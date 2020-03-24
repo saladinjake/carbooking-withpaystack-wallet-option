@@ -20,7 +20,7 @@ class BackendApp {
   }
 
   run() {
-     $('#gtd').animate({'margin-top': '-25px'}, 3000);
+     // $('#gtd').animate({'margin-top': '-25px'}, 3000);
      this.isLoggedIn();
     this.bootstrap();
     this.logOutEvents();

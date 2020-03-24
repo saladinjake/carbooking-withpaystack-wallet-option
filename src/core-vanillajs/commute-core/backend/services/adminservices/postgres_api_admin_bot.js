@@ -7560,9 +7560,15 @@ noReadWrite('manage_cars')
   	setTimeout(()=>{
 
   	let planToView = usersPlan.filter((item,i)=> item._id== clickedPlan);
-
+    let q_id; p_id;
   	let has_been_updated = planToView[0].has_updated;
   	console.log(has_been_updated)
+    if(has_been_updated=='Yes'){
+      q_id ='';
+       p_id='';
+
+    }
+    console.log(planToView[0])
    document.getElementById("quote-date").disabled=true
 
   	let planId = planToView[0].plan_id;
@@ -7874,10 +7880,20 @@ noReadWrite('manage_cars')
 
         let this_user = user_name[0]
         document.getElementById("quote-id").value="CMT-QT-"+ clickedPlan;
-        document.getElementById("quote-payment-id").value='CMT-PAY-'+clickedPlan;
-        document.getElementById("paystack-reference").value='CMT-REF-'+clickedPlan;
+
+        if(has_been_updated=="Yes"){
+        // document.getElementById("quote-payment-id").value='CMT-PAY-'+clickedPlan;
+        // document.getElementById("paystack-reference").value='CMT-REF-'+clickedPlan;
+
+      }
         let plan_ref= 'CMPAYREF-'+clickedPlan;
         document.getElementById("quote-payment-amount").value= price_of_plan;
+
+
+        if(has_been_updated=="No"){
+          document.getElementById("quote-payment-id").value='NOT SET';
+        document.getElementById("paystack-reference").value='NOT SET';
+        }
 
         
 

@@ -149,7 +149,7 @@ class FrontEndApp {
   }
 
   run() {
-    $('#gtd').animate({'margin-top': '-25px'}, 3000);
+    // $('#gtd').animate({'margin-top': '-25px'}, 3000);
       // $("#content").effect("bounce", { times:4, distance:200 }, 400);
       //   $("form").effect("bounce", { times:4, distance:200 }, 400);
     this.bootstrap();
