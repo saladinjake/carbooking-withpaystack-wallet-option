@@ -6938,7 +6938,7 @@ getUser = (req, res) => {
 
                  sgMail.setApiKey('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');
 
-                sgMail.send(mailOptions);
+                //sgMail.send(mailOptions);
                 
                 // transporter.sendMail(mailOptions, function (error, response) {
                 //     if (error) {
@@ -6966,7 +6966,7 @@ getUser = (req, res) => {
 
                  sgMail.setApiKey('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');
 
-                sgMail.send(mailOptions);
+                //sgMail.send(mailOptions);
                 // transporter.sendMail(mailOptions, function (error, response) {
                 //     if (error) {
                 //         console.log(error+"eroor here");
@@ -6980,6 +6980,7 @@ getUser = (req, res) => {
           return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .' });
       }); 
     });
+
 
     
   }
