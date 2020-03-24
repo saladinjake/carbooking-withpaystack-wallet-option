@@ -6922,7 +6922,7 @@ getUser = (req, res) => {
 
            if(user.status=="Unpaid"){
 
-            readHTMLFile(__dirname + '/templates/notification.html', function(err, html) {
+            readHTMLFile(__dirname + '/views/templates/notification.html', function(err, html) {
                 var template = handlebars.compile(html);
                 var replacements = {
                      username: user.username,

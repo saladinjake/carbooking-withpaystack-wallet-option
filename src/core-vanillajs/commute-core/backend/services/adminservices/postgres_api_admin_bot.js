@@ -304,72 +304,79 @@ function getUserRights(){
 function WarLockAdmin(roleName,permName){
 
 // window.addEventListener('load',()=>{
-  document.getElementById('gtd').style.display='none'
+  document.getElementById('gtd').style.display='none';
 
-  if(localStorage.getItem('previledges')){
-  
-  let previledges = JSON.parse(localStorage.getItem('previledges'));
+  if(localStorage.getItem('userToken')){
+     // if(typeof(localStorage.getItem('previledges')=='undefined')){
+     //    localStorage.clear();
+     //    return window.location.href="./"
 
-  console.log(previledges[roleName])
+     // }
 
-  //alert(previledges[roleName])
-  
+      if(localStorage.getItem('previledges')){
+      
+      let previledges = JSON.parse(localStorage.getItem('previledges'));
 
-  if(previledges[roleName]!='yes'){
+      console.log(previledges[roleName])
 
-    window.location.href="/previledges-denied"
-    document.getElementById('gtd').style.display='block'
-   // return "no"
-  }else{
-    document.getElementById('gtd').style.display='block'
-    //return "yes"
-  }
-
-
-  if(previledges[permName]!='yes'){
-    // alert('cant manage')
-    // // disable all buttons
-
-
-    
-      //var notification = alertify.notify('Read only mode. You can only read informations in this module.Configure the previledges to be able to perform otheractions.', 'error', 45, function(){  console.log('dismissed'); });
+      //alert(previledges[roleName])
       
 
-   
-    
-  
+      if(previledges[roleName]!='yes'){
 
-  //document.addEventListener('DOMContentLoaded', ()=>{
+        window.location.href="/previledges-denied"
+        document.getElementById('gtd').style.display='block'
+       // return "no"
+      }else{
+        document.getElementById('gtd').style.display='block'
+        //return "yes"
+      }
+
+
+      if(previledges[permName]!='yes'){
+        // alert('cant manage')
+        // // disable all buttons
+
+
+        
+          //var notification = alertify.notify('Read only mode. You can only read informations in this module.Configure the previledges to be able to perform otheractions.', 'error', 45, function(){  console.log('dismissed'); });
+          
+
+       
+        
+      
+
+      //document.addEventListener('DOMContentLoaded', ()=>{
 
 
 
-$("a.btn").hide()
+    $("a.btn").hide()
 
 
 
-    //})
-    
+        //})
+        
 
-  
+      
+      }
+
+      if(previledges.status!='Active'){
+        window.location.href="/previledges-denied"
+        document.getElementById('gtd').style.display='block';
+
+        setTimeout(()=>{
+           localStorage.clear();
+        },2000)
+       
+
+
+      }
+
+    }
+
+    // })
+      
   }
-
-  if(previledges.status!='Active'){
-    window.location.href="/previledges-denied"
-    document.getElementById('gtd').style.display='block';
-
-    setTimeout(()=>{
-       localStorage.clear();
-    },2000)
-   
-
-
-  }
-
-}
-
-// })
-  
-
 
 }
 
@@ -7561,17 +7568,18 @@ noReadWrite('manage_cars')
 
   	let planToView = usersPlan.filter((item,i)=> item._id== clickedPlan);
     let q_id, p_id;
+    let planId = planToView[0].plan_id;
   	let has_been_updated = planToView[0].has_updated;
   	console.log(has_been_updated)
     if(has_been_updated=='Yes'){
-      q_id ='';
-       p_id='';
+      q_id ='CMT-QUOTE'+ planId;
+       p_id='CMT-REF-'+ planId;
 
     }
     console.log(planToView[0])
    document.getElementById("quote-date").disabled=true
 
-  	let planId = planToView[0].plan_id;
+  	
 
   	if(has_been_updated=="No"){
        document.getElementById("quote-amount").disabled=false;
@@ -7882,8 +7890,8 @@ noReadWrite('manage_cars')
         document.getElementById("quote-id").value="CMT-QT-"+ clickedPlan;
 
         if(has_been_updated=="Yes"){
-        // document.getElementById("quote-payment-id").value='CMT-PAY-'+clickedPlan;
-        // document.getElementById("paystack-reference").value='CMT-REF-'+clickedPlan;
+          document.getElementById("quote-payment-id").value='CMT-PAY-'+clickedPlan;
+          document.getElementById("paystack-reference").value='CMT-REF-'+clickedPlan;
 
       }
         let plan_ref= 'CMPAYREF-'+clickedPlan;
