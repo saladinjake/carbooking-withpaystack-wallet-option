@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+        <meta name="author" content="Coderthemes">
+
+		<link rel="shortcut icon" href="assets/images/favicon.png">
+
+        <title>Commute Dashboard</title>
+
+
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
+
+        <!-- include the RTL css files-->
+<link rel="stylesheet" href="assets/vendors/alertifyjs/css/alertify.rtl.css">
+<link rel="stylesheet" href="assets/vendors/alertifyjs/css/themes/default.rtl.css">
+
+<!-- include alertify script -->
+<script src="assets/vendors/alertifyjs/alertify.js"></script>
+
+        <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="assets/js/modernizr.min.js"></script>
+
+   <style type="text/css">
+      #gtd{
+          opacity:0;
+        }
+   </style>
+    </head>
+
+ <div id="loader" class="center"></div> 
+    <body class="fixed-left">
+     
+
+
+<div id="gtd">
+        <!-- Begin page -->
+        <div id="wrapper">
+
+               <!-- Top Bar Start -->
+            <div class="topbar">
+
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <div class="text-center">
+                        <a href="index.html" class="logo"><!-- <i class="icon-magnet icon-c-logo"></i> --> <img class="logo-small" src="assets/images/CommuteLogos-13.png"/>  <img class="logo-wide" src="assets/images/CommuteLogos-02.png"/>   <!-- <span>Ub<i class="md md-album"></i>ld</span> --> </a>
+                        <!-- Image Logo here -->
+                        <!--<a href="index.html" class="logo">-->
+                            <!--<i class="icon-c-logo"> <img src="assets/images/logo_sm.png" height="42"/> </i>-->
+                            <!--<span><img src="assets/images/logo_light.png" height="20"/></span>-->
+                        <!--</a>-->
+                    </div>
+                </div>
+
+                <!-- Button mobile view to collapse sidebar menu -->
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container">
+                        <div class="">
+                            <div class="pull-left">
+                                <button class="button-menu-mobile open-left waves-effect waves-light">
+                                    <i class="md md-menu"></i>
+                                </button>
+                                <span class="clearfix"></span>
+                            </div>
+
+                            <!-- <ul class="nav navbar-nav hidden-xs">
+                                <li><a href="#" class="waves-effect waves-light">Files</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown"
+                                       role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span
+                                            class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <form role="search" class="navbar-left app-search pull-left hidden-xs">
+			                     <input type="text" placeholder="Search..." class="form-control">
+			                     <a href=""><i class="fa fa-search"></i></a>
+			                </form> -->
+							
+							
+
+                            <ul class="nav navbar-nav navbar-right pull-right">
+								<li class="dropdown top-menu-item-xs">
+								<a href="topup-wallet.html" class="text-custom header-title wallet-balance-top hidden-xs"> ₦ 200,000</a>
+								</li>
+                                <li class="dropdown top-menu-item-xs">
+                                    <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="icon-bell"></i> <span class="badge badge-xs badge-danger">3</span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-lg">
+                                        <li class="notifi-title"><span class="label label-default pull-right">New 3</span>Notification</li>
+                                        <li class="list-group slimscroll-noti notification-list">
+                                           <!-- list item-->
+                                           <a href="javascript:void(0);" class="list-group-item">
+                                              <div class="media">
+                                                 <div class="pull-left p-r-10">
+                                                    <em class="fa fa-diamond noti-primary"></em>
+                                                 </div>
+                                                 <div class="media-body">
+                                                    <h5 class="media-heading">A new order has been placed A new order has been placed</h5>
+                                                    <p class="m-0">
+                                                        <small>There are new settings available</small>
+                                                    </p>
+                                                 </div>
+                                              </div>
+                                           </a>
+
+                                           <!-- list item-->
+                                           <a href="javascript:void(0);" class="list-group-item">
+                                              <div class="media">
+                                                 <div class="pull-left p-r-10">
+                                                    <em class="fa fa-cog noti-warning"></em>
+                                                 </div>
+                                                 <div class="media-body">
+                                                    <h5 class="media-heading">New settings</h5>
+                                                    <p class="m-0">
+                                                        <small>There are new settings available</small>
+                                                    </p>
+                                                 </div>
+                                              </div>
+                                           </a>
+
+                                           <!-- list item-->
+                                           <a href="javascript:void(0);" class="list-group-item">
+                                              <div class="media">
+                                                 <div class="pull-left p-r-10">
+                                                    <em class="fa fa-bell-o noti-custom"></em>
+                                                 </div>
+                                                 <div class="media-body">
+                                                    <h5 class="media-heading">Updates</h5>
+                                                    <p class="m-0">
+                                                        <small>There are <span class="text-primary font-600">2</span> new updates available</small>
+                                                    </p>
+                                                 </div>
+                                              </div>
+                                           </a>
+
+                                           <!-- list item-->
+                                           <a href="javascript:void(0);" class="list-group-item">
+                                              <div class="media">
+                                                 <div class="pull-left p-r-10">
+                                                    <em class="fa fa-user-plus noti-pink"></em>
+                                                 </div>
+                                                 <div class="media-body">
+                                                    <h5 class="media-heading">New user registered</h5>
+                                                    <p class="m-0">
+                                                        <small>You have 10 unread messages</small>
+                                                    </p>
+                                                 </div>
+                                              </div>
+                                           </a>
+
+                                            <!-- list item-->
+                                           <a href="javascript:void(0);" class="list-group-item">
+                                              <div class="media">
+                                                 <div class="pull-left p-r-10">
+                                                    <em class="fa fa-diamond noti-primary"></em>
+                                                 </div>
+                                                 <div class="media-body">
+                                                    <h5 class="media-heading">A new order has been placed A new order has been placed</h5>
+                                                    <p class="m-0">
+                                                        <small>There are new settings available</small>
+                                                    </p>
+                                                 </div>
+                                              </div>
+                                           </a>
+
+                                           <!-- list item-->
+                                           <a href="javascript:void(0);" class="list-group-item">
+                                              <div class="media">
+                                                 <div class="pull-left p-r-10">
+                                                    <em class="fa fa-cog noti-warning"></em>
+                                                 </div>
+                                                 <div class="media-body">
+                                                    <h5 class="media-heading">New settings</h5>
+                                                    <p class="m-0">
+                                                        <small>There are new settings available</small>
+                                                    </p>
+                                                 </div>
+                                              </div>
+                                           </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" class="list-group-item text-right">
+                                                <small class="font-600">See all notifications</small>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="hidden-xs">
+                                    <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
+                                </li>
+                                <!--<li class="hidden-xs">
+                                    <a href="#" class="right-bar-toggle waves-effect waves-light"><i class="icon-settings"></i></a>
+                                </li> -->
+                                <li class="dropdown top-menu-item-xs">
+                                    <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="profile.html"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
+                                        
+                                        <li class="divider"></li>
+                                        <li><a href="login.html"><i class="ti-power-off m-r-10 text-danger"></i> Logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+							
+							
+                        </div>
+                        <!--/.nav-collapse -->
+                    </div>
+                </div>
+            </div>
+            <!-- Top Bar End -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+
+            <div class="left side-menu">
+                <div class="sidebar-inner slimscrollleft">
+                    <!--- Divider -->
+                    <div id="sidebar-menu">
+                        <ul>
+
+                            <li class="text-muted menu-title">Navigation</li>
+							
+							<li class="">
+                                <a href="index.html" class="waves-effect"><i class="md md-dashboard"></i> <span> Dashboard </span> </a>
+                            </li>
+                            
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-location-pin"></i> <span> Plans </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled">
+									<li><a href="create-plan.html">Create Plan</a></li>
+                                    <li><a href="plan-history.html">Plan History</a></li>
+                                </ul>
+                            </li>
+
+                                                        
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="md-account-balance-wallet"></i> <span> Wallet </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled">
+									<li><a href="topup-wallet.html">Topup Balance</a></li>
+									<li><a href="payment-history.html">Payment History</a></li>
+									<li><a href="quotation-history.html">Quotation History</a></li>
+                                </ul>
+                            </li>
+
+                                                    
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="md-headset"></i> <span> Support </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled">
+									 <li><a href="create-ticket.html">Create Ticket</a></li>
+									<li><a href="faq.html">FAQ</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-light-bulb"></i> <span> SOS </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="#">Report SOS</a></li>
+                                </ul>
+                            </li>
+							
+							<li class="has_sub">
+                                <a href="request-car-repair.html" class="waves-effect"><i class="ti-car"></i> <span> Request Car Repair </span> </span></a>
+                                
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!-- Left Sidebar End -->
+
+
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        
+
+						
+						 <div class="row">
+
+                            <!-- <div class="col-lg-6">
+
+                                <div class="card-box">
+									<h4 class="text-dark header-title m-t-0">Sales Analytics</h4>
+									<div class="text-center">
+										<ul class="list-inline chart-detail-list">
+											<li>
+												<h5><i class="fa fa-circle m-r-5" style="color: #7e57c2;"></i>Desktops</h5>
+											</li>
+											<li>
+												<h5><i class="fa fa-circle m-r-5" style="color: #b39ddb;"></i>Tablets</h5>
+											</li>
+											<li>
+												<h5><i class="fa fa-circle m-r-5" style="color: #ede7f6;"></i>Mobiles</h5>
+											</li>
+										</ul>
+									</div>
+									<div id="morris-bar-stacked" style="height: 303px;"></div>
+								</div>
+
+                            </div>  -->
+
+                            <!-- col -->
+
+                            <div class="col-lg-12" id="hide-on-click">
+                                <div class="card-box">
+                                    
+								<div class="row m-t-40 m-b-40 align-items-center justify-content-center">
+									
+									<div class="center-block text-center col-lg-12 m-b-50">
+									<h2 class=" m-t-20 m-b-40 text-danger">REPORT SOS</h2>
+									<div style="padding:10px 0;"></div>
+                        			<h4 class="text-dark header-title m-t-20 m-b-30">Are you sure you want to report a distress call ?</h4>
+                        			<p class="text-muted m-b-40 font-13">
+										
+									</p>
+									<div style="padding:10px 0;"></div>
+									<div class="m-t-30 p-t-30">
+									<div class="col-lg-3">
+									</div>
+									<div class="col-lg-3 text-center">
+									<button id="get-location-btn" type="submit" class="btn btn-danger btn-block btn-lg w-sm waves-effect waves-light">
+										Yes
+									</button> 
+									
+									</div>
+									<div class="col-lg-3 text-center">
+									<button id="cancle-sos" type="submit" class="btn btn-custom btn-lg btn-purple btn-block w-sm waves-effect waves-light">
+										No
+									</button> 
+									
+									</div>
+									<div class="col-lg-3">
+									</div>
+									</div>
+
+
+
+                        			
+                                       
+                                    </div> 
+
+
+
+									
+									<div class="hidden-sm hidden-xs" style="padding:200px 0px;"></div>
+									</div>
+
+                        		</div>
+							</div>
+                        	<!-- end col -->
+
+                        </div>
+                        <!-- end row -->
+
+
+                        <div class="row" id="show-map">
+
+                          
+  <!-- .col -->
+  <div class="col-md-11 col-sm-11 col-xs-11">
+    <div class="panel panel-default">
+      <div class="panel-heading">Location Response</div>
+      <div class="info-msg">
+                    <i class="fa fa-info-circle"></i>
+                    
+                  </div>
+
+                  <div class="success-msg" id="msg">
+                    <i class="fa fa-check"></i>
+                    
+                  </div>
+
+                  <div class="warning-msg">
+                    <i class="fa fa-warning"></i>
+                    
+                  </div>
+
+                  <div class="error-msg" id="msg-err" >
+                    <i class="fa fa-times-circle"></i>
+                    
+                  </div>
+      <div class="panel-body">
+        <p style="display:none">Lat/Long: <span id="location-lat-long"  class="form-control"></span></p>
+        <p style="display:none">Address: <span id="location-address" type="text" class="form-control"> </span></p>
+        <p>Map:</p><div id="map-container" style="height: 400px;"></div>
+      </div>
+    </div>
+  </div><!-- .col -->
+</div><!-- .row -->
+
+
+
+                        <div class="row">
+
+                            <!-- <div class="col-lg-6">
+
+                                <div class="card-box">
+									<h4 class="text-dark header-title m-t-0">Sales Analytics</h4>
+									<div class="text-center">
+										<ul class="list-inline chart-detail-list">
+											<li>
+												<h5><i class="fa fa-circle m-r-5" style="color: #7e57c2;"></i>Desktops</h5>
+											</li>
+											<li>
+												<h5><i class="fa fa-circle m-r-5" style="color: #b39ddb;"></i>Tablets</h5>
+											</li>
+											<li>
+												<h5><i class="fa fa-circle m-r-5" style="color: #ede7f6;"></i>Mobiles</h5>
+											</li>
+										</ul>
+									</div>
+									<div id="morris-bar-stacked" style="height: 303px;"></div>
+								</div>
+
+                            </div>  -->
+
+                            <!-- col -->
+
+                         <!-- end col -->
+
+                        </div>
+                        <!-- end row -->
+
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <footer class="footer text-right">
+                    © 2019. All rights reserved.
+                </footer>
+
+            </div>
+
+
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+
+
+            <!-- Right Sidebar -->
+            <div class="side-bar right-bar nicescroll">
+                <h4 class="text-center">Chat</h4>
+                <div class="contact-list nicescroll">
+                    <ul class="list-group contacts-list">
+                        <li class="list-group-item">
+                            <a href="#">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-1.jpg" alt="">
+                                </div>
+                                <span class="name">Chadengle</span>
+                                <i class="fa fa-circle online"></i>
+                            </a>
+                            <span class="clearfix"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-2.jpg" alt="">
+                                </div>
+                                <span class="name">Tomaslau</span>
+                                <i class="fa fa-circle online"></i>
+                            </a>
+                            <span class="clearfix"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-3.jpg" alt="">
+                                </div>
+                                <span class="name">Stillnotdavid</span>
+                                <i class="fa fa-circle online"></i>
+                            </a>
+                            <span class="clearfix"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-4.jpg" alt="">
+                                </div>
+                                <span class="name">Kurafire</span>
+                                <i class="fa fa-circle online"></i>
+                            </a>
+                            <span class="clearfix"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-5.jpg" alt="">
+                                </div>
+                                <span class="name">Shahedk</span>
+                                <i class="fa fa-circle away"></i>
+                            </a>
+                            <span class="clearfix"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-6.jpg" alt="">
+                                </div>
+                                <span class="name">Adhamdannaway</span>
+                                <i class="fa fa-circle away"></i>
+                            </a>
+                            <span class="clearfix"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-7.jpg" alt="">
+                                </div>
+                                <span class="name">Ok</span>
+                                <i class="fa fa-circle away"></i>
+                            </a>
+                            <span class="clearfix"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-8.jpg" alt="">
+                                </div>
+                                <span class="name">Arashasghari</span>
+                                <i class="fa fa-circle offline"></i>
+                            </a>
+                            <span class="clearfix"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-9.jpg" alt="">
+                                </div>
+                                <span class="name">Joshaustin</span>
+                                <i class="fa fa-circle offline"></i>
+                            </a>
+                            <span class="clearfix"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-10.jpg" alt="">
+                                </div>
+                                <span class="name">Sortino</span>
+                                <i class="fa fa-circle offline"></i>
+                            </a>
+                            <span class="clearfix"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /Right-bar -->
+
+        </div>
+        <!-- END wrapper -->
+
+</div>
+
+<style type="text/css">
+ #toast {
+    visibility: hidden;
+    max-width: 150px;
+    height: 50px;
+    /*margin-left: -125px;*/
+    margin: auto;
+    width:200px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+
+    position: fixed;
+    z-index: 1;
+    left: 0;right:0;
+    bottom: 30px;
+    font-size: 17px;
+    white-space: nowrap;
+}
+#toast #img{
+    width: 50px;
+    height: 50px;
+    
+    float: left;
+    
+    padding-top: 16px;
+    padding-bottom: 16px;
+    
+    box-sizing: border-box;
+
+    
+    background-color: #111;
+    color: #fff;
+}
+#toast #desc{
+
+    
+    color: #fff;
+   
+    padding: 16px;
+    
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes expand {
+    from {min-width: 50px} 
+    to {min-width: 350px}
+}
+
+@keyframes expand {
+    from {min-width: 50px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes stay {
+    from {min-width: 350px} 
+    to {min-width: 350px}
+}
+
+@keyframes stay {
+    from {min-width: 350px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes shrink {
+    from {min-width: 350px;} 
+    to {min-width: 50px;}
+}
+
+@keyframes shrink {
+    from {min-width: 350px;} 
+    to {min-width: 50px;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 60px; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 60px; opacity: 0;}
+}
+</style>
+
+
+
+
+
+<div id="toast"><!-- <div id="img">Icon</div> --><div id="desc">A notification message..</div></div>
+
+<script type="text/javascript">
+    
+</script>
+        <script>
+            var resizefunc = [];
+        </script>
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/detect.js"></script>
+        <script src="assets/js/fastclick.js"></script>
+
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/jquery.blockUI.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/wow.min.js"></script>
+        <script src="assets/js/jquery.nicescroll.js"></script>
+        <script src="assets/js/jquery.scrollTo.min.js"></script>
+
+        <script src="assets/plugins/peity/jquery.peity.min.js"></script>
+
+        <!-- jQuery  -->
+        <script src="assets/plugins/waypoints/lib/jquery.waypoints.js"></script>
+        <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
+
+        <script src="assets/plugins/jquery-knob/jquery.knob.js"></script>
+
+        <script src="assets/pages/jquery.dashboard.js"></script>
+
+        <script src="assets/js/jquery.core.js"></script>
+        <script src="assets/js/jquery.app.js"></script>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $('.counter').counterUp({
+                    delay: 100,
+                    time: 1200
+                });
+
+                $(".knob").knob();
+
+            });
+        </script>
+
+        <script type="text/javascript">
+            document.getElementById("cancle-sos").addEventListener("click", function(e){
+                window.location.href="dashboard.html"
+            })
+        </script>
+
+
+
+ <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyC2zkhqhHZk1o_sEln8ahx3KuI1XP07w9I&callback=initMap"></script>
+ <script type="text/javascript">
+   function initMap(){}
+ </script>
+    </body>
+</html>
