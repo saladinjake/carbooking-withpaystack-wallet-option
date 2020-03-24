@@ -7560,7 +7560,7 @@ noReadWrite('manage_cars')
   	setTimeout(()=>{
 
   	let planToView = usersPlan.filter((item,i)=> item._id== clickedPlan);
-    let q_id; p_id;
+    let q_id, p_id;
   	let has_been_updated = planToView[0].has_updated;
   	console.log(has_been_updated)
     if(has_been_updated=='Yes'){
