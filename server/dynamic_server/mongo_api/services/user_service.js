@@ -2358,32 +2358,41 @@ static updateUsersItinerary(request,response){
 
             
 
-            readHTMLFile(__dirname + '/views/templates/notification.html', function(err, html) {
-                var template = handlebars.compile(html);
-                var replacements = {
-                     username: user_id,
-                     detail: description
-                };
-                var htmlToSend = template(replacements);
+            // readHTMLFile(__dirname + '/views/templates/notification.html', function(err, html) {
+            //     var template = handlebars.compile(html);
+            //     var replacements = {
+            //          username: user_id,
+            //          detail: description
+            //     };
+            //     var htmlToSend = template(replacements);
+
+            //      mailOptions = { 
+            //   from:  'juwavictor@gmail.com', //process.env.APPLICATION_GMAIL, 
+            //   to: user.email, 
+            //   subject: 'Account Verification Token', 
+            //   html: htmlToSend,
+
+            // };
+
                 
-                 mailOptions.html = htmlToSend;
-                 sgMail.setApiKey('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');
+            //      //mailOptions.html = htmlToSend;
+            //      sgMail.setApiKey('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');
 
-                sgMail.send(mailOptions);
+            //     sgMail.send(mailOptions);
 
-                // transporter.sendMail(mailOptions, function (error, response) {
-                //     if (error) {
-                //         console.log(error+"eroor here");
-                //         offline = 'Yes';
+            //     // transporter.sendMail(mailOptions, function (error, response) {
+            //     //     if (error) {
+            //     //         console.log(error+"eroor here");
+            //     //         offline = 'Yes';
 
-                //      }   
+            //     //      }   
                         
 
 
 
                         
-                // });
-            });
+            //     // });
+            // });
 
             if(offline=="Yes"){
 
@@ -6255,6 +6264,18 @@ getUser = (req, res) => {
       plan_id,
     } = request.body;
 
+    console.log(itineraries,
+      user_id,
+      carsSelected,
+      planName,
+      price,
+      planCategoryName,
+      no_hours,
+      username,
+      email,
+      phone_number,
+      plan_id,)
+
 
     
      const NewUserPlan = new UserPlanModel({ 
@@ -6933,19 +6954,22 @@ getUser = (req, res) => {
                     //description: description
                 };
                 var htmlToSend = template(replacements);
+                mailOptions = { 
+              from:  'juwavictor@gmail.com', //process.env.APPLICATION_GMAIL, 
+              to: user.email, 
+              subject: 'Commute Plan Update', 
+              html:htmlToSend,
+              cc:'juwavictor@gmail.com',
+
+            };
                 
-                 mailOptions.html = htmlToSend;
+                // mailOptions.html = htmlToSend;
 
                  sgMail.setApiKey('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');
 
-                //sgMail.send(mailOptions);
+                sgMail.send(mailOptions);
                 
-                // transporter.sendMail(mailOptions, function (error, response) {
-                //     if (error) {
-                //         console.log(error+"eroor here");
-                //         //callback(error);
-                //     }
-                // });
+                
             });
 
           }else{
@@ -6962,17 +6986,21 @@ getUser = (req, res) => {
                 };
                 var htmlToSend = template(replacements);
                 
-                 mailOptions.html = htmlToSend;
+                // mailOptions.html = htmlToSend;
+
+                 mailOptions = { 
+              from:  'juwavictor@gmail.com', //process.env.APPLICATION_GMAIL, 
+              to: user.email, 
+              cc:'juwavictor@gmail.com',
+              subject: 'Commute Plan Update', 
+              html:htmlToSend
+
+            };
 
                  sgMail.setApiKey('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');
+                 sgMail.send(mailOptions);
 
-                //sgMail.send(mailOptions);
-                // transporter.sendMail(mailOptions, function (error, response) {
-                //     if (error) {
-                //         console.log(error+"eroor here");
-                //         //callback(error);
-                //     }
-                // });
+               
             });
 
           }

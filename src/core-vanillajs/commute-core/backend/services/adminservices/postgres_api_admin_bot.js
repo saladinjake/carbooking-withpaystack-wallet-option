@@ -8702,7 +8702,7 @@ WarLockAdmin('view_transactions','manage_transactions')
 
                        //craete notification and update status to ongoing
                        postNotification(notification_url,dataNotification)
-
+                   alert(email.value)
                    var usersPlan = {
                      plan_id:  plan_id.value,
                      createdDate: createdDate.value,

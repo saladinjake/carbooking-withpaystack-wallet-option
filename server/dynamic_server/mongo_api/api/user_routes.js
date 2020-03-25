@@ -721,7 +721,7 @@ class UserRoutes {
 
   this.router.post("/admin-plan-add",  //add booking
     TokenVerification.adminAuthentication,
-     UserSanitizer.checkIfUserDoesntExists,
+     //UserSanitizer.checkIfUserDoesntExists,
     UserController.createNewPlanBooking
   );
 
