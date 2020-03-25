@@ -8605,8 +8605,8 @@ WarLockAdmin('view_transactions','manage_transactions')
 
 
       document.getElementById("quote-id").value="CMT-QT-"+ id;
-        document.getElementById("quote-payment-id").value='CMPAYSTK-'+id;
-        document.getElementById("paystack-reference").value='CMPAYREF-'+id;
+        document.getElementById("quote-payment-id").value='NOT SET';
+        document.getElementById("paystack-reference").value='NOT SET';
         let plan_ref= 'CMPAYREF-'+id;
        // document.getElementById("quote-payment-amount").value= price_of_plan;
        
@@ -8666,6 +8666,12 @@ WarLockAdmin('view_transactions','manage_transactions')
 
                   let value_text = document.getElementById("quote-amount").value;
 
+
+                   let e = document.getElementById('email')
+                   let em =e.options[e.selectedIndex].text;
+
+                   //alert(em)
+
                   if(status_QUOTE=="--choose--"){
                      var notification = alertify.notify('Choose a status', 'error', 5, function(){  console.log('dismissed'); });
                      return false;        
@@ -8691,7 +8697,7 @@ WarLockAdmin('view_transactions','manage_transactions')
                         let notification_url ="http://localhost:12000/api/v1/notification"; 
                         
                         let dataNotification = {
-                          user_id: email.value,
+                          user_id: em,
                           type: 'information',
                           description: data_msg,
                          
@@ -8702,7 +8708,7 @@ WarLockAdmin('view_transactions','manage_transactions')
 
                        //craete notification and update status to ongoing
                        postNotification(notification_url,dataNotification)
-                   alert(email.value)
+
                    var usersPlan = {
                      plan_id:  plan_id.value,
                      createdDate: createdDate.value,
@@ -8717,7 +8723,7 @@ WarLockAdmin('view_transactions','manage_transactions')
                     duration: noHrs,
 
                     username: username.value,
-                    email: email.value,
+                    email: em,
                     phone_number: document.getElementById("phone_number").value,
                   };
 

@@ -111,8 +111,8 @@ export  default class ManualBookings extends Component {
                                             <div className="col-sm-7">
                                                 <select className="form-control" id="status">
                                                     <option>pending</option>
-                                                    <option>ongoing</option>
-                                                    <option>completed</option>
+                                                    <option>Ongoing</option>
+                                                    <option>Completed</option>
                                                 </select>
                                             </div>
                                         </div>
