@@ -8715,7 +8715,7 @@ WarLockAdmin('view_transactions','manage_transactions')
                     itineraries: ItineraryList ,
                     user_id:document.getElementById("email").value, 
                     carsSelected: carsSelected,
-                    plan_name: plan_name.value,
+                    plan_name:  plan_name.options[plan_name.selectedIndex].text,   //plan_name.value,
                     price: document.getElementById("quote-amount").value ,
                     plan_categories: plan_categories,
                     status:status_QUOTE,
