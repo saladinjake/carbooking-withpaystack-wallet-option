@@ -63,6 +63,8 @@ export default class Recorder {
     this.playButton.onclick = this.play.bind(this);
     this.downloadButton.onclick = this.download.bind(this);
 
+
+
     
   }
 
@@ -109,6 +111,8 @@ export default class Recorder {
       this.playButton.disabled = false;
       this.downloadButton.disabled = false;
     }
+    var notification = alertify.notify('Record in session..', 'warning', 45, function(){  console.log('dismissed'); });
+    
   }
 
   
