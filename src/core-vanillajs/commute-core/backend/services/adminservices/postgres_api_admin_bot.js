@@ -8811,6 +8811,31 @@ WarLockAdmin('view_transactions','manage_transactions')
                   createBookingSet(postUrl ,usersPlan)
 
 
+
+
+                let dataQuotations = {
+                   plan_id:  plan_id.value,
+                  amount:value_text,
+                  status: status,
+                  full_name: username.value,
+                  quotation_id: 'CMT-QUOTE-'+ plan_id.value,
+                  email: em,
+                  reference: 'CMT-REF-'+ plan_id.value,
+                  phone_number: document.getElementById("phone_number").value,
+                  createdDateOfQuotation: new Date()
+
+                } 
+
+
+
+               
+    
+
+               let quot_url = 'http://localhost:12000/api/v1/make-quotation'
+               createQuotations(quot_url, dataQuotations) 
+
+
+
                 
                   
               }
