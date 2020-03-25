@@ -79,7 +79,7 @@ export  default class DriveTest extends Component {
                                         <thead>
                                             <tr>
                                                 
-                                                <th className="col-lg-2">Car ID</th>
+                                               
                                                 <th className="col-lg-2">Date</th>
                                                 <th className="col-lg-2">Email</th>
                                                 <th className="col-lg-2">Username</th>
