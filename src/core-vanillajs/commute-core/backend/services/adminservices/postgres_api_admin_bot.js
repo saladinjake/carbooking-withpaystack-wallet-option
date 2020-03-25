@@ -3313,12 +3313,12 @@ window.viewRecordTemplate = (el)=>{
 	       const right_side_modal_video =`<video style="height:400px; width:100%" id="video-${view_id}" controls><source src="${el.dataset.media}" type="video/webm"></video>`;
 	       document.getElementById("video1").innerHTML = right_side_modal_video;
 
-         var elements = document.getElementsByTagName("input");
-    for (var ii=0; ii < elements.length; ii++) {
-      if (elements[ii].type == "text") {
-        elements[ii].value = "";
-      }
-    }
+    //      var elements = document.getElementsByTagName("input");
+    // for (var ii=0; ii < elements.length; ii++) {
+    //   if (elements[ii].type == "text") {
+    //     elements[ii].value = "";
+    //   }
+    // }
 
 	      let id= "#status"+ view_id;
 		    $( id + " option").each(function () {

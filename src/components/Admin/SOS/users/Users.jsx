@@ -68,8 +68,7 @@ export  default class SOSADMIN extends Component {
                                     <div className="col-sm-4">
                                         <a style={{display:"none"}} href="#custom-modal" id="add-new"
                                             className="btn btn-default btn-md waves-effect waves-light m-b-30"
-                                            data-animation="fadein" data-plugin="custommodal" data-overlaySpeed="200"
-                                            data-overlayColor="#36404a"><i className="md md-add"></i> Add User</a>
+                                            data-animation="fadein" data-plugin="custommodal" ><i className="md md-add"></i> Add User</a>
                                     </div>
                                 </div>
 
@@ -198,18 +197,18 @@ export  default class SOSADMIN extends Component {
 
 
 
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
+        <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
 
       
-                <div class="modal-body">
+                <div className="modal-body">
 
-                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                       <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true" >&times;</span>
                         </button>        
                        
-                        <div class="embed-responsive embed-responsive-16by9">
+                        <div className="embed-responsive embed-responsive-16by9">
                           
 
 
