@@ -110,7 +110,7 @@ export  default class ManualBookings extends Component {
                                             <label for="" className="col-sm-4 control-label">Plan Status</label>
                                             <div className="col-sm-7">
                                                 <select className="form-control" id="status">
-                                                    <option>pending</option>
+                                                    <option>Pending</option>
                                                     <option>Ongoing</option>
                                                     <option>Completed</option>
                                                 </select>
