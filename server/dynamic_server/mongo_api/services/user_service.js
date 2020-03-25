@@ -6250,48 +6250,64 @@ getUser = (req, res) => {
 
 
   static createNewPlanBooking(request,response){
-      let {
-       itineraries,
-      user_id,
-      carsSelected,
-      planName,
-      price,
-      planCategoryName,
-      no_hours,
-      username,
-      email,
-      phone_number,
-      plan_id,
-    } = request.body;
+    //   let {
+    //    itineraries,
+    //   user_id,
+    //   carsSelected,
+    //   planName,
+    //   price,
+    //   planCategoryName,
+    //   no_hours,
+    //   username,
+    //   email,
+    //   phone_number,
+    //   plan_id,
+    // } = request.body;
 
-    console.log(itineraries,
-      user_id,
-      carsSelected,
-      planName,
-      price,
-      planCategoryName,
-      no_hours,
-      username,
-      email,
-      phone_number,
-      plan_id,)
+    let {
+       plan_id,
+                     createdDate,
+                    itineraries ,
+                    user_id, 
+                    carsSelected,
+                    // plan_name:  plan_name.options[plan_name.selectedIndex].text,   //plan_name.value,
+                    price,
+                    // plan_categories: plan_categories,
+                    status,
+                    no_hours,
+                    duration,
+                    phone_number,
+                     plan_category,//plan_categories1.value,
+              plan_name,//plan_name1.value,
+
+                    username,
+                    email,
+    }= request.body;
+
+   
 
 
     
      const NewUserPlan = new UserPlanModel({ 
       id: new AutoincrementId(UserPlanModel).counter(), 
-      user_id,
-      price,
-      plan_id,
-      phone_number,
-      plan_category_name:planCategoryName,
-      plan_name:planName,
-      cars_on_plan: carsSelected,
-      itineries: itineraries,
-      duration:no_hours,
-      no_hours:no_hours,
-      username: username,
-      email: email
+     plan_id,
+                    createdDateOfQuotation: createdDate,
+                    itineraries ,
+                    user_id, 
+                    carsSelected,
+                    // plan_name:  plan_name.options[plan_name.selectedIndex].text,   //plan_name.value,
+                    price,
+                    // plan_categories: plan_categories,
+                    status,
+                    no_hours,
+                    duration,
+                    phone_number,
+
+                     plan_category_name: plan_category,//plan_categories1.value,
+              plan_name,//plan_name1.value,
+
+                    username,
+                    email,
      });
 
 
@@ -6332,7 +6348,7 @@ getUser = (req, res) => {
   }
 
   static manageManualBooking(request,response){
-    return  UserService.manageManualBooking(request,response)
+    //return  UserService.manageManualBooking(request,response)
   }
 
   static manageItineraries(request,response){

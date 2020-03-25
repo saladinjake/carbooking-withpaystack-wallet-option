@@ -10,6 +10,11 @@ import Validator from "./helpers/validator";
 let datapromise;
 
 
+
+let usersFoundId;
+ 
+
+
 function createUserDriveTestDetail(url, data){
   const user = JSON.parse(localStorage.getItem('userToken'));
   fetch(url, {
@@ -94,8 +99,12 @@ function noReadWrite(perms){
 
 
 function setUserdetail(email,o,wallet=false){
-  let linkOfApi = 'http://localhost:12000/api/v1/'+ '/fetchuserinfo/'+ email;
-  const user = JSON.parse(localStorage.getItem('userToken'))
+  let linkOfApi = 'http://localhost:12000/api/v1'+ '/fetchuserinfo/'+ email;
+  
+
+  if(localStorage.getItem('userToken')){
+
+   const user = JSON.parse(localStorage.getItem('userToken'))
   fetch(linkOfApi, {
       method: 'GET',
       headers: {
@@ -132,6 +141,54 @@ function setUserdetail(email,o,wallet=false){
       
         // return MessageBoard.displayMsg(e);
       })
+
+     }
+}
+
+
+
+function getUserdetail(email){
+  let linkOfApi = 'http://localhost:12000/api/v1/'+ 'fetchuserinfo/'+ email;
+   if(localStorage.getItem('userToken')){
+  const user = JSON.parse(localStorage.getItem('userToken'))
+  return fetch(linkOfApi, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': user.token,
+      },
+      mode: 'cors',
+      
+    })
+      .then(response => response.json())
+      .then(data => {
+     
+        if (data) {
+          let userRecord = data.data[0].userInfo[0];
+          console.log(userRecord)
+
+          if(userRecord.id){
+             localStorage.setItem('user_to_book',userRecord.id)
+          }
+
+         
+          
+          //document.getElementById('email').value = userRecord.email;
+         return userRecord;
+          
+          
+        } else {
+          var notification = alertify.notify('Could not perform Update location operation', 'error', 5, function(){  console.log('dismissed'); });
+      
+        }
+      }).catch(e => {
+        // var notification = alertify.notify(e, 'error', 5, function(){  console.log('dismissed'); });
+      
+        // return MessageBoard.displayMsg(e);
+      })
+
+       }
 }
 
 
@@ -8409,6 +8466,13 @@ WarLockAdmin('view_transactions','manage_transactions')
         if(e.target.id=="submitItinerary"){
           
            e.preventDefault();
+
+           let emailsUser = document.getElementById('email');
+            
+            let emalMan = emailsUser.options[emailsUser.selectedIndex].text
+
+            getUserdetail(emalMan);
+            
           
 
            var notification = alertify.notify('The Plan and cars selected for these itineraries cant be modified on submit.', 'success', 5, function(){  console.log('dismissed'); });
@@ -8510,6 +8574,10 @@ WarLockAdmin('view_transactions','manage_transactions')
                 return false
 
             }
+
+            if(localStorage.getItem('user_to_book')){
+              usersFoundId = localStorage.getItem('user_to_book');
+            }
            
 
             
@@ -8529,7 +8597,7 @@ WarLockAdmin('view_transactions','manage_transactions')
                end_time :endDate, 
                pickup_time: endDate,
                drive_option: optDriver,
-               user_id: document.getElementById("email").value,
+               user_id: usersFoundId,  //document.getElementById("email").value,
                travel_option:optTraveler,
                drivingschool: driving_school,
                carsSelected,
@@ -8709,23 +8777,33 @@ WarLockAdmin('view_transactions','manage_transactions')
                        //craete notification and update status to ongoing
                        postNotification(notification_url,dataNotification)
 
+
+                     
+                       let plan_name1 = document.getElementById('plan_name')
+            let plan_categories1 = document.getElementById("plan_categories");
+
                    var usersPlan = {
                      plan_id:  plan_id.value,
                      createdDate: createdDate.value,
                     itineraries: ItineraryList ,
-                    user_id:document.getElementById("email").value, 
+                    user_id: usersFoundId, 
                     carsSelected: carsSelected,
-                    plan_name:  plan_name.options[plan_name.selectedIndex].text,   //plan_name.value,
+                    // plan_name:  plan_name.options[plan_name.selectedIndex].text,   //plan_name.value,
                     price: document.getElementById("quote-amount").value ,
-                    plan_categories: plan_categories,
+                    // plan_categories: plan_categories,
                     status:status_QUOTE,
                     no_hours:noHrs ,
                     duration: noHrs,
+
+                     plan_category: plan_categories1.options[plan_categories1.selectedIndex].text ,//plan_categories1.value,
+              plan_name:   plan_name1.options[plan_name1.selectedIndex].text ,//plan_name1.value,
 
                     username: username.value,
                     email: em,
                     phone_number: document.getElementById("phone_number").value,
                   };
+
+                  console.log(usersPlan)
 
 
 
