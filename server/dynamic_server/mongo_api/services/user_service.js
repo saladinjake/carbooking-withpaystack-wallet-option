@@ -8,6 +8,10 @@ const csv = require('csv-parser');
 const uuidv4 = require('uuid/v4');
  const sgMail = require('@sendgrid/mail');
 
+ var postmark = require("postmark");
+
+
+
 import {passport ,express} from '../App'; 
 import UserPlanModel from '../models/UserPlan.model';
 import PlanModel from "../models/Plan.model";
@@ -54,6 +58,8 @@ import Mixins from '../helpers/mixins';
 import fs from 'fs';
 import handlebars from 'handlebars';
 
+import MailMan from './MailMan'
+
 /*pAy stack*/
 import request from 'request';
 import _ from 'lodash';
@@ -67,12 +73,19 @@ import FaqService  from "./faqs_service";
 import  FeedbackService  from './feedback_service';
 import  SOSService  from "./sos_service";
 
+
+
+import MailConfig from '../config/email';
+
+
+var gmailTransport = MailConfig.GmailTransport;
+var smtpTransport = MailConfig.SMTPTransport;
+
+
 const {initializePayment, verifyPayment} = require('../config/paystack')(request);
 
 
 const MongooseDatabase =  Database.getInstance() || new  Database();
-
-// const MongooseDatabase = Database.getInstance() || new Database();
 
 
 
@@ -89,7 +102,168 @@ var readHTMLFile = function(path, callback) {
 };
 
 
+
+
+
+
+
+
 export class UserService {
+
+  static NotificationEmail( request, response,templateDir, replacements,userEmail,STATUS=201){
+   //MailConfig.ViewOption(gmailTransport,hbs);
+    let HelperOptions = {
+      from: "tester@softclo.com", //'"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',
+      to:  userEmail, //'Joshua.adedoyin@softclo.com',
+      subject: 'Hellow world!',
+      html: 'test',
+      context: {
+        name:"COMMUTE TAXI",
+        email: "tester@softclo.com",
+        address: "3A DOTUN CLOSE, IKEJA LAGOS"
+      }
+    };
+//     Signed out
+// Adedoyin Joshua
+//joshadedoyin.aj@gmail.com
+   
+    readHTMLFile(__dirname + templateDir, function(err, html) {
+                var template = handlebars.compile(html);
+                var replacements = replacements;
+                var htmlToSend = template(replacements);
+                
+                HelperOptions.html = htmlToSend;
+                smtpTransport.sendMail(HelperOptions, (error,info) => {
+                      if(error) {
+                        console.log(error);
+                        //res.json(error);
+                        return res.status(400).send({ msg: error });
+                      }
+                      console.log("email is send");
+                      console.log(info);
+                      //res.json(info)
+                      return response.status(STATUS).send({status: STATUS ,success:'ok', msg: 'Successfully updated  .', data: info });
+                     // return res.status(STATUS).send({ msg: "successfully sent you a password reset link", status:'ok',data: info }); 
+                
+                });
+
+               
+
+                   
+
+             })   
+
+ }
+
+  static passwordResetsMail( request, response,userEmail,templateDir, replacementObj={username:'saladin'}, tokenSTR){
+    let HelperOptions = {
+      from:  process.env.SMTP_USER_NAME,            //'"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',
+      to:  userEmail, 
+      subject: 'Hellow world!',
+      html: 'test',
+      context: {
+        name:"COMMUTE TAXI",
+        email: "tester@softclo.com",
+        address: "3A DOTUN CLOSE, IKEJA LAGOS"
+      }
+    };
+
+   
+    readHTMLFile(__dirname + templateDir, function(err, html) {
+                var template = handlebars.compile(html);
+                var replacements = {
+                     username: replacementObj.username ,//'juwavictor@gmail.com'
+                     link: 'http:\/\/' + request.headers.host + '\/api/v1/auth/resetMyPassword\/' + tokenSTR 
+                };
+                var htmlToSend = template(replacements);
+                
+                HelperOptions.html = htmlToSend;
+                smtpTransport.sendMail(HelperOptions, (error,info) => {
+                      if(error) {
+                        console.log(error);
+                        //res.json(error);
+                        return response.status(400).send({ msg: error });
+                      }
+                      console.log("email is send");
+                      console.log(info);
+                      //res.json(info)
+                      return response.status(200).send({ msg: "successfully sent you a password reset link", status:'ok',data: info }); 
+                
+                });
+
+               
+
+                   
+
+             })   
+
+ }
+
+  static newUserMail(request,response, result, templateDir='/views/templates/signup-verification.html', tokenToSend, status=201){
+
+
+
+    let HelperOptions = {
+      from:    process.env.SMTP_USER_NAME,         //"tester@softclo.com", //'"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',
+      to:  result.email, //'Joshua.adedoyin@softclo.com',
+      subject: 'Sign Up Activation Email',
+      html: 'test',
+      context: {
+        name:"COMMUTE TAXI",
+        email: process.env.SMTP_USER_NAME,   // "tester@softclo.com",
+        address: "3A DOTUN CLOSE, IKEJA LAGOS"
+      }
+    };
+
+   
+    readHTMLFile(__dirname + templateDir, function(err, html) {
+                var template = handlebars.compile(html);
+                var replacements = {
+                     username: result.username,
+                     link: 'http:\/\/' + request.headers.host + '\/api/v1/auth/confirmation\/' + tokenToSend, 
+                
+                };
+                var htmlToSend = template(replacements);
+                
+                HelperOptions.html = htmlToSend;
+                smtpTransport.sendMail(HelperOptions, (error,info) => {
+                      if(error) {
+                        console.log(error);
+                        //res.json(error);
+                        return res.status(400).send({ msg: error });
+                      }
+                      console.log("email is send");
+                      console.log(info);
+                      //res.json(info)
+                       const token = TokenGenerator.generateToken(result);
+                        return response.status(status).json({
+                                                status: status,
+                                                data: [
+                                                  {
+                                                    token,
+                                                    user,
+                                                  },
+                                                ],
+                                                message: 'User created successfully',
+                        });
+
+
+
+
+
+                });
+
+               
+
+                   
+
+      })   
+
+    
+
+   
+
+  }
   static signup(request, response) {
     // console.log(request.body)
     let { firstname, 
@@ -138,136 +312,21 @@ export class UserService {
               return console.log(err.message );
              }
             console.log(emailtoken.email_confirm_token, emailtoken._userId)
-            // var smtpConfig = {
-            //   host: 'smtp.gmail.com',
-            //   port: 587,
-            //   service:'gmail',
-            //   secure: true, // use SSL, 
-            //                 // you can try with TLS, but port is then 587
-            //   auth: {
-            //     user:  'juwavictor@gmail.com',//process.env.APPLICATION_GMAIL, // Your email id
-            //     pass:  'saladin123!@jhjhj#'// process.env.APPLICATION_GMAIL_PASSWORD
-            //   }
-            // };
-            // Send the email
-            // var transporter = nodemailer.createTransport(
-            //   //{ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } }
-            //   smtpConfig
-            //   );
-
-            // Configure Nodemailer SendGrid Transporter
-            const transporter = nodemailer.createTransport(
-              sendgridTransport({
-                service: 'SendGrid',
-                 auth: {
-               api_user: 'softcloplatform',    // SG username
-                  api_key: 'sendgrid@softclo-123', // SG password
-                },
-              })
-            );
-
-            // var transporter = nodemailer.createTransport({
-            //    service: 'SendGrid', 
-            //     secure : false, // true for 465, false for other ports
-            //    auth: { 
-            //     user: process.env.SENDGRID_USERNAME,
-            //      pass: process.env.SENDGRID_PASSWORD 
-            //    } ,
-            //    // tls: {rejectUnauthorized: false}
-            // });
             
-            var mailOptions = { 
-              from:  'juwavictor@gmail.com', //process.env.APPLICATION_GMAIL, 
-              to: user.email, 
-              subject: 'Account Verification Token', 
-              // text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + request.headers.host + '\/api/v1/auth/confirmation\/' + emailtoken.email_confirm_token + '.\n' 
-              //html: ``,
+            
 
-            };
+            //console.log(__dirname + '/views/templates/signup-verification.html')
 
-            console.log(__dirname + '/views/templates/signup-verification.html')
+            UserService.newUserMail(request,response, result,'/views/templates/signup-verification.html', emailtoken.email_confirm_token,201)
 
-            readHTMLFile(__dirname + '/views/templates/signup-verification.html', function(err, html) {
-                var template = handlebars.compile(html);
-                var replacements = {
-                     username: user.firstname,
-                     link: 'http:\/\/' + request.headers.host + '\/api/v1/auth/confirmation\/' + emailtoken.email_confirm_token 
-                };
-                var htmlToSend = template(replacements);
-                
-                 mailOptions.html = htmlToSend;
-
-                  sgMail.setApiKey('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');
-
-                sgMail.send(mailOptions);
-
-                const token = TokenGenerator.generateToken(result);
-                          return response.status(201).json({
-                            status: 201,
-                            data: [
-                              {
-                                token,
-                                user,
-                              },
-                            ],
-                            message: 'User created successfully',
-                          });
-
-                // transporter.sendMail(mailOptions, function (error, response) {
-                //     if (error) {
-                //         console.log(error+"eroor here");
-                //         //callback(error);
-
-                //         return response.status(400).json({
-                //             status: 400,
-                //             data: [
-                //               {
-                                
-                //                 user,
-                //               },
-                //             ],
-                //             message: 'Unable to send request. Newtwork connection error.',
-                //           });
-
-                //     }else{
-
-                //           const token = TokenGenerator.generateToken(result);
-                //           return response.status(201).json({
-                //             status: 201,
-                //             data: [
-                //               {
-                //                 token,
-                //                 user,
-                //               },
-                //             ],
-                //             message: 'User created successfully',
-                //           });
-                //     }
-                // });
-            });
+            
 
 
-            // transporter.sendMail(mailOptions, function (err) {
-            //     if (err) { //return response.status(500).send({ msg: err.message }); 
-            //        //console.log(err.message)
-            //      }
-            //     //res.status(200).send('A verification email has been sent to ' + user.email + '.');
-            //     //console.log("verification email sent")
-            // });
+            
         });
 
 
-        // const token = TokenGenerator.generateToken(result);
-        // return response.status(201).json({
-        //   status: 201,
-        //   data: [
-        //     {
-        //       token,
-        //       user,
-        //     },
-        //   ],
-        //   message: 'User created successfully',
-        // });
+        
       })
       .catch(err => {
         console.log(err+ 'error here')
@@ -442,111 +501,20 @@ static resendTokenPost (req, res) {
         token.save(function (err) {
             if (err) { return res.status(500).send({ msg: err.message }); }
 
-            // Send the email
-           
-
-            //             const transporter = nodemailer.createTransport(
-            //   sendgridTransport({
-            //      service: 'SendGrid',
-            //      //  tls: {rejectUnauthorized: false},
-            //      // secure : false, // true for 465, false for other ports
-            //      auth: {
-            //       api_user: 'softcloplatform',    // SG username
-            //       api_key: 'sendgrid@softclo-123', // SG password
-            //     },
-            //   })
-            // );
-
-            // var transporter = nodemailer.createTransport({
-            //    service: 'SendGrid', 
-            //     secure : false, // true for 465, false for other ports
-            //    auth: { 
-            //     user: process.env.SENDGRID_USERNAME,
-            //      pass: process.env.SENDGRID_PASSWORD 
-            //    } ,
-            //    // tls: {rejectUnauthorized: false}
-            // });
-
-
-            var transport = nodemailer.createTransport({
-              host: "smtp.mailtrap.io",
-              port: 2525,
-              auth: {
-                user: "saladin",
-                pass: "saladin123!@#"
-              },
-              debug: true, // show debug output
-              logger: true // log information in console
-            });
             
-            var mailOptions = { 
-              from:  'juwavictor@gmail.com', //process.env.APPLICATION_GMAIL, 
-              to: user.email, 
-              subject: 'Account Verification Token', 
-              // text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + request.headers.host + '\/api/v1/auth/confirmation\/' + emailtoken.email_confirm_token + '.\n' 
-              //html: ``,
+            var result = { 
+              username: user.username, 
+              firstname: user.firstname,
+              email: user.email,
+              link:'',
+             
 
             };
 
-            console.log(__dirname + '/templates/signup-verification.html')
-
-            readHTMLFile(__dirname + '/views/templates/signup-verification.html', function(err, html) {
-                var template = handlebars.compile(html);
-                var replacements = {
-                     username: user.firstname,
-                     link: 'http:\/\/' + req.headers.host + '\/api/v1/auth/confirmation\/' + token.email_confirm_token 
-                };
-                var htmlToSend = template(replacements);
-                
-                 mailOptions.html = htmlToSend;
-
-                 sgMail.setApiKey('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');
-
-                sgMail.send(mailOptions);
-
-                 return response.status(200).json({
-                            status: 200,
-                            data: [
-                              {
-                                
-                              },
-                            ],
-                            message: 'Reset token User created successfully',
-                          }); 
+          UserService.newUserMail(request,response, result,'/views/templates/signup-verification.html', token.email_confirm_token, 200)
 
 
-                // transporter.sendMail(mailOptions, function (error, response) {
-                //      if (error) {
-                //         console.log(error+"eroor here");
-                //         //callback(error);
-
-                //         return response.status(400).json({
-                //             status: 400,
-                //             data: [
-                //               {
-                                
-                //                 user,
-                //               },
-                //             ],
-                //             message: 'Unable to send request. Newtwork connection error.',
-                //           });
-
-                //     }else{
-
-                          
-                //           return response.status(200).json({
-                //             status: 200,
-                //             data: [
-                //               {
-                                
-                //               },
-                //             ],
-                //             message: 'Reset token User created successfully',
-                //           });
-                //     }
-                //    // return res.status(200).send({ msg: "sent email request" });
-                // });
-            });
+           
 
             
         });
@@ -577,66 +545,11 @@ static passwordForgot(req, res){
             if (err) { 
               return res.status(500).send({ msg: err.message });
             }
-            // send email to the given users email for password reset confirmation
-            // var smtpConfig = {
-            //           host: 'smtp.gmail.com',
-            //           port: 587,
-            //           service:'gmail',
-            //           //secure: true, // use SSL, 
-            //                         // you can try with TLS, but port is then 587
-            //           auth: {
-            //             user: 'juwavictor@gmail.com', // Your email id
-            //             pass: 'saladin123!@#' // Your password
-            //           }
-            // };
-           
-                    // Send the email
-           // var transporter = nodemailer.createTransport({
-           //     service: 'SendGrid', 
-           //         //tls: {rejectUnauthorized: false},
-           //       //secure : false, // true for 465, false for other ports
-           //     auth: {
-           //         api_user: 'softcloplatform',    // SG username
-           //        api_key:  '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' //'sendgrid@softclo-123', // SG password
-           //      },
-           //  });
-
-           
 
 
+            UserService.passwordResetsMail( req, res,user.email,'/views/templates/reset-password.html', {username:user.username}, hashedStringToSend)
 
-            
-            var mailOptions = { 
-               from:  'juwavictor@gmail.com', //process.env.APPLICATION_GMAIL, 
-               to: user.email, 
-               subject: 'Account Verification Token', 
-            };
-
-            readHTMLFile(__dirname + '/views/templates/reset-password.html', function(err, html) {
-                var template = handlebars.compile(html);
-                var replacements = {
-                     username: user.firstname,
-                     link: 'http:\/\/' + req.headers.host + '\/api/v1/auth/resetMyPassword\/' + hashedStringToSend 
-                };
-                var htmlToSend = template(replacements);
-                
-                 mailOptions.html = htmlToSend;
-                // transporter.sendMail(mailOptions, function (error, response) {
-                //     if (err) { 
-                //       console.log(err)
-                //       return res.status(500).send({ msg: err.message }); }
-                //     return res.status(200).send({ msg: "successfully sent you a password reset link", status:'ok' }); 
-                // });
-
-               
-                sgMail.setApiKey('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');
-
-                sgMail.send(mailOptions);
-
-                 return res.status(200).send({ msg: "successfully sent you a password reset link", status:'ok' }); 
-
-            });
-
+         
         });
 
     });
@@ -2313,120 +2226,12 @@ static updateUsersItinerary(request,response){
       .then(data => {
         const user = data;
         
-        
-        
-      
-            var smtpConfig = {
-              host: 'smtp.gmail.com',
-              port: 587,
-              service:'gmail',
-              secure: true, // use SSL, 
-                            // you can try with TLS, but port is then 587
-              auth: {
-                user:  'juwavictor@gmail.com',//process.env.APPLICATION_GMAIL, // Your email id
-                pass:  'saladin123!@jhjhj#'// process.env.APPLICATION_GMAIL_PASSWORD
-              }
-            };
-            // Send the email
-            // var transporter = nodemailer.createTransport(
-            //   //{ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } }
-            //   smtpConfig
-            //   );
 
-            // Configure Nodemailer SendGrid Transporter
-            const transporter = nodemailer.createTransport(
-              sendgridTransport({
-                auth: {
-                  api_user: process.env.SENDGRID_USERNAME,    // SG username
-                  api_key: process.env.SENDGRID_PASSWORD, // SG password
-                },
-              })
-            );
+            UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
+                     username: user_id,
+                     detail: description
+            },user_id,201)
 
-            
-            
-            var mailOptions = { 
-              from:  'juwavictor@gmail.com', //process.env.APPLICATION_GMAIL, 
-              to: user.email, 
-              subject: 'Account Verification Token', 
-              // text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + request.headers.host + '\/api/v1/auth/confirmation\/' + emailtoken.email_confirm_token + '.\n' 
-              //html: ``,
-
-            };
-
-            let offline = 'No';
-
-            
-
-            // readHTMLFile(__dirname + '/views/templates/notification.html', function(err, html) {
-            //     var template = handlebars.compile(html);
-            //     var replacements = {
-            //          username: user_id,
-            //          detail: description
-            //     };
-            //     var htmlToSend = template(replacements);
-
-            //      mailOptions = { 
-            //   from:  'juwavictor@gmail.com', //process.env.APPLICATION_GMAIL, 
-            //   to: user.email, 
-            //   subject: 'Account Verification Token', 
-            //   html: htmlToSend,
-
-            // };
-
-                
-            //      //mailOptions.html = htmlToSend;
-            //      sgMail.setApiKey('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');
-
-            //     sgMail.send(mailOptions);
-
-            //     // transporter.sendMail(mailOptions, function (error, response) {
-            //     //     if (error) {
-            //     //         console.log(error+"eroor here");
-            //     //         offline = 'Yes';
-
-            //     //      }   
-                        
-
-
-
-                        
-            //     // });
-            // });
-
-            if(offline=="Yes"){
-
-
-            return response.status(422).json({
-                              status: 422,
-                              data: [
-                                {
-                            
-                                  user,
-                                },
-                              ],
-                              message: 'You could be offline sending the mail to the user.',
-                        });
-            }else{
-
-                  
-
-                            return response.status(201).json({
-                              status: 201,
-                              data: [
-                                {
-                            
-                                  user,
-                                },
-                              ],
-                              message: 'User created successfully',
-                            });
-                       
-          }
-
-
-          
-     
 
         
       })
@@ -2439,6 +2244,7 @@ static updateUsersItinerary(request,response){
       });
 
   }
+
 
 
 
@@ -6918,110 +6724,34 @@ getUser = (req, res) => {
         console.log(user + 'hello')
 
 
-        var smtpConfig = {
-              host: 'smtp.gmail.com',
-              port: 587,
-              service:'gmail',
-              secure: true, // use SSL, 
-                            // you can try with TLS, but port is then 587
-              auth: {
-                user:  'juwavictor@gmail.com',//process.env.APPLICATION_GMAIL, // Your email id
-                pass:  'saladin123!@jhjhj#'// process.env.APPLICATION_GMAIL_PASSWORD
-              }
-            };
-            // Send the email
-            // var transporter = nodemailer.createTransport(
-            //   //{ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } }
-            //   smtpConfig
-            //   );
-
-            // Configure Nodemailer SendGrid Transporter
-            const transporter = nodemailer.createTransport(
-              sendgridTransport({
-                auth: {
-                  api_user: process.env.SENDGRID_USERNAME,    // SG username
-                  api_key: process.env.SENDGRID_PASSWORD, // SG password
-                },
-              })
-            );
-
-            
-            
-            var mailOptions = { 
-              from:  'juwavictor@gmail.com', //process.env.APPLICATION_GMAIL, 
-              to: user.email, 
-              subject: 'Commute Plan Update', 
-              
-
-            };
-
            
 
-           if(user.status=="Unpaid"){
+          if(user.status=="Unpaid"){
 
-            readHTMLFile(__dirname + '/views/templates/notification.html', function(err, html) {
-                var template = handlebars.compile(html);
-                var replacements = {
+
+             UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
                      username: user.username,
                      plan_id:user.plan_id,
                      price: user.price,
                      date: createdDateOfQuotation.substring(0,10)
-                    //link: 'http:\/\/' + 'localhost:4000/'   
+                    //link: 'https:\/\/' + 'localhost:4000/'   
                     //description: description
-                };
-                var htmlToSend = template(replacements);
-                mailOptions = { 
-              from:  'juwavictor@gmail.com', //process.env.APPLICATION_GMAIL, 
-              to: user.email, 
-              subject: 'Commute Plan Update', 
-              html:htmlToSend,
-              cc:'juwavictor@gmail.com',
+                },user.email,200)
 
-            };
-                
-                // mailOptions.html = htmlToSend;
-
-                 sgMail.setApiKey('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');
-
-                sgMail.send(mailOptions);
-                
-                
-            });
 
           }else{
 
-             readHTMLFile(__dirname + '/templates/paid.html', function(err, html) {
-                var template = handlebars.compile(html);
-                var replacements = {
+            UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
                      username: user.username,
                      plan_id:user.plan_id,
                      price: user.price,
                      date: createdDateOfQuotation.substring(0,10)
-                    //link: 'http:\/\/' + 'localhost:4000/'   
-                    //description: description
-                };
-                var htmlToSend = template(replacements);
-                
-                // mailOptions.html = htmlToSend;
+                },user.email,200)
 
-                 mailOptions = { 
-              from:  'juwavictor@gmail.com', //process.env.APPLICATION_GMAIL, 
-              to: user.email, 
-              cc:'juwavictor@gmail.com',
-              subject: 'Commute Plan Update', 
-              html:htmlToSend
-
-            };
-
-                 sgMail.setApiKey('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');
-                 sgMail.send(mailOptions);
-
-               
-            });
-
+            
           }
           //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
-          return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .' });
+          //return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .' });
       }); 
     });
 
@@ -7083,26 +6813,6 @@ getUser = (req, res) => {
 
 
 
-
-//   const month = 10;
-// const year = 2016;
-// const fromDate = new Date(year, month, 1);
-// const toDate = new Date(fromDate.getFullYear(), fromDate.getMonth() + 1, 0);
-
-// const condition = {"createdAt": {'$gte': date, '$lte': lastDay)}};
-
-// Account.find(condition, function(err, response){
-//     if (!err){
-//         console.log(response);
-//     }
-// });
-
-
-  
-
-
-
-  
 
 //drivers
 

@@ -3,7 +3,7 @@ import View from '../views/View';
 import InterventionModel from '../models/InterventionModel';
 import setConfigData from '../helpers/localStorageData';
 // import $ from 'jquery';
-import googleMapsGeocoder from 'google-maps-geocoder';
+// import googleMapsGeocoder from 'google-maps-geocoder';
 
 import $ from 'jquery';
 

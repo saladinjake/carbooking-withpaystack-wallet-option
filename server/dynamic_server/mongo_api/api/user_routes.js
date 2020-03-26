@@ -6,6 +6,8 @@ import SubmitEventValidator from '../middlewares/post_sanitizer';
 
 import DriverModel from "../models/Driver.model";
 
+
+
 import cors from 'cors';
 let corsOption = {
         origin: true,
@@ -42,6 +44,65 @@ class UserRoutes {
  * Respond to GET requests to /account.
  * Upon request, render the 'account.html' web page in views/ directory.
  */
+
+ this.router.get('/email/template', (req, res, next) => {
+  MailConfig.ViewOption(gmailTransport,hbs);
+  let HelperOptions = {
+    from: '"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',
+    to: 'juwavictor@gmail.com',
+    subject: 'Hellow world!',
+    template: 'test',
+    context: {
+      name:"COMMUTE TAXI",
+      email: "juwavictor@gmail.com",
+      address: "3A DOTUN CLOSE, IKEJA LAGOS"
+    }
+  };
+  gmailTransport.sendMail(HelperOptions, (error,info) => {
+    if(error) {
+      console.log(error);
+      res.json(error);
+    }
+    console.log("email is send");
+    console.log(info);
+    res.json(info)
+  });
+});
+
+this.router.get('/email/smtp/template', (req, res, next) => {
+  MailConfig.ViewOption(smtpTransport,hbs);
+  let HelperOptions = {
+    from: '"COMMUTE TAXI SERVICE" <tester@softclo.com>',
+    to: 'tariqul.islam.rony@gmail.com',
+    subject: 'Hellow world!',
+    template: 'test',
+    context: {
+      name:"tariqul_islam",
+      email: "tester@softclo.com",
+      address: "30 a my street"
+    }
+  };
+  smtpTransport.verify((error, success) => {
+      if(error) {
+        res.json({output: 'error', message: error})
+        res.end();
+      } else {
+        smtpTransport.sendMail(HelperOptions, (error,info) => {
+          if(error) {
+            res.json({output: 'error', message: error})
+          }
+          res.json({output: 'success', message: info});
+          res.end();
+        });
+      }
+  })
+  
+});
+
+
+ this.router.get('/test-email',
+  UserController.testEmail,
+  )
     this.router.get('/profile/update/:id',
       TokenVerification.userAuthentication,
     	UserController.showProfile
@@ -869,6 +930,17 @@ class UserRoutes {
 
 
 
+
+    
+
+
+
+
+
+
+
+
+    
 
 
 

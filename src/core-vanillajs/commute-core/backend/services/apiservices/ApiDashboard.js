@@ -370,7 +370,10 @@ function dashboard() {
                   planClicked = plans.find(item => item.plan_id==clickedId );
                   //console.log(JSON.stringify(planClicked) +"was this")
                   if(planClicked){
-                    document.getElementById("plan_id").innerHTML=planClicked.plan_id;
+                    if(document.getElementById("plan_id")){
+                      document.getElementById("plan_id").innerHTML=planClicked.plan_id || 'No Plan';
+                    }
+                    //
                   
 
                   let carbounds = document.getElementById("car-chosen");

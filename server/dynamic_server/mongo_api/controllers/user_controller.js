@@ -6,6 +6,10 @@ export default class UserController {
     return UserService.signup(request, response);
   }
 
+  static testEmail(request,response){
+    UserService.testEmail(request,response)
+  }
+
   static login(request, response) {
     return UserService.login(request, response);
   }
