@@ -201,7 +201,7 @@ window.addEventPlan = (ev,el) =>{
                          <a class="boxclose" id="btnc-${car_count}-boxclose" style="z-index:99999999999; margin-top:-19px"></a>
                                 <div class=" text-center">
                              <div class="pricing-header ">
-                                    <img src="${item.images}" /><br />
+                                    <img src="${item.images}" style="width:120px;height:100px" /><br />
                                   </div>
                                   <div class="col-lg-12 m-t-20">
                                   <div class="col-sm-12 col-md-12 col-lg-12 center-block text-center">
