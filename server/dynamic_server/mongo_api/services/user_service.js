@@ -6115,7 +6115,7 @@ getUser = (req, res) => {
 
                     username,
                     email,
-                     has_been_updated:'Yes',
+                    has_updated: has_been_updated,
      });
 
 
