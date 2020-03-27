@@ -218,8 +218,8 @@ export class Profile extends Component {
                                         <i className="md-directions-car text-custom"></i>
                                     </div>
                                     <div className="col-lg-6 pull-right text-right">
-                                        <h3 className="text-dark"><b className="" id="car-model">Toyota Corola XLE</b></h3>
-                                        <p className="text-muted" id="plate">LB 234 HGF</p>
+                                        <h3 className="text-dark"><b className="" id="car-model"></b></h3>
+                                        <p className="text-muted" id="plate"></p>
                                     </div>
                                     <div className="clearfix"></div>
                                 </div>
@@ -236,7 +236,7 @@ export class Profile extends Component {
                                     </div>
                                     <div className="col-lg-6 pull-right text-right">
                                         <h3 className="text-dark"><b className="">Average Ratings</b></h3>
-                                        <p className="text-muted" id="ratings">LB 234 HGF</p>
+                                        <p className="text-muted" id="ratings"></p>
                                     </div>
                                     <div className="clearfix"></div>
                                 </div>
