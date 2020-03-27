@@ -8623,6 +8623,7 @@ WarLockAdmin('view_transactions','manage_transactions')
                username: usr,
                email: emal,
                phone_number: document.getElementById("phone_number").value,
+               has_been_updated:'Yes',
         };
 
             
@@ -8820,6 +8821,7 @@ WarLockAdmin('view_transactions','manage_transactions')
                     username: username.value,
                     email: em,
                     phone_number: document.getElementById("phone_number").value,
+                     has_been_updated:'Yes',
                   };
 
                   console.log(usersPlan)
