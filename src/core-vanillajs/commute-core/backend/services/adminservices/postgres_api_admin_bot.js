@@ -4530,7 +4530,7 @@ class ApiAdminBotService  {
                     <td class="">${item.phone_number}</td>
                     <td class="">${item.test_certificate}</td>
                     <td class=""><span class="label ${className}">${item.status}</span></td>
-                    
+                     <td class="">${item.id}</td>
                     
                     <td class=""><a href="#" data-roles="${item.roles}" onclick="updateRecordView(this)" data-isVerified="${item.isVerified}" data-avatar="https://commute-bucket.s3.amazonaws.com/${item.avatar}"  data-id="${item._id}" data-firstname="${item.firstname}" data-username="${item.username}" data-lastname="${item.lastname}" data-email="${item.email}" data-phone="${item.phone_number}" data-status="${item.status}" data-certificate="${item.test_certificate}"  class="table-action-btn"><i class="md md-edit"></i></a>
                     <a href="#" onclick="deleteRecord(this)" data-id="${item._id}" data-url="/users"  class="table-action-btn "><i class="md md-close"></i></a></td>
@@ -7589,7 +7589,7 @@ noReadWrite('manage_cars')
                                             <td class="">${item.plan_name}</td>
                                             <td class="text-center "><span class="${className}">${item.status}</span></td>
                                             <td class="">  ${item.price}</td>
-                                            
+
                                             
                                               <td class="">
                                                    <a id="plan-current-${item._id}" onclick="getBookingId(this)"  data-id="${item._id}" href="#" class="table-action-btn btn-custom btn-purple"><i class="md md-chevron-right"></i></a>

@@ -25,7 +25,7 @@ export class DriverRatings extends Component {
 
        <div className="column-sos">
        <div className="content-page " id="spread-out">
-                <div className="content" id="ratings">
+                <div className="content" id="driver-ratings">
                     <div className="container">                        
                          <div className="row">
 
@@ -41,7 +41,7 @@ export class DriverRatings extends Component {
                 <img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" className="profile-img" />
         <div className="profile-text">
           <h1 className="profile-name text-center">Jonathan Doe</h1>
-          <span className="profile-title text-center">Commute Taxi Service</span>
+          <h6 className="text-center">Commute Taxi Service</h6>
         </div>
           <div className="rate text-center">
 

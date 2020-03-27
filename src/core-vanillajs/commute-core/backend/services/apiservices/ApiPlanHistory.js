@@ -65,7 +65,7 @@ function ApiPlanHistory() {
     //window.addEventListener('DOMContentLoaded', event => {
       event.preventDefault();
       const urls = [
-                    activeUrl + `/plans/${user.user.id}/user`
+                    activeUrl + `/plans/${user.user.email}/user`
       ];
 
 
