@@ -119,6 +119,7 @@ import ItineraryHistoryDriver from './components/Drivers/Driver/Dashboard/Itiner
 
 import MechanicRequestDriver from './components/Drivers/Driver/MechanicRequest/MechanicRequest';
 import ProfileDriver from './components/Drivers/Driver/Profile/Profile';
+import Ratings from './components/Drivers/Driver/Profile/Ratings';
 import SOSRequestDriver from './components/Drivers/Driver/SOS/SOS';
 import TicketRequestDriver from './components/Drivers/Driver/Ticket/Ticket';
 import TicketHistoryDriver from './components/Drivers/Driver/Ticket/SubmittedTicket';
@@ -235,6 +236,7 @@ const Router = () => (
                 <Route path="/drivers-signup" component={RegisterDriver} />
                 <Route path="/recovery-driver" component={ForgotPasswordDriver} />
                 <Route path="/drivers-profile" component={ProfileDriver} /> 
+                 <Route path="/drivers-ratings" component={Ratings} />
                  <Route path="/drivers-sos-request" component={SOSRequestDriver} /> 
                  <Route path="/drivers-sos-history" component={SubmittedSOSDriver} /> 
 

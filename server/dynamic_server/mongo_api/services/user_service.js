@@ -1509,15 +1509,16 @@ static updateUsersItinerary(request,response){
 
 
   static getAllUsersPlans(request,response){
-    UserPlanModel.find({ email: request.params.id })
+    UserPlanModel.find({ id: request.params.id })
       .then(data => {
         const plans = data;
-        if (plans.length === 0) {
-          return response.status(404).json({
-            status: 404,
-            error: 'User has no plans record',
-          });
-        }
+        console.log(plans)
+        // if (plans.length === 0) {
+        //   return response.status(404).json({
+        //     status: 404,
+        //     error: 'User has no plans record',
+        //   });
+        // }
         return response.status(200).json({
           status: 200,
           data: [

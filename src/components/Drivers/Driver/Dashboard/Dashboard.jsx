@@ -112,7 +112,7 @@ export  default class Dashboard extends Component {
                                 </div>
                             </div></a>
 
-                            <a id="request-car-repair" href="#"><div className="col-sm-6  col-md-6 col-lg-3">
+                            <a id="request-car-repair" href="./drivers-ratings"><div className="col-sm-6  col-md-6 col-lg-3">
                                 <div className="widget-bg-color-icon card-box">
                                     <div className="bg-icon bg-icon-custom pull-left">
                                         <i className="md-star text-custom"></i>

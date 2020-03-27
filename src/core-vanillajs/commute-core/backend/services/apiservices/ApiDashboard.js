@@ -212,7 +212,7 @@ function dashboard() {
     //window.addEventListener('DOMContentLoaded', event => {
       // event.preventDefault();
     const urls = [activeUrl + `/itinerary/${user.user.id}/user`,
-                    activeUrl + `/plans/${user.user.email}/user`,
+                    activeUrl + `/plans/${user.user.id}/user`,
                     
     ];
 
