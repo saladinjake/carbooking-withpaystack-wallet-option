@@ -279,15 +279,17 @@ function dashboard() {
 
                       let eachRecord=``;
                       itinerary.map((item, i) => {
+                        let className='label-success'
                         if(item.status=="Ongoing"){
+                             className='label-danger';
                              
-                             item.status=`<span class="label label-table label-danger">${item.status}</span>`;
                           }else if(item.status=="Completed"){
                           
-                            item.status= `<span class="label label-table label-success">${item.status}</span>`;
+                            className= `label-success`;
                           }else{
+                            className='label-warning';
                             
-                            item.status=`<span class="label label-table label-warning">${item.status}</span>`;
+                            //item.status=`<span class="label label-table label-warning">${item.status}</span>`;
                           }
                           eachRecord = `
                           <tr id="${i}">
@@ -296,7 +298,7 @@ function dashboard() {
                           <td class="">${item.start_location} </td>
                           <td class="">${item.destination}</td>
                             
-                            <td class="">${item.status}</td>
+                            <td class=""><span class="label label-table ${className}">${item.status}</span></td>
                                                                            
                          </tr>`; 
                          tablebody.insertAdjacentHTML('beforeend', eachRecord); 
