@@ -197,27 +197,6 @@ class MongoAppDemo {
 
 
 
-  //good
-  // var server = http.createServer(app).listen(that.port, function(){
-  //   console.log("Express server listening on port " + that.port);
-  // });
-
-  // var io = socket.listen(server);
-  // io.sockets.on('connection', function () {
-  //   console.log('hello world im a hot socket');
-  // });
-  
-
-   //old
-
-   // let serverListener = that.express.listen(that.port, err => {
-   //      if (err) {
-   //        return console.log(err);
-   //      }
-   //      console.log(`server is listening on ${that.port}`);
-   // })
-
-
 
    io.listen(
      that.express.listen(that.port, err => {

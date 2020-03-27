@@ -2,7 +2,7 @@ import InterventionController from '../controllers/feedback_controller';
 import TokenVerification from '../middlewares/token_validator';
 import SubmitEventValidator from '../middlewares/post_sanitizer';
 // import BridgeRoutes from './routes';
-const SUBMIT_INTERVENTION_LINK = '/feedback/:id';
+const SUBMIT_INTERVENTION_LINK = '/feedback';
 const feedback_GET_SPECIFIC_LINK = '/feedback/:id';
 const INTERVENTION_LOCATION_LINK = '/feedback/:id/location';
 const INTERVENTION_COMMENT_LINK = '/feedback/:id/comment';

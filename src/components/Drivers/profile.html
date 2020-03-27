@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+    <meta name="author" content="Coderthemes">
+
+    <link rel="shortcut icon" href="assets/images/favicon.png">
+
+    <title>Commute Dashboard</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
+
+    <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="assets/js/modernizr.min.js"></script>
+
+</head>
+
+
+<body class="fixed-left">
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+               <!-- Top Bar Start -->
+               <div class="topbar" id="topbarmenu"></div>
+               <!-- Top Bar End -->
+   
+               <!-- ========== Left Sidebar Start ========== -->
+   
+               <div class="left side-menu" id="left-side-menu"></div>
+               <!-- Left Sidebar End -->
+
+
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+                <div class="container">
+
+                    <!-- Page-Title -->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4 class="page-title">Profile Page</h4>
+                            <ol class="breadcrumb">
+                                <li><a href="#">Ubold</a></li>
+                                <li><a href="#">Forms</a></li>
+                                <li class="active">Form Validation</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 30px;">
+
+
+                        <div class="col-lg-6">
+                            <div class="card-box">
+                                <!-- <h4 class="m-t-0 header-title"><b>Horizontal Form</b></h4>
+									<p class="text-muted font-13 m-b-30">
+	                                    Your awesome text goes here.
+	                                </p> -->
+
+                                <form class="form-horizontal" role="form" data-parsley-validate novalidate>
+                                    <div class="form-group">
+                                        <label for="profileImage" class="col-sm-4 control-label"></label>
+                                        <div class="col-sm-7">
+                                            <img src="./assets/images/avatar.png" alt="Avatar" class="avatar">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="username" class="col-sm-4 control-label">Username</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" required disabled parsley-type="text" class="form-control"
+                                                id="username" readonly value="jamesdoe">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="firstName" class="col-sm-4 control-label">First Name</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" required parsley-type="text" class="form-control"
+                                                id="firstName" value="James">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lastName" class="col-sm-4 control-label">Last Name</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" required parsley-type="text" class="form-control"
+                                                id="lastName" value="Doe">
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="form-group">
+                                        <label for="certificate" class="col-sm-4 control-label">Self Drive Certificate</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" required parsley-type="text" class="form-control"
+                                                id="certificate" placeholder="CMT-456-OP">
+                                        </div>
+                                    </div> -->
+
+
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">Email Address</label>
+                                        <div class="col-sm-7">
+                                            <input type="email" required parsley-type="email" class="form-control"
+                                                id="inputEmail3" value="james.doeo@email.com" class="profileEmail">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="hori-pass1" class="col-sm-4 control-label">Password*</label>
+                                        <div class="col-sm-7">
+                                            <input id="hori-pass1" type="password" placeholder="Password" required
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="hori-pass2" class="col-sm-4 control-label">Confirm Password
+                                            *</label>
+                                        <div class="col-sm-7">
+                                            <input data-parsley-equalto="#hori-pass1" type="password" required
+                                                placeholder="Password" class="form-control" id="hori-pass2">
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-sm-8">
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                Save Changes
+                                            </button>
+                                            <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
+                                                Cancel Changes
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-lg-6 card-box">
+                            <h4 class="m-l-10 page-title m-b-30" >Currently Assigned Car</h4  >
+                         <div class="m-t-10">
+                            <div class="col-sm-12 col-md-9">
+                                <div class="widget-bg-color-icon card-box">
+                                    <div class="bg-icon bg-icon-custom pull-left">
+                                        <i class="md-directions-car text-custom"></i>
+                                    </div>
+                                    <div class="col-lg-6 pull-right text-right">
+                                        <h3 class="text-dark"><b class="">Toyota Corola XLE</b></h3>
+                                        <p class="text-muted">LB 234 HGF</p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+                         </div>   
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+            <footer class="footer">
+                © 2016. All rights reserved.
+            </footer>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Right content here -->
+        <!-- ============================================================== -->
+
+
+        <!-- Right Sidebar -->
+
+        <!-- /Right-bar -->
+
+
+    </div>
+    <!-- END wrapper -->
+
+    <script>
+        var resizefunc = [];
+    </script>
+
+    <!-- jQuery  -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/detect.js"></script>
+    <script src="assets/js/fastclick.js"></script>
+    <script src="assets/js/jquery.slimscroll.js"></script>
+    <script src="assets/js/jquery.blockUI.js"></script>
+    <script src="assets/js/waves.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+
+
+    <script src="assets/js/jquery.core.js"></script>
+    <script src="assets/js/jquery.app.js"></script>
+
+
+    <script type="text/javascript" src="assets/plugins/parsleyjs/parsley.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('form').parsley();
+        });
+    </script>
+
+    
+
+
+<script src="../src/components/LeftSideMenu.jsx"></script>
+<script src="../src/index.js"></script>
+
+
+</body>
+
+</html>

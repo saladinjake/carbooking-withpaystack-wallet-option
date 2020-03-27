@@ -198,84 +198,65 @@ export class Profile extends Component {
                                 
                                 <div className="panel-body">
                                     <div className="clearfix">
-                                        <div className="pull-left">
-                                            <h4 className="text-right"><img src="public/assets/images/CommuteLogos-02.png"
-                                                    alt="velonic" /></h4>
-
-                                        </div>
-                                        <div className="pull-right">
-                                            <h4>License Permit <br/>
-                                                <strong>2015-04-23654789</strong>
-                                            </h4>
-                                        </div>
+                                        
                                     </div>
                                     <hr/>
                                     <div className="row">
-                                        <div className="col-md-12">
-
-                                            <div className="pull-left m-t-30">
-                                                <address>
-                                                    <strong>Commute Ltd.</strong><br/>
-                                                    TS30, Road 9B, Unit 3, <br/>
-                                                    Lekki Gardens, Lekki - Epe Expy,<br/>
-                                                    Lagos Nigeria<br/>
-                                                    <abbr title="Phone">P:</abbr> (234) 908-191920081
-                                                </address>
-                                            </div>
-                                            
-                                        </div>
+                                        
                                     </div>
 
                                     <div className="row">
-                                            <div className="col-md-12">
-    
-                                                <div className="pull-left m-t-15">
-                                                    <strong>
-                                                        To whom it may concern
-                                                    </strong>
-                                                </div>
-                                                
-                                            </div>
+                                            
                                         </div>
                                     <div style={{paddingTop: "15px"}}></div>
                                     <div className="row">
                                         <div className="col-md-12">
-                                            <div className="table-responsive" >
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                                    vitae eleifend justo. Donec efficitur vestibulum quam, a
-                                                    iaculis erat pellentesque et. Morbi est odio, pulvinar id sem
-                                                    non, cursus varius tortor. Proin tortor nisi, volutpat
-                                                    posuere ex ac, sagittis elementum dolor. Etiam tellus neque,
-                                                    sollicitudin vel ante id, ullamcorper imperdiet turpis. In
-                                                    dignissim tellus id sodales pharetra. Curabitur convallis
-                                                    orci mauris, lacinia adipiscing elit.sollicitudin vel ante id, ullamcorper imperdiet turpis. In
-                                                    dignissim tellus id sodales pharetra. Curabitur convallis
-                                                    orci mauris, lacinia adipiscing elit.sollicitudin vel ante id, ullamcorper imperdiet turpis. In
-                                                    dignissim tellus id sodales pharetra. Curabitur convallis
-                                                    orci mauris, lacinia adipiscing elit.sollicitudin vel ante id, ullamcorper imperdiet turpis. In
-                                                    dignissim tellus id sodales pharetra. Curabitur convallis
-                                                    orci mauris, lacinia adipiscing elit.sollicitudin vel ante id, ullamcorper imperdiet turpis. In
-                                                    dignissim tellus id sodales pharetra. Curabitur convallis
-                                                    orci mauris, lacinia adipiscing elit.sollicitudin vel ante id, ullamcorper imperdiet turpis. In
-                                                    dignissim tellus id sodales pharetra. Curabitur convallis
-                                                    orci mauris, lacinia adipiscing elit. </p>
-                                            </div>
+                                            <div className="m-t-10 pull">
+                            <div className="col-sm-12 col-md-12">
+                                <div className="widget-bg-color-icon card-box">
+                                    <div className="bg-icon bg-icon-custom pull-left">
+                                        <i className="md-directions-car text-custom"></i>
+                                    </div>
+                                    <div className="col-lg-6 pull-right text-right">
+                                        <h3 className="text-dark"><b className="" id="car-model">Toyota Corola XLE</b></h3>
+                                        <p className="text-muted" id="plate">LB 234 HGF</p>
+                                    </div>
+                                    <div className="clearfix"></div>
+                                </div>
+                            </div>
+
+                         </div>
+
+
+
+                          <div className="col-sm-12 col-md-12">
+                                <div className="widget-bg-color-icon card-box">
+                                    <div className="bg-icon bg-icon-custom pull-left">
+                                        <i className="md-star text-custom"></i>
+                                    </div>
+                                    <div className="col-lg-6 pull-right text-right">
+                                        <h3 className="text-dark"><b className="">Average Ratings</b></h3>
+                                        <p className="text-muted" id="ratings">LB 234 HGF</p>
+                                    </div>
+                                    <div className="clearfix"></div>
+                                </div>
+                            </div>
+
+                         
+
+
+
+
+
                                         </div>
                                     </div>
                                     <div style={{paddingTop: "15px"}}></div>
                                     <div className="row" style={{borderRadius: "0px"}}>
-                                        <div className="col-md-3 col-md-offset-9">
-                                            <p className="text-right"><b>Yours Sincerely</b> <br/>
-                                                <img src="public/assets/images/CommuteLogos-02.png" style={{width: "100px"}} />
-                                            </p>
-                                        </div>
+                                        
                                     </div>
                                     <hr/>
                                     <div className="hidden-print">
-                                        <div className="pull-right">
-                                            
-                                            <a id="download-pdf" href="#" style={{width:"100px", fontSize:"14px",marginRight:"4px"}} className="btn btn-primary waves-effect waves-light">Download</a>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>

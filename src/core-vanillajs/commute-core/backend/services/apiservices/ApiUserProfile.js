@@ -59,6 +59,13 @@ class ApiUpdateProfile {
           document.getElementById('username').value= userRecord.username;
           document.getElementById('avatar-img2').src= userRecord.avatar;
 
+
+          if(document.getElementById('car-model')){
+            document.getElementById('car-model').innerHTML= userRecord.assigned_car_name[0]
+            document.getElementById('plate').innerHTML= userRecord.assigned_car_plate_number
+            document.getElementById('ratings').innerHTML=userRecord.ratings_average
+          }
+
           var me =JSON.parse(localStorage.getItem('userToken'));
           if(userRecord.avatar){
           

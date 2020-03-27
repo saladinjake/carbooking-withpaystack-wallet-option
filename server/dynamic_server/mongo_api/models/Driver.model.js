@@ -40,11 +40,11 @@ let DriverSchema = new mongoose.Schema({
       },
 
    
-
+      
       roles: { 
         type: String , 
        
-        default:'driver'
+        default:'Individual Driver'
             
       },
 
@@ -62,6 +62,8 @@ let DriverSchema = new mongoose.Schema({
       avatar:{
         type: String
       },
+
+      
 
       car_assigned_name: {
         type: Array,

@@ -30,6 +30,9 @@ let UserSchema = new mongoose.Schema({
           type: String,
           
       },
+      ratings_average:{
+        type:String,
+      },
 
       status:{
         type:String,
