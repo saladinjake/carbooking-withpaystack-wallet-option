@@ -60,7 +60,7 @@ class ApiUpdateProfile {
           document.getElementById('avatar-img2').src= userRecord.avatar;
 
 
-          if(document.getElementById('car-model')){
+          if(document.getElementById('drivers-profile')){
             document.getElementById('car-model').innerHTML= userRecord.assigned_car_name[0]
             document.getElementById('plate').innerHTML= userRecord.assigned_car_plate_number
             document.getElementById('ratings').innerHTML=userRecord.ratings_average
