@@ -7590,6 +7590,7 @@ noReadWrite('manage_cars')
                                             <td class="text-center "><span class="${className}">${item.status}</span></td>
                                             <td class="">  ${item.price}</td>
                                             
+                                            
                                               <td class="">
                                                    <a id="plan-current-${item._id}" onclick="getBookingId(this)"  data-id="${item._id}" href="#" class="table-action-btn btn-custom btn-purple"><i class="md md-chevron-right"></i></a>
                                               </td>

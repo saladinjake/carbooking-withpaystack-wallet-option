@@ -1509,7 +1509,7 @@ static updateUsersItinerary(request,response){
 
 
   static getAllUsersPlans(request,response){
-    UserPlanModel.find({ id: request.params.id })
+    UserPlanModel.find({ email: request.params.id })
       .then(data => {
         const plans = data;
         console.log(plans)

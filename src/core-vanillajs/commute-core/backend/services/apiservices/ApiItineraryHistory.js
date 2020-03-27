@@ -46,35 +46,31 @@ function ApiItineraryHistory() {
       Promise.all(promises)
         .then(datas => {
 
-              const tablebody = document.getElementById('tablebody-it');
 
 
-              // if(datas.status="404"){
-              //   let Notemplate2='';
-              //   Notemplate2 =`<tr>
-              //                 <td><a href="#"></a></td>
-              //                     <td></td>
-              //                     <td></td>
-              //                     <td></td>
-              //                     <td></td>
-              //                       <td>
-                                        
-              //                       </td>
-              //       </tr>`;
-              //       tablebody.insertAdjacentHTML('beforeend', Notemplate2);
 
-              //  }else{
-               
+
+
+
+
+
+              const tablebody1 = document.getElementById('tablebody');
+
+
+              
              
                      //console.log(datas)
                     const itinerary = [... new Set(datas[0].data[0].itinerary)];
                     
                   let eachRecord=``;
+                  let className='';
                   itinerary.map((item, i) => {
-                      if(item.status=="completed"){
-                         item.status=`<span class="label label-table label-success">${item.status}</span>`;
+                      if(item.status=="Completed"){
+                         className=`label-success`;
+                       }else if(item.status=='Pending'){
+                        className= `label-warning`;
                        }else{
-                         item.status= `<span class="label label-table label-danger">${item.status}</span>`;
+                        className= `label-danger`;
                        }
                       
                       eachRecord = `
@@ -86,9 +82,9 @@ function ApiItineraryHistory() {
                           <td> ${formatDate(new Date(item.start_time))}</td>
                           <td>${item.drive_option}</td>
                            <td>${item.no_hours}</td>  
-                            <td>${item.status}</td>
+                            <td><span class="label label-table ${className}">${item.status}</span></td>
                      </tr>`; 
-                      tablebody.insertAdjacentHTML('beforeend', eachRecord); 
+                      tablebody1.insertAdjacentHTML('beforeend', eachRecord); 
                   });
                  
           // }

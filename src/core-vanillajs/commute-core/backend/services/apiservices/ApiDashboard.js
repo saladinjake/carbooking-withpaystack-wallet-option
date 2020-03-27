@@ -212,7 +212,7 @@ function dashboard() {
     //window.addEventListener('DOMContentLoaded', event => {
       // event.preventDefault();
     const urls = [activeUrl + `/itinerary/${user.user.id}/user`,
-                    activeUrl + `/plans/${user.user.id}/user`,
+                    activeUrl + `/plans/${user.user.email}/user`,
                     
     ];
 
@@ -243,8 +243,8 @@ function dashboard() {
 
             
             itinerary =[...new Set(datas[0].data[0].itinerary)] || [];
-            plans = [...new Set(datas[1].data[0].plans)] || [];
-            //console.log(JSON.stringify(plans)+"main plan")
+            plans = [...new Set(datas[1].data[0].plans)] ;
+            console.log(JSON.stringify(plans)+"main plan")
             let currentPlan = plans[plans.length -1] || []; // last plan user embarked on
             
             localStorage.setItem('currentUserPlan', currentPlan);
@@ -279,10 +279,10 @@ function dashboard() {
 
                       let eachRecord=``;
                       itinerary.map((item, i) => {
-                        if(item.status=="ongoing"){
+                        if(item.status=="Ongoing"){
                              
                              item.status=`<span class="label label-table label-danger">${item.status}</span>`;
-                          }else if(item.status=="completed"){
+                          }else if(item.status=="Completed"){
                           
                             item.status= `<span class="label label-table label-success">${item.status}</span>`;
                           }else{
@@ -368,7 +368,7 @@ function dashboard() {
                    //alert(clickedId)
                  // console.log(clickedId)
                   planClicked = plans.find(item => item.plan_id==clickedId );
-                  console.log(JSON.stringify(planClicked))
+                  //console.log(JSON.stringify(planClicked) +"was this")
                   if(planClicked){
                     if(document.getElementById("plan_id")){
                       document.getElementById("plan_id").innerHTML=planClicked.plan_id || 'No Plan';
@@ -379,7 +379,7 @@ function dashboard() {
                   let carbounds = document.getElementById("car-chosen");
                   // var selectedCars = [...new Set(plans[0].cars_on_plan)];
                    var selectedCars = [...new Set(planClicked.cars_on_plan)];
-                   console.log(planClicked.cars_on_plan)
+                   //console.log(planClicked.cars_on_plan)
                   let car_record='';
 
                   console.log(selectedCars)
@@ -407,7 +407,7 @@ function dashboard() {
                   //itineries attached to plan
                   let planned_itineraries = document.getElementById("planned-itineraries");
                   var selectedItineraries = [...new Set(planClicked.itineries)];
-                  console.log(selectedItineraries)
+                  //console.log(planClicked+"taken")
                  
 
                   let className='';

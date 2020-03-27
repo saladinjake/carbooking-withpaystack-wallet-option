@@ -1169,7 +1169,7 @@ class WebsitePlanCategory {
         var usersPlan = {
           plan_id: PLAN_ID,
           itineraries: iti,
-          user_id:userOnline.user.id, 
+          user_id:Number(userOnline.user.id), 
           carsSelected: carList,
            planName: planset[1],
           price: "pending",

@@ -71,7 +71,7 @@ export  default class Dashboard extends Component {
                                                      <th data-hide="all" className="col-lg-2">Status</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="tablebody-it">
+                                            <tbody id="tablebody">
                                                 
                                             </tbody>
                                             <tfoot>
