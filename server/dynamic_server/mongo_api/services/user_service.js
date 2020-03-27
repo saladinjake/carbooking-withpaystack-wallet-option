@@ -636,37 +636,306 @@ static passwordForgot(req, res){
   }
 
 
+  
+
+static getAsyncRoles = async function(request,response){
+    try{
+        const promiseList = await RolesAndPreviledgesModel.findOne({ for_admins:  true, previledges_info: request.params.roles }).exec;
+        return promistList;
+    }catch(err){
+        return err;
+    }
+}
+
+
+static getAsyncUsers = async function(request,response){
+    try{
+        const promiseList = await RolesAndPreviledgesModel.findOne({ for_admins:  true, previledges_info: request.params.roles }).exec();
+        return promistList;
+    }catch(err){
+        return err;
+    }
+}
+
+
+static updateAsyncUserPreviledges = async function(request,response){
+    try{
+        const promiseList = await  UserModel.find({_id: request.params.id}).exec();
+        return promistList;
+    }catch(err){
+        return err;
+    }
+}
+
+
+
+
   static showProfileRights(request,response){//profile-admin-rights
 
-    UserModel.find({_id: request.params.id})
-      .then(data => {
-        console.log("specific profile:" + data)
-        
-       
-        const userInfo = data; //related
-        if (userInfo.length <= 0) {
-                return response.status(404).json({
-                  status: 404,
-                  error: 'The user with the given id does not exists',
-                });
+    console.log(request.params.roles +"what we need")
+
+
+    RolesAndPreviledgesModel.findOne({ for_admins:  true, previledges_info: request.params.roles }, function (err, roles) {
+
+        if (!roles) {
+          return response.status(400).send({ msg: 'We were unable to find a plan with that id.' });
         }
-        return response.status(200).json({
-                status: 200,
-                data: [
-                  {
-                    userInfo,
-                    message: 'Get a specific user was successful',
-                  },
-                ],
-          });
-      })
-      .catch(err =>
-              response.status(400).json({
-                status: 400,
-                error: ErrorHandler.errors().validationError,
-              }),
-            );
+
+
+        // Verify and save the user
+        // user.avatar= avatar || user.avatar;
+        roles.status =  roles.status;
+        roles.view_bookings=  roles.view_bookings;
+          roles.view_quotations=  roles.view_quotations;
+          roles.view_transactions= roles.view_transactions;
+          roles.view_payments = roles.view_payments;
+          roles.view_drivers =  roles.view_drivers;
+          roles.view_sos= roles.view_sos;
+          roles.view_partners = roles.view_partners;
+          roles.view_package= roles.view_package;
+          roles.view_cars= roles.view_cars;
+          roles.view_tickets = roles.view_tickets;
+          roles.view_faqs = roles.view_faqs;
+          roles.view_users = roles.view_users;
+          roles.view_admins =  roles.view_admins;
+          roles.view_settings = roles.view_settings;
+
+
+        
+        roles.manage_bookings= roles.manage_bookings;
+          roles.manage_quotations=  roles.manage_quotations;
+          roles.manage_transactions=  roles.manage_transactions;
+          roles.manage_payments =roles.manage_payments;
+          roles.manage_drivers = roles.manage_drivers;
+          roles.manage_sos= roles.manage_sos;
+          roles.manage_partners =  roles.manage_partners;
+          roles.manage_package=  roles.manage_package;
+          roles.manage_cars= roles.manage_cars;
+          roles.manage_tickets = roles.manage_tickets;
+          roles.manage_faqs =  roles.manage_faqs;
+          roles.manage_users =  roles.manage_users;
+          roles.manage_admins =  roles.manage_admins;
+          roles.manage_settings = roles.manage_settings;
     
+
+     
+        roles.save(function (err,user) {
+          if (err) { 
+            console.log(err)
+            return response.status(500).send({ msg: err.message });
+          }
+
+          console.log(user)
+
+          //find all users of usch roles and update
+          UserModel.find({ roles:  request.params.roles }, function (err, users) {
+
+                if (!users) {
+                  return response.status(400).send({ msg: 'We were unable to find a plan with that id.' });
+                }
+
+               
+               console.log(roles.view_faqs,roles.view_package,roles.view_drivers)
+               UserModel.updateMany({ roles: new String(request.params.roles) },
+                 { $set:
+                       { 
+
+
+                            view_bookings: roles.view_bookings,
+                            view_quotations: roles.view_quotations,
+                            view_transactions: roles.view_transactions,
+                            view_payments : roles.view_payments,
+                            view_drivers :  roles.view_drivers,
+                            view_sos: roles.view_sos,
+                            view_partners :  roles.view_partners,
+                            view_package:roles.view_package,
+                            view_cars: roles.view_cars,
+                            view_tickets : roles.view_tickets,
+                            view_faqs : roles.view_faqs,
+                            view_users : roles.view_users,
+                            view_admins : roles.view_admins,
+                            view_settings : roles.view_settings,
+
+
+                          
+                            manage_bookings : roles.manage_bookings,
+                            manage_quotations : roles.manage_quotations,
+                            manage_transactions : roles.manage_transactions,
+                            manage_payments : roles.manage_payments,
+                            manage_drivers : roles.manage_drivers,
+                            manage_sos: roles.manage_sos,
+                            manage_partners : roles.manage_partners,
+                            manage_package: roles.manage_package,
+                            manage_cars: roles.manage_cars,
+                            manage_tickets : roles.manage_tickets,
+                            manage_faqs : roles.manage_faqs,
+                            manage_users : roles.manage_users,
+                            manage_admins : roles.manage_admins,
+                            manage_settings : roles.manage_settings,
+
+
+                        }
+              },{ multi: true }
+              
+              , function(err,result)
+                 {
+                  if (err) {
+                    console.log(err)
+                    res.send(err);
+                  } else {
+                    
+                           UserModel.find({_id: request.params.id})
+                                  .then(data => {
+                                    console.log("specific profile:" + data)
+                                    
+                                   
+                                    const userInfo = data; //related
+                                    if (userInfo.length <= 0) {
+                                            return response.status(404).json({
+                                              status: 404,
+                                              error: 'The user with the given id does not exists',
+                                            });
+                                    }
+                                    return response.status(200).json({
+                                            status: 200,
+                                            data: [
+                                              {
+                                                userInfo,
+                                                message: 'Get a specific user was successful',
+                                              },
+                                            ],
+                                      });
+                                  })
+                                  .catch(err =>
+                                          response.status(400).json({
+                                            status: 400,
+                                            error: ErrorHandler.errors().validationError,
+                                          }),
+                                        );
+                  }
+              
+              });
+
+
+
+
+           })
+
+
+        }); 
+      });
+
+
+
+
+
+
+
+
+
+    //////////////////////////////////////////
+
+
+     // RolesAndPreviledgesModel.findOne({ for_admins:  true, previledges_info: request.params.roles }, function (err, roles){
+           
+     //                  if (!roles) {
+     //                    return response.status(400).send({ msg: 'We were unable to find a plan with that id.' });
+     //                  }
+
+     //                  console.log(roles+ "<>>>>>>>>>>>>>>>>>>>>>>")
+
+                    
+
+                     
+
+     //                    UserModel.updateMany({ for_admins:  true , roles: request.params.roles},{ $set:{  
+     //                       // usergroup_set:new String(request.params.roles),
+     //                       // roles: new String(request.params.roles),
+
+     //                         view_bookings: roles.view_bookings,
+     //                        view_quotations: roles.view_quotations,
+     //                        view_transactions: roles.view_transactions,
+     //                        view_payments : roles.view_payments,
+     //                        view_drivers :  roles.view_drivers,
+     //                        view_sos: roles.view_sos,
+     //                        view_partners :  roles.view_partners,
+     //                        view_package:roles.view_package,
+     //                        view_cars: roles.view_cars,
+     //                        view_tickets : roles.view_tickets,
+     //                        view_faqs : roles.view_faqs,
+     //                        view_users : roles.view_users,
+     //                        view_admins : roles.view_admins,
+     //                        view_settings : roles.view_settings,
+
+
+                          
+     //                        manage_bookings : roles.manage_bookings,
+     //                        manage_quotations : roles.manage_quotations,
+     //                        manage_transactions : roles.manage_transactions,
+     //                        manage_payments : roles.manage_payments,
+     //                        manage_drivers : roles.manage_drivers,
+     //                        manage_sos: roles.manage_sos,
+     //                        manage_partners : roles.manage_partners,
+     //                        manage_package: roles.manage_package,
+     //                        manage_cars: roles.manage_cars,
+     //                        manage_tickets : roles.manage_tickets,
+     //                        manage_faqs : roles.manage_faqs,
+     //                        manage_users : roles.manage_users,
+     //                        manage_admins : roles.manage_admins,
+     //                        manage_settings : roles.manage_settings,
+
+     //                     }
+
+
+     //                   },{ multi: true }, function(err,result){
+     //                        if (err) {
+     //                           console.log(err)
+     //                          response.send(err);
+     //                        } else {
+     //                          console.log("successful ________________----------------------------------")
+     //                           console.log(result)
+
+
+
+       
+
+     //                            UserModel.find({_id: request.params.id})
+     //                              .then(data => {
+     //                                console.log("specific profile:" + data)
+                                    
+                                   
+     //                                const userInfo = data; //related
+     //                                if (userInfo.length <= 0) {
+     //                                        return response.status(404).json({
+     //                                          status: 404,
+     //                                          error: 'The user with the given id does not exists',
+     //                                        });
+     //                                }
+     //                                return response.status(200).json({
+     //                                        status: 200,
+     //                                        data: [
+     //                                          {
+     //                                            userInfo,
+     //                                            message: 'Get a specific user was successful',
+     //                                          },
+     //                                        ],
+     //                                  });
+     //                              })
+     //                              .catch(err =>
+     //                                      response.status(400).json({
+     //                                        status: 400,
+     //                                        error: ErrorHandler.errors().validationError,
+     //                                      }),
+     //                                    );
+     //          }//end else  
+
+
+     //          })
+
+         
+         
+
+     //  })                
     
   }
 
@@ -2821,44 +3090,91 @@ getUser = (req, res) => {
       
     }
 
+
+     RolesAndPreviledgesModel.findOne({ for_admins:  true, usergroup_set: user_type }, function (err, roles) {
+           
+          if (!roles) {
+                        return response.status(400).send({ msg: 'We were unable to find a plan with that id.' });
+          }
+          console.log(roles)
+
     
 
 
-    UserModel.findOne({ _id:  request.params.id }, function (err, user) {
+            UserModel.findOne({ _id:  request.params.id }, function (err, user) {
 
-      if (!user){ 
-       return response.status(400).send({ msg: 'We were unable to find a user with that email.' });
-      
-      }
-      if(password=="unchanged" ){
-       user.password= user.password;
-       console.log("old:" + user.password)
-      } else{
-        user.password= TokenGenerator.hashPassword(password.trim());
-        console.log("new pass: "+ user.password)
-      }
+              if (!user){ 
+               return response.status(400).send({ msg: 'We were unable to find a user with that email.' });
+              
+              }
+              if(password=="unchanged" ){
+               user.password= user.password;
+               console.log("old:" + user.password)
+              } else{
+                user.password= TokenGenerator.hashPassword(password.trim());
+                console.log("new pass: "+ user.password)
+              }
 
-     
-      // Verify and save the user
-    
-      user.username= username || user.username;
-      user.email= email || user.email;
-      user.status= status || user.status;
-      user.avatar= avatar || user.avatar;
-      user.roles= user_type|| user.user_type;
-      user.firstname= firstname|| user.firstname;
-      user.lastname = lastname || user.lastname;
-      user.phone_number = phoneNumber|| user.phone_number;
-      user.test_certificate = certificate || user.test_certificate;
-      //user.isVerified = boolVerification || user.isVerified;
-      user.save(function (err,user) {
-        if (err) { console.log(err) 
-          return response.status(500).send({ msg: err.message }); }
-        console.log(user + 'hello')
-          //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
-          return response.status(200).send({success:'ok', msg: 'Successfully updated user profile.' });
-      }); 
-    });
+             
+              // Verify and save the user
+            
+              user.username= username || user.username;
+              user.email= email || user.email;
+              user.status= status || user.status;
+              user.avatar= avatar || user.avatar;
+              user.roles= user_type|| user.user_type;
+              user.firstname= firstname|| user.firstname;
+              user.lastname = lastname || user.lastname;
+              user.phone_number = phoneNumber|| user.phone_number;
+              user.test_certificate = certificate || user.test_certificate;
+              //user.isVerified = boolVerification || user.isVerified;
+
+
+              
+            user.view_bookings=  roles.view_bookings;
+          user.view_quotations= roles.view_quotations;
+          user.view_transactions= roles.view_transactions;
+          user.view_payments = roles.view_payments;
+          user.view_drivers =  roles.view_drivers;
+          user.view_sos= roles.view_sos;
+          user.view_partners =  roles.view_partners;
+          user.view_package= roles.view_package;
+          user.view_cars= roles.view_cars;
+          user.view_tickets = roles.view_tickets;
+          user.view_faqs = roles.view_faqs;
+          user.view_users = roles.view_users;
+          user.view_admins = roles.view_admins;
+          user.view_settings = roles.view_settings;
+
+
+        
+          user.manage_bookings= roles.manage_bookings;
+          user.manage_quotations= roles.manage_quotations;
+          user.manage_transactions=roles.manage_transactions;
+          user.manage_payments = roles.manage_payments;
+          user.manage_drivers = roles.manage_drivers;
+          user.manage_sos= roles.manage_sos;
+          user.manage_partners = roles.manage_partners;
+          user.manage_package= roles.manage_package;
+          user.manage_cars= roles.manage_cars;
+          user.manage_tickets = roles.manage_tickets;
+          user.manage_faqs = roles.manage_faqs;
+          user.manage_users = roles.manage_users;
+          user.manage_admins = roles.manage_admins;
+          user.manage_settings = roles.manage_settings;
+
+
+              user.save(function (err,user) {
+                if (err) { console.log(err) 
+                  return response.status(500).send({ msg: err.message }); }
+                console.log(user + 'hello')
+                  //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
+                  return response.status(200).send({success:'ok', msg: 'Successfully updated user profile.' });
+              }); 
+            });
+
+
+     })
   }
 
   static manageAdminsDetailVerification(request,response){
@@ -4611,13 +4927,7 @@ getUser = (req, res) => {
           manage_admins
         }  = request.body;  
 
-    // const { field,value, status, previledges_info } = request.body ;
-    // let newValue =''
-    // if(value==true){
-    //   newValue="yes"
-    // }else{
-    //   newValue="no"
-    // }
+    
 
 
     RolesAndPreviledgesModel.findOne({ _id:  new String( request.params.id) }, function (err, roles) {
@@ -4679,15 +4989,7 @@ getUser = (req, res) => {
                   return response.status(400).send({ msg: 'We were unable to find a plan with that id.' });
                 }
 
-                // users[field] = newValue;
-                // users.status = status;
-
-
-
-
-
-
-
+               
 
                UserModel.updateMany({ roles: previledges_info },
                  { $set:
@@ -4736,38 +5038,7 @@ getUser = (req, res) => {
                     console.log(err)
                     res.send(err);
                   } else {
-                    console.log( view_bookings,
-                    view_quotations,
-                    view_transactions,
-                    view_payments,
-                    view_drivers,
-                    view_sos,
-                    view_partners,
-                    view_package,
-                    view_cars,
-                     view_tickets,
-                    view_faqs,
-                    view_users,
-                    view_admins,
-                    view_settings,
-                    status,
-
-
-                    manage_bookings,
-                    manage_quotations,
-                    manage_payments,
-                    manage_drivers,
-                    manage_sos,
-                   manage_partners,
-                    manage_package,
-                   manage_transactions,
-                    manage_cars,
-                    manage_tickets,
-                    manage_faqs,
-                    manage_settings,
-                    manage_users,
-                    manage_admins 
-                   )
+                    
                     return response.status(200).json({
                       status: 200,
                       data: [

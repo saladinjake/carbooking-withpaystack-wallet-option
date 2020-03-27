@@ -89,23 +89,6 @@ function ApiPlanHistory() {
              
               const tablebody2 = document.getElementById('tablebody1');
 
-              // if(datas.status="404"){
-              //   let Notemplate2='', Notemplate3;
-              //   Notemplate2 =`<tr>
-              //                 <td><a href="#"></a></td>
-              //                     <td></td>
-              //                     <td></td>
-              //                     <td></td>
-              //                     <td></td>
-              //                       <td>
-                                        
-              //                       </td>
-              //       </tr>`;
-              //       tablebody2.insertAdjacentHTML('beforeend', Notemplate2);
-
-                    
-
-              //  }else{
                
                      console.log(datas)
                     const plans = datas[0].data[0].plans;
@@ -127,7 +110,6 @@ function ApiPlanHistory() {
                                 planAction = ` <td class="">
                                                        <a onclick="getPlanId(this)" id="plan-current-${item.plan_id}" href="#" data-plan_id="${item.plan_id}" data-id="${item.plan_id}" href="#" class="table-action-btn  btn-purple"><i class="glyphicon glyphicon-ok"></i></a>
                                                   </td>`
-                            //item.payment_status= `<span class="label label-table label-success">${item.payment_status}</span>`+ `₦ ${item.price}`;
                             }else{
                                classFor =`label-danger`;
                              planAction = ` <td class="">
@@ -141,8 +123,6 @@ function ApiPlanHistory() {
                              planAction = ` <td class="">
                                                    <a id="plan-current-${item.plan_id}" onclick="getPlanId(this)" data-plan_id="${item.plan_id}" data-id="${item.plan_id}" href="#" class="table-action-btn btn-custom btn-purple"><i class="md md-chevron-right"></i></a>
                                               </td>`
-                            //item.price= `₦ ${item.price}`;
-                            //item.payment_status=`<span class="label label-table label-warning">${item.payment_status}</span>`;
                           }
                       template2 =`<tr>
                                     <td class=""><a href="#">PLANID-${item._id}</a></td>

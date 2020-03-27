@@ -920,7 +920,7 @@ this.router.get('/email/smtp/template', (req, res, next) => {
     UserController.deletePreviledges
   );
 
-  this.router.get('/profile-admin-rights/update/:id',
+  this.router.get('/profile-admin-rights/update/:id/permission/:roles',
       TokenVerification.userAuthentication,
       UserController.showProfileRights
     );//showProfileRights(request,response)

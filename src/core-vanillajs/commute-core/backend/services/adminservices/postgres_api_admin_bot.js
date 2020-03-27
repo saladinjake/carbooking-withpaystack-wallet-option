@@ -308,11 +308,12 @@ window.genCert = (o) =>{
 
 function getUserRights(){
 
+
 //window.onload = function(){
   if(localStorage.getItem('userToken')){
 
     const user = JSON.parse(localStorage.getItem('userToken'));
-     let linkOfApi = 'http://localhost:12000/api/v1/profile-admin-rights/update/'+ user.user._id;
+     let linkOfApi = 'http://localhost:12000/api/v1/profile-admin-rights/update/'+ user.user._id+ '/permission/'+ user.user.roles;
      
  return fetch(linkOfApi, {
       method: 'GET',
@@ -332,6 +333,8 @@ function getUserRights(){
           let userRecord = data.data[0].userInfo[0];
           console.log(userRecord)
           //userRights.push(userRecord)
+
+           localStorage.setItem('previledges', JSON.stringify(userRecord))
    
           return  userRecord;
 
