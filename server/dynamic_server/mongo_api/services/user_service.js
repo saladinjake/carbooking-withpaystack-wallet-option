@@ -137,7 +137,7 @@ export class UserService {
                       if(error) {
                         console.log(error);
                         //res.json(error);
-                        return res.status(400).send({ msg: error });
+                        return response.status(400).send({ msg: error });
                       }
                       console.log("email is send");
                       console.log(info);
@@ -148,6 +148,7 @@ export class UserService {
                 });
 
                
+
 
                    
 
@@ -1509,7 +1510,7 @@ static updateUsersItinerary(request,response){
 
   static getAllUsersPlans(request,response){
     UserPlanModel.find({ user_id: Number(request.params.id) })
-    
+       console.log("this user id >>>>>>>>>>>>>>>>>>>>>"+ request.params.id)
       .then(data => {
         const plans = data;
         if (plans.length === 0) {

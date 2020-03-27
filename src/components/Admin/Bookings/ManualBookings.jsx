@@ -63,8 +63,7 @@ export  default class ManualBookings extends Component {
                     <div className="row">
                             
                     <div className="col-lg-12 card-box">
-                      <div className="col-lg-2 pull-left"><a href="#" id="gobackFor"
-                            className="gobackFor btn btn-default waves-effect waves-light pull-left m-b-10"><i className="md  md-chevron-left"></i> Back to List</a> </div>
+                     
                             <div className="col-lg-8"><h4 className="m-b-10 header-title">Create Booking <span className="m-l-10 text-purple font-13"><b></b></span></h4></div>
                             <div className="col-lg-2 pull-right"><div className="btn-group pull-right m-t-0">
                                     <button type="button" className="btn btn-inverse dropdown-toggle waves-effect waves-light"

@@ -5482,6 +5482,15 @@ WarLockAdmin('view_partners','manage_partners')
     });
 
 
+     let idzz= "#type"
+        $( idzz + " option").each(function () {
+            if ($(this).html() == datas[0].roles) {
+                $(this).attr("selected", "selected");
+                return;
+            }
+        });
+
+
 
     const data = datas[0];
     firstname.value =data.firstname;
@@ -7580,9 +7589,11 @@ noReadWrite('manage_cars')
                                             <td class="">${item.plan_name}</td>
                                             <td class="text-center "><span class="${className}">${item.status}</span></td>
                                             <td class="">  ${item.price}</td>
+                                            
                                               <td class="">
                                                    <a id="plan-current-${item._id}" onclick="getBookingId(this)"  data-id="${item._id}" href="#" class="table-action-btn btn-custom btn-purple"><i class="md md-chevron-right"></i></a>
                                               </td>
+
                               </tr>`;
                               tablebody1.insertAdjacentHTML('beforeend', template2);
 
@@ -8300,7 +8311,7 @@ WarLockAdmin('view_transactions','manage_transactions')
          noReadWrite('manage_bookings')
   	 console.log('this page rocks...')
 
-
+     let chosen_id_user =1;
       
     document.getElementById("drive-test-certificate").disabled=true;
 
@@ -8313,7 +8324,7 @@ WarLockAdmin('view_transactions','manage_transactions')
      let useremails =[];
      let this_user_names = [...new Set(users)].filter((item)=>usernames.push(item.username) )
     
-
+    
 
       let selectOptions_users = ``;
 
@@ -8349,8 +8360,11 @@ WarLockAdmin('view_transactions','manage_transactions')
 
            let me =this_user_names.filter((item)=>item.username== $(this).val())
            console.log(me)
+           chosen_id_user = Number(me[0].id);
            document.getElementById("drive-test-certificate").value =me[0].test_certificate;
            document.getElementById("phone_number").value =me[0].phone_number;
+
+
            
            
            // For each chocie in the selected option
@@ -8460,14 +8474,18 @@ WarLockAdmin('view_transactions','manage_transactions')
      let planList = [];
      var carsSelected =[];
 
+       let emailsUser = document.getElementById('email');
+      let user_selected = [...new Set(users)].filter((item)=>item.email ==emailsUser.options[emailsUser.selectedIndex].text )
+      console.log(user_selected)
 
       
      document.body.addEventListener('click', function(e){
         if(e.target.id=="submitItinerary"){
           
            e.preventDefault();
+           console.log(user_selected)
 
-           let emailsUser = document.getElementById('email');
+          
             
             let emalMan = emailsUser.options[emailsUser.selectedIndex].text
 
@@ -8576,7 +8594,7 @@ WarLockAdmin('view_transactions','manage_transactions')
             }
 
             if(localStorage.getItem('user_to_book')){
-              usersFoundId = localStorage.getItem('user_to_book');
+              usersFoundId = Number(localStorage.getItem('user_to_book'));
             }
            
 
@@ -8597,7 +8615,7 @@ WarLockAdmin('view_transactions','manage_transactions')
                end_time :endDate, 
                pickup_time: endDate,
                drive_option: optDriver,
-               user_id: usersFoundId,  //document.getElementById("email").value,
+               user_id:   chosen_id_user, //usersFoundId,  //document.getElementById("email").value,
                travel_option:optTraveler,
                drivingschool: driving_school,
                carsSelected,
@@ -8655,6 +8673,7 @@ WarLockAdmin('view_transactions','manage_transactions')
                               description:driving_school,
                               time: driving_school,
                               createdDate: formatDate(new Date()),
+                              user_id: chosen_id_user,
 
                              }
 
@@ -8786,7 +8805,7 @@ WarLockAdmin('view_transactions','manage_transactions')
                      plan_id:  plan_id.value,
                      createdDate: createdDate.value,
                     itineraries: ItineraryList ,
-                    user_id: usersFoundId, 
+                    user_id: Number( chosen_id_user), 
                     carsSelected: carsSelected,
                     // plan_name:  plan_name.options[plan_name.selectedIndex].text,   //plan_name.value,
                     price: document.getElementById("quote-amount").value ,
@@ -8822,7 +8841,8 @@ WarLockAdmin('view_transactions','manage_transactions')
                   email: em,
                   reference: 'CMT-REF-'+ plan_id.value,
                   phone_number: document.getElementById("phone_number").value,
-                  createdDateOfQuotation: new Date()
+                  createdDateOfQuotation: new Date(),
+                  user_id:Number( chosen_id_user)
 
                 } 
 
