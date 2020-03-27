@@ -200,7 +200,7 @@ export  default class ManualBookings extends Component {
                                                 <label for="" className="control-label m-b-10">Car 1</label>
                                                     <div className="">
                                                         <select className="form-control" id="car1">
-                                                            <option selected disabled>Kindly select car</option>
+                                                            <option selected disabled>--Kindly select a car --</option>
                                                            
                                                         </select>
                                                     </div>
@@ -212,7 +212,7 @@ export  default class ManualBookings extends Component {
                                                 <label for="" className="control-label m-b-10">Car 2</label>
                                                     <div className="">
                                                         <select className="form-control" id="car2">
-                                                            <option selected disabled>Kindly select car</option>
+                                                            <option selected disabled>--Kindly select a car --</option>
                                                             
                                                         </select>
                                                     </div>
@@ -224,7 +224,7 @@ export  default class ManualBookings extends Component {
                                                     <label for="" className="control-label m-b-10">Car 3</label>
                                                     <div className="">
                                                         <select className="form-control" id="car3">
-                                                            <option selected disabled>Kindly select car</option>
+                                                            <option selected disabled>--Kindly select a car --</option>
                                                            
                                                         </select>
                                                     </div>

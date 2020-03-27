@@ -8457,13 +8457,19 @@ WarLockAdmin('view_transactions','manage_transactions')
 
      document.getElementById('plan_id').value = 'CMT-PLAN-'+ id;
      let first_car = document.getElementById("car1");
-     first_car.innerHTML= selectOptions;
+     //first_car.innerHTML= selectOptions;
+     $('#car1').append(selectOptions);
+     // $('#car_1').on('change', function() {
+     //    carsSelected[0] =
+     // })
      let second_car = document.getElementById("car2")
-     second_car.innerHTML= selectOptions;
+     //second_car.innerHTML= selectOptions;
+     $('#car2').append(selectOptions);
       
 
      let third_car = document.getElementById("car3")
-     third_car.innerHTML= selectOptions;
+     //third_car.innerHTML= selectOptions;
+     $('#car3').append(selectOptions);
      let uid = 'CMT-USER-'+ guidGenerator()
      //fetch the drivers assigned to these cars then push to the car lists
      let itinsData ={};
@@ -8473,6 +8479,8 @@ WarLockAdmin('view_transactions','manage_transactions')
      let cars_data = [];
      let planList = [];
      var carsSelected =[];
+
+
 
        let emailsUser = document.getElementById('email');
       let user_selected = [...new Set(users)].filter((item)=>item.email ==emailsUser.options[emailsUser.selectedIndex].text )
@@ -8539,6 +8547,18 @@ WarLockAdmin('view_transactions','manage_transactions')
 
             if(plancategory =='--Kindly select a category --'){
                var notification = alertify.notify('Select a category for this plan', 'error', 5, function(){  console.log('dismissed'); });
+       
+              return false;
+            }
+
+            if(car_1 =='--Kindly select a car --'){
+               var notification = alertify.notify('Select a car for this plan', 'error', 5, function(){  console.log('dismissed'); });
+       
+              return false;
+            }
+
+            if(car_2 =='--Kindly select a car --'){
+               var notification = alertify.notify('Select a car for this plan', 'error', 5, function(){  console.log('dismissed'); });
        
               return false;
             }
@@ -8623,7 +8643,7 @@ WarLockAdmin('view_transactions','manage_transactions')
                username: usr,
                email: emal,
                phone_number: document.getElementById("phone_number").value,
-               has_been_updated:'Yes',
+               //has_been_updated:'Yes',
         };
 
             
@@ -8805,7 +8825,7 @@ WarLockAdmin('view_transactions','manage_transactions')
                    var usersPlan = {
                      plan_id:  plan_id.value,
                      createdDate: createdDate.value,
-                    itineraries: ItineraryList ,
+                    itineraries:  ItineraryList,
                     user_id: Number( chosen_id_user), 
                     carsSelected: carsSelected,
                     // plan_name:  plan_name.options[plan_name.selectedIndex].text,   //plan_name.value,

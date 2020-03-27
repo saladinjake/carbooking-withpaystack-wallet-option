@@ -368,7 +368,7 @@ function dashboard() {
                    //alert(clickedId)
                  // console.log(clickedId)
                   planClicked = plans.find(item => item.plan_id==clickedId );
-                  //console.log(JSON.stringify(planClicked) +"was this")
+                  console.log(JSON.stringify(planClicked))
                   if(planClicked){
                     if(document.getElementById("plan_id")){
                       document.getElementById("plan_id").innerHTML=planClicked.plan_id || 'No Plan';
@@ -379,7 +379,7 @@ function dashboard() {
                   let carbounds = document.getElementById("car-chosen");
                   // var selectedCars = [...new Set(plans[0].cars_on_plan)];
                    var selectedCars = [...new Set(planClicked.cars_on_plan)];
-                   //console.log(planClicked.cars_on_plan)
+                   console.log(planClicked.cars_on_plan)
                   let car_record='';
 
                   console.log(selectedCars)
@@ -407,7 +407,7 @@ function dashboard() {
                   //itineries attached to plan
                   let planned_itineraries = document.getElementById("planned-itineraries");
                   var selectedItineraries = [...new Set(planClicked.itineries)];
-                  //console.log(planClicked+"taken")
+                  console.log(selectedItineraries)
                  
 
                   let className='';

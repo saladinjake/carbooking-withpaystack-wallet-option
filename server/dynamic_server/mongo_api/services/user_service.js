@@ -6098,10 +6098,12 @@ getUser = (req, res) => {
      const NewUserPlan = new UserPlanModel({ 
       id: new AutoincrementId(UserPlanModel).counter(), 
      plan_id,
+
+    
                     createdDateOfQuotation: createdDate,
-                    itineraries ,
+                    itineries:itineraries ,
                     user_id, 
-                    carsSelected,
+                    cars_on_plan:carsSelected,
                     // plan_name:  plan_name.options[plan_name.selectedIndex].text,   //plan_name.value,
                     price,
                     // plan_categories: plan_categories,
@@ -6115,7 +6117,7 @@ getUser = (req, res) => {
 
                     username,
                     email,
-                    has_updated: has_been_updated,
+                    has_updated: 'Yes',
      });
 
 
