@@ -286,7 +286,7 @@ function dashboard() {
                         if(item.status=="Ongoing"){
                              className='label-danger';
                              
-                          }else if(item.status=="Completed"){
+                          }else if(item.status=="Completed" || item.status=="Paid"){
                           
                             className= `label-success`;
                           }else{
