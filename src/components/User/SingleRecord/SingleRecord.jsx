@@ -30,7 +30,9 @@ export default class SingleRecord extends Component {
                     <div className="container">
 
                        
-                        
+                           <div id="note">
+     Sorry. You cannot start this trip . If quotation details has been sent to you please endeavour to make payments.
+</div>
 
 
                         <div className="row card-box">

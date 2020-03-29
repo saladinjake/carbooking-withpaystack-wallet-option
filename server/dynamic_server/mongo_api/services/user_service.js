@@ -1759,6 +1759,9 @@ static updateUsersItinerary(request,response){
             }= request.body;
 
 
+
+
+
     UserPlanModel.findOne({ plan_id:new String(request.params.id) }, function (err, user) {
 
       // Verify and save the user
@@ -1778,10 +1781,31 @@ static updateUsersItinerary(request,response){
       
       user.save(function (err,user) {
         if (err) { return response.status(500).send({ msg: err.message }); }
+
+
+        UserPlanModel.updateMany({ plan_id: request.params.id },{
+                                            $set:{   status:status, 
+                                                      price: amount,
+                                                      has_updated:has_updated,
+                                                    "itineries.$[].status":status,
+                                                  }},{ multi: true }, function(err,result){
+                                     if (err) {
+                                          console.log(err)
+                                          response.send(err);
+                                        } else {
+                                          console.log(result)
+                                          return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated itineraries of this plan .' });
+                                
+                                        }
+
+          })
+
+
+
         
 
 
-          return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .' });
+          // return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .' });
       }); 
     });
 
@@ -6896,27 +6920,43 @@ getUser = (req, res) => {
           if(user.status=="Unpaid"){
 
 
-             UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
-                     username: user.username,
-                     plan_id:user.plan_id,
-                     price: user.price,
-                     date: createdDateOfQuotation.substring(0,10)
-                    //link: 'https:\/\/' + 'localhost:4000/'   
-                    //description: description
-                },user.email,200)
+             // UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
+             //         username: user.username,
+             //         plan_id:user.plan_id,
+             //         price: user.price,
+             //         date: createdDateOfQuotation.substring(0,10)
+             //        //link: 'https:\/\/' + 'localhost:4000/'   
+             //        //description: description
+             //    },user.email,200)
 
 
           }else{
 
-            UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
-                     username: user.username,
-                     plan_id:user.plan_id,
-                     price: user.price,
-                     date: createdDateOfQuotation.substring(0,10)
-                },user.email,200)
+            // UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
+            //          username: user.username,
+            //          plan_id:user.plan_id,
+            //          price: user.price,
+            //          date: createdDateOfQuotation.substring(0,10)
+            //     },user.email,200)
 
             
           }
+
+
+          UserPlanModel.updateMany({ plan_id: request.params.id },{
+                                            $set:{  //status:status, 
+                                                    "itineries.$[].status":status,
+                                                  }},{ multi: true }, function(err,result){
+                                     if (err) {
+                                          console.log(err)
+                                          response.send(err);
+                                        } else {
+                                          console.log(result)
+                                          return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated itineraries of this plan .' });
+                                
+                                        }
+
+          })
           //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
           //return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .' });
       }); 
@@ -6946,22 +6986,22 @@ getUser = (req, res) => {
       
                   //multiple updates of the status for this itineraries attached to this plan
 
-    ItineraryModel.findOne({plan_id: request.params.id}, function (err, user) {
+    // ItineraryModel.findOne({plan_id: request.params.id}, function (err, user) {
 
-      if(err){
-        console.log(err)
-      }
+    //   if(err){
+    //     console.log(err)
+    //   }
 
-      // Verify and save the user
-      user.status= status || user.status;
+    //   // Verify and save the user
+    //   user.status= status || user.status;
       
-      user.plan_id= request.params.id || user.plan_id;
-      user.user_plan_id= user_plan_id || user.user_plan_id;
+    //   user.plan_id= request.params.id || user.plan_id;
+    //   user.user_plan_id= user_plan_id || user.user_plan_id;
       
-      user.save(function (err,user) {
-        if (err) { return response.status(500).send({ msg: err.message }); }
-        console.log(user + 'hello')
-          //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
+    //   user.save(function (err,user) {
+    //     if (err) { return response.status(500).send({ msg: err.message }); }
+    //     console.log(user + 'hello')
+    //       //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
 
 
           ItineraryModel.updateMany({ plan_id: user_plan_id },{
@@ -6976,47 +7016,18 @@ getUser = (req, res) => {
                             } else {
 
 
-                               UserPlanModel.updateMany({ plan_id: user_plan_id },{
-                                            $set:{  //status:status, 
-                                                    "itineries.$[].status":status,
-                                                  }},{ multi: true }, function(err,result){
-                                     if (err) {
-                                          console.log(err)
-                                          response.send(err);
-                                        } else {
-                                          console.log(result)
-                                          return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated itineraries of this plan .' });
-                                
-                                        }
-
-                              })
+                               
                               // console.log(result)
-                              // return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated itineraries of this plan .' });
+                              return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated itineraries of this plan .' });
                     
                             }
 
-    })     
+               })     
 
           //return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .' });
-      }); 
-    });
+      // }); 
+    // });
 
- // ItineraryModel.updateMany({ plan_id: plan_id },{
- //              $set:{  status:status, 
- //                      user_plan_id: user_plan_id,
- //                       has_received_quote:has_received_quote,
- //                        has_received_payments: has_received_payments
- //                      }},{ multi: true }, function(err,result){
- //                         if (err) {
- //                              console.log(err.message)
- //                              response.send(err.message);
- //                            } else {
- //                              console.log(result)
- //                              return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated itineraries of this plan .' });
-                    
- //                            }
-
- //    })     
 
 
 

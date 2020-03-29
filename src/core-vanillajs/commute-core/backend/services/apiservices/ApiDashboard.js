@@ -421,7 +421,7 @@ function dashboard() {
                   let payButton = ``;
                   selectedItineraries.map((item, i) => {
                            if(item.status=="Paid"){
-                             className="label-danger";
+                             className="label-success";
                              //item.status=`<span class="label label-table label-danger">${item.status}</span>`;
 
                              payButton=`<td class="">
@@ -438,7 +438,8 @@ function dashboard() {
                           }else if(item.status=="Unpaid"){
                             className="label-warning";
                             document.getElementById('start').disabled=true;
-                            let msgBox =`<span class="label label-danger">You can not start this trip. please make payments for this plan to start the trip</span>`;
+                            let msgBox =`<span class="label label-danger"> 
+                                    Please make payments to start this plan .</span>`;
                             
                             document.getElementById("itin-ids").innerHTML = msgBox;
 
@@ -458,7 +459,7 @@ function dashboard() {
                             
                           }else{
                             document.getElementById('start').disabled=true;
-                            let msgBox =`<span class="label label-danger">Quotations has not yet been sent to make  payments for this plan to start the trip.</span>`;
+                            let msgBox =`<span class="label label-danger">Quotations has not yet been sent .</span>`;
                             
                             document.getElementById("itin-ids").innerHTML = msgBox;
                             

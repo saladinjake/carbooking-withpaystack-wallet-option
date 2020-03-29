@@ -197,6 +197,7 @@
     "prop-types": "^15.7.2",
     "pug": "^2.0.4",
     "q": "^1.5.1",
+    "randomcolor": "^0.5.4",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-fontawesome": "^1.6.1",
