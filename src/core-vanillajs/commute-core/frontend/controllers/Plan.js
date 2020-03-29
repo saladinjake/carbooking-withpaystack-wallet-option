@@ -1059,11 +1059,13 @@ class WebsitePlanCategory {
             
             console.log(userPlanItineries)
 
-            ItineraryList.push(userPlanItineries)
+            
 
             if(WebsitePlanCategory.validationFails(userPlanItineries) == true){
               return false;
             }
+
+            ItineraryList.push(userPlanItineries)
 
             
 
