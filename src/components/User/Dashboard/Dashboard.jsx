@@ -66,7 +66,7 @@ export  default class Dashboard extends Component {
 
                             
 
-                            <a id="plan-detail" href="./plan-detail">
+                            <a id="plan-detail" href="./plan-detail" className="tooltipLink" data-tooltip="lets you view the all planned itineraries and planned trips">
                             <div data-id="plan-detail" data-href="./plan-detail" className="col-sm-6  col-md-6 col-lg-3">
                             <div className="widget-bg-color-icon card-box p-t-10 p-b-10">
                                     <div className="text-dark">

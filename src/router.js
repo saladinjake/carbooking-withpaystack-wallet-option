@@ -92,6 +92,7 @@ import WalletAdmin from './components/Admin/Wallet/WalletHomeAdmin';
 import WalletHistoryAdmin from './components/Admin/Wallet/WalletHistoryAdmin'
 import QuoteSubscriptionHistoryAdmin from './components/Admin/Wallet/QuoteSubscriptionHistoryAdmin'
 
+import ActivityLogger from './components/Admin/ActivityLogger/ActivityLogger';
 // import Previledges from  './components/Admin/Previledges/users/Users'
 import Previledges from "./components/Admin/Previledges/users/Users"
 
@@ -224,6 +225,9 @@ const Router = () => (
              <Route exact path="/admin-previledges" component={Previledges} /> 
 
 
+             <Route path="/activity-logger" component={ActivityLogger} /> 
+
+
 
 
 
@@ -256,6 +260,7 @@ const Router = () => (
                 <Route path="/drivers-upcomingtrips" component={UpcomingTripsContent} />    
                 <Route path="/drivers-tripdetail" component={TripDetailContent} />  
 
+                
 
 
 

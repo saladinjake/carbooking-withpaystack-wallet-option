@@ -646,7 +646,18 @@ export default class UserController {
   }
 
 
+   static getTrails(request,response){
+    return  UserService.getTrails(request,response)
+  }
 
+  
+
+
+
+  
+  static createTrail(request,response){
+    return UserService.createTrail(request,response);
+  }
 
 
 

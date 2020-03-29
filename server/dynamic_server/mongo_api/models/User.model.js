@@ -30,6 +30,12 @@ let UserSchema = new mongoose.Schema({
           type: String,
           
       },
+      fb_id:{
+        type:String
+      },
+      google_id:{
+        type:String,
+      },
       ratings_average:{
         type:String,
       },

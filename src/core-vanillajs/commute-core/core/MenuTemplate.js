@@ -82,9 +82,17 @@ export default class MenuTemplate{
                        
                        
 
-                        <li class="has_sub">
-                            <a href="./admin-dashboard" class="waves-effect"><i class="ti-dashboard"></i> <span> Dashboard
-                                </span></a>
+                        <li class="has_sub sub-toggle">
+                            
+
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-dashboard"></i><span>
+                                    Home</span> <span class="menu-arrow"></span>  </a>
+                                    <ul class="list-unstyled list">
+                                     
+                                        <li><a href="./admin-dashboard">Admin Dashboard</a></li>
+                                        <li><a href="./activity-logger">Activity Logs</a></li>
+                                         
+                                    </ul>
                         </li>
 
                         <li class="has_sub ">

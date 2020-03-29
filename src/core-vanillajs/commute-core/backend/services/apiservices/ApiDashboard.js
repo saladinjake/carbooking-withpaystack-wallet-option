@@ -189,6 +189,9 @@ window.getPlanId = (item) =>{
 let planClicked ={};
 planClicked._id =0;
 
+
+
+
 function dashboard() {
 
   $("#map-set").hide();
@@ -321,7 +324,7 @@ function dashboard() {
                                 classFor =`label-success`;
                                 item.price= `₦ ${item.price}`;
                                 planAction = ` <td class="">
-                                                       <a disabled href="#" class="table-action-btn  btn-purple"><i class="glyphicon glyphicon-ok"></i></a>
+                                                       <a disabled href="#" class="table-action-btn  btn-purple tool"   data-tip="Visit the plan history page to view the detai of this completed plan." tabindex="1"><i class="glyphicon glyphicon-ok"></i></a>
                                                   </td>`
                             //item.payment_status= `<span class="label label-table label-success">${item.payment_status}</span>`+ `₦ ${item.price}`;
                             }else{

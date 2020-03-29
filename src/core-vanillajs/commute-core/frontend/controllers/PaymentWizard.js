@@ -40,6 +40,8 @@ export default class PaymentWizard{
 		  let userPaymentDetails = JSON.parse(localStorage.getItem('quoteToPay'))
           let oldBalance = user.user.balance;
           let newBalance = userPaymentDetails.amount;
+          oldBalance = parseFloat(oldBalance)
+
 		  console.log(userPaymentDetails)
           userPaymentDetails.reference= 'CMT-PAYSTACK-'+ userPaymentDetails.reference;
 
@@ -149,6 +151,20 @@ export default class PaymentWizard{
   		document.getElementById("deduction").innerHTML =  paymentDetail.amount;
   		let newbalance = user.user.balance - paymentDetail.amount;
   		document.getElementById("newbalance").innerHTML = newbalance
+       let oldBalance = parseFloat(user.user.balance);
+       if(oldBalance<=0){
+            
+            var notification = alertify.notify('Insufficient balance to perform transaction. You need to top up', 'error', 10, function(){  console.log('dismissed'); });
+         
+            return false
+
+          }else if(parseFloat(paymentDetail.amount)> oldBalance){
+            //false
+            var notification = alertify.notify('Insufficient balance to perform transaction. please top up your wallet', 'error', 10, function(){  console.log('dismissed'); });
+         
+
+            return false
+          }
 
 
 

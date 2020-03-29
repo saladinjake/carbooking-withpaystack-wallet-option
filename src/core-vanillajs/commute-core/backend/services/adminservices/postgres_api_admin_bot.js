@@ -5,6 +5,7 @@ import getOnlineUrlConnection from '../apiservices/helpers/getOnlineUrlConnectio
 import $ from 'jquery';
 //import carsInfo from "./helpers/cars_info";
 import Validator from "./helpers/validator";
+import AuditTrail from './helpers/Logger'
 
 
 let datapromise;
@@ -31,6 +32,9 @@ function createUserDriveTestDetail(url, data){
               .then(data => {
                 console.log(data)
                 if (data.status == 201) {
+
+                  AuditTrail.sendLogInfo(user, data.username, 'Drive Test Module', 'Success', '201', 'POST')
+
                   
                   var notification = alertify.notify('Successfully created drive test ', 'success', 5, function(){  console.log('dismissed'); });
                       
@@ -41,6 +45,9 @@ function createUserDriveTestDetail(url, data){
 
                  // ApiDeleteOneStatusRecord.redirect(recordOfType);
                 } else {
+
+                   AuditTrail.sendLogInfo(user, data.username, 'Drive Test Module', 'Failed', '400', 'POST')
+                  
                   
                   var notification = alertify.notify('Could not perform update operation.', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -130,11 +137,13 @@ function setUserdetail(email,o,wallet=false){
              document.getElementById('quotation_id'+o.dataset.id).value = userRecord.balance;
           }
 
-          
+         AuditTrail.sendLogInfo(user, userRecord.username, 'Profile Module', 'Success', '200', 'GET')
+                  
           
         } else {
           var notification = alertify.notify('Could not perform Update location operation', 'error', 5, function(){  console.log('dismissed'); });
-      
+          AuditTrail.sendLogInfo(user, userRecord.username, 'Profile Module', 'Failed', '200', 'GET')
+         
         }
       }).catch(e => {
         // var notification = alertify.notify(e, 'error', 5, function(){  console.log('dismissed'); });
@@ -144,6 +153,8 @@ function setUserdetail(email,o,wallet=false){
 
      }
 }
+
+
 
 
 
@@ -172,15 +183,19 @@ function getUserdetail(email){
              localStorage.setItem('user_to_book',userRecord.id)
           }
 
+
+          
+          
+        AuditTrail.sendLogInfo(user, userRecord.username, 'Profile Module', 'Success', '200', 'GET')
+
          
-          
-          //document.getElementById('email').value = userRecord.email;
          return userRecord;
-          
-          
-        } else {
+           }else{
+            AuditTrail.sendLogInfo(user, userRecord.username, 'Profile Module', 'Failed', '200', 'GET')
+         
+           
           var notification = alertify.notify('Could not perform Update location operation', 'error', 5, function(){  console.log('dismissed'); });
-      
+          
         }
       }).catch(e => {
         // var notification = alertify.notify(e, 'error', 5, function(){  console.log('dismissed'); });
@@ -244,17 +259,20 @@ function updateUsersTestCenter(url, prePostData){
                 if (data.status == 200) {
                   
                   var notification = alertify.notify('Successfully update of users test location', 'success', 5, function(){  console.log('dismissed'); });
-                      
+                    
                   setTimeout(()=>{
                     window.location.reload();
-                  },2000)
+                  },4000)
                       
 
                  // ApiDeleteOneStatusRecord.redirect(recordOfType);
-                } else {
+                AuditTrail.sendLogInfo(user, userRecord.username, 'Drive Test', 'Success', '201', 'POST')
+           }else{
+            AuditTrail.sendLogInfo(user, userRecord.username, 'Drive Test', 'Failed', '200', 'GET')
+         
                   
                   var notification = alertify.notify('Could not perform update operation for users test location.', 'error', 5, function(){  console.log('dismissed'); });
-
+                  
                 }
               }).catch(e=> console.log(e));
 
@@ -336,16 +354,21 @@ function getUserRights(){
 
            localStorage.setItem('previledges', JSON.stringify(userRecord))
    
-          return  userRecord;
+        
 
-          
-        } else {
+         //AuditTrail.sendLogInfo(user, '', 'Previledges', 'Success', '201', 'POST')
+           return  userRecord;
+           }else{
+           // AuditTrail.sendLogInfo(user, userRecord.username, 'Drive Test', 'Failed', '200', 'GET')
+         
           var notification = alertify.notify('Could not perform Update location operation', 'error', 5, function(){  console.log('dismissed'); });
-      
+          
+
         }
       }).catch(e => {
          var notification = alertify.notify('Slow network....please reload the webpage or restart the service.', 'error', 5, function(){  console.log('dismissed'); });
           
+
          // localStorage.clear()
          // window.location.href='/'
         // return MessageBoard.displayMsg(e);
@@ -540,6 +563,8 @@ window.updateInspectionAction = (o) =>{
               .then(data => {
                 console.log(data)
                 if (data.status == 200) {
+
+                   AuditTrail.sendLogInfo(user, prePostData.email, 'Inspection Module', 'Success', '201', 'PUT')
                   
                   var notification = alertify.notify('Successfully created inspection ', 'success', 5, function(){  console.log('dismissed'); });
                       
@@ -548,8 +573,10 @@ window.updateInspectionAction = (o) =>{
                   },2000)
                       
 
-                 // ApiDeleteOneStatusRecord.redirect(recordOfType);
-                } else {
+                
+                      }else{
+                      AuditTrail.sendLogInfo(user, prePostData.username, 'Inspection Module', 'Failed', '200', 'PUT')
+         
                   
                   var notification = alertify.notify('Could not perform update operation.', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -1228,8 +1255,11 @@ window.viewPreviledges = (el) =>{
              // setTimeout(()=>{
              //  window.location.reload()
              // },2000)
-           // ApiDeleteOneStatusRecord.redirect(recordOfType);
-          } else {
+            AuditTrail.sendLogInfo(user,'', 'Roles And Previledges/Edit Mode', 'Success', '201', 'PUT')
+                  
+          }else{
+                      AuditTrail.sendLogInfo(user, '', 'Roles And Previledges/Edit Mode', 'Failed', '200', 'PUT')
+         
             
             var notification = alertify.notify('Could not perform update operation', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -1500,6 +1530,9 @@ window.RolesUpdate =(el) =>{
     }
 
 
+     // AuditTrail.sendLogInfo(user, '', 'Roles And Previledges/View Mode', 'Success', '201', 'PUT')
+                  
+          
 
 
 
@@ -1565,13 +1598,17 @@ window.RolesAddAction = (t) =>{
                   
                   var notification = alertify.notify('Successfully created user role.', 'success', 5, function(){  console.log('dismissed'); });
                       
+                   AuditTrail.sendLogInfo(user, prePostData.email, 'UserGroup > Roles And Previledges/Create Mode', 'Success', '201', 'PUT')
+                      
                   setTimeout(()=>{
                     window.location.href="./admin-previledges"
-                  },2000)
+                  },4000)
                       
 
-                 // ApiDeleteOneStatusRecord.redirect(recordOfType);
-                } else {
+                         
+          }else{
+                      AuditTrail.sendLogInfo(user, '', 'UserGroup > Roles And Previledges/Create Mode', 'Failed', '200', 'PUT')
+         
                   
                   var notification = alertify.notify('Could not perform update operation. Ensure the fields are filled in correctly.', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -1638,13 +1675,20 @@ window.RolesUpdateAction =(t) =>{
                   
                   var notification = alertify.notify('Successfully updated roles.', 'success', 5, function(){  console.log('dismissed'); });
                       
-                  setTimeout(()=>{
-                    window.history.back();
-                  },2000)
+                 
                       
 
-                 // ApiDeleteOneStatusRecord.redirect(recordOfType);
-                } else {
+                 AuditTrail.sendLogInfo(user,'', 'UserGroup > Roles And Previledges/EDIT Mode', 'Success', '201', 'PUT')
+                      
+                  setTimeout(()=>{
+                      window.history.back();
+                  },4000)
+                      
+
+                         
+          }else{
+                      AuditTrail.sendLogInfo(user, '', 'UserGroup > Roles And Previledges/EDIT Mode', 'Failed', '400', 'PUT')
+         
                   
                   var notification = alertify.notify('Could not perform update operation. Ensure the fields are filled in correctly.', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -1748,7 +1792,10 @@ window.viewInspectionUpdate = (el) =>{
 
           //       }
           //     }).catch(e=> console.log(e));
-         
+
+        //  AuditTrail.sendLogInfo(user,'', 'UserGroup > Roles And Previledges/EDIT Mode', 'Success', '201', 'PUT')
+                      
+                 
 
 }
 
@@ -1791,11 +1838,23 @@ function createBookingSet(postUrl, userPlanItineries){
           //MessageBoard.displayMsg('Form submitted succesfully');
           var notification = alertify.notify('succesfully created itinerary.', 'success', 5, function(){  console.log('dismissed'); });
 
+
+            AuditTrail.sendLogInfo(user,userPlanItineries.username, 'BOOKINGS Module', 'Success', '201', 'POST')
+                      
+                 
+                         
+       
+                     
+
        
         } else if (data.status === 401 || data.status === 403) {
+           AuditTrail.sendLogInfo(user, userPlanItineries.username, 'BOOKINGS Module', 'Failed', '403', 'POST')
+         
           window.location.href = './';
         } else {
           //MessageBoard.displayMsg(data.error);
+           AuditTrail.sendLogInfo(user, userPlanItineries.username, 'BOOKINGS Module', 'Failed', '400', 'POST')
+         
           var notification = alertify.notify('Error in posting data.', 'error', 5, function(){  console.log('dismissed'); });
 
         }
@@ -1827,11 +1886,22 @@ function createQuotations(postUrl, userqUOTA){
         if (data.status === 201) {
           //MessageBoard.displayMsg('Form submitted succesfully');
           var notification = alertify.notify('succesfully created quotation.', 'success', 5, function(){  console.log('dismissed'); });
-
+          AuditTrail.sendLogInfo(user,userqUOTA.username, 'BOOKINGS > QUOTATIONS', 'Success', '201', 'POST')
+                      
+                 
+              
        
         } else if (data.status === 401 || data.status === 403) {
+          AuditTrail.sendLogInfo(user,userqUOTA.username, 'BOOKINGS > QUOTATIONS', 'Failed', '201', 'POST')
+                      
+                 
+              
           window.location.href = './';
         } else {
+          AuditTrail.sendLogInfo(user,userqUOTA.username, 'BOOKINGS > QUOTATIONS', 'Failed', '201', 'POST')
+                      
+                 
+              
           //MessageBoard.displayMsg(data.error);
           var notification = alertify.notify('Error in posting quotation.', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -1992,12 +2062,18 @@ function postNotification(postUrl,prePostData){
         	console.log(data)
           //MessageBoard.displayMsg('Form submitted succesfully');
           var notification = alertify.notify('Successful transaction.', 'success', 5, function(){  console.log('dismissed'); });
-			           
+			     
+
+           AuditTrail.sendLogInfo(user,prePostData.email, 'Notification', 'Success', '201', 'POST')
+                 
 
           localStorage.setItem('urlType', postUrl);
         } else if (data.status === 401 || data.status === 403) {
+           AuditTrail.sendLogInfo(user,prePostData.email, 'Notification', 'Success', '400', 'POST')
+           
           window.location.href = './';
         } else {
+           AuditTrail.sendLogInfo(user,prePostData.email, 'Notification', 'Success', '400', 'POST')
           //MessageBoard.displayMsg(data.error);
           var notification = alertify.notify('Failed to send quotation to user', 'error', 5, function(){  console.log('dismissed'); });
 			           
@@ -2026,10 +2102,11 @@ function updateStatus(linkOfApi, statusData){
         if (data.status === 200) {
          var notification = alertify.notify('Successful transaction.', 'success', 5, function(){  console.log('dismissed'); });
 			           
-
+          AuditTrail.sendLogInfo(user,'', 'Payments', 'Success', '200', 'PUT')
           console.log(data);
           //document.getElementById('selectStatus').options[select.selectedIndex].value = newStatus;
         } else {
+          AuditTrail.sendLogInfo(user,'', 'Payments', 'Success', '200', 'PUT')
           //  //MessageBoard.displayMsg(data.error);
           var notification = alertify.notify('Failed to update paymentstatus', 'error', 5, function(){  console.log('dismissed'); });
 			
@@ -2149,6 +2226,9 @@ window.showModalVideo = function(el){
 			    document.getElementById("demoVideo").pause()
 
 			}) 
+
+
+
 		
 
 }
@@ -2460,9 +2540,18 @@ window.addEvent = (o) =>{
 	        if (data.status === 201) {
 	          modal_view_id.style.display="none";
 	          var notification = alertify.notify('Successfully created  user.', 'success', 5, function(){  console.log('dismissed'); });
-	     //     window.location.reload();
-	         // ApiDeleteOneStatusRecord.redirect(recordOfType);
+	     
+
+       AuditTrail.sendLogInfo(user,prePostData.username, 'USER ENTITY  MODULE(USER/DRIVER/ADMIN)', 'Success', '201', 'POST')
+          
+
+
 	        } else {
+
+
+  
+          AuditTrail.sendLogInfo(user,prePostData.username, 'USER ENTITY MODULE', 'Failed', '400', 'POST')
+          
 	          
 	          var notification = alertify.notify('Could not perform add operation.', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -2636,9 +2725,16 @@ window.updateRecordItins = (o) =>{
 	          var notification = alertify.notify('Successfully updated plan ', 'success', 5, function(){  console.log('dismissed'); });
 	              window.location.reload();
 
-	         // ApiDeleteOneStatusRecord.redirect(recordOfType);
+	         
+
+  
+          AuditTrail.sendLogInfo(user,prePostData.assigned_driver_name, 'ITINERARY MODULE (DRIVER ASSIIGNMENT)', 'Success', '201', 'POST')
+          
 	        } else {
-	          
+	           AuditTrail.sendLogInfo(user,prePostData.assigned_driver_name, 'ITINERARY MODULE (DRIVER ASSIIGNMENT)', 'Success', '400', 'POST')
+          
+
+
 	          var notification = alertify.notify('Could not perform update operation', 'error', 5, function(){  console.log('dismissed'); });
 
 	        }
@@ -2960,10 +3056,20 @@ window.updatePlanData = (o) =>{
 	          //document.getElementById("gtd").classList.remove("overlay")
 
 	          var notification = alertify.notify('Successfully updated plan ', 'success', 5, function(){  console.log('dismissed'); });
-	              window.location.reload();
+	              
+
+             AuditTrail.sendLogInfo(user,prePostData.plan_name, 'PLAN CATEGORY ', 'Success', '201', 'POST')
+          
+          
+            
+
+                window.location.reload();
 
 	         // ApiDeleteOneStatusRecord.redirect(recordOfType);
 	        } else {
+
+             AuditTrail.sendLogInfo(user,prePostData.plan_name, 'PLAN CATEGORY', 'FAILED', '400', 'POST')
+          
 	          
 	          var notification = alertify.notify('Could not perform update operation. Ensure the plan selected is correct.', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -3062,10 +3168,14 @@ window.updateRecordSettings = (o) =>{
 	          var notification = alertify.notify('Successful updated ', 'success', 5, function(){  console.log('dismissed'); });
 	              window.location.reload();
 	         // ApiDeleteOneStatusRecord.redirect(recordOfType);
+
+           AuditTrail.sendLogInfo(user,'', 'API SETTINGS', 'Success', '200', 'POST')
+          
 	        } else {
 	          
 	          var notification = alertify.notify('Could not perform update operation', 'error', 5, function(){  console.log('dismissed'); });
-
+            AuditTrail.sendLogInfo(user,'', 'API SETTINGS', 'FAILED', '400', 'POST')
+          
 	        }
 	      }).catch(e=> console.log(e));
 	
@@ -3282,9 +3392,13 @@ window.updateCarRecordTemplate = (o) =>{
 	              setTimeout(()=>{
                     window.location.reload();
                 },4000)
+
+                 AuditTrail.sendLogInfo(user,'', 'CARS MANAGEMENT', 'Success', '200', 'PUT')
               
 	         // ApiDeleteOneStatusRecord.redirect(recordOfType);
 	        } else {
+
+             AuditTrail.sendLogInfo(user,'', 'CARS MANAGEMENT', 'Failed', '400', 'PUT')
 	          
 	          var notification = alertify.notify('Could not perform update operation', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -3535,7 +3649,12 @@ window.addRecordEvent = (o) =>{
 
             var notification = alertify.notify('Successful created.', 'success', 5, function(){  console.log('dismissed'); });
             
-               
+              if(!prePostData.username){
+                 prePostData.username ='';
+              }
+             
+              AuditTrail.sendLogInfo(user,prePostData.username, 'SUPPORT MANAGEMENT(TICKETS/SOS/FAQS)', 'Success', '201', 'POST')
+ 
 
              if(document.getElementById("category"+ view_id)){
 
@@ -3611,9 +3730,9 @@ window.addRecordEvent = (o) =>{
            
               
 
-
-
+             
           } else {
+            AuditTrail.sendLogInfo(user,'', 'SUPPORT MANAGEMENT(TICKETS/SOS/FAQS)', 'fAILED', '400', 'PUT')
             
             var notification = alertify.notify('Could not perform update operation', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -3743,6 +3862,13 @@ window.updateRecordTemplate = (o) =>{
 
 	          var notification = alertify.notify('Successful updated ', 'success', 5, function(){  console.log('dismissed'); });
 	          
+
+            if(!prePostData.username){
+                 prePostData.username ='';
+              }
+             
+              AuditTrail.sendLogInfo(user,prePostData.username, 'SUPPORT MANAGEMENT(TICKETS/SOS/FAQS)', 'Success', '201', 'PUT')
+ 
                
 
              if(tickets==true){
@@ -3809,7 +3935,12 @@ setTimeout(()=>{
 	        } else {
 	          
 	          var notification = alertify.notify('Could not perform update operation', 'error', 5, function(){  console.log('dismissed'); });
-
+            if(!prePostData.username){
+                 prePostData.username ='';
+              }
+             
+              AuditTrail.sendLogInfo(user,prePostData.username, 'SUPPORT MANAGEMENT(TICKETS/SOS/FAQS)', 'Failed', '201', 'PUT')
+ 
 	        }
 	      }).catch(e=> console.log(e));
 	 
@@ -3867,7 +3998,9 @@ window.addCarRecordEvent = (o) =>{
      
      if(avatar.length<=0){
        images = 'https://commute-bucket.s3.amazonaws.com/car1.jpg';
-      
+        var notification = alertify.notify('Upload an image for the car', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
      }
 
 
@@ -3912,10 +4045,16 @@ window.addCarRecordEvent = (o) =>{
                 let modal_view_id = document.getElementsByClassName("mebox");
                 modal_view_id[0].style.display="none";
                 //document.getElementById("gtd").classList.remove("overlay")
-                var notification = alertify.notify('Successfully created  user.', 'success', 5, function(){  console.log('dismissed'); });
+                var notification = alertify.notify('Successfully created  car.', 'success', 5, function(){  console.log('dismissed'); });
+                 
+                AuditTrail.sendLogInfo(user,'', 'CAR MGT', 'Success', '201', 'POST')
+ 
                     window.location.reload();
                // ApiDeleteOneStatusRecord.redirect(recordOfType);
               } else {
+
+                AuditTrail.sendLogInfo(user,'', 'CAR MGT', 'Failed', '400', 'POST')
+ 
                 
                 var notification = alertify.notify('Could not perform add operation.', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -3965,10 +4104,15 @@ window.addPlanEvent = (o) => {
 	          let modal_view_id = document.getElementsByClassName("mebox");
 	          modal_view_id[0].style.display="none";
 	          //document.getElementById("gtd").classList.remove("overlay")
-	          var notification = alertify.notify('Successfully created  user.', 'success', 5, function(){  console.log('dismissed'); });
-	              window.location.reload();
+	          var notification = alertify.notify('Successfully created  Plan.', 'success', 5, function(){  console.log('dismissed'); });
+	           
+             AuditTrail.sendLogInfo(user,'', 'PLAN MODULE', 'Success', '201', 'PUT')
+ 
+                window.location.reload();
 	         // ApiDeleteOneStatusRecord.redirect(recordOfType);
 	        } else {
+
+            AuditTrail.sendLogInfo(user,'', 'PLAN MODULE', 'Failed', '201', 'PUT')
 	          
 	          var notification = alertify.notify('Could not perform add operation.', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -4126,9 +4270,13 @@ window.updateData = (o) =>{
 	        if (data.success === "ok") {
 	          modal_view_id.style.display="none";
 	          var notification = alertify.notify('Successfully updated user ', 'success', 5, function(){  console.log('dismissed'); });
-	              window.location.reload();
+	             AuditTrail.sendLogInfo(user,prePostData.username, 'USER MODULE (ADMIN/USER/DRIVER)', 'Success', '201', 'PUT')
+
+                window.location.reload();
 	         // ApiDeleteOneStatusRecord.redirect(recordOfType);
 	        } else {
+             AuditTrail.sendLogInfo(user,prePostData.username, 'USER MODULE (ADMIN/USER/DRIVER)', 'Failed', '201', 'PUT')
+
 	          
 	          var notification = alertify.notify('Could not perform update operation', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -4211,8 +4359,13 @@ window.deleteData = (o)=>{
           //document.getElementById("gtd").classList.remove("overlay")
           var notification = alertify.notify('Successful delete operation', 'success', 5, function(){  console.log('dismissed'); });
           
+
+           AuditTrail.sendLogInfo(user,'', 'DELETE MODE', 'Success', '201', 'PUT')
+
               window.location.reload();
         } else {
+
+           AuditTrail.sendLogInfo(user,'', 'DELETE MODE', 'Failed', '201', 'PUT')
           var notification = alertify.notify('Could not perform delete operation', 'error', 5, function(){  console.log('dismissed'); });
         }
       });
@@ -4258,8 +4411,12 @@ const profileUpdate = (o)=>{
 	         // ApiDeleteOneStatusRecord.redirect(recordOfType);
 
 	         
-    window.location.reload();
-	        } else {
+     AuditTrail.sendLogInfo(user,'', 'DELETE MODE', 'Success', '201', 'PUT')
+
+              window.location.reload();
+        } else {
+
+           AuditTrail.sendLogInfo(user,'', 'DELETE MODE', 'Failed', '201', 'PUT')
 	          
 	          var notification = alertify.notify('Could not perform update profile operation', 'error', 5, function(){  console.log('dismissed'); });
 
@@ -9817,6 +9974,84 @@ modalbody1.innerHTML= viewModals;
 
   }
 
+  static runAdminActivityTrail(dataTrails){
+    //console.log(dataTrails)
+    //console.log('working on audit trailing...')
+
+
+    let data = [...dataTrails]
+    let htmlConstruct =''
+    data.map((item, i) => { 
+      
+
+
+
+    htmlConstruct +=`<li  className="row  loadmore  card">
+          <div className="profile col-xs-2 pull-right">
+            <img src="${item.avatar}"  style="height:100px;width:100px"/>
+          </div>
+          <div className="activity-content col-xs-10  ">
+            <div className="inner">
+              <span className="date">${item.date} || ${item.message_type}</span>
+              <div className="name">${item.admin}</div>
+              <div className="content">
+                <p>
+                   ${item.logMessage}
+                </p>
+                 <p>
+                  Module: ${item.module_name} || status: ${item.status}
+                </p>
+              </div>
+            </div>
+          </div>
+          <hr/>
+        </li>`;
+
+
+      })
+    document.getElementById("loadbase").innerHTML = htmlConstruct;
+
+
+
+   setTimeout(()=>{
+     loadMore()
+   },4000)
+
+          
+          function loadMore(){
+                $(function () {
+                  $(".loadmore").hide();
+                    $(".loadmore").slice(0, 4).show();
+                    $("#loadMore").on('click', function (e) {
+                        e.preventDefault();
+                        $("li:hidden").slice(0, 4).slideDown();
+                        if ($("li:hidden").length == 0) {
+                            $("#load").fadeOut('slow');
+                        }
+                        $('html,body').animate({
+                            scrollTop: $(this).offset().top
+                        }, 1500);
+                    });
+                });
+
+                // $('a[href=#top]').click(function () {
+                //     $('body,html').animate({
+                //         scrollTop: 0
+                //     }, 600);
+                //     return false;
+                // });
+
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 50) {
+                        $('.totop a').fadeIn();
+                    } else {
+                        $('.totop a').fadeOut();
+                    }
+                });
+
+          }
+  }
+
 
 
 
@@ -9923,6 +10158,7 @@ modalbody1.innerHTML= viewModals;
 			   activeUrl+ `/admin-sales-yesterday`,
          activeUrl+ `/admin-sales-lastweek`,
          activeUrl+ `/admin-users-month-ago`,
+         activeUrl+`/get-trails`
 
 
 
@@ -10128,6 +10364,10 @@ modalbody1.innerHTML= viewModals;
 		    	 break;
          case "admin-previledges":
            ApiAdminBotService.runAdminPreviledges(datas[26].data[0].previledges)
+             app.style.display="block"
+           break; 
+        case "admin-logs":
+           ApiAdminBotService.runAdminActivityTrail(datas[30].data[0].audit)
              app.style.display="block"
            break;  
 		    	default:

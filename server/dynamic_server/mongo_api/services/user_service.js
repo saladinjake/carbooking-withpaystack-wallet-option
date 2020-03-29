@@ -13,6 +13,7 @@ const uuidv4 = require('uuid/v4');
 
 
 import {passport ,express} from '../App'; 
+import AuditNotificationModel from '../models/AuditNotification.model';
 import UserPlanModel from '../models/UserPlan.model';
 import PlanModel from "../models/Plan.model";
 import ItineraryModel from '../models/Itinerary.model';
@@ -830,113 +831,6 @@ static updateAsyncUserPreviledges = async function(request,response){
 
 
 
-
-
-
-    //////////////////////////////////////////
-
-
-     // RolesAndPreviledgesModel.findOne({ for_admins:  true, previledges_info: request.params.roles }, function (err, roles){
-           
-     //                  if (!roles) {
-     //                    return response.status(400).send({ msg: 'We were unable to find a plan with that id.' });
-     //                  }
-
-     //                  console.log(roles+ "<>>>>>>>>>>>>>>>>>>>>>>")
-
-                    
-
-                     
-
-     //                    UserModel.updateMany({ for_admins:  true , roles: request.params.roles},{ $set:{  
-     //                       // usergroup_set:new String(request.params.roles),
-     //                       // roles: new String(request.params.roles),
-
-     //                         view_bookings: roles.view_bookings,
-     //                        view_quotations: roles.view_quotations,
-     //                        view_transactions: roles.view_transactions,
-     //                        view_payments : roles.view_payments,
-     //                        view_drivers :  roles.view_drivers,
-     //                        view_sos: roles.view_sos,
-     //                        view_partners :  roles.view_partners,
-     //                        view_package:roles.view_package,
-     //                        view_cars: roles.view_cars,
-     //                        view_tickets : roles.view_tickets,
-     //                        view_faqs : roles.view_faqs,
-     //                        view_users : roles.view_users,
-     //                        view_admins : roles.view_admins,
-     //                        view_settings : roles.view_settings,
-
-
-                          
-     //                        manage_bookings : roles.manage_bookings,
-     //                        manage_quotations : roles.manage_quotations,
-     //                        manage_transactions : roles.manage_transactions,
-     //                        manage_payments : roles.manage_payments,
-     //                        manage_drivers : roles.manage_drivers,
-     //                        manage_sos: roles.manage_sos,
-     //                        manage_partners : roles.manage_partners,
-     //                        manage_package: roles.manage_package,
-     //                        manage_cars: roles.manage_cars,
-     //                        manage_tickets : roles.manage_tickets,
-     //                        manage_faqs : roles.manage_faqs,
-     //                        manage_users : roles.manage_users,
-     //                        manage_admins : roles.manage_admins,
-     //                        manage_settings : roles.manage_settings,
-
-     //                     }
-
-
-     //                   },{ multi: true }, function(err,result){
-     //                        if (err) {
-     //                           console.log(err)
-     //                          response.send(err);
-     //                        } else {
-     //                          console.log("successful ________________----------------------------------")
-     //                           console.log(result)
-
-
-
-       
-
-     //                            UserModel.find({_id: request.params.id})
-     //                              .then(data => {
-     //                                console.log("specific profile:" + data)
-                                    
-                                   
-     //                                const userInfo = data; //related
-     //                                if (userInfo.length <= 0) {
-     //                                        return response.status(404).json({
-     //                                          status: 404,
-     //                                          error: 'The user with the given id does not exists',
-     //                                        });
-     //                                }
-     //                                return response.status(200).json({
-     //                                        status: 200,
-     //                                        data: [
-     //                                          {
-     //                                            userInfo,
-     //                                            message: 'Get a specific user was successful',
-     //                                          },
-     //                                        ],
-     //                                  });
-     //                              })
-     //                              .catch(err =>
-     //                                      response.status(400).json({
-     //                                        status: 400,
-     //                                        error: ErrorHandler.errors().validationError,
-     //                                      }),
-     //                                    );
-     //          }//end else  
-
-
-     //          })
-
-         
-         
-
-     //  })                
-    
   }
 
 
@@ -956,19 +850,7 @@ static updateAsyncUserPreviledges = async function(request,response){
                 });
 
         }
-       //  let previledges = {
-       //      view_payments:userInfo[0].view_payments,
-       //  view_transactions:userInfo[0].view_transactions,
-       
-       //  view_quotations:userInfo[0].view_quotations,
-       //  view_cars:userInfo[0].view_cars,
-       //  view_drivers:userInfo[0].view_drivers,
-       // view_drivers:userInfo[0].view_drivers,
-       //  view_sos:userInfo[0].view_sos,
-       //  view_package:userInfo[0].view_package,
-       //  view_bookings:userInfo[0].view_bookings,
-       //  };
-
+      
 
 
         return response.status(200).json({
@@ -7129,6 +7011,100 @@ static showUserInfo(request,response){
               }),
             );
     
+
+}
+
+
+static getTrails(request,response){
+
+
+  AuditNotificationModel.find({})
+      .then(data => {
+        console.log("specific profile:" + data)
+        
+       
+        const audit = data; //related
+        // if (audit.length <= 0) {
+        //         return response.status(404).json({
+        //           status: 404,
+        //           error: 'The user with the given id does not exists',
+        //         });
+
+        // }
+      
+
+
+        return response.status(200).json({
+                status: 200,
+                data: [
+                  {
+                    audit,
+                    message: 'Get a specific user was successful',
+                  },
+                ],
+          });
+      })
+      .catch(err =>{
+              console.log(err +">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+              response.status(400).json({
+                status: 400,
+                error: ErrorHandler.errors().validationError,
+              });
+            });
+}
+
+
+static createTrail(request,response){
+
+
+  let { date,
+           admin,
+           user,
+           module_name,
+           status,
+           message_type,
+           logMessage,
+           avatar,
+    } = request.body;
+
+    
+
+    const NewAuditTrail = new AuditNotificationModel({ 
+      id: new AutoincrementId(AuditNotificationModel).counter(), 
+      date,
+           admin,
+           user,
+           module_name,
+           status,
+           message_type,
+           logMessage,
+           avatar
+       });
+
+
+     NewAuditTrail.save()
+      .then(data => {
+        const user = data;
+        return response.status(201).json({
+                status: 201,
+                data: [
+                  {
+                    user,
+                    message: 'AUDIT SUCCESSFULLY CREATED',
+                  },
+                ],
+          });
+        
+
+        
+      })
+      .catch(err => {
+        console.log(err+ 'error here')
+        response.status(400).json({
+          status: 400,
+          error: ErrorHandler.errors().validationError,
+        });
+      });
 
 }
 

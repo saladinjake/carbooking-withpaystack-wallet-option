@@ -4,6 +4,7 @@ import MenuRenderer from '../core/MenuTemplate';
 
 const objData = {
  Menu: new MenuRenderer(),
- AdminRunner: new AdminController()
+ AdminRunner: new AdminController(),
+ 
 };
 export default objData;

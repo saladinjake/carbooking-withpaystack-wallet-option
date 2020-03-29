@@ -880,7 +880,7 @@ this.router.get('/email/smtp/template', (req, res, next) => {
   this.router.post("/add-roles", //create 
     TokenVerification.adminAuthentication,
     UserController.createNewPreviledges
-  );
+  );//
 
 
    this.router.put("/admin-previledges-update/:id", //create 
@@ -924,6 +924,18 @@ this.router.get('/email/smtp/template', (req, res, next) => {
       TokenVerification.userAuthentication,
       UserController.showProfileRights
     );//showProfileRights(request,response)
+
+
+
+  this.router.get("/get-trails", //read done
+    TokenVerification.adminAuthentication,
+    UserController.getTrails
+  );
+
+  this.router.post("/log-audit", //create 
+    TokenVerification.adminAuthentication,
+    UserController.createTrail
+  );//
 
 
 

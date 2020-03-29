@@ -53,76 +53,91 @@ class AuthRoutes {
   //   return this.router;
 
   
-const createToken = auth => {
-    return JWT.sign({
-        id: auth.id
+const createToken = (req, res) => {
+    const accessToken = JWT.sign({
+        id: req.user.id
+        //email
+        //username
     }, process.env.SECRET, { expiresIn: 60 * 120 });
+   
+    req.token =  accessToken;
+    res.setHeader('x-auth-token', req.token);
+    res.status(200).json(req.token);
+    res.redirect(`/${req.roken}`);
 }
-// module.exports = {
-//     facebookOAuth: async (req, res, next) => {
-//         if(!req.user) {
-//             return res.send(401, 'User not authenticated');
-//         }
-//         req.token = createToken(req.user);
-//         res.setHeader('x-auth-token', req.token);
-//         res.status(200).json(req.token);
-//     }
-// };
+
+
+      this.router.get('/google/start',
+         passport.authenticate('google', { session: false, scope: ['openid', 'profile', 'email'] }));
+      this.router.get('/google/redirect',
+         passport.authenticate('google', { session: false }),
+         createToken);
+
+      this.router.get('/auth/facebook',
+        passport.authenticate('facebook', { session: false, scope: ['public_profile'] }));
+      this.router.get('/auth/facebook/callback',
+         passport.authenticate('facebook', { session: false }),
+         createToken);
+
+
+       //working code...
+
+
     // send to google to do the authentication
-    this.router.get('/auth/facebook',
-        passport.authenticate('facebook'),
-        function(req, res){});
-    this.router.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {session: false, failureRedirect: '/' }),
-        function(req, res) {
-           //console.log(req.user)
-        if(!req.user) {
-            return res.send(401, 'User not authenticated');
-        }
+    // this.router.get('/auth/facebook',
+    //     passport.authenticate('facebook'),
+    //     function(req, res){});
+    // this.router.get('/auth/facebook/callback',
+    //     passport.authenticate('facebook', {session: false, failureRedirect: '/' }),
+    //     function(req, res) {
+    //        //console.log(req.user)
+    //     if(!req.user) {
+    //         return res.send(401, 'User not authenticated');
+    //     }
 
-        if(req.user){
-          console.log(req.user)
-        }
+    //     if(req.user){
+    //       console.log(req.user)
+    //     }
 
         
-        req.token = createToken(req.user);
-        res.setHeader('x-auth-token', req.token);
-        res.status(200).json(req.token);
-        // res.redirect(`/${req.roken}`);
+    //     req.token = createToken(req.user);
+    //     res.setHeader('x-auth-token', req.token);
+    //     res.status(200).json(req.token);
+    //     // res.redirect(`/${req.roken}`);
         
-    });
+    // });
 
-    this.router.get('/auth/twitter',
-        passport.authenticate('twitter'),
-        function(req, res){});
-    this.router.get('/auth/twitter/callback',
-        passport.authenticate('twitter', { failureRedirect: '/' }),
-        function(req, res) {
-          res.redirect('http://localhost:4000');
-        });
+    // this.router.get('/auth/twitter',
+    //     passport.authenticate('twitter'),
+    //     function(req, res){});
+    // this.router.get('/auth/twitter/callback',
+    //     passport.authenticate('twitter', { failureRedirect: '/' }),
+    //     function(req, res) {
+    //       res.redirect('http://localhost:4000');
+    //     });
 
       
-    this.router.get('/auth/google',
-        passport.authenticate('google', { scope: [
-          'https://www.googleapis.com/auth/plus.login',
-          'https://www.googleapis.com/auth/plus.profile.emails.read'
-        ] }
-      ));
-    this.router.get('/auth/google/callback',
-        passport.authenticate('google', { failureRedirect: '/' }),
+    // this.router.get('/auth/google',
+    //     passport.authenticate('google', { scope: [
+    //       'https://www.googleapis.com/auth/plus.login',
+    //       'https://www.googleapis.com/auth/plus.profile.emails.read'
+    //     ] }
+    //   ));
+    // this.router.get('/auth/google/callback',
+    //     passport.authenticate('google', { failureRedirect: '/' }),
         
-        function(req, res) {
-          res.redirect('http://localhost:4000');
-    });
+    //     function(req, res) {
+    //       res.redirect('http://localhost:4000');
+    // });
 
-    this.router.get('/auth/instagram',
-        passport.authenticate('instagram'),
-        function(req, res){});
-    this.router.get('/auth/instagram/callback',
-        passport.authenticate('instagram', { failureRedirect: '/' }),
-        function(req, res) {
-          res.redirect('/account');
-    });
+    // this.router.get('/auth/instagram',
+    //     passport.authenticate('instagram'),
+    //     function(req, res){});
+    // this.router.get('/auth/instagram/callback',
+    //     passport.authenticate('instagram', { failureRedirect: '/' }),
+    //     function(req, res) {
+    //       res.redirect('/account');
+    // });
 
 
 
