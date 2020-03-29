@@ -2,6 +2,8 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
+import Mapp from './components/map'
+
 //user
 import HomeLogin from './components/User/Home/Home';
 import Register from './components/User/Register/Register';
@@ -270,6 +272,7 @@ const Router = () => (
 
 
    
+             <Route exact path="/map" component={Mapp} />
 
 
 
