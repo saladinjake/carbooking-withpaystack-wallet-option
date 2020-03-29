@@ -420,12 +420,12 @@ function dashboard() {
                   console.log(planClicked)
                   let payButton = ``;
                   selectedItineraries.map((item, i) => {
-                           if(item.status=="Ongoing"){
+                           if(item.status=="Paid"){
                              className="label-danger";
                              //item.status=`<span class="label label-table label-danger">${item.status}</span>`;
 
                              payButton=`<td class="">
-                                    <a  href="#" onclick="setClickedItinerary(this)" data-driver="${planClicked.cars_on_plan[0].assigned_driver_name}" data-driver_email="${planClicked.cars_on_plan[0].assigned_driver_email}" data-driver-plate_num="${planClicked.cars_on_plan[0].assigned_driver_phone}" data-driver_loc="${planClicked.cars_on_plan[0].assigned_driver_location}" data-status="${item.status}"  data-id="${item.id}" data-travel_option="${item.travel_option}" data-pickup_time=${item.pickup_time} data-start_time="${formatDate(new Date(item.start_time))}" data-end_time="${item.end_time}"  data-start_location="${item.start_location}" data-destination="${item.destination}" data-drive_option="${item.drive_option}"  class="table-action-btn btn-custom btn-purple right-bar-toggle"><i class="md md-chevron-right"></i></a>
+                                    <a  href="#" onclick="setClickedItinerary(this)" data-driver="${planClicked.cars_on_plan[0].assigned_driver_name}" data-driver_email="${planClicked.cars_on_plan[0].assigned_driver_email}" data-driver-plate_num="${planClicked.cars_on_plan[0].assigned_driver_phone}" data-driver_loc="${planClicked.cars_on_plan[0].assigned_driver_location}" data-status="${item.status}"  data-id="${item.id}" data-travel_option="${item.travel_option}" data-pickup_time=${item.pickup_time} data-start_time="${formatDate(new Date(item.start_time))}" data-end_time="${item.end_time}"  data-start_location="${item.start_location}" data-destination="${item.destination}" data-drive_option="${item.drive_option}"  class="table-action-btn btn-custom btn-purple right-bar-toggle "><i class="md md-chevron-right"></i></a>
                                 </td>`;
 
                             
@@ -435,11 +435,18 @@ function dashboard() {
                             payButton= `<td class="">
                                        <button class="btn btn-danger" disabled>Completed</button>
                             </td>`;
-                          }else{
+                          }else if(item.status=="Unpaid"){
                             className="label-warning";
+                            document.getElementById('start').disabled=true;
+                            let msgBox =`<span class="label label-danger">You can not start this trip. please make payments for this plan to start the trip</span>`;
+                            
+                            document.getElementById("itin-ids").innerHTML = msgBox;
+
+
+
 
                             payButton=`<td class="">
-                                    <a  href="#" onclick="setClickedItinerary(this)" data-driver="${planClicked.cars_on_plan[0].assigned_driver_name}" data-driver_email="${planClicked.cars_on_plan[0].assigned_driver_email}" data-driver-plate_num="${planClicked.cars_on_plan[0].assigned_driver_phone}" data-driver_loc="${planClicked.cars_on_plan[0].assigned_driver_location}" data-status="${item.status}"  data-id="${item.id}" data-travel_option="${item.travel_option}" data-pickup_time=${item.pickup_time} data-start_time="${formatDate(new Date(item.start_time))}" data-end_time="${item.end_time}"  data-start_location="${item.start_location}" data-destination="${item.destination}" data-drive_option="${item.drive_option}"  class="table-action-btn btn-custom btn-purple right-bar-toggle"><i class="md md-chevron-right"></i></a>
+                                    <a id="click-me"  href="#" onclick="setClickedItinerary(this)" data-driver="${planClicked.cars_on_plan[0].assigned_driver_name}" data-driver_email="${planClicked.cars_on_plan[0].assigned_driver_email}" data-driver-plate_num="${planClicked.cars_on_plan[0].assigned_driver_phone}" data-driver_loc="${planClicked.cars_on_plan[0].assigned_driver_location}" data-status="${item.status}"  data-id="${item.id}" data-travel_option="${item.travel_option}" data-pickup_time=${item.pickup_time} data-start_time="${formatDate(new Date(item.start_time))}" data-end_time="${item.end_time}"  data-start_location="${item.start_location}" data-destination="${item.destination}" data-drive_option="${item.drive_option}"  class="table-action-btn btn-custom btn-purple right-bar-toggle " ><i class="md md-chevron-right"></i></a>
                                 </td>`;
 
                             //   payButton= `<td class="">
@@ -449,6 +456,22 @@ function dashboard() {
                           
 
                             
+                          }else{
+                            document.getElementById('start').disabled=true;
+                            let msgBox =`<span class="label label-danger">Quotations has not yet been sent to make  payments for this plan to start the trip.</span>`;
+                            
+                            document.getElementById("itin-ids").innerHTML = msgBox;
+                            
+
+                            className="label-warning";
+                           
+                            
+
+
+                            payButton=`<td class="">
+                                    <a  href="#" onclick="setClickedItinerary(this)" data-driver="${planClicked.cars_on_plan[0].assigned_driver_name}" data-driver_email="${planClicked.cars_on_plan[0].assigned_driver_email}" data-driver-plate_num="${planClicked.cars_on_plan[0].assigned_driver_phone}" data-driver_loc="${planClicked.cars_on_plan[0].assigned_driver_location}" data-status="${item.status}"  data-id="${item.id}" data-travel_option="${item.travel_option}" data-pickup_time=${item.pickup_time} data-start_time="${formatDate(new Date(item.start_time))}" data-end_time="${item.end_time}"  data-start_location="${item.start_location}" data-destination="${item.destination}" data-drive_option="${item.drive_option}"  class="table-action-btn btn-custom btn-purple right-bar-toggle " ><i class="md md-chevron-right"></i></a>
+                                </td>`;
+
                           }
                           itineraries_record = `
                           <tr id="${i}">
@@ -465,6 +488,8 @@ function dashboard() {
                          planned_itineraries.insertAdjacentHTML('beforeend', itineraries_record); 
                       });
 
+
+                        
 
                   let tablebody2 = document.getElementById('tablebody1');
                
@@ -546,7 +571,7 @@ function dashboard() {
 
 
                         //start trip detail right side view
-                        initialize()
+                        initializeMap()
 
 
 

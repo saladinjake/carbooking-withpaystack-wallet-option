@@ -1796,6 +1796,9 @@ static updateUsersItinerary(request,response){
     const  {
               status,
               //plan_id,
+              user_plan_id,
+              has_received_payments,
+              has_received_quote,
              
             }= request.body;
 
@@ -1818,7 +1821,13 @@ static updateUsersItinerary(request,response){
 
 
 
-    ItineraryModel.updateMany({ plan_id: new String(request.params.id) },{ $set:{  status:status}},{ multi: true }, function(err,result){
+    ItineraryModel.updateMany({ plan_id: new String(request.params.id) },{ $set:{ 
+              status: status,
+              //plan_id,
+              user_plan_id:new String(request.params.id),
+              has_received_payments: has_received_payments,
+              has_received_quote: has_received_quote
+            }},{ multi: true }, function(err,result){
                          if (err) {
                               console.log(err)
                               res.send(err);
@@ -6926,10 +6935,15 @@ getUser = (req, res) => {
   static updateItineraryStatusAdmin(request, response) {
 
      const {  status,
-                    user_plan_id,
+              user_plan_id,
+              has_received_quote,
                   
                   } = request.body;
-
+        let has_received_payments ='No';
+        if(request.body.has_received_payments ){
+                     has_received_payments = request.body.has_received_payments
+        }
+      
                   //multiple updates of the status for this itineraries attached to this plan
 
     ItineraryModel.findOne({plan_id: request.params.id}, function (err, user) {
@@ -6948,14 +6962,54 @@ getUser = (req, res) => {
         if (err) { return response.status(500).send({ msg: err.message }); }
         console.log(user + 'hello')
           //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
-          return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .' });
+
+
+          ItineraryModel.updateMany({ plan_id: user_plan_id },{
+              $set:{  status:status, 
+                      user_plan_id: user_plan_id,
+                       has_received_quote:has_received_quote,
+                        has_received_payments: has_received_payments
+                      }},{ multi: true }, function(err,result){
+                         if (err) {
+                              console.log(err)
+                              response.send(err);
+                            } else {
+
+
+                               UserPlanModel.updateMany({ plan_id: user_plan_id },{
+                                            $set:{  //status:status, 
+                                                    "itineries.$[].status":status,
+                                                  }},{ multi: true }, function(err,result){
+                                     if (err) {
+                                          console.log(err)
+                                          response.send(err);
+                                        } else {
+                                          console.log(result)
+                                          return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated itineraries of this plan .' });
+                                
+                                        }
+
+                              })
+                              // console.log(result)
+                              // return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated itineraries of this plan .' });
+                    
+                            }
+
+    })     
+
+          //return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .' });
       }); 
     });
 
- // ItineraryModel.updateMany({ plan_id: plan_id },{ $set:{  status:status}},{ multi: true }, function(err,result){
+ // ItineraryModel.updateMany({ plan_id: plan_id },{
+ //              $set:{  status:status, 
+ //                      user_plan_id: user_plan_id,
+ //                       has_received_quote:has_received_quote,
+ //                        has_received_payments: has_received_payments
+ //                      }},{ multi: true }, function(err,result){
  //                         if (err) {
- //                              console.log(err)
- //                              res.send(err);
+ //                              console.log(err.message)
+ //                              response.send(err.message);
  //                            } else {
  //                              console.log(result)
  //                              return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated itineraries of this plan .' });

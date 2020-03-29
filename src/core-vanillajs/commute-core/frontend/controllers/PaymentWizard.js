@@ -1,5 +1,8 @@
 import $ from "jquery"
 
+
+
+
 function setOldBalance(balance){
 
    const user = JSON.parse(localStorage.getItem('userToken'))
@@ -99,6 +102,13 @@ export default class PaymentWizard{
               } )
 
                  },3000)
+
+
+              let itins_url ="http://localhost:12000/api/v1/user-itinerary-status-update/"+ planId;
+              let prepostItins ={
+                status:'Paid',
+              }
+
 
 
 				   
@@ -270,7 +280,7 @@ export default class PaymentWizard{
  
     	 updateAccountBalance(linkOfApi,record) //
     	 updateStatus('http://localhost:12000/api/v1/'+  `plan-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', amount: userPaymentDetails.amount, has_updated: 'Yes' }) //itinerary status
-    	 updateStatus('http://localhost:12000/api/v1/'+  `itin-status/`+ userPaymentDetails.plan_id + '/update' , {status:'ongoing'}) //plan status
+    	 updateStatus('http://localhost:12000/api/v1/'+  `itin-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', has_received_payments:'Yes', has_received_quote:'Yes', user_plan_id:  userPaymentDetails.plan_id }) //plan status
     	 updateStatus('http://localhost:12000/api/v1/'+  `quote-status/`+ userPaymentDetails.plan_id + '/update',{status:'Paid', amount: userPaymentDetails.amount, has_updated:'Yes'}) //quotation
        getBalance()
          

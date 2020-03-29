@@ -99,9 +99,11 @@ let ItinerarySchema = new mongoose.Schema({
          },
          has_received_quote:{
           type: String,
+          default:'No',
          },
          has_received_payments:{
           type:String,
+          default:'No',
          },
 
          // status: {

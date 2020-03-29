@@ -2090,7 +2090,7 @@ function updateStatus(linkOfApi, statusData){
 	fetch(linkOfApi, {
       method: 'PUT',
       headers: {
-        Accept: 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
         'x-access-token': user.token,
       },
@@ -2107,11 +2107,14 @@ function updateStatus(linkOfApi, statusData){
           //document.getElementById('selectStatus').options[select.selectedIndex].value = newStatus;
         } else {
           AuditTrail.sendLogInfo(user,'', 'Payments', 'Success', '200', 'PUT')
+
           //  //MessageBoard.displayMsg(data.error);
           var notification = alertify.notify('Failed to update paymentstatus', 'error', 5, function(){  console.log('dismissed'); });
 			
         }
-      });
+      }).catch(e =>{
+        console.log(e)
+      })
 }
 
 
@@ -8197,7 +8200,10 @@ function enforceFloat() {
 			        	
 			            let userplan_url ="http://localhost:12000/api/v1/userplan-status-update/"+ planId ;
 			            let itins_url ="http://localhost:12000/api/v1/user-itinerary-status-update/"+ planId;
-			            let notification_url ="http://localhost:12000/api/v1/notification"; 
+			            
+
+
+                  let notification_url ="http://localhost:12000/api/v1/notification"; 
 			            
 			            let dataNotification = {
 			              user_id: this_user,
@@ -8212,10 +8218,12 @@ function enforceFloat() {
 		        	   //craete notification and update status to ongoing
 		        	   postNotification(notification_url,dataNotification);
 
+                 var notification = alertify.notify('Please wait while transaction is  processing...', 'success', 10, function(){  console.log('dismissed'); });
+
 
 		        	let dataPlan = {
 			              status:status,
-			              payment_status: status,
+			              payment_status: status ,
 			              email: this_user,
 			               has_updated: "Yes",
 			               plan_id: planId,
@@ -8226,11 +8234,14 @@ function enforceFloat() {
 			          let dataItins ={
 			          	
 			               //price:amt,
-			                status:status,
+			                status:status ,
 			              user_plan_id:planId,
-			              plan_id:planId
+			              plan_id:planId,
+                    has_received_quote: 'Yes',
 
 			          } 
+
+           
 
                 let dataQuotations = {
                    plan_id: planId,
@@ -8262,7 +8273,7 @@ function enforceFloat() {
                setTimeout(() =>{
                   btn.disabled = false;
                 window.location.reload()
-               },3000)
+               },15000)
 		              
 		          }
 		          else{

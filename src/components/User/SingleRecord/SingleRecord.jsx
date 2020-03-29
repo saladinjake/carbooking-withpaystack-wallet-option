@@ -190,7 +190,7 @@ export default class SingleRecord extends Component {
                         <div className="row col-md-12 col-lg-12 ">
                             <div className="col-xs-12 col-md-6 col-sm-6">
                                 <div className="form-group">
-                                <p>CMT-ITIN-<span id="itin-ids" className="h4" ></span></p>
+                                <p id="itin-ids" className="h4" ></p>
                                 </div>
                             </div> 
                         
@@ -349,7 +349,11 @@ export default class SingleRecord extends Component {
 
 
 
-          
+          <div id="slideout">
+    <div id="containclickme">
+        <div className="metro three-d" id="click-me"></div>
+    </div>
+</div>
             
 
            </React.Fragment>    

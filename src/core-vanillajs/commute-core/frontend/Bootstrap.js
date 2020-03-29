@@ -25,6 +25,8 @@ import MenuRenderer from '../core/MenuTemplate';
 import Cusor from '../frontend/controllers/Cusor';
  
 
+
+
 const FrontendRepoBootstrap = {
   Menu: new MenuRenderer(),
   SignUp: new WebsiteSignUp(), //Registers Users online
