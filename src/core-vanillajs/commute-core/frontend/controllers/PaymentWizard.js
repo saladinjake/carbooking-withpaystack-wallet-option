@@ -131,8 +131,27 @@ export default class PaymentWizard{
            	 //redirect to paystack PAYMENT
            	 PaymentWizard.payWithPaystack()
            }else{
+            let user = JSON.parse(localStorage.getItem('userToken'))
+            if(document.getElementById("amount2")){
+                let paymentDetail = JSON.parse(localStorage.getItem("quoteToPay"));   
+
+               let oldb = parseFloat(user.user.balance)
+      
+
+             if(oldb<=0){
+               var notification = alertify.notify('Insufficient balance to perform transaction. You need to top up', 'error', 10, function(){  console.log('dismissed'); });
+         
+               return window.location.href="./wallet"
+              
+              }else if(parseFloat(oldb)< parseFloat(paymentDetail.amount)){
+                var notification = alertify.notify('Insufficient balance to perform transaction. You need to top up', 'error', 10, function(){  console.log('dismissed'); });
+         
+               return window.location.href="./wallet"
+              }
            	 // pay from wallet account
            	 PaymentWizard.driftToEWalletPayment();
+
+            }
            }
     });
 	}
@@ -161,20 +180,9 @@ export default class PaymentWizard{
   		document.getElementById("deduction").innerHTML =  paymentDetail.amount;
   		let newbalance = user.user.balance - paymentDetail.amount;
   		document.getElementById("newbalance").innerHTML = newbalance
-       let oldBalance = parseFloat(user.user.balance);
-       if(oldBalance<=0){
-            
-            var notification = alertify.notify('Insufficient balance to perform transaction. You need to top up', 'error', 10, function(){  console.log('dismissed'); });
-         
-            return false
+       
 
-          }else if(parseFloat(paymentDetail.amount)> oldBalance){
-            //false
-            var notification = alertify.notify('Insufficient balance to perform transaction. please top up your wallet', 'error', 10, function(){  console.log('dismissed'); });
-         
-
-            return false
-          }
+       
 
 
 
@@ -268,6 +276,20 @@ export default class PaymentWizard{
 		     	debit_amount:  newBalance
 		  
 		     };
+
+         // if(record.oldBalance<=0){
+            
+         //    var notification = alertify.notify('Insufficient balance to perform transaction. You need to top up', 'error', 10, function(){  console.log('dismissed'); });
+         
+         //    return false
+
+         //  }else if(parseFloat(userPaymentDetails.amount)> oldBalance){
+         //    //false
+         //    var notification = alertify.notify('Insufficient balance to perform transaction. please top up your wallet', 'error', 10, function(){  console.log('dismissed'); });
+         
+
+         //    return false
+         //  }
 
          userPaymentDetails.reference= 'CMT-WALLET-'+ userPaymentDetails.reference;
 

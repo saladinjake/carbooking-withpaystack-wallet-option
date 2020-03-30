@@ -189,8 +189,7 @@ export class UserService {
                       console.log("email is send");
                       console.log(info);
                       //res.json(info)
-                      return response.status(200).send({ msg: "successfully sent you a password reset link", status:'ok',data: info }); 
-                
+                      
                 });
 
                
@@ -237,18 +236,8 @@ export class UserService {
                       console.log("email is send");
                       console.log(info);
                       //res.json(info)
-                       const token = TokenGenerator.generateToken(result);
-                        return response.status(status).json({
-                                                status: status,
-                                                data: [
-                                                  {
-                                                    token,
-                                                    user,
-                                                  },
-                                                ],
-                                                message: 'User created successfully',
-                        });
-
+                       
+                       
 
 
 
@@ -320,8 +309,18 @@ export class UserService {
             //console.log(__dirname + '/views/templates/signup-verification.html')
 
             UserService.newUserMail(request,response, result,'/views/templates/signup-verification.html', emailtoken.email_confirm_token,201)
+             const token = TokenGenerator.generateToken(result);
+             return response.status(201).json({
+                                                status: 201,
+                                                data: [
+                                                  {
+                                                    token,
+                                                    user,
+                                                  },
+                                                ],
+                                                message: 'User created successfully',
+                        });
 
-            
 
 
             
@@ -505,19 +504,41 @@ static resendTokenPost (req, res) {
 
             
             var result = { 
+              id:user.id,
               username: user.username, 
               firstname: user.firstname,
               email: user.email,
-              link:'',
+              
              
 
             };
 
-          UserService.newUserMail(request,response, result,'/views/templates/signup-verification.html', token.email_confirm_token, 200)
+            var result2 = { 
+              id:user.id,
+              username: user.username, 
+              firstname: user.firstname,
+              email: user.email,
+              
+             
 
+            };
+
+          UserService.newUserMail(request,response, result2,'/views/templates/signup-verification.html', token.email_confirm_token, 200)
+           
+           const token = TokenGenerator.generateToken(result);
+            return response.status(200).json({
+                                                status: 200,
+                                                data: [
+                                                  {
+                                                    token,
+                                                    result,
+                                                  },
+                                                ],
+                                                message: 'User created successfully',
+                        });
 
            
-
+         
             
         });
 
@@ -550,7 +571,8 @@ static passwordForgot(req, res){
 
 
             UserService.passwordResetsMail( req, res,user.email,'/views/templates/reset-password.html', {username:user.username}, hashedStringToSend)
-
+            return response.status(200).send({ msg: "successfully sent you a password reset link", status:'ok',data: info }); 
+                
          
         });
 

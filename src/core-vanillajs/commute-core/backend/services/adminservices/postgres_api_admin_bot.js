@@ -219,7 +219,7 @@ function noReadWrite(perms){
 function setUserdetail(email,o,wallet=false){
   let linkOfApi = 'http://localhost:12000/api/v1'+ '/fetchuserinfo/'+ email;
   
-
+  if(document.getElementById('admin')){
   if(localStorage.getItem('userToken')){
 
    const user = JSON.parse(localStorage.getItem('userToken'))
@@ -263,6 +263,8 @@ function setUserdetail(email,o,wallet=false){
       })
 
      }
+
+   }  
 }
 
 
@@ -270,6 +272,8 @@ function setUserdetail(email,o,wallet=false){
 
 
 function getUserdetail(email){
+
+  if(document.getElementById('admin')){
   let linkOfApi = 'http://localhost:12000/api/v1/'+ 'fetchuserinfo/'+ email;
    if(localStorage.getItem('userToken')){
   const user = JSON.parse(localStorage.getItem('userToken'))
@@ -315,6 +319,8 @@ function getUserdetail(email){
       })
 
        }
+
+     }  
 }
 
 
@@ -397,6 +403,8 @@ window.addEventListener('load', (event) => {
     // loader.style.display = 'block';
     // loader.style.zIndex="9999999";
 
+      if(document.getElementById('admin')){
+
       if(localStorage.getItem('userToken')){
         datapromise =getUserRights()
 
@@ -420,6 +428,8 @@ window.addEventListener('load', (event) => {
       }
 
       }
+
+    }
 })
 
 function guidGenerator() {
@@ -10103,7 +10113,7 @@ modalbody1.innerHTML= viewModals;
 
     var loadMore = new LoadMore({
   "dataUrl": "http://localhost:12000/api/v1",
-  "pageSize": 3
+  "pageSize": 5
 });
 
 loadMore.init(dataTrails);
