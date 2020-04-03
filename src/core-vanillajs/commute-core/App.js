@@ -12,6 +12,20 @@ import MobileAppFeelAlike from './MobileAnimation'
 // require("./js/fastclick.js")
 
 
+function formatAmount(x) {
+    if(typeof(x)=='string'){
+       var parts = x.split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    }else{
+      var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+    }
+    
+    
+}
+
 const isToday = (someDate) => {
   const today = formatDate(new Date()) 
   return someDate == today
@@ -130,7 +144,8 @@ class FrontEndApp {
 
            
             
-
+            document.getElementById('balance-seen').innerHTML = '₦ '+ formatAmount(data.data[0].accountBalance);
+          
             let count = document.getElementById("notifyCount");
             count.innerHTML = userNotifications.length;
         })

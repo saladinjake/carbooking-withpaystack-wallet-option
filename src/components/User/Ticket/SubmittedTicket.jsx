@@ -78,7 +78,8 @@ export  default class SubmittedTicket extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody id="fetched-data">
-                                                
+
+                                           
                                             </tbody>
                                         </table>
                                     </div>

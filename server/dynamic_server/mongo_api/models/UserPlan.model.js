@@ -17,7 +17,10 @@ let UserPlanSchema = new mongoose.Schema({
           enum:[
            'Unpaid',
            'Paid',
-           'Failed'
+           'Failed',
+           'Ongoing',
+           'Pending',
+           'Completed'
           ],
           default: 'Unpaid',
         },

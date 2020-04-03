@@ -16,6 +16,20 @@ function formatDate(date) {
   return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
 }
 
+function formatAmount(x) {
+    if(typeof(x)=='string'){
+       var parts = x.split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    }else{
+      var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+    }
+    
+    
+}
+
 
 function searchTable() {
   // Declare variables
@@ -72,14 +86,14 @@ class PaymentHistory {
     
     const user = JSON.parse(localStorage.getItem('userToken'))
     if((!document.getElementById('signup_page') && !document.getElementById('loginpage') && !document.getElementById('pass_forgot_page') )){
-      
+      // document.getElementById("balance-seen").innerHTML ="₦ "+ formatAmount( user.user.balance)
       document.getElementById("balance").innerHTML ="₦ "+ user.user.balance  //numberWithCommas(user.user.balance) ;
     }
     
     if (document.getElementById('payment-page') ) {
       //document.getElementById("new-balance").innerHTML ="₦ "+ numberWithCommas(user.user.balance) ; 
        
-       
+       // document.getElementById("balance-seen").innerHTML ="₦ "+ formatAmount( user.user.balance)
        document.getElementById("balance").innerHTML ="₦ "+  user.user.balance //numberWithCommas(user.user.balance) ;
        
     const tablebody = document.getElementById("tablebody1");

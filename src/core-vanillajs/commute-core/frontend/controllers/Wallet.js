@@ -77,6 +77,21 @@ function numberWithCommas(x) {
     return x
     
 }
+
+
+function formatAmount(x) {
+    if(typeof(x)=='string'){
+       var parts = x.split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    }else{
+      var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+    }
+    
+    
+}
 class Ewallet {
   constructor() {   
   }
@@ -115,6 +130,7 @@ class Ewallet {
           //       document.getElementById("new-balance").style.display="none"
           // }else{
           document.getElementById("balance").innerHTML = '₦ '+ numberWithCommas(data.data[0].accountBalance);
+           // document.getElementById('balance-seen').innerHTML = '₦ '+ formatAmount(data.data[0].accountBalance);
           document.getElementById("new-balance").innerHTML='₦ '+ numberWithCommas(data.data[0].accountBalance);
           accountBalance = data.data[0].accountBalance;
           user.user.balance = accountBalance;

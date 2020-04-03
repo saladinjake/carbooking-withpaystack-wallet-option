@@ -848,6 +848,19 @@ window.viewPreviledges = (el) =>{
         
     }
 
+   
+
+    if(el.dataset.drivetest=="yes"){
+       var element = document.getElementById("drivetest"+el.dataset.id);
+        element.checked = 1;
+    }
+
+
+    if(el.dataset.inspection=="yes"){
+       var element = document.getElementById("inspection"+el.dataset.id);
+        element.checked = 1;
+    }
+
 
 
 
@@ -974,7 +987,21 @@ window.viewPreviledges = (el) =>{
     }
 
 
+   
 
+
+    if(el.dataset.mdrivetest=="yes"){
+      
+        var element = document.getElementById("mdrivetest"+el.dataset.id);
+        element.checked = 1;
+        
+    }
+    if(el.dataset.minspection=="yes"){
+      
+        var element = document.getElementById("minspection"+el.dataset.id);
+        element.checked = 1;
+        
+    }
 
 
      var save = document.getElementById("saveChanges"+el.dataset.id);
@@ -996,6 +1023,11 @@ window.viewPreviledges = (el) =>{
           view_settings,
           view_users,
           view_admins,
+          view_drive_test,
+          view_car_inspection,
+
+
+
 
           manage_bookings,
           manage_quotations,
@@ -1012,6 +1044,10 @@ window.viewPreviledges = (el) =>{
           manage_users,
           manage_admins;
 
+          manage_car_inspection;
+          manage_drive_test;
+
+
         let payments = document.getElementById("payments"+el.dataset.id),
             transactions = document.getElementById("transactions"+el.dataset.id),
             quotations = document.getElementById("quotations"+el.dataset.id),
@@ -1026,7 +1062,11 @@ window.viewPreviledges = (el) =>{
          admins =document.getElementById("admins"+el.dataset.id),
          tickets =document.getElementById("tickets"+el.dataset.id),
          settings =document.getElementById("settings"+el.dataset.id),
-         faqs =document.getElementById("faqs"+el.dataset.id);
+         faqs =document.getElementById("faqs"+el.dataset.id),
+         drivetest =document.getElementById("drivetest"+el.dataset.id),
+         inspection =document.getElementById("inspection"+el.dataset.id);
+         
+
 
 
 
@@ -1045,6 +1085,12 @@ window.viewPreviledges = (el) =>{
          mtickets =document.getElementById("mtickets"+el.dataset.id),
          msettings =document.getElementById("msettings"+el.dataset.id),
          mfaqs =document.getElementById("mfaqs"+el.dataset.id);
+
+         mdrivetest =document.getElementById("mdrivetest"+el.dataset.id),
+         minspection =document.getElementById("minspection"+el.dataset.id);
+         
+
+
 
   
 
@@ -1161,6 +1207,25 @@ window.viewPreviledges = (el) =>{
         }
         else{
            view_settings="no";
+        }
+
+
+
+        if(drivetest.checked)
+        {
+           view_drive_test="yes";
+        }
+        else{
+           view_drive_test="no";
+        }
+
+
+        if(inspection.checked)
+        {
+           view_car_inspection="yes";
+        }
+        else{
+           view_car_inspection="no";
         }
 
 
@@ -1288,8 +1353,27 @@ window.viewPreviledges = (el) =>{
 
 
 
+        if(mdrivetest.checked)
+        {
+           view_drive_test="yes";
+        }
+        else{
+           view_drive_test="no";
+        }
+
+
+        if(minspection.checked)
+        {
+           manage_car_inspection="yes";
+        }
+        else{
+           manage_car_inspection="no";
+        }
+
+
+
         const user =JSON.parse(localStorage.getItem("userToken"));
-        let linkOfApi = 'http://localhost:12000/api/v1/admin-previledges-update/'+ el.dataset.id  ;
+        let linkOfApi = 'http://demo-commute-taxi-surf-api.herokuapp.com/api/v1/admin-previledges-update/'+ el.dataset.id  ;
 
 
         let status_x = document.getElementById('status'+ el.dataset.id);
@@ -1319,6 +1403,8 @@ window.viewPreviledges = (el) =>{
           view_admins,
           view_users,
           view_tickets,
+          view_drive_test,
+          view_car_inspection,
           status,
 
           manage_bookings,
@@ -1334,7 +1420,9 @@ window.viewPreviledges = (el) =>{
           manage_faqs,
           manage_settings,
           manage_users,
-          manage_admins
+          manage_admins,
+          manage_drive_test,
+          manage_car_inspection
         };
 
         console.log(prePostData)
@@ -1393,6 +1481,7 @@ window.viewPreviledges = (el) =>{
 
 
 }
+
 
 
 window.RolesUpdate =(el) =>{
@@ -2162,6 +2251,9 @@ function BookingValidationFails(planItineries){
   
 
 }
+
+
+
 
 
 function postNotification(postUrl,prePostData){
@@ -4628,7 +4720,7 @@ class ApiAdminBotService  {
 
 
 
-  static runDashboard(users,partners,drivers,cars,tickets, itineraries, todaySales,yesterdaysSales,weeklySales,lastMonth){
+  static runDashboard(users,partners,drivers,cars,tickets, itineraries, todaySales,yesterdaysSales,weeklySales,lastMonth,notice=[]){
     
     // WarLockAdmin('view_dashboard')
     GateKeepersForAdmin();
@@ -4636,7 +4728,7 @@ class ApiAdminBotService  {
     console.log(todaySales)
 //    alert(todaySales)
    
-
+    
     
 
     document.getElementById("total-sales").innerHTML='₦'+ todaySales;
@@ -4661,42 +4753,7 @@ class ApiAdminBotService  {
 
   	console.log(JSON.stringify(todaySales)+ "sales of today");
 
-  	//let today = document.getElementById("todays-sales")
-
-
-
- //  	console.log(totalItineraries)
-    
- //    //todays date
- //    var today = new Date();
-	// var dd = String(today.getDate()).padStart(2, '0');
-	// var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-	// var yyyy = today.getFullYear();
-
-	// today = mm + '/' + dd + '/' + yyyy;
-	// //document.write(today);
-
-
- //    //yesterdays date
- //  	let yesterdaysDate = new Date(new Date().setDate(new Date().getDate() - 1));
   	
-
- //  	//lastWeeksDate
- //  	var d = new Date();           // <- Get the current date
- //    d.setDate(d.getDate() - 7);   // <- Substract 7 days
-
- //    var year = d.getFullYear(),
- //    month = ('00' + (d.getMonth() + 1)).slice(-2),
- //    day = ('00' + d.getDate()).slice(-2);
-
- //    var formattedDate = year + '/' + month + '/' + day;
-
-
-
-  	// const totalRevenues = datas;
-  	// const yesterdaySales = datas;
-  	// const lastWeekSales = datas;
-  	// const lastMonthSales = datas;
   	
 
   	const tablebody1 = document.getElementById('tablebody1');
@@ -4767,6 +4824,61 @@ class ApiAdminBotService  {
     });
 
     //modalbody1.innerHTML=viewModals;
+
+
+
+    
+
+    $(function(){
+      var arrow = $('.chat-head img');
+      var textarea = $('.chat-text textarea');
+
+      arrow.on('click', function(){
+        var src = arrow.attr('src');
+
+        $('.chat-body').slideToggle('fast');
+        if(src == 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png'){
+          arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png');
+        }
+        else{
+          arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
+        }
+      });
+
+      textarea.keypress(function(event) {
+        var $this = $(this);
+
+        if(event.keyCode == 13){
+          var msg = $this.val();
+          $this.val('');
+          $('.msg-insert').prepend("<div class='msg-send'>"+msg+"</div>");
+          }
+      });
+
+    });
+
+
+
+    // if(notice.length>0){
+    //     document.getElementById("notifyCount").innerHTML=notice.length
+    //     notice.map((item,i)=>{
+    //             let markup =`   <div class="pull-left p-r-10" style="" id="${i}">
+                
+    //                                                 <em class="fa fa-diamond noti-primary"></em>
+    //                                              </div>
+    //                                              <div class="media-body">
+    //                                                 <h5 class="media-heading">Quotation Notification<span class="label label-default pull-right">New </span></h5>
+    //                                                 <hr/>
+    //                                                 <p class="m-0">
+    //                                                     <small>${item.description.substring(0,100)}...</small>
+    //                                                 </p>
+    //                                              </div><hr/>`;
+
+    //              $( "#notice_board" ).append( $( markup ) ) 
+
+    //               $( "#notice_board2" ).append( $( markup ) ) 
+    //           })
+    // }
   
 
   }
@@ -6999,17 +7111,19 @@ noReadWrite('manage_cars')
 
   }
 
-  static runAdminInspectionAdd(url='add-inspection', users, partners){
-    WarLockAdmin('view_cars','manage_cars')
+  static runAdminDriveTestAdd(url='add-drive-test', users, partners){
+
+
+     WarLockAdmin('view_drive_test','manage_drive_test')
    // WarLockAdmin('view_users','manage_users')
-        noReadWrite('manage_cars')
+        noReadWrite('manage_drive_test')
     let selectboxData = users;
     if(url='add-inspection'){
       selectboxData = partners;
 
     }
 
-     WarLockAdmin('view_cars')
+     // WarLockAdmin('view_cars')
 
 
      function hasClass(el, classname) {
@@ -7112,7 +7226,282 @@ noReadWrite('manage_cars')
        e.preventDefault()
 
 
-        let linkOfApi = 'http://localhost:12000/api/v1/'+ url ;
+        let linkOfApi = 'http://demo-commute-taxi-surf-api.herokuapp.com/api/v1/'+ url ;
+
+
+
+
+        const email_x = document.getElementById("email")
+
+        
+       const username_x = document.getElementById("username") ;
+
+   const description=      document.getElementById("description").value 
+        
+       const date = document.getElementById("created_date").value 
+
+        const phone_number = document.getElementById("phone_number").value 
+
+
+  const time =        document.getElementById("time").value 
+
+     const car_id =   document.getElementById("car_id").value 
+        
+      const  status_x = document.getElementById("status")
+
+
+
+      if( email_x.options[email_x.selectedIndex].text =='--Select an email user--'){
+        var notification = alertify.notify('Select an email user.', 'error', 5, function(){  console.log('dismissed'); });
+
+         return false;
+      }
+
+
+      if( !date){
+        var notification = alertify.notify('Date required.', 'error', 5, function(){  console.log('dismissed'); });
+
+         return false;
+      }
+
+      if(!car_id){
+        var notification = alertify.notify('car id/plate number required.', 'error', 5, function(){  console.log('dismissed'); });
+
+         return false;
+
+
+      }
+
+
+      if(url!='add-inspection'){
+
+        if(!time){
+        var notification = alertify.notify('Time required.', 'error', 5, function(){  console.log('dismissed'); });
+
+         return false;
+
+
+        }
+
+
+        if(!description){
+        var notification = alertify.notify('Remarks/Comment about the car inspected is required.', 'error', 5, function(){  console.log('dismissed'); });
+
+         return false;
+
+
+      }
+
+
+      }
+
+
+         
+          
+
+
+         
+
+
+
+
+
+
+        
+       
+
+
+          const prePostData = {
+
+             username: username_x.options[username_x.selectedIndex].text,
+            email: email_x.options[email_x.selectedIndex].text,
+            phone_number: phone_number,
+            description: description,
+            createdDate: date,
+            time: time,
+            status: status_x.options[status_x.selectedIndex].text,
+            car_id,
+
+
+          };
+
+
+
+
+
+         
+
+          const user =JSON.parse(localStorage.getItem("userToken"));
+
+          // const validResult = Validator.validatePlanPost({...prePostData});
+
+         // console.log(validResult+ "update error")
+
+              // if(validResult){
+          fetch(linkOfApi, {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': user.token,
+              },
+              body: JSON.stringify(prePostData),
+              mode:"cors",
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data)
+                if (data.status === 201) {
+                  
+                  var notification = alertify.notify('Successfully created inspection ', 'success', 5, function(){  console.log('dismissed'); });
+                      
+                  setTimeout(()=>{
+                    window.location.href="./admin-drive-test"
+                  },2000)
+                      
+
+                 // ApiDeleteOneStatusRecord.redirect(recordOfType);
+                } else {
+                  
+                  var notification = alertify.notify('Could not perform update operation. Ensure the plan selected is correct.', 'error', 5, function(){  console.log('dismissed'); });
+
+                }
+              }).catch(e=> console.log(e));
+         // }else{
+         //  var notification = alertify.notify('unsuccessful update operation', 'error', 5, function(){  console.log('dismissed'); });
+
+         // }
+
+
+         if(url!='add-inspection'){
+          let link="http://demo-commute-taxi-surf-api.herokuapp.com/api/v1/update-testcenter/"+me[0]._id
+         updateUsersTestCenter(link, {test_center:me[0].test_center, test_center_address: me[0].test_center_address})
+
+         }
+
+
+         // update user test center
+         
+
+     })
+
+
+  }
+
+  static runAdminInspectionAdd(url='add-inspection', users, partners){
+    WarLockAdmin('view_car_inspection','manage_car_inspection')
+   // WarLockAdmin('view_users','manage_users')
+        noReadWrite('manage_car_inspection')
+    let selectboxData = users;
+    if(url='add-inspection'){
+      selectboxData = partners;
+
+    }
+
+     // WarLockAdmin('view_cars')
+
+
+     function hasClass(el, classname) {
+       return el.classList.contains(classname);
+    }
+
+    console.log('this was called')
+    let usernames = [];
+
+    let this_user_names = [...new Set(selectboxData)].filter((item)=>usernames.push(item.username) )
+    
+
+
+      let selectOptions_users = ``;
+
+    
+     if(url!='add-inspection'){//for drive test
+
+      [...new Set(selectboxData)].map((item, i) => { 
+          selectOptions_users+=`<option data-with="${item.test_certificate}" id="${item.username}-${i}"  value="${item.username}">${item.email}</option>`; 
+          
+              
+      });
+
+    }else{
+
+
+      [...new Set(selectboxData)].map((item, i) => { 
+          selectOptions_users+=`<option data-with="${item.test_certificate}" id="${item.userName}-${i}"  value="${item.userName}">${item.email}</option>`; 
+          
+              
+      });
+
+
+    }
+
+      $('#email').append(selectOptions_users);
+
+      //document.getElementById("username").innerHTML= selectOptions_users
+
+
+
+     // Map your choices to your option value
+        
+       let me;
+        // When an option is changed, search the above for matching choices
+        $('#email').on('change', function() {
+           // Set selected option as variable
+           var selectValue = $(this).text();
+
+
+
+
+           // Empty the target field
+           $('#username').empty();
+
+
+          
+
+           if(url!='add-inspection'){
+
+              me =this_user_names.filter((item)=>item.username== $(this).val())
+           console.log(me)
+             if(me[0].phone_number){
+                document.getElementById("phone_number").value =me[0].phone_number;
+             }
+
+             if(me[0].test_center){
+               document.getElementById("time").value =me[0].test_center
+              document.getElementById("description").value =me[0].test_center_address
+             }
+          }else{
+
+            me =this_user_names.filter((item)=>item.userName== $(this).val())
+             console.log(me)
+
+            if(me[0].phoneNumber){
+               document.getElementById("phone_number").value =me[0].phoneNumber;
+             }
+
+          }
+           
+            
+           
+           
+           // For each chocie in the selected option
+          // for (i = 0; i <  magicalLookup[selectValue].length; i++) {
+              // Output choice in the target field
+            $('#username').append(`<option>` +  $(this).val() + "</option>");
+
+            
+
+           //}
+        });
+
+
+     document.getElementById("savemesa").addEventListener('click', (e) =>{
+       
+       
+       e.preventDefault()
+
+
+        let linkOfApi = 'http://demo-commute-taxi-surf-api.herokuapp.com/api/v1/'+ url ;
 
 
 
@@ -7268,7 +7657,7 @@ noReadWrite('manage_cars')
 
 
          if(url!='add-inspection'){
-          let link="http://localhost:12000/api/v1/update-testcenter/"+me[0]._id
+          let link="http://demo-commute-taxi-surf-api.herokuapp.com/api/v1/update-testcenter/"+me[0]._id
          updateUsersTestCenter(link, {test_center:me[0].test_center, test_center_address: me[0].test_center_address})
 
          }
@@ -7661,7 +8050,9 @@ noReadWrite('manage_cars')
 									                        <label for="position">Status</label>
 									                        <select id="status${item._id}" class="form-control" data-style="btn-white">
 									                            <option>Pending</option>
+                                              <option>Paid</option>
 									                            <option>Ongoing</option>
+
 									                            <option>Completed</option>
 									                             
 									                        </select>
@@ -7898,7 +8289,7 @@ noReadWrite('manage_cars')
 
   static runAdminPlansDetail(usersPlan){
         WarLockAdmin('view_bookings','manage_bookings')
-            noReadWrite('manage_bookings')
+        noReadWrite('manage_bookings')
 
 
     
@@ -7950,6 +8341,13 @@ noReadWrite('manage_cars')
 	    });	
 	     //document.getElementById("quote-status").disabled=true;		        
      }
+
+     let superAd = JSON.parse(localStorage.getItem('userToken'));
+
+     if(superAd.user.roles=='Super Admin'){
+       document.getElementById("quote-amount").disabled=false;
+     }
+     
   	var selectedCars = [...new Set(planToView[0].cars_on_plan)];
 
   	console.log(planToView)
@@ -8384,6 +8782,10 @@ function enforceFloat() {
 
                let quot_url = 'http://localhost:12000/api/v1/make-quotation'
                createQuotations(quot_url, dataQuotations) 
+
+
+
+
 
 		        	 updateStatus(userplan_url, dataPlan)
 		        	 updateStatus(itins_url, dataItins)
@@ -8942,11 +9344,13 @@ WarLockAdmin('view_transactions','manage_transactions')
             
             console.log(userPlanItineries)
 
-            ItineraryList.push(userPlanItineries)
+            //ItineraryList.push(userPlanItineries)
 
             if(BookingValidationFails(userPlanItineries) == true){
               return false;
             }
+
+            ItineraryList.push(userPlanItineries)
 
             
 
@@ -9168,6 +9572,47 @@ WarLockAdmin('view_transactions','manage_transactions')
 
                let quot_url = 'http://localhost:12000/api/v1/make-quotation'
                createQuotations(quot_url, dataQuotations) 
+
+
+
+
+               let userplan_url ="http://localhost:12000/api/v1/userplan-status-update/"+ plan_id.value ;
+                  let itins_url ="http://localhost:12000/api/v1/user-itinerary-status-update/"+ plan_id.value;
+                  
+              
+              let dataPlan = {
+                    status:status,
+                    payment_status: status ,
+                    email: em,
+                     has_updated: "Yes",
+                     plan_id: plan_id.value,
+                     price:value_text,
+                     createdDateOfQuotation: new Date()
+                  };
+
+                let dataItins ={
+                  
+                     //price:amt,
+                      status:status ,
+                    user_plan_id:plan_id.value,
+                    plan_id:plan_id.value,
+                    has_received_quote: 'Yes',
+
+                } 
+               updateStatus(userplan_url, dataPlan)
+               updateStatus(itins_url, dataItins)
+
+
+
+
+
+
+
+
+
+               ////////////////
+               
+               
 
 
 
@@ -9793,7 +10238,7 @@ modalbody1.innerHTML= viewModals;
           </td>
 
           <td>
-            <a onclick="viewPreviledges(this)" data-madmins="${item.manage_admins}" data-admins="${item.view_admins}" data-msettings="${item.manage_settings}" data-settings="${item.view_settings}" data-musers="${item.manage_settings}" data-users="${item.view_users}" data-mfaqs="${item.manage_faqs}" data-faqs="${item.view_faqs}" data-mtickets="${item.manage_tickets}" data-tickets="${item.view_tickets}" data-mtransactions="${item.manage_transactions}" data-transactions="${item.view_transactions}" data-mquotations="${item.manage_quotations}"  data-quotations="${item.view_quotations}"  data-mpayments="${item.manage_payments}" data-payments="${item.view_payments}" data-mpartners="${item.manage_partners}" data-partners="${item.view_partners}" data-mdrivers="${item.manage_drivers}" data-drivers="${item.view_drivers}" data-mcars="${item.manage_cars}"  data-cars="${item.view_cars}" data-msos="${item.manage_sos}" data-sos="${item.view_sos}"  data-mpackages="${item.manage_package}" data-packages="${item.view_package}" data-mbookings="${item.manage_bookings}" data-bookings="${item.view_bookings}" data-id="${item._id}" data-role="${item.previledges_info}" data-url="/admin-role-previledges"  id="delete" class="table-action-btn "><i class="glyphicon glyphicon-eye-open"></i></a>
+            <a onclick="viewPreviledges(this)" data-mdrivetest="${item.manage_drive_test}" data-minspection="${item.manage_car_inspection}" data-drivetest="${item.view_drive_test}" data-inspection="${item.view_car_inspection}" data-madmins="${item.manage_admins}" data-admins="${item.view_admins}" data-msettings="${item.manage_settings}" data-settings="${item.view_settings}" data-musers="${item.manage_settings}" data-users="${item.view_users}" data-mfaqs="${item.manage_faqs}" data-faqs="${item.view_faqs}" data-mtickets="${item.manage_tickets}" data-tickets="${item.view_tickets}" data-mtransactions="${item.manage_transactions}" data-transactions="${item.view_transactions}" data-mquotations="${item.manage_quotations}"  data-quotations="${item.view_quotations}"  data-mpayments="${item.manage_payments}" data-payments="${item.view_payments}" data-mpartners="${item.manage_partners}" data-partners="${item.view_partners}" data-mdrivers="${item.manage_drivers}" data-drivers="${item.view_drivers}" data-mcars="${item.manage_cars}"  data-cars="${item.view_cars}" data-msos="${item.manage_sos}" data-sos="${item.view_sos}"  data-mpackages="${item.manage_package}" data-packages="${item.view_package}" data-mbookings="${item.manage_bookings}" data-bookings="${item.view_bookings}" data-id="${item._id}" data-role="${item.previledges_info}" data-url="/admin-role-previledges"  id="delete" class="table-action-btn "><i class="glyphicon glyphicon-eye-open"></i></a>
                            
          
           </td>
@@ -9854,11 +10299,9 @@ modalbody1.innerHTML= viewModals;
                                                 </div> 
                                             </div> 
                                         </div>
-                                    </div>        
+                                    </div>`;
 
-          `;
-
-        actionableRoles+=`<div style="display:none"  id="con-close-modala-${item._id}" class="" tabindex="-1"  aria-hidden="true" >
+      actionableRoles+=`<div style="display:none"  id="con-close-modala-${item._id}" class="" tabindex="-1"  aria-hidden="true" >
                      
                                 <button id="close-id" data-id="${item._id}" onclick="addCloseEffect2(this)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
                                                     
@@ -9996,7 +10439,7 @@ modalbody1.innerHTML= viewModals;
                       <div class="form-group col-sm-12">
                         <div class="checkbox checkbox-primary col-sm-6">
                           <input id="packages${item._id}" data-info="${item.previledges_info}" data-packages="${item.view_package}" type="checkbox" data-field="view_package"  data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
-                          <label for="plan-packages" class="">Manage Packages </label>
+                          <label for="plan-packages" class="">View Packages </label>
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6">
@@ -10052,7 +10495,7 @@ modalbody1.innerHTML= viewModals;
 
                         <div class="checkbox checkbox-primary col-sm-6">
                           <input id="musers${item._id}" data-info="${item.previledges_info}" data-bookings="${item.manage_users}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
-                          <label for="plan-bookings" class="">View Users</label>
+                          <label for="plan-bookings" class="">Manage Users</label>
                         </div>
 
 
@@ -10089,12 +10532,44 @@ modalbody1.innerHTML= viewModals;
                     </div>
 
                     <div class="form-group col-sm-12">
+                        <div class="checkbox checkbox-primary col-sm-6">
+                          <input id="inspection${item._id}" data-info="${item.previledges_info}" data-settings="${item.view_car_inspection}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <label for="plan-bookings" class="">View Inspection </label>
+                        </div>
+
+
+                         <div class="checkbox checkbox-primary col-sm-6">
+                          <input id="minspection${item._id}" data-info="${item.previledges_info}" data-settings="${item.manage_car_inspection}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <label for="plan-bookings" class="">Manage Inspection </label>
+                        </div>
+
+
+                      </div>
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <div class="checkbox checkbox-primary col-sm-6">
+                          <input id="drivetest${item._id}" data-info="${item.previledges_info}" data-settings="${item.view_drive_test}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <label for="plan-bookings" class="">View Drive Test </label>
+                        </div>
+
+
+                         <div class="checkbox checkbox-primary col-sm-6">
+                          <input id="mdrivetest${item._id}" data-info="${item.previledges_info}" data-settings="${item.manage_drive_test}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <label for="plan-bookings" class="">Manage Drive Test </label>
+                        </div>
+
+
+                      </div>
+                    </div>
+
+                    <div class="form-group col-sm-12">
                        <button id="saveChanges${item._id}" type="button" class="btn btn-primary btn-custom btn-rounded waves-effect waves-light pull-right">Save</button>
                       
                     </div>
                   </form>
 
-</div>`
+</div>`;
 
         tablebody1.insertAdjacentHTML('beforeend', template2);
     });
@@ -10106,17 +10581,45 @@ modalbody1.innerHTML= viewModals;
 
   }
 
-  static runAdminActivityTrail(dataTrails){
-    //console.log(dataTrails)
-    //console.log('working on audit trailing...')
+  static runAdminNotification(data){
+        alert(data)
+    if(data.length>0){
+                 data.map((item,i)=>{
 
+                
+
+
+
+                let markup =`   <div class="pull-left p-r-10" style="" id="${i}">
+                                                    <em class="fa fa-diamond noti-primary"></em>
+                                                 </div>
+                                                 <div class="media-body">
+                                                    <h5 class="media-heading">Quotation Notification</h5>
+                                                    <hr/>
+                                                    <p class="m-0">
+                                                        <small>${item.description.substring(0,100)}...</small>
+                                                    </p>
+                                                 </div><hr/>`;
+
+                 $( "#notice_board" ).append( $( markup ) ) 
+
+                  //$( "#notice_board2" ).append( $( markup ) ) 
+              })
+    }
+
+
+
+  }
+
+  static runAdminActivityTrail(dataTrails){
+    
 
     var loadMore = new LoadMore({
-  "dataUrl": "http://localhost:12000/api/v1",
-  "pageSize": 5
-});
+        "dataUrl": "http://localhost:12000/api/v1",
+        "pageSize": 5
+      });
 
-loadMore.init(dataTrails);
+      loadMore.init(dataTrails);
 
 
     // let data = [...dataTrails]
@@ -10188,11 +10691,6 @@ loadMore.init(dataTrails);
 		      document.getElementById("second-view").style.display="block";
 		    },2000)
 		     
-   
-    
-    
-
-
 
 	    })
 	 }
@@ -10265,7 +10763,8 @@ loadMore.init(dataTrails);
 			   activeUrl+ `/admin-sales-yesterday`,
          activeUrl+ `/admin-sales-lastweek`,
          activeUrl+ `/admin-users-month-ago`,
-         activeUrl+`/get-trails`
+         activeUrl+`/get-trails`,
+          // activeUrl+`/get-all-notification`
 
 
 
@@ -10320,6 +10819,8 @@ loadMore.init(dataTrails);
 		    	   	//lastMonth
 
                datas[29].data.lastMonth,
+               // datas[31].data[0].allNotification
+               []
 		    	   	);
              app.style.display="block"
    
@@ -10462,7 +10963,7 @@ loadMore.init(dataTrails);
              app.style.display="block"
            break;
            case "admin-drive-test-add":
-           ApiAdminBotService.runAdminInspectionAdd('add-drive-test', datas[0].data[0].users, datas[3].data[0].partners) //24
+           ApiAdminBotService.runAdminDriveTestAdd('add-drive-test', datas[0].data[0].users, datas[3].data[0].partners) //24
              app.style.display="block"
            break; 
 		    	case "admin-drive-test":
@@ -10475,6 +10976,10 @@ loadMore.init(dataTrails);
            break; 
         case "admin-logs":
            ApiAdminBotService.runAdminActivityTrail(datas[30].data[0].audit)
+             app.style.display="block"
+           break;
+        case "admin-notification":
+           ApiAdminBotService.runAdminNotification(datas[31].data[0].allNotification)
              app.style.display="block"
            break;  
 		    	default:

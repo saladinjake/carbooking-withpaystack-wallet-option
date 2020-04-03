@@ -6,9 +6,9 @@ import db from '../models/db';
 
 const MongooseDatabase = db.getInstance() || new db();
 class SeedFactory{
-	constructor(){
-		this.seeders = new Seeder();
-		this.dummyData = DummyData;
+    constructor(){
+        this.seeders = new Seeder();
+        this.dummyData = DummyData;
     
     console.log("starting migrations...")
           // perform seeding
@@ -19,10 +19,10 @@ class SeedFactory{
            
 
 
-	
-	}
+    
+    }
 
-	runSeeder(){
+    runSeeder(){
 
     //this.seeders.seedQuotationHistory(this.dummyData.quotationHistory[0]);
     // this.seeders.seedQuotationHistory(this.dummyData.quotationHistory[1]);
@@ -47,7 +47,7 @@ class SeedFactory{
       );
 
      
-		//console.log("starting user seeds...")
+        //console.log("starting user seeds...")
       this.seeders.seedUsers(this.dummyData.users[0]);
       this.seeders.seedUsers(this.dummyData.users[1]);
       // this.seeders.seedUsers(this.dummyData.users[2]);
@@ -134,7 +134,7 @@ class SeedFactory{
 
       
 
-	console.log("starting redflags seeds...")
+    console.log("starting redflags seeds...")
       this.seeders.seedFeedbackByUser(
       this.dummyData.interventions[0], 
       0);
@@ -165,8 +165,8 @@ class SeedFactory{
         mongoose.connection.close();
             
       },39000 )
-	
-	}
+    
+    }
 }
 
 let Migrate = new SeedFactory();

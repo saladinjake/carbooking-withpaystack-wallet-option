@@ -257,6 +257,71 @@ export  default class AdminDashboard extends Component {
 
             </div> 
 
+
+
+
+
+
+
+
+
+    
+        <div className="chat-box">
+            <div className="chat-head">
+                <h2>Notification</h2>
+                <img src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png" title="Expand Arrow" width="16" />
+            </div>
+            <div className="chat-body">
+                <div className="msg-insert" id="notice_board2">
+ 
+  
+</div>
+                
+            </div>
+        </div>
+ 
+
+
+
+
+
+{/*<div className="frame-notification">
+  <div className="panel-notification">
+    <div className="header flex">
+            <div className="menu-icon">
+                <div className="dash-top"></div>
+                <div className="dash-bottom"></div>
+                <div className="circle circle-1"></div>
+            </div>
+            <span className="title">Notifications</span>
+        </div>
+        
+        <div className="notifications clearfix">
+            <div className="line"></div>
+            <div className="notification">
+                <div className="circle"></div>
+                <span className="time">9:24 AM</span>
+                <p><b>John Walker</b> posted a photo on your wall.</p>
+            </div>
+            
+        </div>
+  </div>
+    
+    <div className="menu-notification">
+        <ul>
+            <li className="hvr-underline-from-left"><span className="fa fa-dashboard"></span>Notifications</li>
+            <li className="hvr-underline-from-left"><span className="fa fa-user"></span>Log Trails</li>
+            <li className="hvr-underline-from-left"><span className="fa fa-bell"></span>To Do List</li>
+            <li className="hvr-underline-from-left"><span className="fa fa-comments"></span>Messages</li>
+        </ul>
+    </div>
+    
+</div> */}
+
+
+
+
+
             </div>
 
 	  );

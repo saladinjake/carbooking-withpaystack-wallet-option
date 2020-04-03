@@ -2,7 +2,7 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
-import Mapp from './components/map'
+//import Mapp from './components/map'
 
 //user
 import HomeLogin from './components/User/Home/Home';
@@ -18,7 +18,7 @@ import Profile from './components/User/Profile/Profile';
 import SOSRequest from './components/User/SOS/SOS';
 import TicketRequest from './components/User/Ticket/Ticket';
 import TicketHistory from './components/User/Ticket/SubmittedTicket';
-import FAQHistory from './components/User/FAQ/FAQ';
+import FAQHistory from './components/User/Faq/Faq';
 import SubmittedSOS from './components/User/SOS/SOSHistory';
 import Wallet from './components/User/Wallet/WalletHome';
 import WalletHistory from './components/User/Wallet/WalletHistory'
@@ -66,7 +66,7 @@ import EmailApiSettings from "./components/Admin/Settings/ApiKeys/Email"
 
 import Payments from "./components/Admin/PaymentModule/users/Payments"
 
-import paymentDetail from "./components/Admin/PaymentModule/userDetail/paymentDetail"
+import paymentDetail from "./components/Admin/PaymentModule/userDetail/PaymentDetail"
 import Quotations from "./components/Admin/PaymentModule/users/Quotations"
 import QuotationDetail from "./components/Admin/PaymentModule/userDetail/QuotationDetail"
 import WalletTransactions from "./components/Admin/PaymentModule/users/WalletTransactions"
@@ -101,7 +101,7 @@ import Previledges from "./components/Admin/Previledges/users/Users"
 import NotFoundPage from './containers/404Page/NotFound';
 import Forbidden from './containers/403/Forbidden';
 
-
+// import AdminNotifications from './components/Admin/Notifications/notifications'
 
 
 
@@ -126,14 +126,17 @@ import Ratings from './components/Drivers/Driver/Profile/Ratings';
 import SOSRequestDriver from './components/Drivers/Driver/SOS/SOS';
 import TicketRequestDriver from './components/Drivers/Driver/Ticket/Ticket';
 import TicketHistoryDriver from './components/Drivers/Driver/Ticket/SubmittedTicket';
-import FAQHistoryDriver from './components/Drivers/Driver/FAQ/FAQ';
+import FAQHistoryDriver from './components/Drivers/Driver/Faq/Faq';
 import SubmittedSOSDriver from './components/Drivers/Driver/SOS/SOSHistory';
 import MechanicRequestDriverHistory from './components/Drivers/Driver/MechanicRequest/MechanicRequestHistory';
 import NotificationsDriver from './components/Drivers/Driver/Notifications/notifications'
- import AssignedVehicleHistory from './components/Drivers/Driver/profile/assignedVehicleHistory';
+ import AssignedVehicleHistory from './components/Drivers/Driver/Profile/assignedVehicleHistory';
  import CompletedTripsContent from './components/Drivers/Driver/Trips/completedTrips';
 import UpcomingTripsContent from './components/Drivers/Driver/Trips/upcomingTrips';
 import TripDetailContent from './components/Drivers/Driver/Trips/tripDetail';
+
+
+
 
 
 
@@ -228,6 +231,7 @@ const Router = () => (
 
 
              <Route path="/activity-logger" component={ActivityLogger} /> 
+             {/*<Route exact path="/admin-notification" component={AdminNotifications} />*/}
 
 
 
@@ -269,10 +273,6 @@ const Router = () => (
                 
 
                
-
-
-   
-             <Route exact path="/map" component={Mapp} />
 
 
 

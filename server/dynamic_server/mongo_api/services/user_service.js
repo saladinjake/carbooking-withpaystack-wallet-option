@@ -231,7 +231,7 @@ export class UserService {
                       if(error) {
                         console.log(error);
                         //res.json(error);
-                        return res.status(400).send({ msg: error });
+                        return response.status(400).send({ msg: error });
                       }
                       console.log("email is send");
                       console.log(info);
@@ -526,7 +526,7 @@ static resendTokenPost (req, res) {
           UserService.newUserMail(request,response, result2,'/views/templates/signup-verification.html', token.email_confirm_token, 200)
            
            const token = TokenGenerator.generateToken(result);
-            return response.status(200).json({
+            return res.status(200).json({
                                                 status: 200,
                                                 data: [
                                                   {
@@ -563,6 +563,7 @@ static passwordForgot(req, res){
             
 
             
+
             // Save the verification token
         ForgotModelToken.save(function (err) {
             if (err) { 
@@ -571,7 +572,7 @@ static passwordForgot(req, res){
 
 
             UserService.passwordResetsMail( req, res,user.email,'/views/templates/reset-password.html', {username:user.username}, hashedStringToSend)
-            return response.status(200).send({ msg: "successfully sent you a password reset link", status:'ok',data: info }); 
+            return res.status(200).send({ msg: "successfully sent you a password reset link", status:'ok' }); 
                 
          
         });
@@ -739,6 +740,15 @@ static updateAsyncUserPreviledges = async function(request,response){
           roles.manage_users =  roles.manage_users;
           roles.manage_admins =  roles.manage_admins;
           roles.manage_settings = roles.manage_settings;
+
+          roles.view_car_inspection = roles.view_car_inspection;
+          roles.view_drive_test = roles.view_drive_test;
+
+          roles.manage_drive_test = roles.manage_drive_test;
+          roles.manage_car_inspection = roles.manage_car_inspection
+
+
+
     
 
      
@@ -795,6 +805,11 @@ static updateAsyncUserPreviledges = async function(request,response){
                             manage_users : roles.manage_users,
                             manage_admins : roles.manage_admins,
                             manage_settings : roles.manage_settings,
+
+                            view_drive_test: roles.view_drive_test,
+                            view_car_inspection: roles.view_car_inspection,
+                            manage_drive_test: roles.manage_drive_test,
+                            manage_car_inspection: roles.manage_car_inspection
 
 
                         }
@@ -897,7 +912,8 @@ static updateAsyncUserPreviledges = async function(request,response){
 
   static setOldBalance(request,response){
        const {
-      old_balance
+      old_balance,
+      currentBalance
     } = request.body;
 
 
@@ -913,6 +929,7 @@ static updateAsyncUserPreviledges = async function(request,response){
       
      
       user.old_balance = old_balance|| user.old_balance;
+      user.balance = currentBalance || user.balance;
       user.save(function (err,user) {
         if (err) { return response.status(500).send({ msg: err.message }); }
         console.log(user + 'hello')
@@ -922,7 +939,10 @@ static updateAsyncUserPreviledges = async function(request,response){
     });
   }
 
+
   static updateProfile(request,response){
+
+    
     const {
       firstname,
       lastname,
@@ -1600,8 +1620,8 @@ static updateUsersItinerary(request,response){
       .then(data => {
         const itinerary = data;
         if (itinerary.length === 0) {
-          return response.status(404).json({
-            status: 404,
+          return response.status(200).json({
+            status: 200,
             error: 'User has no itinerary record',
           });
         }
@@ -2454,6 +2474,40 @@ static updateUsersItinerary(request,response){
 
 
 
+  static getAllNotification(request,response){
+
+    var now = new Date();
+var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+
+    //created_at: {$gte: startOfToday}
+    NotificationModel.find({}).then((donor,error)=>{
+      if(!donor){
+              //handle error when the donor is not found
+              console.log(error)
+              
+      }
+      const allNotification = donor;
+      //console.log(tranx +"for the user")
+      return response.status(200).json({
+                status: 200,
+                data: [
+                  {
+                    allNotification,
+                    message: 'Get a specific user plan was successful',
+                  },
+                ],
+          });
+        
+      }).catch((e)=>{
+          console.log(e)
+          res.redirect('/api/v1/error')
+      })
+
+  }
+
+
+
 
 
   createUserPlan = (req, res) => {
@@ -2943,6 +2997,12 @@ getUser = (req, res) => {
                   manage_settings : roles.manage_settings,
 
 
+                  view_drive_test : roles.view_drive_test,
+                  manage_drive_test : roles.manage_drive_test,
+                  view_car_inspection : roles.view_car_inspection,
+                  manage_car_inspection : roles.manage_car_inspection,
+
+
 
                 });
 
@@ -3099,6 +3159,15 @@ getUser = (req, res) => {
           user.manage_users = roles.manage_users;
           user.manage_admins = roles.manage_admins;
           user.manage_settings = roles.manage_settings;
+
+
+          user.view_drive_test = roles.view_drive_test;
+                  user.manage_drive_test = roles.manage_drive_test;
+                  user.view_car_inspection = roles.view_car_inspection;
+                  user.manage_car_inspection = roles.manage_car_inspection;
+
+
+
 
 
               user.save(function (err,user) {
@@ -4845,6 +4914,9 @@ getUser = (req, res) => {
           view_users,
           view_admins,
           view_settings,
+          view_car_inspection,
+          view_drive_test,
+
           status,
 
 
@@ -4861,7 +4933,9 @@ getUser = (req, res) => {
           manage_faqs,
           manage_settings,
           manage_users,
-          manage_admins
+          manage_admins,
+          manage_drive_test,
+          manage_car_inspection,
         }  = request.body;  
 
     
@@ -4892,6 +4966,9 @@ getUser = (req, res) => {
           roles.view_admins = view_admins || roles.view_admins;
           roles.view_settings = view_settings || roles.view_settings;
 
+          roles.view_drive_test = view_drive_test || roles.view_drive_test;
+          roles.view_car_inspection = view_car_inspection || roles.view_car_inspection;
+
 
         
         roles.manage_bookings= manage_bookings || roles.manage_bookings;
@@ -4908,6 +4985,10 @@ getUser = (req, res) => {
           roles.manage_users = manage_users || roles.manage_users;
           roles.manage_admins = manage_admins || roles.manage_admins;
           roles.manage_settings = manage_settings || roles.manage_settings;
+
+          roles.manage_drive_test = manage_drive_test || roles.manage_drive_test;
+          roles.manage_car_inspection = manage_car_inspection || roles.manage_car_inspection;
+
     
 
      
@@ -4960,7 +5041,13 @@ getUser = (req, res) => {
                           manage_faqs,
                           manage_settings,
                           manage_users,
-                          manage_admins
+                          manage_admins,
+
+
+          view_car_inspection,
+          view_drive_test,
+           manage_drive_test,
+          manage_car_inspection,
 
 
                         }

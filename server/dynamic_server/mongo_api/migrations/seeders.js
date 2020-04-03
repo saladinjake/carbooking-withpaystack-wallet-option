@@ -238,9 +238,9 @@ class Seeders{
   }
 
 
-	
+  
 
-	seedSOSRequestByUser(dataInterventions, id){
+  seedSOSRequestByUser(dataInterventions, id){
      
           // perform seeding
           setTimeout(()  => {
@@ -257,7 +257,7 @@ class Seeders{
 
            },12000)
  
-	}
+  }
 
   seedFaqs(dataFaqs){
 
@@ -339,7 +339,7 @@ class Seeders{
 
 
 
-	seedFeedbackByUser(dataRedflags, id){
+  seedFeedbackByUser(dataRedflags, id){
           // perform seeding
           //Awesome saladin.. Awesome!!!
           setTimeout(()  => {
@@ -355,14 +355,14 @@ class Seeders{
           }).catch(e => console.log('could not find user data for his redflag'))
 
          },21000)     
-	}
+  }
 
 
 
 
 
 
-	tearDown(){
+  tearDown(){
     UserModel.deleteMany().exec()
     .then(table=> console.log('table deleted: ' + table))
     .catch(e => throw e)
@@ -406,9 +406,9 @@ class Seeders{
     //   })
     // }
        
-	}
+  }
 
-	buildUp(){
+  buildUp(){
      [
        //all collections to create
       
@@ -426,8 +426,8 @@ class Seeders{
         });
 
      });
-	
   
-	}
+  
+  }
 }
 export default Seeders;

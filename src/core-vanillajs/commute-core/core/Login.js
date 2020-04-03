@@ -105,10 +105,7 @@ class WebsiteLogin {
          
                 window.location.href="./";
              }else if(user.token && (document.getElementById('signup_page') || document.getElementById('loginpage') )){
-              // console.log("yes 3")
-              // if(user.isAdmin){
-              //   window.location.href="./admin"
-              // }
+              
               window.location.href="./dashboard"
           
             }
@@ -126,10 +123,7 @@ class WebsiteLogin {
     })
   
 
-    // window.onbeforeunload = function () {
-    //    localStorage.clear();
-    //    //localStorage.clearItems()
-    // };
+   
 
 
     //finally check if token has expired then log user out

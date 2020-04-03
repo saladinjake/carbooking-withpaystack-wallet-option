@@ -277,12 +277,14 @@ function dashboard() {
               let tablebody = document.getElementById('tablebody');
               let tablebody2 = document.getElementById('tablebody1');
               document.getElementById("plan-id").innerHTML = currentPlan.plan_name || "Current Plan";
-              //console.log(itinerary.length+ ":it length")
-              
+              console.log(itinerary.length+ ":it length")
+                  
 
-                      let eachRecord=``;
+                    let eachRecord=``;
                       itinerary.map((item, i) => {
                         let className='label-success'
+
+                        
                         if(item.status=="Ongoing"){
                              className='label-danger';
                              
@@ -295,17 +297,22 @@ function dashboard() {
                             //item.status=`<span class="label label-table label-warning">${item.status}</span>`;
                           }
                           eachRecord = `
-                          <tr id="${i}">
-                                <td class="">${formatDate(new Date(item.created_at))} </td>
-                          <td class="">${item.plan_category}</td>
-                          <td class="">${item.start_location} </td>
-                          <td class="">${item.destination}</td>
-                            
-                            <td class=""><span class="label label-table ${className}">${item.status}</span></td>
-                                                                           
-                         </tr>`; 
+                          <tr key={i}>
+                          <td> ${formatDate(new Date(item.created_at))} </td>
+                          <td>${item.plan_category}</td>
+                          <td>${item.start_location} </td>
+                          <td>${item.destination}</td>
+                          <td> ${formatDate(new Date(item.start_time))}</td>
+                          <td>${item.drive_option}</td>
+                           <td>${item.no_hours}</td>  
+                            <td><span class="label label-table ${className}">${item.status}</span></td>
+                     </tr>`; 
                          tablebody.insertAdjacentHTML('beforeend', eachRecord); 
                       });
+
+                  
+
+                      
                
                          
                       // const tablebody = document.getElementById('tablebody');

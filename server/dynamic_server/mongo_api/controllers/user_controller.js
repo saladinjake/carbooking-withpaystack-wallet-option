@@ -6,6 +6,10 @@ export default class UserController {
     return UserService.signup(request, response);
   }
 
+  static getAllNotification(request,response){
+    return UserService.getAllNotification(request,response)
+  }
+
   static testEmail(request,response){
     UserService.testEmail(request,response)
   }

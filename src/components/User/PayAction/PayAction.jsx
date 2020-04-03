@@ -168,7 +168,7 @@ export class PayAction extends Component {
 
                             <div className="col-md-3 text-center" id="building-details">
                                 <div className="panel panel-info">
-                                    <div className="panel-heading">Review Building Details</div>
+                                    <div className="panel-heading">Review Billing Details</div>
                                         <div className="panel-body">
                                             <div className="table-responsive project-list">
                                                 <table className="table table-striped"><tbody  ><tr >

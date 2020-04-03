@@ -112,6 +112,8 @@ export  default class ManualBookings extends Component {
                                                     <option>Pending</option>
                                                     <option>Ongoing</option>
                                                     <option>Completed</option>
+                                                    <option>Paid</option>
+                                                    <option>Unpaid</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -146,16 +148,7 @@ export  default class ManualBookings extends Component {
 
                                             
 
-                                            <div className="form-group col-sm-12">
-                                            <label for="" className="col-sm-4 control-label">Plan Status</label>
-                                            <div className="col-sm-7">
-                                                <select className="form-control" id="status">
-                                                    <option>pending</option>
-                                                    <option>ongoing</option>
-                                                    <option>completed</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                           
 
                                         <div className="form-group col-sm-12">
                                                 <label for="inputEmail3" className="col-sm-4 control-label">Phone Number</label>

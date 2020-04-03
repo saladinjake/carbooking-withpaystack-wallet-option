@@ -19,6 +19,58 @@ let userPlanItineries;
 let ItineraryList =[];
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+function postNotification(postUrl,prePostData){
+  let user = JSON.parse(localStorage.getItem('userToken'))
+    fetch(postUrl, {
+      method: 'POST',
+      headers: {
+        'Access-Control-Allow-Headers': 'x-access-token',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': user.token,
+      },
+      mode: 'cors',
+      body: JSON.stringify(prePostData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 201) {
+          console.log(data)
+          //MessageBoard.displayMsg('Form submitted succesfully');
+          var notification = alertify.notify('Successful transaction.', 'success', 5, function(){  console.log('dismissed'); });
+           
+
+                
+
+          localStorage.setItem('urlType', postUrl);
+        } else if (data.status === 401 || data.status === 403) {
+           
+          //window.location.href = './';
+        } else {
+           //MessageBoard.displayMsg(data.error);
+          var notification = alertify.notify('Failed to send quotation to user', 'error', 5, function(){  console.log('dismissed'); });
+                 
+        }
+      })
+      .catch(error => {
+        throw error;
+      });
+}
+
+
+
 function createUserDriveTestDetail(url, data){
   const user = JSON.parse(localStorage.getItem('userToken'));
   fetch(url, {
@@ -573,52 +625,7 @@ class WebsitePlanCategory {
   }
 
   loadItineraries(itinerarys){
-    // const user = JSON.parse(localStorage.getItem('userToken'));
-    // var fetch_lock = false;
-    // if(fetch_lock) return;
-    // fetch_lock = true;
-    // return fetch(activeUrl + `/itinerary/${user.user.id}/user`, {
-    //       method: 'GET',
-    //       headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json',
-    //         'x-access-token': user.token,
-    //       },
-    //        mode: 'cors',
-    //     }).then(response => response.json())
-    //   .then(datas => {
-    //           const tablebody = document.getElementById('tablebody');
-              
-    //            console.log(datas)
-    //           const itinerary = [...new Set(datas.data[0].itinerary)];
-              
-
-
-             
-    //           let eachRecord=``;
-    //           itinerary.map((item, i) => {
-
-    //               eachRecord = `
-    //               <tr key={i}>
-    //                   <td> ${formatDate(new Date(item.start_time))}</td>
-    //                   <td>${item.start_location} </td>
-    //                   <td>${item.destination}</td>
-    //                   <td>${item.drive_option}</td>
-    //                     <td>
-    //                       <a data-drivingschool="${item.drivingschool}" data-drive_option="${item.drive_option}" data-no_hours="${item.no_hours}" data-end_time="${item.end_time}"  data-certificate_id="${item.certificate_id}" id="${item.id}"  data-id="${item.id}"  data-driver_option="${item.drive_option}"  data-start_time="${item.start_time}" data-start_location="${item.start_location}" data-destination="${item.destination}" onclick="getIdPlan(this)"  href="#" class="table-action-btn md-trigger" data-toggle="modal" data-target="#con-close-modal"><i  class="md md-edit update" ></i></a>    
-    //                       </td>
-                                                                       
-    //              </tr>`;  
-    //              tablebody.insertAdjacentHTML('beforeend', eachRecord);
-    //           });
-               
-        
-      
-    //     })
-    //     .catch(error => {
-    //       throw error;
-    //     });
-
+    
 
 
             var allNewItineraries = [...new Set(itinerarys)];//[...new Set(JSON.parse(localStorage.getItem('itins')) )];
@@ -670,51 +677,9 @@ class WebsitePlanCategory {
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
           isPlaceChanged = true;
             startLoc = autocomplete.getPlace();
-            // console.log(JSON.stingify(startLoc)+ "....")
-       
-            
-            // var geocoder = new google.maps.Geocoder();
-            // var place = autocomplete.getPlace();
-            // var address = place.formatted_address;
-            // geocoder.geocode({ 'address': address }, function (results, status) {
-            //     if (status == google.maps.GeocoderStatus.OK) {
-            //         var latitude = results[0].geometry.location.lat();
-            //         var longitude = results[0].geometry.location.lng();
-            //         var mapOptions = { center: new google.maps.LatLng(latitude, longitude), zoom: 15, mapTypeId: google.maps.MapTypeId.ROADMAP };
-            //         //var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
-            //         //var marker = new google.maps.Marker({ position: new google.maps.LatLng(latitude, longitude), map: map });
-
-            //     } else {
-            //         alert("Request failed.")
-            //     }
-            // });
+         
         });
 
-    //     $(function () {
-    //        $("#location").keydown(function () {
-    //           isPlaceChanged = false;
-    //        });
-
-    //        $("#destination").keydown(function () {
-    //           isPlaceChanged = false;
-    //        });
- 
-        
-
-    //       endLoc.addEventListener("change",()=>{
-    //          if (!isPlaceChanged) {
-    //               $("#location").val('');
-    //               //alert("Please Enter valid start location");
-    //               var notification = alertify.notify('Please Enter valid start location', 'error', 5, function(){  console.log('dismissed'); });
-              
-    //           }
-    //           else {
-    //               //alert($("#location").val());
-    //               var notification = alertify.notify('Start location has been found.', 'error', 5, function(){  console.log('dismissed'); });
-              
-    //           }
-    //       })
-    // });
 
 
          var autocomplete2 = new google.maps.places.Autocomplete(endLoc,options);
@@ -1174,9 +1139,9 @@ class WebsitePlanCategory {
           user_id:Number(userOnline.user.id), 
           carsSelected: carList,
            planName: planset[1],
-          price: "pending",
+          price: "Pending",
           planCategoryName: planset[2],
-          status:"pending",
+          status:"Pending",
           no_hours:iti.no_hours || planset[3],
           duration: no_hourss,
 
@@ -1202,8 +1167,38 @@ class WebsitePlanCategory {
             .then(data =>{
               console.log(data)
 
-              var notification = alertify.notify('Plan has been added successfully.', 'success', 5, function(){  console.log('dismissed'); });
-              window.location.href="http://localhost:4000/dashboard";
+              var notification = alertify.notify('Plan has been added successfully. Syncronization initiated , please wait...', 'success', 10, function(){  console.log('dismissed'); });
+              
+             
+
+
+               let data_msg =" " + userOnline.user.username + " "; 
+                 data_msg+="has  subscribed to the plan " + PLAN_ID + "on our platform."; 
+                 data_msg+="Please prepare a quotation for the user."; 
+                
+
+              
+                
+                  let notification_url ="http://localhost:12000/api/v1/notification"; 
+                  
+                  let dataNotification = {
+                    user_id: userOnline.user.email,
+                    type: 'payment',
+                    description: data_msg,
+                   
+                    
+                  };
+
+                  
+
+                 //craete notification and update status to ongoing
+                 postNotification(notification_url,dataNotification);
+
+            setTimeout(()=>{
+             // window.location.href="http://localhost:4000/dashboard";
+            },8000)
+
+              
 
               //localStorage.removeItem('duration')
         // localStorage.removeItem('plan')

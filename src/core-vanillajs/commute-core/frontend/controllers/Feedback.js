@@ -239,8 +239,8 @@ class IReporterWebsiteInterventions {
      if (document.getElementById('view-tickets')) {
 
     const recordItems = document.querySelector('#fetched-data');
-  
-    if (items.length === 0) {
+     alert('hello man')
+    if (items.length ===0) {
       recordItems.innerHTML = 'No records Yet';
       recordItems.style.textAlign = 'center';
       recordItems.style.fontSize = '32px';

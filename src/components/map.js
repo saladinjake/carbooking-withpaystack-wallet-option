@@ -53,19 +53,20 @@ class Map extends Component {
     this.addMarker(srcLatLng,'Origin','A');
     this.addMarker(destLatLng,'Destination','B');
 
-    const DirectionsService = new google.maps.DirectionsService();
-    DirectionsService.route({
-      origin: srcLatLng,
-      destination: destLatLng,
-      travelMode: google.maps.TravelMode.DRIVING,
-    }, (result, status) => {
-      if (status === google.maps.DirectionsStatus.OK) {
-          this.drawPath(result.routes[0].overview_path,this.map,this.state.colors[this.state.id]);
-          this.moveMarker(result.routes[0].overview_path,this.state.id)
-      } else {
-        console.error(`error fetching directions ${result}`);
-      }
-    });
+    // const DirectionsService = new google.maps.DirectionsService();
+    // DirectionsService.route({
+    //   origin: srcLatLng,
+    //   destination: destLatLng,
+    //   travelMode: google.maps.TravelMode.DRIVING,
+    // }, (result, status) => {
+    //   if (status === google.maps.DirectionsStatus.OK) {
+        
+    //       this.drawPath(result.routes[0].overview_path,this.map,this.state.colors[this.state.id]);
+    //       this.moveMarker(result.routes[0].overview_path,this.state.id)
+    //   } else {
+    //     console.error(`error fetching directions ${result}`);
+    //   }
+    // });
   }
 
   drawPath(cords,map,color){
@@ -108,7 +109,7 @@ class Map extends Component {
     return(
       <div className="row">
         <div className="col-md-8 mapcont">
-          <div ref="map" className="map"></div><br />
+          <div ref="map" className="map" style={{display:"block"}}></div><br />
         </div>
         <div className="col-md-4">
           <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

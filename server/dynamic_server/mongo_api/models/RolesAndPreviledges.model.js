@@ -103,6 +103,15 @@ let RolesAndPreviledgesSchema = new mongoose.Schema({
          type: String,
              default:'yes',
       },
+      view_car_inspection:{
+         type: String,
+             default:'yes',
+      },
+      view_drive_test:{
+         type: String,
+             default:'yes',
+
+      },
 
 
 
@@ -170,6 +179,16 @@ let RolesAndPreviledgesSchema = new mongoose.Schema({
       manage_admins:{
          type: String,
              default:'yes',
+      },
+
+      manage_car_inspection:{
+         type: String,
+             default:'yes',
+      },
+      manage_drive_test:{
+         type: String,
+             default:'yes',
+
       },
         
         

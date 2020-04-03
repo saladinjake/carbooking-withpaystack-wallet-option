@@ -10,6 +10,8 @@ class WebsiteProfile {
   attachEvents() {
     console.log('calling profile controller');
 
+    if(localStorage.getItem('userToken')){
+
     const user = JSON.parse(localStorage.getItem('userToken'));
 
     if((!document.getElementById('signup_page') && !document.getElementById('loginpage') && !document.getElementById('pass_forgot_page') )){
@@ -36,6 +38,10 @@ class WebsiteProfile {
     } else {
       console.log('cant find where to load data');
     }
+
+   }
+   
+    
   }
   static hasClass(el, classname) {
     return el.classList.contains(classname);

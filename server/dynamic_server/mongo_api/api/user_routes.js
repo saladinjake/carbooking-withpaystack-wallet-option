@@ -103,6 +103,7 @@ this.router.get('/email/smtp/template', (req, res, next) => {
  this.router.get('/test-email',
   UserController.testEmail,
   )
+
     this.router.get('/profile/update/:id',
       TokenVerification.userAuthentication,
     	UserController.showProfile
@@ -936,6 +937,13 @@ this.router.get('/email/smtp/template', (req, res, next) => {
     TokenVerification.adminAuthentication,
     UserController.createTrail
   );//
+
+
+  
+ this.router.get('/get-all-notification',
+   TokenVerification.adminAuthentication,
+   UserController.getAllNotification
+  );
 
 
 

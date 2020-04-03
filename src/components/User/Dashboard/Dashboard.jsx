@@ -150,21 +150,25 @@ export  default class Dashboard extends Component {
                                                 </div>
                                                 <div className="clearfix"></div>
                             <div className="m-t-10" style={{border:"1px solid #4c3392"}}></div>
+
+                            
+                                       <div id="available">
                                         <table id="demo-foo-pagination" data-page-size="7" 
                                            data-search="true" className="table toggle-circle table-hover">
 
+
+
+
                                             <thead>
-                                                <tr>
-
-                                                
-
-                                                  <th data-toggle="true" className="col-lg-4">Created Date</th>
-                                                    <th className="col-lg-2">Plan Category</th>
+                                                 <tr>
+                                                    <th data-toggle="true" className="col-lg-4">Created Date</th>
+                                                    <th data-hide="phone" className="col-lg-4">Plan Category</th>
                                                     <th data-hide="phone" className="col-lg-4">Start Location</th>
-                                                    <th data-hide="phone" className="col-lg-4">Destination</th>
-                                                    
+                                                    <th data-hide="phone" className="col-lg-3">Destination</th>
+                                                    <th data-hide="phone" className="col-lg-4">Start Time</th>
+                                                    <th data-hide="phone" className="col-lg-2">Drive Option</th>
+                                                    <th data-hide="phone" className="col-lg-2">Duration (hrs)</th>
                                                      <th data-hide="all" className="col-lg-2">Status</th>
-                                                   
                                                 </tr>
                                             </thead>
                                            
@@ -181,6 +185,7 @@ export  default class Dashboard extends Component {
                                             </tr>
                                         </tfoot>
                                         </table>
+                                        </div>
                                     </div>
 
                                 </div>
