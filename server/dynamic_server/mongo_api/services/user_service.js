@@ -26,6 +26,7 @@ import { ErrorHandler } from '../helpers/error_handler';
 import { ResponseHandler } from '../helpers/response_handler';
 import UserModel from '../models/User.model.js';
 import PartnersModel from "../models/Partners.model.js";
+import EarningsModel from '../models/EarningsModel';
 //import DriversModel from "../models/Driver.model.js";
 import WalletModel from '../models/Wallet.model.js';
 import PaymentModel from "../models/Payments.model.js";
@@ -47,7 +48,7 @@ import GmailSettingModel from "../models/GmailSettings.model";
 import InspectionModel from "../models/Inspection.model";
 import DriveTestModel from  "../models/DriveTest.model";
 import RolesAndPreviledgesModel from '../models/RolesAndPreviledges.model'
-
+import MechModel from '../models/Repairs.model';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import path from 'path';
@@ -523,7 +524,7 @@ static resendTokenPost (req, res) {
 
             };
 
-          UserService.newUserMail(request,response, result2,'/views/templates/signup-verification.html', token.email_confirm_token, 200)
+          UserService.newUserMail(req,res, result2,'/views/templates/signup-verification.html', token.email_confirm_token, 200)
            
            const token = TokenGenerator.generateToken(result);
             return res.status(200).json({
@@ -538,6 +539,7 @@ static resendTokenPost (req, res) {
                         });
 
            
+
          
             
         });
@@ -627,7 +629,8 @@ static passwordForgot(req, res){
   
   static showProfile(request,response){//profile-admin-rights
 
-    UserModel.find({id: Number(request.params.id)})
+    // UserModel.find({id: Number(request.params.id)})
+    UserModel.find({email:request.params.id})
       .then(data => {
         console.log("specific profile:" + data)
         
@@ -822,7 +825,7 @@ static updateAsyncUserPreviledges = async function(request,response){
                     res.send(err);
                   } else {
                     
-                           UserModel.find({_id: request.params.id})
+                           UserModel.find({email: request.params.id})
                                   .then(data => {
                                     console.log("specific profile:" + data)
                                     
@@ -923,15 +926,19 @@ static updateAsyncUserPreviledges = async function(request,response){
     
 
 
-    UserModel.findOne({ id:  request.params.id }, function (err, user) {
+    UserModel.findOne({ email:  request.params.id }, function (err, user) {
 
       if (!user) return response.status(400).send({ msg: 'We were unable to find a user with that email.' });
       
      
-      user.old_balance = old_balance|| user.old_balance;
-      user.balance = currentBalance || user.balance;
+      user.old_balance = new String(old_balance) || user.old_balance;
+      user.balance = new String(currentBalance) || user.balance;
+      console.log(new String(old_balance), new String(currentBalance))
       user.save(function (err,user) {
-        if (err) { return response.status(500).send({ msg: err.message }); }
+
+        if (err) { 
+          console.log(err)
+          return response.status(500).send({ msg: err.message }); }
         console.log(user + 'hello')
           //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
           return response.status(200).send({success:'ok', msg: 'Successfully updated user profile.' });
@@ -968,7 +975,8 @@ static updateAsyncUserPreviledges = async function(request,response){
     
 
 
-    UserModel.findOne({ id:  request.params.id }, function (err, user) {
+
+    UserModel.findOne({ email:  request.params.id }, function (err, user) {
 
       if (!user) return response.status(400).send({ msg: 'We were unable to find a user with that email.' });
       
@@ -993,7 +1001,9 @@ static updateAsyncUserPreviledges = async function(request,response){
       user.phone_number = phoneNumber|| user.phone_number;
       user.test_certificate = certificate|| user.test_certificate;
       user.save(function (err,user) {
-        if (err) { return response.status(500).send({ msg: err.message }); }
+        if (err) { 
+          console.log(err)
+          return response.status(500).send({ msg: err.message }); }
         console.log(user + 'hello')
           //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
           return response.status(200).send({success:'ok', msg: 'Successfully updated user profile.' });
@@ -2402,7 +2412,7 @@ static updateUsersItinerary(request,response){
 
     const id = new String(request.params.id);
     console.log(id)
-    NotificationModel.find({user_id:request.params.id}).then((donor,error)=>{
+    NotificationModel.find({user_id:request.params.id, for_users: true}).then((donor,error)=>{
       if(!donor){
               //handle error when the donor is not found
               console.log(error)
@@ -2436,6 +2446,11 @@ static updateUsersItinerary(request,response){
       description,
   
     } = request.body;
+    let for_users =true;
+
+    if(request.body.for_users){
+      for_users =false;
+    }
 
    
     const NewNotificationModel = new NotificationModel({ 
@@ -2443,6 +2458,7 @@ static updateUsersItinerary(request,response){
       user_id,
       type,
       description,
+      for_users
 
     
       //accountNumber: uuidv4()
@@ -2481,7 +2497,7 @@ var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
 
     //created_at: {$gte: startOfToday}
-    NotificationModel.find({}).then((donor,error)=>{
+    NotificationModel.find({for_users:true},null, {sort: { field : -1 }}).then((donor,error)=>{
       if(!donor){
               //handle error when the donor is not found
               console.log(error)
@@ -3586,13 +3602,14 @@ getUser = (req, res) => {
        firstName: firstname,
         lastName: lastname,
         userName: username,
-
+        name: firstname + " " + lastname,
         email,
         password,
         address:address,
         totalCars,
         
         phoneNumber: phoneNumber,
+        phone: phoneNumber,
         avatar,
         businessName:certificate,
         roles: user_type,
@@ -5732,6 +5749,8 @@ getUser = (req, res) => {
   static manageCarsDetail(request,response){
     const {
       status,
+      health_status,
+      car_status,
       car_type,
       car_model,
       description,
@@ -5764,6 +5783,8 @@ getUser = (req, res) => {
          CarsModel.updateOne({_id: request.params.id }, {
                     
                       status: status || redId.status,
+                      health_status: health_status || redId.health_status,
+                      car_status: car_status || redId.car_status,
                       car_type: car_type|| redId.car_type,
                       car_model: car_model || redId.car_model,
                       description: description || redId.description,
@@ -5817,6 +5838,8 @@ getUser = (req, res) => {
   static createNewCar(request,response){
     const {
        status,
+       health_status,
+       car_status,
             color,
             model,
       car_type,
@@ -5838,6 +5861,8 @@ getUser = (req, res) => {
     const NewCars = new CarsModel({ 
             id:  new AutoincrementId(CarsModel).counter(),
             status,
+            health_status,
+            car_status,
             color,
             model: car_model,
       car_type,
@@ -5852,7 +5877,71 @@ getUser = (req, res) => {
       plate_number,
       license,
       assigned_driver_id,
-      images
+      images,
+
+
+      
+
+car: {
+
+  car_name:car_type,
+
+model_id:car_model,
+
+model_make_id:car_type,
+
+model_name:car_model,
+
+model_trim:car_model,
+
+model_year:car_year,
+
+manufacturer:'',
+
+
+
+},
+
+
+carModel:car_model,
+
+carYear:car_year,
+
+vehicleColor:color,
+
+plateNo:plate_number,
+
+inspectionDate:'',
+
+inspectionTime:'',
+
+carDescription:description,
+
+imagePath: images,
+
+creator:partner_id,
+
+date_created:new Date(),
+partnerEmail:'',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       });
 
     NewCars.save()
@@ -5954,6 +6043,194 @@ getUser = (req, res) => {
           error: ErrorHandler.errors().validationError,
         }),
       );
+  }
+
+  static getAllRepairs(request,response){
+
+    MechModel.find()
+      .then(data => {
+        const mech = data;
+        //console.log(googleSettings,"users available are here")
+        if (mech.length === 0) {
+
+          return response.status(200).json({
+          status: 200,
+          data: [
+            {
+              mech:[],
+               
+          
+              message: 'Successful',
+            },
+          ],
+        });
+          
+        }
+        return response.status(200).json({
+          status: 200,
+          data: [
+            {
+              mech,
+               
+          
+              message: 'Successful',
+            },
+          ],
+        });
+      })
+      .catch(error =>
+        response.status(400).json({
+          status: 400,
+          error: ErrorHandler.errors().validationError,
+        }),
+      );
+
+  }
+
+
+  static changeRepairStatus(request,response){
+
+    MechModel.find({_id: request.params.id})
+  .then(redId => {
+        if (redId.length <= 0) {
+          return response.status(404).json({
+                      status: 404,
+                      error: 'The status with the given red-flag id does not exists',
+                    });
+        }
+         const { status } = request.body;
+    
+
+
+            MechModel.updateOne({_id:request.params.id }, {
+                    
+                      status: status
+                  
+                }).then(data => {
+                  
+                const redflagStatus = data;
+                
+                return response.status(201).json({
+                  status: 201,
+                  data: [
+                    {
+                      id: redflagStatus._id,
+                      message: 'Updated red-flag record’s status',
+                    },
+                  ],
+                });
+              })
+              .catch(err =>{
+                console.log(err)
+                response.status(400).json({
+                  status: 400,
+                  error: ErrorHandler.errors().validationError,
+                });
+              });
+
+  
+      })
+      .catch(error =>
+        response.status(400).send({
+          status: 400,
+          error:ErrorHandler.errors().validationError,
+        }),
+      );
+
+  }
+
+
+
+    static getAllPartnerEarnings(request,response){
+
+    EarningsModel.find()
+      .then(data => {
+        const earnings = data;
+        //console.log(googleSettings,"users available are here")
+        if (earnings.length === 0) {
+
+          return response.status(200).json({
+          status: 200,
+          data: [
+            {
+              earnings:[],
+               
+          
+              message: 'Successful',
+            },
+          ],
+        });
+          
+        }
+        return response.status(200).json({
+          status: 200,
+          data: [
+            {
+              earnings,
+               
+          
+              message: 'Successful',
+            },
+          ],
+        });
+      })
+      .catch(error =>
+        response.status(400).json({
+          status: 400,
+          error: ErrorHandler.errors().validationError,
+        }),
+      );
+
+  }
+
+
+  static createNewPartnerEarnings(request,response){
+
+    const { paymentDate,
+PaymentStatus,
+PaymentAmount,
+paymentReference,
+partnerId,
+partnerEmail,
+partnerBankAccount,
+vehicleId,
+vehicleName,
+vehiclePlateNo,} = request.body;
+
+    const NewEarnings = new EarningsModel({ 
+            id:  new AutoincrementId(EarningsModel).counter(),
+            paymentDate,
+PaymentStatus,
+PaymentAmount,
+paymentReference,
+partnerId,
+partnerEmail,
+partnerBankAccount,
+vehicleId,
+vehicleName,
+vehiclePlateNo,
+      });
+
+    NewEarnings.save()
+      .then(data => {
+        const Earnings = data;
+        return response.status(201).json({
+          status: 201,
+          data: [
+            {
+              id: Earnings.id,
+              message: 'Created car record',
+            },
+          ],
+        });
+      })
+      .catch(err =>{
+        console.log(err)
+        response.status(400).json({
+          status: 400,
+          error: ErrorHandler.errors().validationError,
+        });
+      });
   }
 
 

@@ -33,7 +33,7 @@ export  default class SubmittedSOS extends Component {
 
       <div className="content-page page-wrap" id="spread-out">
                 
-                <div className="content" id="view-sos">
+                <div className="content animated animatedFadeInUp fadeInUp " id="view-sos">
                     <div className="container">
 
                        

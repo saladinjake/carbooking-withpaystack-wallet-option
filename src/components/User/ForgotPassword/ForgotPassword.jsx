@@ -45,7 +45,7 @@ export class ForgotPassword extends Component {
       <div id="pass_forgot_page">
     <div className="account-pages" ></div>
     <div className="clearfix"></div>
-    <div className="wrapper-page">
+    <div className="wrapper-page" animated animatedFadeInUp fadeInUp >
       <div className=" card-box">
         <div className="panel-heading">
           <h3 className="text-center"> Reset Password </h3>

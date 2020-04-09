@@ -29,7 +29,7 @@ export  default class WalletHistory extends Component {
 
     <div className="content-page" id="spread-out">
        
-        <div className="content" id="payment-page">
+        <div className="content animated animatedFadeInUp fadeInUp " id="payment-page">
             <div className="container">
 
                

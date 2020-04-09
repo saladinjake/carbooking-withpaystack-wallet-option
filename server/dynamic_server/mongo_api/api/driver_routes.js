@@ -37,7 +37,7 @@ let corsOption = {
 
 //for e wallet transactions
 
-const validate = require('express-validation');
+//const validate = require('express-validation');
 
 class DriversRoutes {
   constructor(router) {

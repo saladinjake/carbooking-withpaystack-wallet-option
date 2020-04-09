@@ -12,6 +12,12 @@ let NotificationSchema = new mongoose.Schema({
           type: String,
     
         },
+
+        for_users:{
+
+          type:Boolean,
+          default:true
+        },
         // message:{
         //   type: String,
           

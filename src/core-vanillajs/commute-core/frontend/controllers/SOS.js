@@ -18,6 +18,24 @@ function formatDate(date) {
   return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
 }
 
+
+function GateKeepersForUser() {
+  let user ;
+  // if(JSON.parse(localStorage.getItem('userToken'))){
+     user = JSON.parse(localStorage.getItem('userToken'));
+  // }
+  //back to login
+  if (!user) {
+    window.location.href = './';
+  }
+
+  else if(user.isVerified===false){
+    window.location.href = './';
+  }
+
+  
+}
+
 export default class SOS{
 	constructor(){}
 
@@ -32,7 +50,12 @@ export default class SOS{
 
 	
 	attachEvents(){
+     if(localStorage.getItem('userToken')){
 	  if (document.getElementById('sos-page')) {
+
+     
+
+     
 			// $("#show-map").hide();
 			//  $(document).ready(function() {
 			// 	// get location button functionality
@@ -59,6 +82,10 @@ export default class SOS{
 	  if(document.getElementById("view-sos")){
          this.indexController()
 	  }
+
+     }else{
+       
+     }
 
 	}
 

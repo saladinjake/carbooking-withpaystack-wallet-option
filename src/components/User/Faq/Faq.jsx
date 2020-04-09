@@ -39,7 +39,7 @@ export  default class FAQ extends Component {
 
 						
 						
-						<div className="row">
+						<div className="row animated animatedFadeInUp fadeInUp ">
 							<div className="col-sm-12">
 								<div className="card-box">
 

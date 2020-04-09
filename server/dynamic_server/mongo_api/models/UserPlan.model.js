@@ -26,6 +26,7 @@ let UserPlanSchema = new mongoose.Schema({
         },
 
 
+
         payment_status:{
           type:String,
           default:'Unpaid'

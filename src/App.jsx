@@ -42,22 +42,21 @@ const loadingAction = () => {
   document.onreadystatechange = function(e) { 
             e.preventDefault();
             if (document.readyState !== "complete") { 
-                document.querySelector("#gtd").style.visibility = "hidden";
-                document.querySelector("#gtd").style.opacity = 0; 
-                document.querySelector("#loader").style.visibility = "visible"; 
+               
 
             } else { 
-                document.querySelector("#loader").style.display = "none"; 
-                document.querySelector("#gtd").style.visibility = "visible"; 
-                document.querySelector("#gtd").style.opacity = 1;
+                
 
                  if (!document.getElementById('admin')) {
                           console.log('frontend');
                           new FrontEndApp().run();
-                  } else {
+    } else {
                           console.log('backend');
-                          new BackEndApp().run();
-                  }
+                          new BackEndApp().run()                     
+    }
+               
+
+                 
             } 
 
         
@@ -66,12 +65,82 @@ const loadingAction = () => {
 }
 
 
+document.addEventListener('load', ()=>{
+ $("#loader").animate({
+        top: -3500
+      }, 2500);
+      
+  setTimeout(()=>{
+       
+
+      document.querySelector("#gtd").style.visibility = "hidden";
+                document.querySelector("#gtd").style.opacity = 0; 
+                document.querySelector("#loader").style.visibility = "visible";
+
+    },2000)
+
+    
+
+})
+  
+
+
 
 $(document).ready(function(){
-     loadingAction();
+       
+ if (!document.getElementById('admin')) {
+   
+      setTimeout(()=>{
 
+       $("#loader").animate({
+        top: -3500
+      }, 2500);
+
+
+
+      },3400)
+
+      document.querySelector("#gtd").style.visibility = "visible"; 
+        document.querySelector("#gtd").style.opacity = 1;
+
+    setTimeout(()=>{
+
+    
+      
+      document.querySelector("#gtd").style.visibility = "visible"; 
+        document.querySelector("#gtd").style.opacity = 1;
+      }
+         
+      ,3500)
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+      
+
+   
      
 });
+
+
+ document.addEventListener('DOMContentLoaded',()=>{
+   loadingAction()
+ })
+    
+
 
 
 

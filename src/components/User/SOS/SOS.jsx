@@ -24,7 +24,7 @@ export class CarRepairRequest extends Component {
       <React.Fragment>
 
        <div class="column-sos">
-       <div className="content-page " id="spread-out">
+       <div className="content-page animated animatedFadeInUp fadeInUp " id="spread-out">
                 <div className="content" id="sos-page">
                     <div className="container">                        
                          <div className="row">

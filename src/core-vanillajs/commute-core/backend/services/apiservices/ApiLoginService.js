@@ -63,6 +63,10 @@ class ApiLoginService {
       .then(response => response.json())
       .then(data => {
         if (data.status === 422) {
+           showLoader()
+  showConfirmation()
+  resetLogin()
+
           setTimeout(()=>{
             dome2.disabled=false;
             dome2.innerHTML='LOG IN';
@@ -77,6 +81,11 @@ class ApiLoginService {
           localStorage.setItem('userToken', JSON.stringify(data.data[0]));
           localStorage.login == 'true';
           localStorage.setItem('userToken', JSON.stringify(data.data[0]));
+
+
+          showLoader()
+  showConfirmation()
+  resetLogin()
 
 
           MessageBoard.displayMsg(data.message);
@@ -106,6 +115,10 @@ class ApiLoginService {
             dome2.disabled=false;
             dome2.innerHTML='LOG IN';
           },4000)
+
+           showLoader()
+  showConfirmation()
+  resetLogin()
         }
         else if(data.status==404){
           MessageBoard.displayMsg(data.error);
@@ -114,6 +127,10 @@ class ApiLoginService {
             dome2.disabled=false;
             dome2.innerHTML='LOG IN';
           },4000)
+
+           showLoader()
+  showConfirmation()
+  resetLogin()
         }
          else if(data.status==400){
           console.log(data)
@@ -125,6 +142,10 @@ class ApiLoginService {
           },4000)
           // MessageBoard.displayMsg(data.error );
           //Router.redirect('./');
+
+           showLoader()
+  showConfirmation()
+  resetLogin()
         }
       })
       .catch(error => {
@@ -211,6 +232,40 @@ class ApiLoginService {
       });
 
   }
+}
+
+
+const button = document.querySelector('#login_btn')
+const loader = document.querySelector('#loader-container')
+const confirmation = document.querySelector('#confirmation-container')
+
+
+// button.addEventListener('click', (e) => {
+//   e.preventDefault()
+//   showLoader()
+//   showConfirmation()
+//   resetLogin()
+// })
+
+const showLoader = () => {
+  loader.classList.add('loader-open')
+  loader.classList.remove('loader-close')
+}
+
+const showConfirmation = () => {
+  setTimeout(() => {
+    confirmation.classList.add('confirmation-open')
+    confirmation.classList.remove('confirmation-close')
+  }, 2000)
+}
+
+const resetLogin = () => {
+  setTimeout(() => {
+    loader.classList.add('loader-close')
+    loader.classList.remove('loader-open')
+    confirmation.classList.add('confirmation-close')
+    confirmation.classList.remove('confirmation-open')
+  }, 4000)
 }
 
 export default ApiLoginService;

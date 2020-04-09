@@ -37,7 +37,7 @@ export class Register extends Component {
             <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 pull-right p-l-0 p-r-0" style={{background: "#fff", height:"100%"}}>
             
 
-      <div className="card-box p-l-0 p-r-0">
+      <div className="card-box p-l-0 p-r-0 animated animatedFadeInUp fadeInUp ">
         <div className="panel-heading p-b-0">
           <h1 className="text-custom m-t-40 m-b-20 text-left" style={{ fontWeight:"700", letterSpacing:"3px"}}>Sign up</h1>
                 <a href="/" className="btn-link" style={{textDecoration:"none"}}>or log in to your account</a>
@@ -69,7 +69,7 @@ export class Register extends Component {
 
                     
 
-          <form id="sign-form"  className="form m-t-10" method="POST" action="http://localhost:12000/api/v1/auth/signup">
+          <form id="sign-form"  className="form m-t-10 animated animatedFadeInUp fadeInUp fade-in" method="POST" action="http://localhost:12000/api/v1/auth/signup">
 
               
 

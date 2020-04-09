@@ -20,7 +20,9 @@ function formatDate(date) {
 
 function ApiItineraryHistory() {
   if(document.getElementById("itinerary-history")){
-    const user = JSON.parse(localStorage.getItem('userToken'));
+
+    if(localStorage.getItem('userToken')){
+         const user = JSON.parse(localStorage.getItem('userToken'));
     //window.addEventListener('DOMContentLoaded', event => {
       // event.preventDefault();
       const urls = [activeUrl + `/itinerary/${user.user.id}/user`,
@@ -54,12 +56,17 @@ function ApiItineraryHistory() {
 
 
 
-              const tablebody1 = document.getElementById('tablebody');
+              const tablebody1 = document.getElementById('tablebodyA');
 
 
-              
-             
-                     //console.log(datas)
+               if(datas[0].error){
+              // alert('no itin'+ datas[0].error)
+              document.getElementById('tableviewItins').style.display="none"
+              document.getElementById('svgItins').style.display="block"
+            
+             }else{
+
+               //console.log(datas)
                     const itinerary = [... new Set(datas[0].data[0].itinerary)];
                     
                   let eachRecord=``;
@@ -84,16 +91,24 @@ function ApiItineraryHistory() {
                            <td>${item.no_hours}</td>  
                             <td><span class="label label-table ${className}">${item.status}</span></td>
                      </tr>`; 
-                      tablebody1.insertAdjacentHTML('beforeend', eachRecord); 
+                     if( tablebody1){
+                       tablebody1.insertAdjacentHTML('beforeend', eachRecord);
+                     }
+                       
                   });
                  
+
+             }
+                    
           // }
 
         })
         .catch(error => {
           throw error;
         });
-    //});
+    }
+    
+    
 
   }
 }

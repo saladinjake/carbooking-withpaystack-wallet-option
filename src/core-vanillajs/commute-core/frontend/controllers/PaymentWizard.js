@@ -6,7 +6,7 @@ import $ from "jquery"
 function setOldBalance(balance,currentBalance){
 
    const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch("http://localhost:12000/api/v1/old_balance/"+ user.user.id, {
+    return fetch("http://localhost:12000/api/v1/old_balance/"+ user.user.email, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -196,9 +196,9 @@ export default class PaymentWizard{
       PaymentWizard.deductionOperation(parseFloat(getBalance()), parseFloat(JSON.parse(localStorage.getItem("quoteToPay")).amount))
       
 
-       setTimeout(()=>{
-         setOldBalance(getBalance(),currentBalance) 
-      },3000)
+      //  setTimeout(()=>{
+      //    setOldBalance(getBalance(),currentBalance) 
+      // },3000)
        
       
 
@@ -384,7 +384,7 @@ function createPlaymentDetail(url,prePostData){
 function getBalance(){
      
       const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch("http://localhost:12000/api/v1/balance/"+ user.user.id, {
+    return fetch("http://localhost:12000/api/v1/balance/"+ user.user.email, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

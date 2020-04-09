@@ -53,14 +53,14 @@ class FrontEndApp {
   }
 
   r403(){
-    if(document.getElementById('httpresponse')){
-    TweenMax.set('#policeman',{xPercent:-50, yPercent:0, left:"50%", bottom:"0%"});
-    TweenMax.set('#hand',{transformOrigin:"center bottom",y:50});
-    TweenMax.fromTo('#hand',0.3,{rotation:-10},{rotation:10,yoyo:true,repeat:-1,ease:Power1.easeInOut});
+   //  if(document.getElementById('httpresponse')){
+   //  TweenMax.set('#policeman',{xPercent:-50, yPercent:0, left:"50%", bottom:"0%"});
+   //  TweenMax.set('#hand',{transformOrigin:"center bottom",y:50});
+   //  TweenMax.fromTo('#hand',0.3,{rotation:-10},{rotation:10,yoyo:true,repeat:-1,ease:Power1.easeInOut});
 
 
 
-   }
+   // }
   }
 
   bootstrap() {
@@ -98,7 +98,7 @@ class FrontEndApp {
         
 
 
-        const urls = ["http://localhost:12000/api/v1/balance/"+ user.user.id, 
+        const urls = ["http://localhost:12000/api/v1/balance/"+ user.user.email, 
                       "http://localhost:12000/api/v1/notification/"+ user.user.email
                       ];
     //console.log('Token:  ' + ApiGetBothRecord.getLoggedInUser().token);
@@ -116,6 +116,7 @@ class FrontEndApp {
         let noticeBoard = document.getElementById("notice_board")
         Promise.all(promises)
         .then(datas => {
+          console.log(datas)
             let userDetail = datas[0].data[0].accountBalance
             let userNotifications = datas[1].data[0].tranx
             console.log(userNotifications )
@@ -143,8 +144,8 @@ class FrontEndApp {
             }
 
            
-            
-            document.getElementById('balance-seen').innerHTML = '₦ '+ formatAmount(data.data[0].accountBalance);
+            let value = datas[0].data[0].accountBalance ||  '0.00'
+            document.getElementById('balance-seen').innerHTML = '₦ '+ value;
           
             let count = document.getElementById("notifyCount");
             count.innerHTML = userNotifications.length;

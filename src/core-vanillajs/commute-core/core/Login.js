@@ -10,6 +10,8 @@ class WebsiteLogin {
     
   }
   attachEvents() {
+    this.isLoggedIn();
+     this.logOutEvents();
     if (document.getElementById('loginpage')) {
       //this.isLoggedIn();
       $(".toggle-password").click(function() {
@@ -29,8 +31,8 @@ class WebsiteLogin {
       
     }
 
-    this.isLoggedIn();
-    this.logOutEvents();
+    
+   
   }
   switchFormEvents() {
     
@@ -81,6 +83,7 @@ class WebsiteLogin {
   isLoggedIn(){
     
   window.addEventListener('load', (event) => {
+    
 
    console.log("this has been called to check")
    let  user = localStorage.getItem('userToken');

@@ -14,7 +14,7 @@ const { handler: errorHandler } = require('../middlewares/error');
  */
 exports.getBalance = (request, response) =>{
 
-  UserModel.find({id: Number(request.params.id)})
+  UserModel.find({email: request.params.id})
       .then(data => {
         const redFlag = data;
         if (redFlag.length <= 0) {

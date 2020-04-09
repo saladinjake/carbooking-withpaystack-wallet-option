@@ -88,7 +88,9 @@ export  default class CarMgt extends Component {
                                                 <th>Color</th>
 
                                                 
-                                                <th>status</th>
+                                                <th>Booking Status</th>
+                                                <th>Health Check</th>
+                                                <th>Car Status</th>
                                                 <th>Image</th>
                                                 <th style={{minWidth: "90px"}}>Action</th>
                                             
@@ -114,6 +116,12 @@ export  default class CarMgt extends Component {
                                     </table>
                                 </div>
                             </div>
+
+
+
+
+                              
+
 
                         </div> 
 
@@ -170,6 +178,18 @@ export  default class CarMgt extends Component {
                                 <div className="card-box">
                                    
                                       <div id="modalbody1"></div>
+                                    
+                                </div>
+                            </div>
+
+
+
+                            <div className="col-lg-6 m-t-10" >
+                                <div className="card-box">
+                                   
+                                        <div class="card-box">
+                                            <img src="" id="car" class="responsive"/>
+                                        </div>
                                     
                                 </div>
                             </div>

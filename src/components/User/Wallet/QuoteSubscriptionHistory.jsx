@@ -33,7 +33,7 @@ export  default class QuoteSubscriptionHistory extends Component {
 
     <div className="content-page" id="spread-out">
        
-        <div className="content" id="quote-page">
+        <div className="content animated animatedFadeInUp fadeInUp " id="quote-page">
             <div className="container">
 
                

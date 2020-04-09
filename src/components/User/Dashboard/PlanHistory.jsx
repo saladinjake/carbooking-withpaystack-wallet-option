@@ -33,7 +33,7 @@ export  default class Dashboard extends Component {
 
       <div className="content-page page-wrap" id="spread-out" >
                 
-                <div className="content" id="plan-history">
+                <div className="content animated animatedFadeInUp fadeInUp " id="plan-history">
                     <div className="container">
 
                         
@@ -51,7 +51,7 @@ export  default class Dashboard extends Component {
                             
 
                             <div className="col-lg-12">
-                                <div className="card-box">
+                                <div className="card-box animated animatedFadeInUp fadeInUp ">
                                     
                                     <h4 className="text-dark header-title m-t-0">Plan History</h4>
                                     <p className="text-muted m-b-30 font-13">
@@ -79,7 +79,7 @@ export  default class Dashboard extends Component {
                                                     <th data-hide="all" style={{minWidth: "80px"}}></th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="tablebody1">
+                                            <tbody id="tablebodyB">
                                                 
                                                
 

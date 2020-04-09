@@ -239,7 +239,7 @@ class IReporterWebsiteInterventions {
      if (document.getElementById('view-tickets')) {
 
     const recordItems = document.querySelector('#fetched-data');
-     alert('hello man')
+     //alert('hello man')
     if (items.length ===0) {
       recordItems.innerHTML = 'No records Yet';
       recordItems.style.textAlign = 'center';

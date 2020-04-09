@@ -74,7 +74,7 @@ export class Plan extends Component {
     <React.Fragment>
       
 
-      <div className="content-page"  id="spread-out" >
+      <div className="content-page animated animatedFadeInUp fadeInUp "  id="spread-out" >
             
                 <div className="content" id="planpage">
                     <div className="container">

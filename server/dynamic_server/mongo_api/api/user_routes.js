@@ -21,17 +21,17 @@ let corsOption = {
 
 //for e wallet transactions
 
-const validate = require('express-validation');
-const controllerWallet = require('../controllers/ewallet.controller');
-//const { authorize, ADMIN, LOGGED_CUSTOMER } = require('../../middlewares/auth');
-const {
-  listCustomers,
-  walletDeposit,
-  walletTransfer,
-  createCustomer,
-  replaceCustomer,
-  updateCustomer,
-} = require('../helpers/customer.validation');
+// const validate = require('express-validation');
+ const controllerWallet = require('../controllers/ewallet.controller');
+// //const { authorize, ADMIN, LOGGED_CUSTOMER } = require('../../middlewares/auth');
+// const {
+//   listCustomers,
+//   walletDeposit,
+//   walletTransfer,
+//   createCustomer,
+//   replaceCustomer,
+//   updateCustomer,
+// } = require('../helpers/customer.validation');
 
 class UserRoutes {
   constructor(router) {
@@ -259,14 +259,14 @@ this.router.get('/email/smtp/template', (req, res, next) => {
       .route('/balance/:id')
       .get( TokenVerification.userAuthentication,  controllerWallet.getBalance);
 
-    this.router
-      .route('/transactions')
-      .get( TokenVerification.userAuthentication,  controllerWallet.getTransactions);
+    // this.router
+    //   .route('/transactions')
+    //   .get( TokenVerification.userAuthentication,  controllerWallet.getTransactions);
 
-    this.router
-      .route('/deposit')
-      .post( TokenVerification.userAuthentication, 
-        validate(walletDeposit), controllerWallet.deposit);
+    // this.router
+    //   .route('/deposit')
+    //   .post( TokenVerification.userAuthentication, 
+    //     validate(walletDeposit), controllerWallet.deposit);
 
 
 
@@ -324,13 +324,13 @@ this.router.get('/email/smtp/template', (req, res, next) => {
 
     
     
-    this.router
-      .route('/transfer')
-      .post( TokenVerification.userAuthentication, validate(walletTransfer), controllerWallet.transfer);
+    // this.router
+    //   .route('/transfer')
+    //   .post( TokenVerification.userAuthentication, validate(walletTransfer), controllerWallet.transfer);
 
-    this.router
-      .route('/withdrawal')
-      .post( TokenVerification.userAuthentication, validate(walletDeposit), controllerWallet.withdrawal);
+    // this.router
+    //   .route('/withdrawal')
+    //   .post( TokenVerification.userAuthentication, validate(walletDeposit), controllerWallet.withdrawal);
 
 
    this.router.get('/',(req, res) => {
@@ -943,6 +943,18 @@ this.router.get('/email/smtp/template', (req, res, next) => {
  this.router.get('/get-all-notification',
    TokenVerification.adminAuthentication,
    UserController.getAllNotification
+  );
+
+
+ this.router.get('/get-all-cars-repair-request',
+   TokenVerification.adminAuthentication,
+   UserController.getAllRepairs
+  );
+
+
+ this.router.put('/admin-mech-status/:id',
+   TokenVerification.adminAuthentication,
+   UserController.changeRepairStatus
   );
 
 

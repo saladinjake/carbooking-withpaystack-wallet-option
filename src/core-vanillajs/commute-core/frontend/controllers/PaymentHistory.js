@@ -82,6 +82,7 @@ class PaymentHistory {
    //  document.getElementById("demo-foo-search").addEventListener("keyup",(e)=>{
    //   searchTable() 
    // })
+   if(localStorage.getItem('userToken')){
     
     
     const user = JSON.parse(localStorage.getItem('userToken'))
@@ -135,11 +136,15 @@ class PaymentHistory {
       })
       .catch(err => console.log(err.msg));
     }
+
+  }
  }
 
   indexPageController() {
     //return WalletModel.topUp() 
+    if(localStorage.getItem('userToken')){
       const user = JSON.parse(localStorage.getItem('userToken'))
+    
 
 
     
@@ -223,6 +228,8 @@ class PaymentHistory {
         throw error;
       });
   }
+
+}
 
 }
 

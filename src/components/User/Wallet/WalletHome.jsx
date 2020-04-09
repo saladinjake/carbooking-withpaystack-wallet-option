@@ -25,7 +25,7 @@ export class Wallet extends Component {
 
       <a id="portfolio" style={{textAlign:"center",fontSize:"15px",marginTop:"-20px"}} href="#" className="link-to-portfolio hover-target"  data-toggle="modal" data-target="#con-close-modal"><i className="md md-add text-info"></i></a>
 
-       <div className="content-page" id="spreadout">
+       <div className="content-page animated animatedFadeInUp fadeInUp " id="spreadout">
                 <div className="content" id="wallet-page">
                     <div className="container">
                         <div className="row">

@@ -53,7 +53,7 @@ export  default class QuoteSubscriptionHistoryAdmin extends Component {
                         
                         <div className="col-sm-6 text-lg-center text-right pull-right">
                           <div className="form-group">
-                              <input id="search" type="text" placeholder="Search" className="form-control input-sm" autocomplete="on" />
+                              <input id="search" type="text" placeholder="Enter Plan ID..." className="form-control input-sm" autocomplete="on" />
                           </div>
                         </div>
                       </div>

@@ -27,7 +27,7 @@ export class Profile extends Component {
     return (
       
 
-       <div className="content-page" id="spread-out">
+       <div className="content-page animated animatedFadeInUp fadeInUp" id="spread-out">
            
             <div className="content" id="profile-page">
                 <div className="container">
@@ -77,7 +77,7 @@ export class Profile extends Component {
        
 
 
-                                <form action="#" className="form-horizontal" role="form" data-parsley-validate noValidate encType="multipart/form-data" method="post">
+                                <form action="#" className="form-horizontal animated animatedFadeInUp fadeInUp" role="form" data-parsley-validate noValidate encType="multipart/form-data" method="post">
                                     <div className="form-group">
                                         <label htmlFor="profileImage" className="col-sm-4 control-label"></label>
                                         <div className="col-sm-7">
@@ -227,7 +227,7 @@ export class Profile extends Component {
                                     </div>
 
                                     <div className="row">
-                                            <div className="col-md-12">
+                                            <div className="col-md-12 animated animatedFadeInUp fadeInUp">
     
                                                 <div className="pull-left m-t-15">
                                                     <strong>
@@ -239,7 +239,7 @@ export class Profile extends Component {
                                         </div>
                                     <div style={{paddingTop: "15px"}}></div>
                                     <div className="row">
-                                        <div className="col-md-12">
+                                        <div className="col-md-12 animated animatedFadeInUp fadeInUp">
                                             <div className="table-responsive" >
                                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                                                     vitae eleifend justo. Donec efficitur vestibulum quam, a
@@ -263,7 +263,7 @@ export class Profile extends Component {
                                         </div>
                                     </div>
                                     <div style={{paddingTop: "15px"}}></div>
-                                    <div className="row" style={{borderRadius: "0px"}}>
+                                    <div className="row animated animatedFadeInUp fadeInUp" style={{borderRadius: "0px"}}>
                                         <div className="col-md-3 col-md-offset-9">
                                             <p className="text-right"><b>Yours Sincerely</b> <br/>
                                                 <img src="public/assets/images/CommuteLogos-02.png" style={{width: "100px"}} />
@@ -271,7 +271,7 @@ export class Profile extends Component {
                                         </div>
                                     </div>
                                     <hr/>
-                                    <div className="hidden-print">
+                                    <div className="hidden-print animated animatedFadeInUp fadeInUp">
                                         <div className="pull-right">
                                             
                                             <a id="download-pdf" href="#" style={{width:"100px", fontSize:"14px",marginRight:"4px"}} className="btn btn-primary waves-effect waves-light">Download</a>

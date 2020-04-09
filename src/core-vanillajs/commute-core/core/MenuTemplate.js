@@ -110,9 +110,21 @@ export default class MenuTemplate{
                         
 
 
-                        <li class="has_sub ">
-                            <a href="./admin-partners" class="waves-effect"><i class="ti-tag"></i> <span> Partners </span>
+                         <li class="has_sub sub-toggle">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-tag"></i> <span>
+                                    Partners </span> <span class="menu-arrow"></span>  </a>
+                            <ul class="list-unstyled list">
+                            <li>
+                               <a href="./admin-partners" class="waves-effect"><i class="ti-tag"></i> <span>Partners Details</span>
                             </a>
+                           </li>
+
+                           <li>
+                               <a href="./admin-partners-earnings" class="waves-effect"><i class="ti-money"></i> <span>  Earnings</span>
+                            </a>
+                           </li>
+                           </ul>
+
                         </li>
 
                         <li class="has_sub ">
@@ -183,6 +195,11 @@ export default class MenuTemplate{
                         <li class="has_sub ">
                                 <a href="./admin-cars-mgt" class="waves-effect"><i class="ti-car"></i> <span> Car
                                         Management </span> </a>
+                        </li>
+
+                        <li class="has_sub ">
+                                <a href="./admin-mech" class="waves-effect"><i class="ti-car"></i> <span> Mechanic Request
+                                     </span> </a>
                         </li>
 
                          

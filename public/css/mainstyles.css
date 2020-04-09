@@ -83,32 +83,6 @@ body{
 }
 
 
-#loader { 
-            border: 12px solid  #4b9cdb; 
-            border-radius: 50%; 
-            border-top: 12px solid #444444; 
-            width: 70px; 
-            height: 70px; 
-            animation: spin 1s linear infinite; 
-        } 
-          
-        @keyframes spin { 
-            100% { 
-                transform: rotate(360deg); 
-            } 
-        } 
-          
-        .center { 
-            position: absolute; 
-            top: 0; 
-            bottom: 0; 
-            left: 0; 
-            right: 0; 
-            margin: auto; 
-        } 
-
-
-
 
 
 
@@ -2131,6 +2105,68 @@ path{
 
 
 
+
+
+
+
+
+/* Animation */
+
+@keyframes fadeInUp {
+    from {
+        transform: translate3d(0,40px,0)
+    }
+
+    to {
+        transform: translate3d(0,0,0);
+        opacity: 1
+    }
+}
+
+@-webkit-keyframes fadeInUp {
+    from {
+        transform: translate3d(0,40px,0)
+    }
+
+    to {
+        transform: translate3d(0,0,0);
+        opacity: 1
+    }
+}
+
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: both
+}
+
+.animatedFadeInUp {
+    opacity: 0
+}
+
+.fadeInUp {
+    opacity: 0;
+    animation-name: fadeInUp;
+    -webkit-animation-name: fadeInUp;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 */
 
@@ -2235,3 +2271,115 @@ path{
   opacity: .9;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#loader-container,
+#confirmation-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  right: 0;
+  height: 100%;
+  transition: all .5s;
+}
+
+#loader-container {
+  background: #2DABE5;
+}
+
+.loader-close {
+  width: 0;
+  opacity: 0;
+}
+
+.loader-open {
+  width: 100%;
+  opacity: 1;
+}
+
+.loader {
+  width: 3rem;
+  height: 3rem;
+  border-top: 4px solid #2DABE5;
+  border-left: 4px dotted white;
+  border-bottom: 4px dotted white;
+  border-right: 4px dotted white;
+  border-radius: 50%;
+  animation: spin .3s linear infinite;
+}
+
+.loader-text {
+  color: #FFF;
+  padding-top: .5rem;
+}
+
+#confirmation-container {
+  background: #27ae60;
+}
+
+.confirmation-close {
+  width: 0;
+  opacity: 0;
+}
+
+.confirmation-open {
+  width: 100%;
+  opacity: 1;
+}
+
+.confirmation {
+  color: #FFF;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.responsive {
+  width: 60%;
+  height: auto;
+  margin:0px auto;
+}

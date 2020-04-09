@@ -679,5 +679,16 @@ export default class UserController {
   }
 
 
+  static getAllRepairs(request,response){
+    return UserService.getAllRepairs(request,response); 
+
+  }
+
+  static changeRepairStatus(request,response){
+    return UserService.changeRepairStatus(request,response); 
+
+  }
+
+
 
 }

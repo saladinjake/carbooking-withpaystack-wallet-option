@@ -169,14 +169,14 @@ function createUserDriveTestDetail(url, data){
 
 
 
-function noReadWrite(perms){
+function noReadWrite(PREVILEDGES,perms){
   
  
 
 
     $( document ).ready(function() {
     
-      let perm = JSON.parse(localStorage.getItem('previledges'));
+      let perm = PREVILEDGES[0];
       perm = perm[perms]
 
      // alert(perm)
@@ -398,39 +398,45 @@ function updateUsersTestCenter(url, prePostData){
 
 
     
-window.addEventListener('load', (event) => {
-    //   const loader = document.getElementById("loader");
-    // loader.style.display = 'block';
-    // loader.style.zIndex="9999999";
+// window.addEventListener('load', (event) => {
+//     //   const loader = document.getElementById("loader");
+//     // loader.style.display = 'block';
+//     // loader.style.zIndex="9999999";
 
-      if(document.getElementById('admin')){
+//       if(document.getElementById('admin')){
 
-      if(localStorage.getItem('userToken')){
-        datapromise =getUserRights()
+//       if(localStorage.getItem('userToken')){
+//         datapromise =getUserRights()
 
-        if(datapromise){
-          //loader.style.display = 'none';
+//         if(datapromise){
+//           //loader.style.display = 'none';
 
-       datapromise.then(data=> { 
-          localStorage.setItem('previledges', JSON.stringify(data))
+//        datapromise.then(data=> { 
+//           localStorage.setItem('previledges', JSON.stringify(data))
 
-        }) 
-      }else{
-         var notification = alertify.notify('Login has Expiried or probably a slow network Connectivity issue.', 'error', 5, function(){  console.log('dismissed'); });
-        localStorage.clear()
-        // localStorage.clearItem()
-         //loader.style.display = 'none';
+//         }) 
+//       }else{
+//             // localStorage.clear()
+//         if(localStorage.getItem('previledges')=='undefined'){
+//           var notification = alertify.notify('Login has Expiried or probably a slow network Connectivity issue.', 'error', 5, function(){  console.log('dismissed'); });
+     
+          
 
-         setTimeout(()=>{
-             window.location.href="./"
-         },2000)
+//           setTimeout(()=>{
+//              window.location.reload()
+//          },2000)
+//         }
+//         // localStorage.clearItem()
+//          //loader.style.display = 'none';
+
+         
         
-      }
+//       }
 
-      }
+//       }
 
-    }
-})
+//     }
+// })
 
 function guidGenerator() {
           var S4 = function() {
@@ -487,8 +493,11 @@ function getUserRights(){
 
         }
       }).catch(e => {
-         var notification = alertify.notify('Slow network....please reload the webpage or restart the service.', 'error', 5, function(){  console.log('dismissed'); });
           
+          if(localStorage.getItem('previledges') =='undefined'){
+              var notification = alertify.notify('Slow network....please reload the webpage or restart the service.', 'error', 5, function(){  console.log('dismissed'); });
+              
+          }
 
          // localStorage.clear()
          // window.location.href='/'
@@ -505,28 +514,22 @@ function getUserRights(){
 
 
 
-function WarLockAdmin(roleName,permName){
+function WarLockAdmin(previledges,roleName,permName){
 
 // window.addEventListener('load',()=>{
   document.getElementById('gtd').style.display='none';
 
   if(localStorage.getItem('userToken')){
-     // if(typeof(localStorage.getItem('previledges')=='undefined')){
-     //    localStorage.clear();
-     //    return window.location.href="./"
+     
 
-     // }
 
-      if(localStorage.getItem('previledges')){
+      if(true){
       
-      let previledges = JSON.parse(localStorage.getItem('previledges'));
+      let previledgesA =previledges;
 
-      console.log(previledges[roleName])
+     
 
-      //alert(previledges[roleName])
-      
-
-      if(previledges[roleName]!='yes'){
+      if(previledgesA[0][roleName]!='yes'){
 
         window.location.href="/previledges-denied"
         document.getElementById('gtd').style.display='block'
@@ -537,34 +540,15 @@ function WarLockAdmin(roleName,permName){
       }
 
 
-      if(previledges[permName]!='yes'){
-        // alert('cant manage')
-        // // disable all buttons
-
-
+      if(previledgesA[0][permName]!='yes'){
         
-          //var notification = alertify.notify('Read only mode. You can only read informations in this module.Configure the previledges to be able to perform otheractions.', 'error', 45, function(){  console.log('dismissed'); });
-          
+         $("a.btn").hide()
 
-       
-        
-      
-
-      //document.addEventListener('DOMContentLoaded', ()=>{
-
-
-
-    $("a.btn").hide()
-
-
-
-        //})
-        
 
       
       }
 
-      if(previledges.status!='Active'){
+      if(previledgesA[0].status!='Active'){
         window.location.href="/previledges-denied"
         document.getElementById('gtd').style.display='block';
 
@@ -574,7 +558,7 @@ function WarLockAdmin(roleName,permName){
        
 
 
-      }
+       }
 
     }
 
@@ -705,6 +689,8 @@ window.updateInspectionAction = (o) =>{
               }).catch(e=> console.log(e));
 
 }
+
+
 
 
 window.viewPreviledges = (el) =>{
@@ -1042,9 +1028,9 @@ window.viewPreviledges = (el) =>{
           manage_faqs,
           manage_settings,
           manage_users,
-          manage_admins;
+          manage_admins,
 
-          manage_car_inspection;
+          manage_car_inspection,
           manage_drive_test;
 
 
@@ -1084,7 +1070,7 @@ window.viewPreviledges = (el) =>{
          madmins =document.getElementById("madmins"+el.dataset.id),
          mtickets =document.getElementById("mtickets"+el.dataset.id),
          msettings =document.getElementById("msettings"+el.dataset.id),
-         mfaqs =document.getElementById("mfaqs"+el.dataset.id);
+         mfaqs =document.getElementById("mfaqs"+el.dataset.id),
 
          mdrivetest =document.getElementById("mdrivetest"+el.dataset.id),
          minspection =document.getElementById("minspection"+el.dataset.id);
@@ -1373,7 +1359,7 @@ window.viewPreviledges = (el) =>{
 
 
         const user =JSON.parse(localStorage.getItem("userToken"));
-        let linkOfApi = 'http://demo-commute-taxi-surf-api.herokuapp.com/api/v1/admin-previledges-update/'+ el.dataset.id  ;
+        let linkOfApi = 'http://localhost:12000/api/v1/admin-previledges-update/'+ el.dataset.id  ;
 
 
         let status_x = document.getElementById('status'+ el.dataset.id);
@@ -3437,7 +3423,7 @@ window.viewCarRecordTemplate = (el)=>{
  document.getElementById("inputLicense"+view_id).value= el.dataset.license;
     //document.getElementById("user-id").innerHTML="CMT-CAR-"+ view_id.substring(-5,view_id.length);
     
-
+document.getElementById('car').src=el.dataset.old_car
     let id= "#status"+ el.dataset.id;
     $( id + " option").each(function () {
         if ($(this).html() == el.dataset.status) {
@@ -3445,6 +3431,26 @@ window.viewCarRecordTemplate = (el)=>{
             return;
         }
     });
+
+
+     let ida= "#health_status"+ el.dataset.id;
+    $( ida + " option").each(function () {
+        if ($(this).html() == el.dataset.health_status) {
+            $(this).attr("selected", "selected");
+            return;
+        }
+    });
+
+
+    let ida3= "#health_status"+ el.dataset.id;
+    $( ida3 + " option").each(function () {
+        if ($(this).html() == el.dataset.car_status) {
+            $(this).attr("selected", "selected");
+            return;
+        }
+    });
+
+
 
      let id2= "#car_model"+ view_id;
     $( id2 + " option").each(function () {
@@ -3509,6 +3515,8 @@ window.updateCarRecordTemplate = (o) =>{
 
 
   const status_x = document.getElementById("status"+ o.dataset.id);
+  const health_x = document.getElementById("health_status"+ o.dataset.id);
+  const car_status_x = document.getElementById("car_status"+ o.dataset.id);
 
   const model_make = document.getElementById("car_model_make" + o.dataset.id);
 
@@ -3560,6 +3568,8 @@ window.updateCarRecordTemplate = (o) =>{
       color: color.value,
       model: car_model.options[car_model.selectedIndex].text,
       status: status_x.options[status_x.selectedIndex].text,
+      health_status: health_x.options[health_x.selectedIndex].text,
+      car_status: car_status_x.options[car_status_x.selectedIndex].text,
       car_type: model_make.options[model_make.selectedIndex].text,
       car_model: car_model.options[car_model.selectedIndex].text,
       model_make_id: model_make_id.options[model_make_id.selectedIndex].text,
@@ -3726,12 +3736,20 @@ window.viewRecordTemplate = (el)=>{
 		        }
 		    });
 
+  }else if( document.getElementById("admin-repairs-status" +el.dataset.id)){ // mechanic request
 
 
-     
+    let id= "#admin-repairs-status"+ view_id;
+        $( id + " option").each(function () {
+            if ($(this).html() == el.dataset.status) {
+                $(this).attr("selected", "selected");
+                return;
+            }
+        });
 
-	
-    }else { //faq
+
+
+  }else { //faq
        document.getElementById("question"+el.dataset.id).value= el.dataset.question;
        document.getElementById("answers"+el.dataset.id).value= el.dataset.answer;
 
@@ -4036,6 +4054,17 @@ window.updateRecordTemplate = (o) =>{
     	
     	status
       };
+
+    }else if(document.getElementById("admin-repairs-status"+ view_id)){
+       status_x = document.getElementById("admin-repairs-status"+ view_id);
+      status = status_x.options[status_x.selectedIndex].text;
+      prePostData = {
+       
+      
+      status
+      };
+
+
 
     }else{ //faq
 
@@ -4644,26 +4673,65 @@ const profileUpdate = (o)=>{
 	 }
 }
 
-function searchTable() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("search");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("tablebody1");
-  tr = table.getElementsByTagName("tr");
-  console.log("working")
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
+function searchTable(trId=0) {
+  // // Declare variables
+  // var input, filter, table, tr, td, i, txtValue;
+  // input = document.getElementById("search");
+  // filter = input.value.toUpperCase();
+  // table = document.getElementById("tablebody1");
+  // tr = table.getElementsByTagName("tr");
+  // console.log("working")
+  // // Loop through all table rows, and hide those who don't match the search query
+  // for (i = 0; i < tr.length; i++) {
+  //   if(trId){
+  //     td = tr[i].getElementsByTagName("td")[trId];
+  //   }else{
+  //     td = tr[i].getElementsByTagName("td")[0];
+  //   }
+    
+  //   if (td) {
+  //     txtValue = td.textContent || td.innerText;
+  //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+  //       tr[i].style.display = "";
+  //     } else {
+  //       tr[i].style.display = "none";
+  //     }
+  //   }
+  // }
+
+  // $(document).ready(function(){
+
+  // Search all columns
+  $('#search').keyup(function(){
+    // Search Text
+    var search = $(this).val();
+
+    // Hide all table tbody rows
+    $('table tbody tr').hide();
+
+    // Count total search result
+    var len = $('table tbody tr:not(.notfound) td:contains("'+search+'")').length;
+
+    if(len > 0){
+      // Searching text in columns and show match row
+      $('table tbody tr:not(.notfound) td:contains("'+search+'")').each(function(){
+        $(this).closest('tr').show();
+      });
+    }else{
+      //$('.notfound').show();
     }
-  }
+
+  });
+
+  
+// // });
+
+// // Case-insensitive searching (Note - remove the below script for Case sensitive search )
+// $.expr[":"].contains = $.expr.createPseudo(function(arg) {
+//    return function( elem ) {
+//      return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+//    };
+// });
 }
 
 
@@ -4828,6 +4896,7 @@ class ApiAdminBotService  {
 
 
     
+    
 
     $(function(){
       var arrow = $('.chat-head img');
@@ -4859,34 +4928,33 @@ class ApiAdminBotService  {
 
 
 
-    // if(notice.length>0){
-    //     document.getElementById("notifyCount").innerHTML=notice.length
-    //     notice.map((item,i)=>{
-    //             let markup =`   <div class="pull-left p-r-10" style="" id="${i}">
+    if(notice.length>0){
+        document.getElementById("notifyCount").innerHTML=notice.length
+        notice.map((item,i)=>{
+                let markup =`   <div class="pull-left p-r-10" style="" id="${i}">
                 
-    //                                                 <em class="fa fa-diamond noti-primary"></em>
-    //                                              </div>
-    //                                              <div class="media-body">
-    //                                                 <h5 class="media-heading">Quotation Notification<span class="label label-default pull-right">New </span></h5>
-    //                                                 <hr/>
-    //                                                 <p class="m-0">
-    //                                                     <small>${item.description.substring(0,100)}...</small>
-    //                                                 </p>
-    //                                              </div><hr/>`;
+                                                 </div>
+                                                 <div class="media-body">
+                                                    <h5 class="media-heading">Quotation Notification<span class="label label-default pull-right">New </span></h5>
+                                                    <hr/>
+                                                    <p class="m-0">
+                                                        <small>${ item.description.substring(0,150)}...<a id="plan-current-5e8904789ee841375ce073f3" onclick="" data-id="5e8904789ee841375ce073f3" href="./admin-bookings" class="table-action-btn btn-custom btn-purple"><i class="md md-chevron-right"></i></a></small>
+                                                    </p>
+                                                 </div><hr/>`;
 
-    //              $( "#notice_board" ).append( $( markup ) ) 
+                 $( "#notice_board" ).append( $( markup ) ) 
 
-    //               $( "#notice_board2" ).append( $( markup ) ) 
-    //           })
-    // }
+                  $( "#notice_board2" ).append( $( markup ) ) 
+              })
+    }
   
 
   }
    
-  static runAdminUsers(datas){
-    //
-    WarLockAdmin('view_users','manage_users')
-    noReadWrite('manage_users')
+  static runAdminUsers(datas,previledges){
+    // //
+    WarLockAdmin(previledges, 'view_users','manage_users')
+    noReadWrite(previledges,'manage_users')
     GateKeepersForAdmin();
     addClick() 
 
@@ -5097,10 +5165,10 @@ class ApiAdminBotService  {
     
   }
 
-  static runAdminAdmins(datas){
+  static runAdminAdmins(datas,previledges){
 
-  WarLockAdmin('view_admins','manage_admins')
-      noReadWrite('manage_admins')
+  WarLockAdmin(previledges,'view_admins','manage_admins')
+      noReadWrite(previledges,'manage_admins')
    GateKeepersForAdmin();
    addClick() 
    document.getElementById("search").addEventListener("keyup",(e)=>{
@@ -5312,10 +5380,10 @@ class ApiAdminBotService  {
 
    
 
-  static runAdminDrivers(datas,carsAvailable){
+  static runAdminDrivers(datas,carsAvailable,previledges){
    GateKeepersForAdmin();
-   WarLockAdmin('view_drivers','manage_drivers')
-       noReadWrite('manage_drivers')
+   WarLockAdmin(previledges,'view_drivers','manage_drivers')
+       noReadWrite(previledges,'manage_drivers')
    addClick()
    document.getElementById("search").addEventListener("keyup",(e)=>{
    	 searchTable() 
@@ -5508,10 +5576,10 @@ class ApiAdminBotService  {
     
   }
 
-  static runAdminPartners(datas){
+  static runAdminPartners(datas,previledges){
 
-WarLockAdmin('view_partners','manage_partners')
-    noReadWrite('manage_partners')
+WarLockAdmin(previledges,'view_partners','manage_partners')
+    noReadWrite(previledges,'manage_partners')
 
     GateKeepersForAdmin();
     addClick()
@@ -5544,11 +5612,12 @@ WarLockAdmin('view_partners','manage_partners')
   	    	className="label-pink"
   	    }         
         template2 +=`<tr class="notification">
-                    <td class="">${item.firstName}</td>
-                    <td class="">${item.lastName}</td>
+                    <td class="">${item.firstName || item.name}</td>
+                   
                     <td class="">${item.email}</td>
-                    <td class="">${item.phoneNumber}</td>
-                    <td class="">${item.totalCars}</td>
+                    <td class="">${item.businessName}</td>
+                    <td class="">${item.phoneNumber || item.phone}</td>
+                    
                     <td class=""><span class="label ${className}">${item.status}</span></td>
                     
                     <td class=""><a onclick="updateRecordView(this)" data-toggle="modal" data-isVerified="${item.isVerified}" data-totalCars="${item.totalCars}"  data-avatar="https://commute-bucket.s3.amazonaws.com/${item.avatar}"   data-id="${item._id}" data-totalCars="${item.totalCars}" data-firstname="${item.firstName}" data-lastname="${item.lastName}" data-email="${item.email}" data-phone="${item.phoneNumber}" data-username="${item.userName}" data-address="${item.address}" data-status="${item.status}" data-certificate="${item.businessName}"  class="table-action-btn"><i class="md md-edit"></i></a>
@@ -5938,12 +6007,12 @@ WarLockAdmin('view_partners','manage_partners')
 
   }
 
-  static runPlanPackage(individualPlans,corporatePlans){
+  static runPlanPackage(individualPlans,corporatePlans,previledges){
 
 
 
- WarLockAdmin('view_package','manage_package')
-     noReadWrite('manage_package')
+ WarLockAdmin(previledges,'view_package','manage_package')
+     noReadWrite(previledges,'manage_package')
   	GateKeepersForAdmin();
   	addPlan()
   	document.getElementById("search").addEventListener("keyup",(e)=>{
@@ -6102,9 +6171,9 @@ WarLockAdmin('view_partners','manage_partners')
 
   }
 
-  static runAdminSOS(datas){
-    WarLockAdmin('view_sos','manage_sos')
-        noReadWrite('manage_sos')
+  static runAdminSOS(datas,previledges){
+    WarLockAdmin(previledges,'view_sos','manage_sos')
+        noReadWrite(previledges,'manage_sos')
 
   	GateKeepersForAdmin();
   	//addSOS()
@@ -6326,10 +6395,10 @@ WarLockAdmin('view_partners','manage_partners')
   }
 
 
-  static runAdminTickets(datas, admins, users){
+  static runAdminTickets(datas, admins, users,previledges){
    
-    WarLockAdmin('view_tickets','manage_tickets')
-        noReadWrite('manage_tickets')
+    WarLockAdmin(previledges,'view_tickets','manage_tickets')
+        noReadWrite(previledges,'manage_tickets')
 
 
     document.getElementById('add-new').addEventListener('click',(e)=>{
@@ -6651,10 +6720,10 @@ WarLockAdmin('view_partners','manage_partners')
   }
 
 
-   static runAdminFaqs(datas){
+   static runAdminFaqs(datas,previledges){
 
-     WarLockAdmin('view_faqs','manage_faqs')
-         noReadWrite('manage_faqs')
+     WarLockAdmin(previledges,'view_faqs','manage_faqs')
+         noReadWrite(previledges,'manage_faqs')
   	GateKeepersForAdmin();
     document.getElementById('add-new').addEventListener('click',(e)=>{
       //$('.mebox').show()
@@ -6831,11 +6900,11 @@ WarLockAdmin('view_partners','manage_partners')
   }
 
 
-  static runAdminCarsMgt(datas,carsInfo,drivers){
+  static runAdminCarsMgt(datas,carsInfo,drivers,previledges){
 
-WarLockAdmin('view_cars','manage_cars')
+WarLockAdmin(previledges,'view_cars','manage_cars')
 
-noReadWrite('manage_cars')
+noReadWrite(previledges,'manage_cars')
 
      GateKeepersForAdmin();
   		console.log("loading plan page")
@@ -6940,21 +7009,45 @@ noReadWrite('manage_cars')
            className = "label-success"
   	    } else{
            className = "label-warning"
-        }          
+        } 
+
+        let className2 ='label-warning'
+        if(item.health_status=="Pending"){
+           className2 = "label-danger"
+        }else if(item.health_status=="Completed"){
+          className2 = "label-success"
+        }
+          
+        let className3='';
+        if(item.car_status=="Disabled"){
+           className3 = "label-danger"
+        }else if(item.car_status=="Active"){
+           className3 = "label-success"
+        } else{
+           className3 = "label-warning"
+        } 
+
+
+
+    
         template2 =`<tr>
                          <td class=""><a  href="#" id="plancat${item._id}" data-id="${item._id}" data-url="/admin-car-mgt-detail" class=""><b>${formatDate(new Date(item.created_at))} </b></a> </td>
-                          <td class="">CMT-CAR-${item._id}</td>
-                          <td class="">${item.car_type}</td>
-                          <td class="">${item.model_make_id}</td>
-                          <td class="">${item.plate_number}</td>
+                          <td class="">${item._id}</td>
+                          <td class="">${ item.carModel  ||item.car_type}</td>
+                          <td class="">${ item.carModel || item.model_make_id}</td>
+                          <td class="">${ item.plateNo  || item.plate_number}</td>
 
-                           <td class="">${item.car_year}</td>
-                           <td class="">${item.color}</td>
+                           <td class="">${ item.carYear || item.car_year}</td>
+                           <td class="">${ item.vehicleColor || item.color}</td>
  
                            <td class=""><span class="label ${className}">${item.status}</span></td>
-                           <td><img  style="width:100px;height:100px" src="${item.images}" /></td>
+
+                          <td class=""><span class="label ${className2}">${ item.health_status}</span></td>
+
+                          <td class=""><span class="label ${className3}">${ item.car_status}</span></td>
+                           <td><img  style="width:100px;height:100px" src="${item.imagePath || item.images}" /></td>
                            <td class="">
-                               <a onclick="viewCarRecordTemplate(this)" data-model_make_id="${item.model_make_id}" data-old_car="${item.images}" href="#" data-model="${item.model}" data-car_type="${item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name}-${item.assigned_driver_email}" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${item.partner_id}" data-model="${item.model}"  data-car_year="${item.car_year}" data-color="${item.color}"  data-status="${item.status}" data-plate_number="${item.plate_number}" data-inspection_detail="${item.inspection_detail}" data-description="${item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${item.license}" data-url="/admin-car-mgt-detail" class="table-action-btn"><i class="md md-edit"></i></a>
+                               <a onclick="viewCarRecordTemplate(this)" data-car_status="${item.car_status}" data-health_status="${item.health_status}" data-model_make_id="${item.carModel || item.model_make_id}" data-old_car="${ item.imagePath || item.images}" href="#" data-model="${ item.carModel  || item.model}" data-car_type="${ item.carModel || item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name}-${item.assigned_driver_email}" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${ item.creator || item.partner_id}" data-model="${ item.carModel || item.model}"  data-car_year="${ item.carYear  || item.car_year}" data-color="${ item.vehicleColor || item.color}"  data-status="${item.status}" data-plate_number="${ item.plateNo || item.plate_number}" data-inspection_detail="${item.inspection_detail}" data-description="${ item.carDescription || item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${ item.plateNo || item.license}" data-url="/admin-car-mgt-detail" class="table-action-btn"><i class="md md-edit"></i></a>
                                 <a onclick="deleteRecord(this)" data-id="${item._id}" data-url="/cars"  id="delete" class="table-action-btn "><i class="md md-close"></i></a></td>
                            
                            </td>
@@ -6972,12 +7065,44 @@ noReadWrite('manage_cars')
 								                        
 								                        <div class="form-group">
                                         <div class="m-t-20">
-                                                    <label for="position">Car Status</label>
+                                                    <label for="position">Car Booking Status</label>
                                                     <div>
                                                     <select id="status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
                                                        <option>Booked</option>
+                                                      
                                                        <option>Available</option>
-                                                       <option>UnAvailable</option>
+                                                       
+
+                                                       
+                                                    </select></div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="m-t-20">
+                                                    <label for="position">Inspection Status</label>
+                                                    <div>
+                                                    <select id="health_status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
+                                                       
+                                                       <option>Pending</option>
+                                                       <option>Completed</option>
+                                                       
+
+                                                       
+                                                    </select></div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="m-t-20">
+                                                    <label for="position">Car Status</label>
+                                                    <div>
+                                                    <select id="car_status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
+                                                       
+                                                       <option>Active</option>
+                                                       <option>Disabled</option>
+                                                       <option>Suspended</option>
+                                                       
 
                                                        
                                                     </select></div>
@@ -7078,7 +7203,7 @@ noReadWrite('manage_cars')
 
                               <img src="${item.images}" id="img${item._id}" title="cars are here" data-carinfo="hello car"  style="width:100px;height:100px" /><span id="oldcar">old car profile</span>
 								    
-								                        
+								               <br/>         
 								                        
 								                        
 								                </div> 
@@ -7111,12 +7236,12 @@ noReadWrite('manage_cars')
 
   }
 
-  static runAdminDriveTestAdd(url='add-drive-test', users, partners){
+  static runAdminDriveTestAdd(url='add-drive-test', users, partners,previledges){
 
 
-     WarLockAdmin('view_drive_test','manage_drive_test')
+     WarLockAdmin(previledges,'view_drive_test','manage_drive_test')
    // WarLockAdmin('view_users','manage_users')
-        noReadWrite('manage_drive_test')
+        noReadWrite(previledges,'manage_drive_test')
     let selectboxData = users;
     if(url='add-inspection'){
       selectboxData = partners;
@@ -7226,7 +7351,7 @@ noReadWrite('manage_cars')
        e.preventDefault()
 
 
-        let linkOfApi = 'http://demo-commute-taxi-surf-api.herokuapp.com/api/v1/'+ url ;
+        let linkOfApi = 'http://localhost:12000/api/v1/'+ url ;
 
 
 
@@ -7374,7 +7499,7 @@ noReadWrite('manage_cars')
 
 
          if(url!='add-inspection'){
-          let link="http://demo-commute-taxi-surf-api.herokuapp.com/api/v1/update-testcenter/"+me[0]._id
+          let link="http://localhost:12000/api/v1/update-testcenter/"+me[0]._id
          updateUsersTestCenter(link, {test_center:me[0].test_center, test_center_address: me[0].test_center_address})
 
          }
@@ -7388,10 +7513,10 @@ noReadWrite('manage_cars')
 
   }
 
-  static runAdminInspectionAdd(url='add-inspection', users, partners){
-    WarLockAdmin('view_car_inspection','manage_car_inspection')
+  static runAdminInspectionAdd(url='add-inspection', users, partners,previledges){
+    WarLockAdmin(previledges,'view_car_inspection','manage_car_inspection')
    // WarLockAdmin('view_users','manage_users')
-        noReadWrite('manage_car_inspection')
+        noReadWrite(previledges,'manage_car_inspection')
     let selectboxData = users;
     if(url='add-inspection'){
       selectboxData = partners;
@@ -7501,7 +7626,7 @@ noReadWrite('manage_cars')
        e.preventDefault()
 
 
-        let linkOfApi = 'http://demo-commute-taxi-surf-api.herokuapp.com/api/v1/'+ url ;
+        let linkOfApi = 'http://localhost:12000/api/v1/'+ url ;
 
 
 
@@ -7639,7 +7764,7 @@ noReadWrite('manage_cars')
                   var notification = alertify.notify('Successfully created inspection ', 'success', 5, function(){  console.log('dismissed'); });
                       
                   setTimeout(()=>{
-                    window.location.href="./admin-drive-test"
+                    window.location.href="./admin-inspection"
                   },2000)
                       
 
@@ -7657,7 +7782,7 @@ noReadWrite('manage_cars')
 
 
          if(url!='add-inspection'){
-          let link="http://demo-commute-taxi-surf-api.herokuapp.com/api/v1/update-testcenter/"+me[0]._id
+          let link="http://localhost:12000/api/v1/update-testcenter/"+me[0]._id
          updateUsersTestCenter(link, {test_center:me[0].test_center, test_center_address: me[0].test_center_address})
 
          }
@@ -7670,10 +7795,10 @@ noReadWrite('manage_cars')
 
   }
 
-  static runAdminInspection(datas){
+  static runAdminInspection(datas,previledges){
 
-     WarLockAdmin('view_cars','manage_cars')
-         noReadWrite('manage_cars')
+     WarLockAdmin('view_car_inspection','manage_car_inspection')
+         noReadWrite('manage_car_inspection')
     GateKeepersForAdmin();
       console.log("loading plan page")
     document.getElementById("search").addEventListener("keyup",(e)=>{
@@ -7842,10 +7967,10 @@ noReadWrite('manage_cars')
   
   }
 
-  static runSettings(datas){
+  static runSettings(datas,previledges){
    
-    WarLockAdmin('view_settings','manage_settings')
-        noReadWrite('manage_settings')
+    WarLockAdmin(previledges,'view_settings','manage_settings')
+        noReadWrite(previledges,'manage_settings')
   	GateKeepersForAdmin();
   
   	
@@ -7976,9 +8101,9 @@ noReadWrite('manage_cars')
 
   }
 
-  static runAdminItineraries(itineraries, drivers){
-    WarLockAdmin('view_bookings','manage_bookings')
-        noReadWrite('manage_bookings')
+  static runAdminItineraries(itineraries, drivers,previledges){
+    WarLockAdmin(previledges,'view_bookings','manage_bookings')
+        noReadWrite(previledges,'manage_bookings')
     let itinerary =[...new Set(itineraries)] || [];
     console.log(itinerary)
 
@@ -7995,7 +8120,7 @@ noReadWrite('manage_cars')
     });
 
     document.getElementById("search").addEventListener("keyup",(e)=>{
-   	  searchTable() 
+   	  searchTable(1) 
     })
 
         let tablebody = document.getElementById('tablebody1');
@@ -8021,6 +8146,8 @@ noReadWrite('manage_cars')
             // alert(item.assigned_driver_name)
             eachRecord = `
                           <tr id="${i}">
+                          <td>${item.username} </td>
+                          <td>${item.email} </td>
                                 <td>${formatDate(new Date(item.created_at))} </td>
                           <td class="">${item.plan_category}</td>
                           <td class="">${item.start_location} </td>
@@ -8220,9 +8347,13 @@ noReadWrite('manage_cars')
 
 
 
-  static runAdminPlans(usersPlan){
-    WarLockAdmin('view_bookings','manage_bookings')
-        noReadWrite('manage_bookings')
+  static runAdminPlans(usersPlan,previledges){
+    WarLockAdmin(previledges,'view_bookings','manage_bookings')
+        noReadWrite(previledges,'manage_bookings')
+
+        document.getElementById("search").addEventListener("keyup",(e)=>{
+     searchTable(3) 
+   })
 
   	
     let plans = [...new Set(usersPlan)] || [];
@@ -8287,9 +8418,9 @@ noReadWrite('manage_cars')
 
 
 
-  static runAdminPlansDetail(usersPlan){
-        WarLockAdmin('view_bookings','manage_bookings')
-        noReadWrite('manage_bookings')
+  static runAdminPlansDetail(usersPlan,previledges){
+        WarLockAdmin(previledges,'view_bookings','manage_bookings')
+        noReadWrite(previledges,'manage_bookings')
 
 
     
@@ -8614,15 +8745,15 @@ noReadWrite('manage_cars')
                   let car_record='';
 
                   //console.log(JSON.stringify(selectedCars)+"all cars for this guy")
-                  selectedCars.map((item, i) => {
+                   selectedCars.map((item, i) => {
                           car_record += `
                            <a href="#"><div class="col-sm-6  col-md-6 col-lg-4" >
                                 <div class="widget-bg-color-icon card-box">
                                     <div class="bg-icon bg-icon-info pull-left" >
-                                        <img src="${item.image|| item.images}" style="height:90px"/>
+                                        <img src="${  item.imagePath || item.image || item.images}" style="height:90px"/>
                                     </div>
                                     <div class="col-lg-6 pull-right text-right">
-                                        <h3 class="text-dark"><b className="">${item.car_type} ${item.model} ${item.car_year}</b></h3>
+                                        <h3 class="text-dark"><b className=""> ${ item.carModel || item.model} ${ item.carYear || item.car_year}</b></h3>
                                         <p class="text-muted"></p>
                                     </div>
                                     <div class="clearfix"></div>
@@ -8822,12 +8953,16 @@ function enforceFloat() {
   }
 
 
-  static runAdminWallets(data){
+  static runAdminWallets(data,previledges){
 
-WarLockAdmin('view_transactions','manage_transactions')
-    noReadWrite('manage_transactions')
+WarLockAdmin(previledges,'view_transactions','manage_transactions')
+    noReadWrite(previledges,'manage_transactions')
 
   	let datas =[...new Set(data)] || [];
+
+    document.getElementById("search").addEventListener("keyup",(e)=>{
+     searchTable(4) 
+   })
 
         
       
@@ -8999,11 +9134,11 @@ WarLockAdmin('view_transactions','manage_transactions')
   }
 
 
-  static runAdminPlansManualBookings(dataCars, users){
+  static runAdminPlansManualBookings(dataCars, users,previledges){
   	//ApiAdminBotService.gobackFor()
     
-     WarLockAdmin('view_bookings','manage_bookings')
-         noReadWrite('manage_bookings')
+     WarLockAdmin(previledges,'view_bookings','manage_bookings')
+         noReadWrite(previledges,'manage_bookings')
   	 console.log('this page rocks...')
 
      let chosen_id_user =1;
@@ -9636,17 +9771,17 @@ WarLockAdmin('view_transactions','manage_transactions')
 
   }
 
-  static runAdminPayments(data){
+  static runAdminPayments(data,previledges){
   
-WarLockAdmin('view_payments','manage_payments')
-    noReadWrite('manage_payments')
+WarLockAdmin(previledges,'view_payments','manage_payments')
+    noReadWrite(previledges,'manage_payments')
 
 
      let datas =[...new Set(data)] || [];
 let className="label-success";
 
 document.getElementById("search").addEventListener("keyup",(e)=>{
-   	 searchTable() 
+   	 searchTable(2) 
    })
         
       
@@ -9819,15 +9954,15 @@ modalbody1.innerHTML= viewModals;
   }
 
 
-  static runAdminQuotations(data){
-     WarLockAdmin('view_quotations', 'manage_quotations')
-         noReadWrite('manage_quotations')
+  static runAdminQuotations(data,previledges){
+     WarLockAdmin(previledges,'view_quotations', 'manage_quotations')
+         noReadWrite(previledges,'manage_quotations')
 // WarLockAdmin('view_payments','manage_payments')
 // WarLockAdmin('view_transactions','manage_transactions')
   	let datas =[...new Set(data)] || [];
 
   	document.getElementById("search").addEventListener("keyup",(e)=>{
-   	 searchTable() 
+   	 searchTable(2) 
    })
 
         
@@ -10002,11 +10137,11 @@ modalbody1.innerHTML= viewModals;
 
 
 
-  static runAdminDriveTest(driveTest,users){
-    WarLockAdmin('view_cars','manage_cars')
-    WarLockAdmin('view_users','manage_users')
-        noReadWrite('manage_users')
-            noReadWrite('manage_cars')
+  static runAdminDriveTest(driveTest,users,previledges){
+    WarLockAdmin(previledges,'view_drive_test','manage_drivers')
+    
+        noReadWrite(previledges,'manage_drive_test')
+          
      GateKeepersForAdmin();
       console.log("loading plan page")
     document.getElementById("search").addEventListener("keyup",(e)=>{
@@ -10181,12 +10316,12 @@ modalbody1.innerHTML= viewModals;
 
 
 
-  static runAdminPreviledges(previledges){
+  static runAdminPreviledges(previledges,previledgesA){
 
     GateKeepersForAdmin();
 
-    WarLockAdmin('view_settings','manage_settings')
-        noReadWrite('manage_settings')
+    WarLockAdmin(previledgesA,'view_settings','manage_settings')
+        noReadWrite(previledgesA,'manage_settings')
   
     document.getElementById("search").addEventListener("keyup",(e)=>{
      searchTable() 
@@ -10345,7 +10480,7 @@ modalbody1.innerHTML= viewModals;
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6 ">
-                          <input id="mpayments${item._id}" data-info="${item.previledges_info}" data-payments="${item.manage_payments}" type="checkbox" data-field="manage_payments"   data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="mpayments${item._id}" data-info="${item.previledges_info}" data-mpayments="${item.manage_payments}" type="checkbox" data-field="manage_payments"   data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="payments" class=""  >Manage Payments </label>
                         </div>
                         <br/>
@@ -10359,7 +10494,7 @@ modalbody1.innerHTML= viewModals;
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6 ">
-                          <input id="mtransactions${item._id}" data-transactions="${item.manage_transactions}" data-info="${item.previledges_info}" type="checkbox" data-field="manage_transactions"  data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="mtransactions${item._id}" data-transactions="${item.manage_transactions}" data-minfo="${item.previledges_info}" type="checkbox" data-field="manage_transactions"  data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="topup-transactions" class="">Manage Wallet </label>
                         </div>
 
@@ -10373,7 +10508,7 @@ modalbody1.innerHTML= viewModals;
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="mquotations${item._id}"data-info="${item.previledges_info}"  data-quotations="${item.manage_quotations}" data-field="view_quotations" type="checkbox"  data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="mquotations${item._id}"data-info="${item.previledges_info}"  data-mquotations="${item.manage_quotations}" data-field="view_quotations" type="checkbox"  data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="quotations" class="">Manage Quotations </label>
                         </div>
 
@@ -10389,7 +10524,7 @@ modalbody1.innerHTML= viewModals;
                         </div>
 
                          <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="mcars${item._id}" data-info="${item.previledges_info}" data-cars="${item.manage_cars} type="checkbox" data-field="view_cars"  data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="mcars${item._id}" data-info="${item.previledges_info}" data-mcars="${item.manage_cars} type="checkbox" data-field="view_cars"  data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="cars" class="">Manage Cars </label>
                         </div>
 
@@ -10401,7 +10536,7 @@ modalbody1.innerHTML= viewModals;
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="mdrivers${item._id}" data-info="${item.previledges_info}" data-drivers="${item.manage_drivers}" type="checkbox" data-field="view_drivers" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="mdrivers${item._id}" data-info="${item.previledges_info}" data-mdrivers="${item.manage_drivers}" type="checkbox" data-field="view_drivers" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="drivers" class="">Manage Drivers </label>
                         </div>
 
@@ -10414,7 +10549,7 @@ modalbody1.innerHTML= viewModals;
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="mpartners${item._id}" data-info="${item.previledges_info}" data-partners="${item.manage_partners}" type="checkbox" data-field="view_partners"  data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="mpartners${item._id}" data-info="${item.previledges_info}" data-mpartners="${item.manage_partners}" type="checkbox" data-field="view_partners"  data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="partners" class="">Manage Partners </label>
                         </div>
 
@@ -10430,7 +10565,7 @@ modalbody1.innerHTML= viewModals;
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="msos${item._id}" type="checkbox" data-info="${item.previledges_info}" data-sos="${item.manage_sos}" data-field="view_sos" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="msos${item._id}" type="checkbox" data-info="${item.previledges_info}" data-msos="${item.manage_sos}" data-field="view_sos" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="sos" class="">Manage SOS </label>
                         </div>
 
@@ -10443,7 +10578,7 @@ modalbody1.innerHTML= viewModals;
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="mpackages${item._id}" data-info="${item.previledges_info}" data-packages="${item.manage_package}" type="checkbox" data-field="view_package"  data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="mpackages${item._id}" data-info="${item.previledges_info}" data-mpackages="${item.manage_package}" type="checkbox" data-field="view_package"  data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="plan-packages" class="">Manage Packages </label>
                         </div>
 
@@ -10455,7 +10590,7 @@ modalbody1.innerHTML= viewModals;
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="mbookings${item._id}" data-info="${item.previledges_info}" data-bookings="${item.manage_bookings}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="mbookings${item._id}" data-info="${item.previledges_info}" data-mbookings="${item.manage_bookings}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="plan-bookings" class="">Manage Bookings </label>
                         </div>
 
@@ -10463,12 +10598,12 @@ modalbody1.innerHTML= viewModals;
 
                       <div class="form-group col-sm-12">
                         <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="tickets${item._id}" data-info="${item.previledges_info}" data-bookings="${item.view_tickets}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="tickets${item._id}" data-info="${item.previledges_info}" data-tickets="${item.view_tickets}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="plan-bookings" class="">View Tickets</label>
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="mtickets${item._id}" data-info="${item.previledges_info}" data-bookings="${item.manage_tickets}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="mtickets${item._id}" data-info="${item.previledges_info}" data-mtickets="${item.manage_tickets}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="plan-bookings" class="">Manage Tickets</label>
                         </div>
 
@@ -10481,7 +10616,7 @@ modalbody1.innerHTML= viewModals;
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="mfaqs${item._id}" data-info="${item.previledges_info}" data-faqs="${item.manage_faqs}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="mfaqs${item._id}" data-info="${item.previledges_info}" data-mfaqs="${item.manage_faqs}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="plan-bookings" class="">Manage Faqs </label>
                         </div>
 
@@ -10489,12 +10624,12 @@ modalbody1.innerHTML= viewModals;
 
                       <div class="form-group col-sm-12">
                         <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="users${item._id}" data-info="${item.previledges_info}" data-bookings="${item.view_users}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="users${item._id}" data-info="${item.previledges_info}" data-users="${item.view_users}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="plan-bookings" class="">View Users</label>
                         </div>
 
                         <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="musers${item._id}" data-info="${item.previledges_info}" data-bookings="${item.manage_users}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="musers${item._id}" data-info="${item.previledges_info}" data-musers="${item.manage_users}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="plan-bookings" class="">Manage Users</label>
                         </div>
 
@@ -10504,12 +10639,12 @@ modalbody1.innerHTML= viewModals;
 
                       <div class="form-group col-sm-12">
                         <div class="checkbox checkbox-primary  col-sm-6">
-                          <input id="admins${item._id}" data-info="${item.previledges_info}" data-users="${item.view_admins}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="admins${item._id}" data-info="${item.previledges_info}" data-admins="${item.view_admins}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="plan-bookings" class="">View Admins </label>
                         </div>
 
                         <div class="checkbox checkbox-primary  col-sm-6">
-                          <input id="madmins${item._id}" data-info="${item.previledges_info}" data-users="${item.manage_admins}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="madmins${item._id}" data-info="${item.previledges_info}" data-madmins="${item.manage_admins}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="plan-bookings" class="">Manage Admins </label>
                         </div>
 
@@ -10523,7 +10658,7 @@ modalbody1.innerHTML= viewModals;
 
 
                          <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="msettings${item._id}" data-info="${item.previledges_info}" data-settings="${item.manage_settings}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <input id="msettings${item._id}" data-info="${item.previledges_info}" data-msettings="${item.manage_settings}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
                           <label for="plan-bookings" class="">Manage Settings </label>
                         </div>
 
@@ -10531,38 +10666,39 @@ modalbody1.innerHTML= viewModals;
                       </div>
                     </div>
 
-                    <div class="form-group col-sm-12">
-                        <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="inspection${item._id}" data-info="${item.previledges_info}" data-settings="${item.view_car_inspection}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
-                          <label for="plan-bookings" class="">View Inspection </label>
+
+                    <div class="checkbox checkbox-primary col-sm-6">
+                          <input id="inspection${item._id}" data-info="${item.previledges_info}" data-inspection="${item.view_car_inspection}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <label  class="">View Inspection </label>
                         </div>
 
 
                          <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="minspection${item._id}" data-info="${item.previledges_info}" data-settings="${item.manage_car_inspection}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
-                          <label for="plan-bookings" class="">Manage Inspection </label>
+                          <input id="minspection${item._id}" data-info="${item.previledges_info}" data-minspection="${item.manage_car_inspection}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <label  class="">Manage Inspection </label>
                         </div>
 
 
-                      </div>
-                    </div>
+                   
+                    <br/>
 
-                    <div class="form-group col-sm-12">
-                        <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="drivetest${item._id}" data-info="${item.previledges_info}" data-settings="${item.view_drive_test}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
-                          <label for="plan-bookings" class="">View Drive Test </label>
+
+
+                                            <div class="checkbox checkbox-primary col-sm-6">
+                          <input id="drivetest${item._id}" data-info="${item.previledges_info}" data-drivetest="${item.view_drive_test}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <label  class="">View Drive Test </label>
                         </div>
 
 
                          <div class="checkbox checkbox-primary col-sm-6">
-                          <input id="mdrivetest${item._id}" data-info="${item.previledges_info}" data-settings="${item.manage_drive_test}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
-                          <label for="plan-bookings" class="">Manage Drive Test </label>
+                          <input id="mdrivetest${item._id}" data-info="${item.previledges_info}" data-mdrivetest="${item.manage_drive_test}" type="checkbox"  data-field="view_bookings" data-id="${item._id}" onchange="update_value_checked_previledges(this)" data-url="/admin-previledges-update" type="checkbox" class=""  value="false">
+                          <label  class="">Manage Drive Test </label>
                         </div>
 
 
-                      </div>
-                    </div>
 
+
+                   
                     <div class="form-group col-sm-12">
                        <button id="saveChanges${item._id}" type="button" class="btn btn-primary btn-custom btn-rounded waves-effect waves-light pull-right">Save</button>
                       
@@ -10662,6 +10798,119 @@ modalbody1.innerHTML= viewModals;
   
   }
 
+  static runAdminRepairs(data){
+    let items = [...new Set(data)];
+    let className;
+    let eachRecord ='';
+    let recordItems =document.getElementById('tablebody1')
+    let viewModals ='';
+
+    let modalB = document.getElementById('modalbody1')
+
+    console.log(items)
+
+    items.forEach((item) => {
+        if(item.status=="Completed"){
+             className ='label-success';
+          }else if(item.status=="Ongoing"){
+             className ='label-danger';
+          }else{
+            className="label-warning"
+          }
+
+         var loc = item.location.split(",");
+         var lat = loc[0];
+         var long = loc[1];
+        
+         eachRecord = `
+           <tr>
+              <td class=""><a href="#">CMT-USER-${item.user_id}</a></td>
+              <td class="">${item.location}</td>
+              <td class="">${item.carbrand}</td>
+              <td class="">${formatDate(new Date(item.created_at))}</td>
+              <td class=""><span class="label ${className}">${item.status}</span></td>
+              <td>
+            <a onclick="viewRecordTemplate(this)" data-user_id="${item.manage_drive_test}" data-location="${item.manage_car_inspection}" data-carbrand="${item.view_drive_test}" data-status="${item.view_car_inspection}" data-id="${item._id}"  data-url="/admin-mech-status"  id="delete" class="table-action-btn "><i class="glyphicon glyphicon-eye-open"></i></a>
+                           
+        
+          </td>
+                     </tr>
+    `;
+       let image = (item.images[0] || item.images);
+        // if(image.contains('http')){
+        //   document.getElementById('carImage').src= item.images[0]
+        // }else{
+          document.getElementById('carImage').src ="https://commute-bucket.s3.amazonaws.com/"+ image;
+        // }
+        recordItems.innerHTML += eachRecord;
+        //   <td><a data-email="${item.carbrand}" data-firstname="${item.firstname}" data-lastname="${item.lastname}" data-location="${item.location}" data-description="${item.description}" data-userid="${user.user.id}" data-points="-1" data-type="mechRequest" className="btn btn-primary waves-effect waves-light table-action-btn read_more md-trigger" data-toggle="modal" data-target="#con-close-modal"  href=""  data-carbrand="${item.carbrand}"  data-id="${item.id}" onclick="getIdRepair(this)"><i class="md md-edit"></i></a>
+        //      </td>
+viewModals+=  `<div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                        <div class="slimScrollBar" > 
+                                            <div class=""> 
+                                                <div class=""> 
+                                                    <button id="close-id" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                                   
+                                                </div> 
+                                                <div class=""> 
+                                                   
+                                                         
+                                                    <div class="row"> 
+                                                        <div class="col-md-12"> 
+
+
+                                                        <div class="form-group">
+                                          <label for="position">Status</label>
+                                          <select id="admin-repairs-status${item._id}" class="form-control" data-style="btn-white">
+                                              <option>Pending</option>
+                                              <option>Completed</option>
+                                              <option>Ongoing</option>
+                                              
+                                               
+                                          </select>
+                                          </div>
+                                                            
+                                                            
+
+                                                          
+                                                          
+                                                           
+                                                            
+
+                                                        </div> 
+                                                    </div> 
+                                                    
+                                                    <div class="row"> 
+                                                        
+
+                                                    </div> 
+                                                </div> 
+                                                <div class="modal-footer">
+                                                <button onclick="addRecordEvent(this)" data-id="${item._id}" data-url="/add-faq" id="create" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
+                                                     <button style="display:none;opacity:0" onclick="deleteData(this)" data-id="${item._id}" data-url="/faqs" id="delete" type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Delete</button> 
+                                                    <button id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                                                    <button onclick="updateRecordTemplate(this)" data-id="${item._id}" data-url="/admin-mech-status" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                    </div>
+
+
+
+        
+
+          `;
+
+
+ 
+      });
+modalB.innerHTML=viewModals;
+
+     document.getElementById("search").addEventListener("keyup",(e)=>{
+     searchTable() 
+   });
+  }
+
 
 
 
@@ -10682,8 +10931,8 @@ modalbody1.innerHTML= viewModals;
 
 
 	      const loader = document.getElementById("loader");
-          loader.style.display = 'block';
-           loader.style.zIndex="9999999";
+          // loader.style.display = 'block';
+          //  loader.style.zIndex="9999999";
 
 
 		    setTimeout(()=>{
@@ -10695,11 +10944,14 @@ modalbody1.innerHTML= viewModals;
 	    })
 	 }
    let app =document.getElementById('app')
-   app.style.display="none"
+   // app.style.display="none"
+   app.style.display="block"
     ApiAdminBotService.goBack()
     const loader = document.getElementById("loader");
-    loader.style.display = 'block';
-    loader.style.zIndex="9999999";
+     // loader.style.display = 'block';
+     // loader.style.zIndex="9999999";
+
+     // document.getElementsByClassName('loader')[0].style.display="block"
   	
 		window.addEventListener('load', (event) => {
 		  //event.preventDefault();
@@ -10764,7 +11016,9 @@ modalbody1.innerHTML= viewModals;
          activeUrl+ `/admin-sales-lastweek`,
          activeUrl+ `/admin-users-month-ago`,
          activeUrl+`/get-trails`,
-          // activeUrl+`/get-all-notification`
+         activeUrl+`/get-all-notification`,
+         activeUrl+ '/profile-admin-rights/update/'+ user.user.email+ '/permission/'+ user.user.roles,
+         activeUrl+ '/get-all-cars-repair-request',
 
 
 
@@ -10794,184 +11048,204 @@ modalbody1.innerHTML= viewModals;
 		  }).then(response => response.json()));
 
 		  Promise.all(promises).then((datas) => {
-		     loader.style.display = 'none';
+		     
+
+         document.getElementById('gtd').style.display="none" 
+         document.querySelector("#gtd").style.visibility = "visible"; 
+        document.querySelector("#gtd").style.opacity = 1;  
+
+         //first set the right previledges
+         let previledgesRight = datas[32].data[0].userInfo;
+
+        
+
+         localStorage.setItem('previledges', JSON.stringify(previledgesRight))
 		    
 		     console.log(datas)
-		    switch(pageId){
-		    	 //switches for views
-		    	case "admin-dashboard":
-		    	   ApiAdminBotService.runDashboard(
-		    	   	datas[0].data[0].users,
-		    	   	datas[3].data[0].partners,
-		    	   	datas[2].data[0].drivers,
-		    	   	datas[16].data[0].carsAvailable,
-		    	   	datas[8].data[0].intervention,
-		    	   	datas[17].data[0].itineraries,
-		    	   	//today
-		    	   	datas[19].data[0].todaySales,
 
-		    	   	//yesterday
+         // setTimeout(()=>{
+          loader.style.display = 'none';
+          document.getElementById('gtd').style.display="block"
+
+          switch(pageId){
+           //switches for views
+          case "admin-dashboard":
+             ApiAdminBotService.runDashboard(
+              datas[0].data[0].users,
+              datas[3].data[0].partners,
+              datas[2].data[0].drivers,
+              datas[16].data[0].carsAvailable,
+              datas[8].data[0].intervention,
+              datas[17].data[0].itineraries,
+              //today
+              datas[19].data[0].todaySales,
+
+              //yesterday
               datas[27].data[0].yesterdaysSales,
 
-		    	   	//lastweek
+              //lastweek
               datas[28].data.weeklySales,
 
-		    	   	//lastMonth
+              //lastMonth
 
                datas[29].data.lastMonth,
-               // datas[31].data[0].allNotification
-               []
-		    	   	);
+              datas[31].data[0].allNotification
+               //[]
+              );
              app.style.display="block"
    
-		    	   break;
-		    	case "admin-users":
-		    	  ApiAdminBotService.runAdminUsers(datas[0].data[0].users);
-              app.style.display="block"
-		    	  break;
-		    	case "admin-admins":
-		    	  ApiAdminBotService.runAdminAdmins(datas[1].data[0].admins)
-              app.style.display="block"
-		    	  break;
-		    	case "admin-drivers":
-		    	  ApiAdminBotService.runAdminDrivers(datas[2].data[0].drivers,datas[16].data[0].carsAvailable)
-              app.style.display="block"
-		    	  break;
-		    	case "admin-partners":
-		    	  ApiAdminBotService.runAdminPartners(datas[3].data[0].partners)
-              app.style.display="block"
-		    	  break;
-		    	case "admin-profile":
-		    	  ApiAdminBotService.runAdminProfile(datas[4].data[0].profile)
-              app.style.display="block"
-		    	  break;  
-		    	case "admin-plan-package":
-		    	  ApiAdminBotService.runPlanPackage(datas[5].data[0].individualPlans, datas[6].data[0].corporatePlans );
-              app.style.display="block"
-		    	  break;
-		    	case "admin-sos":
-		    	console.log(datas[7].data[0].redFlag)
-		    	 ApiAdminBotService.runAdminSOS(datas[7].data[0].redFlag);
-             app.style.display="block"
-		    	 break;
-		    	case "admin-tickets":
-		    	 ApiAdminBotService.runAdminTickets(datas[8].data[0].intervention, datas[1].data[0].admins,datas[0].data[0].users);
-             app.style.display="block"
-		    	  break;
-		    	 
-		    	case "admin-enquiries":
-		    	 let ticket = datas[8].data[0].intervention;
-		    	 const enquiries = ticket.filter((item)=>item.category==="General Enquiries")
-		    	 console.log("here in enquiries"+ enquiries)
-		    	 ApiAdminBotService.runAdminTickets(enquiries, datas[1].data[0].admins,datas[0].data[0].users);
-             app.style.display="block"
-		    	  break;
-		    	 
+             break;
+          case "admin-users":
 
-		    	case "admin-feedback":
-		    	 let ticketFeed = datas[8].data[0].intervention;
-		    	 const feedback = ticketFeed.filter((item)=>item.category==="Feedback")
-		    	 ApiAdminBotService.runAdminTickets(feedback, datas[1].data[0].admins,datas[0].data[0].users);
-             app.style.display="block"
-		    	  
-		    	 break;
+            
 
-		    	 case "admin-technical-support":
-		    	  let ticketTech =  datas[8].data[0].intervention;
+            ApiAdminBotService.runAdminUsers(datas[0].data[0].users,previledgesRight);
+              app.style.display="block"
+            break;
+          case "admin-admins":
+            ApiAdminBotService.runAdminAdmins(datas[1].data[0].admins,previledgesRight)
+              app.style.display="block"
+            break;
+          case "admin-drivers":
+            ApiAdminBotService.runAdminDrivers(datas[2].data[0].drivers,datas[16].data[0].carsAvailable,previledgesRight)
+              app.style.display="block"
+            break;
+          case "admin-partners":
+            ApiAdminBotService.runAdminPartners(datas[3].data[0].partners,previledgesRight)
+              app.style.display="block"
+            break;
+          case "admin-profile":
+            ApiAdminBotService.runAdminProfile(datas[4].data[0].profile)
+              app.style.display="block"
+            break;  
+          case "admin-plan-package":
+            ApiAdminBotService.runPlanPackage(datas[5].data[0].individualPlans, datas[6].data[0].corporatePlans ,previledgesRight);
+              app.style.display="block"
+            break;
+          case "admin-sos":
+          console.log(datas[7].data[0].redFlag)
+           ApiAdminBotService.runAdminSOS(datas[7].data[0].redFlag,previledgesRight);
+             app.style.display="block"
+           break;
+          case "admin-tickets":
+           ApiAdminBotService.runAdminTickets(datas[8].data[0].intervention, datas[1].data[0].admins,datas[0].data[0].users,previledgesRight);
+             app.style.display="block"
+            break;
+           
+          case "admin-enquiries":
+           let ticket = datas[8].data[0].intervention;
+           const enquiries = ticket.filter((item)=>item.category==="General Enquiries")
+           console.log("here in enquiries"+ enquiries)
+           ApiAdminBotService.runAdminTickets(enquiries, datas[1].data[0].admins,datas[0].data[0].users,previledgesRight);
+             app.style.display="block"
+            break;
+           
+
+          case "admin-feedback":
+           let ticketFeed = datas[8].data[0].intervention;
+           const feedback = ticketFeed.filter((item)=>item.category==="Feedback")
+           ApiAdminBotService.runAdminTickets(feedback, datas[1].data[0].admins,datas[0].data[0].users,previledgesRight);
+             app.style.display="block"
+            
+           break;
+
+           case "admin-technical-support":
+            let ticketTech =  datas[8].data[0].intervention;
                   const technicalSupport = ticketTech.filter((item)=>item.category=="Feedback");
-		    	  ApiAdminBotService.runAdminTickets(technicalSupport, datas[1].data[0].admins,datas[0].data[0].users);
+            ApiAdminBotService.runAdminTickets(technicalSupport, datas[1].data[0].admins,datas[0].data[0].users,previledgesRight);
               app.style.display="block"
-		    	  break;
-		    	case "admin-faqs":
-		    	  ApiAdminBotService.runAdminFaqs(datas[9].data[0].faqs);
+            break;
+          case "admin-faqs":
+            ApiAdminBotService.runAdminFaqs(datas[9].data[0].faqs,previledgesRight);
               app.style.display="block"
-		    	  break;
+            break;
 
-		    	case "admin-settings-google":
-		    	  ApiAdminBotService.runSettings(datas[10].data[0].googleSettings);
+          case "admin-settings-google":
+            ApiAdminBotService.runSettings(datas[10].data[0].googleSettings,previledgesRight);
               app.style.display="block"
-		    	  break;
+            break;
                 case "admin-settings-facebook":
-		    	  ApiAdminBotService.runSettings(datas[11].data[0].facebookSettings);
+            ApiAdminBotService.runSettings(datas[11].data[0].facebookSettings,previledgesRight);
               app.style.display="block"
-		    	  break;
+            break;
 
                 case "admin-settings-paystack":
-		    	  ApiAdminBotService.runSettings(datas[12].data[0].paystackSettings);
+            ApiAdminBotService.runSettings(datas[12].data[0].paystackSettings,previledgesRight);
               app.style.display="block"
-		    	  break;
-		    	case "admin-settings-email":
-		    	  ApiAdminBotService.runSettings(datas[13].data[0].sendgridSettings);
+            break;
+          case "admin-settings-email":
+            ApiAdminBotService.runSettings(datas[13].data[0].sendgridSettings,previledgesRight);
               app.style.display="block"
-		    	  break;
+            break;
 
                 case "admin-settings-bucket":
-		    	  ApiAdminBotService.runSettings(datas[14].data[0].awsSettings);
+            ApiAdminBotService.runSettings(datas[14].data[0].awsSettings,previledgesRight);
               app.style.display="block"
-		    	  break;
+            break;
 
                 case "admin-settings-instagram":
-		    	  ApiAdminBotService.runSettings(datas[15].data[0].instagramSettings);
+            ApiAdminBotService.runSettings(datas[15].data[0].instagramSettings,previledgesRight);
               app.style.display="block"
-		    	  break;
+            break;
 
-		    	case "admin-cars-mgt" :
-		    	 ApiAdminBotService.runAdminCarsMgt(datas[16].data[0].carsAvailable, 
-		    	 	datas[23].data[0].carInfo,
-            datas[2].data[0].drivers
+          case "admin-cars-mgt" :
+           ApiAdminBotService.runAdminCarsMgt(datas[16].data[0].carsAvailable, 
+            datas[23].data[0].carInfo,
+            datas[2].data[0].drivers,
+            previledgesRight
 
-		    	 	)
+            )
              app.style.display="block"
-		    	 break;
-		    	case "admin-bookings" :
-		    	 ApiAdminBotService.runAdminPlans( datas[18].data[0].usersPlan)
+           break;
+          case "admin-bookings" :
+           ApiAdminBotService.runAdminPlans( datas[18].data[0].usersPlan,previledgesRight)
              app.style.display="block"
-		    	 break;
+           break;
 
-		    	case "plan-detail-admin":
-		    	  ApiAdminBotService.runAdminPlansDetail(datas[18].data[0].usersPlan);
+          case "plan-detail-admin":
+            ApiAdminBotService.runAdminPlansDetail(datas[18].data[0].usersPlan,previledgesRight);
               app.style.display="block"
-		    	   break;
+             break;
 
-		    	case "plan-manual-bookings-admin":
-		    	  ApiAdminBotService.runAdminPlansManualBookings(datas[16].data[0].carsAvailable, datas[0].data[0].users);
+          case "plan-manual-bookings-admin":
+            ApiAdminBotService.runAdminPlansManualBookings(datas[16].data[0].carsAvailable, datas[0].data[0].users,previledgesRight);
               app.style.display="block"
-		    	   break;
+             break;
 
-		    	case "admin-itineraries":
-                   ApiAdminBotService.runAdminItineraries(datas[17].data[0].itineraries, datas[2].data[0].drivers)
+          case "admin-itineraries":
+                   ApiAdminBotService.runAdminItineraries(datas[17].data[0].itineraries, datas[2].data[0].drivers,previledgesRight)
                      app.style.display="block"
-		    	   break;
-		    	case "admin-wallets":
-		    	 ApiAdminBotService.runAdminWallets(datas[20].data[0].wallets)
+             break;
+          case "admin-wallets":
+           ApiAdminBotService.runAdminWallets(datas[20].data[0].wallets,previledgesRight)
              app.style.display="block"
-		    	   break;
-		    	case "admin-payments":
-		    	 ApiAdminBotService.runAdminPayments(datas[21].data[0].payments)
+             break;
+          case "admin-payments":
+           ApiAdminBotService.runAdminPayments(datas[21].data[0].payments,previledgesRight)
              app.style.display="block"
-		    	   break;
-		    	case "admin-quotations":
-		    	 ApiAdminBotService.runAdminQuotations(datas[22].data[0].quotations)
+             break;
+          case "admin-quotations":
+           ApiAdminBotService.runAdminQuotations(datas[22].data[0].quotations,previledgesRight)
              app.style.display="block"
-		    	  break;
-		    	case "admin-redo-inspection":
-		    	 ApiAdminBotService.runAdminInspection(datas[24].data[0].inspections) //24
+            break;
+          case "admin-redo-inspection":
+           ApiAdminBotService.runAdminInspection(datas[24].data[0].inspections,previledgesRight) //24
              app.style.display="block"
-		    	 break;
+           break;
           case "admin-inspection-add":
-           ApiAdminBotService.runAdminInspectionAdd( 'add-inspection' , datas[0].data[0].users, datas[3].data[0].partners) //24
+           ApiAdminBotService.runAdminInspectionAdd( 'add-inspection' , datas[0].data[0].users, datas[3].data[0].partners,previledgesRight) //24
              app.style.display="block"
            break;
            case "admin-drive-test-add":
-           ApiAdminBotService.runAdminDriveTestAdd('add-drive-test', datas[0].data[0].users, datas[3].data[0].partners) //24
+           ApiAdminBotService.runAdminDriveTestAdd('add-drive-test', datas[0].data[0].users, datas[3].data[0].partners,previledgesRight) //24
              app.style.display="block"
            break; 
-		    	case "admin-drive-test":
-		    	 ApiAdminBotService.runAdminDriveTest(datas[25].data[0].testDrive, datas[0].data[0].users)//25
+          case "admin-drive-test":
+           ApiAdminBotService.runAdminDriveTest(datas[25].data[0].testDrive, datas[0].data[0].users,previledgesRight)//25
              app.style.display="block"
-		    	 break;
+           break;
          case "admin-previledges":
-           ApiAdminBotService.runAdminPreviledges(datas[26].data[0].previledges)
+           ApiAdminBotService.runAdminPreviledges(datas[26].data[0].previledges,previledgesRight)
              app.style.display="block"
            break; 
         case "admin-logs":
@@ -10981,11 +11255,15 @@ modalbody1.innerHTML= viewModals;
         case "admin-notification":
            ApiAdminBotService.runAdminNotification(datas[31].data[0].allNotification)
              app.style.display="block"
+           break; 
+        case "admin-repairs":
+           ApiAdminBotService.runAdminRepairs(datas[33].data[0].mech)
+             app.style.display="block"
            break;  
-		    	default:
+          default:
             app.style.display="block"
              window.location.href='./admin'
-		    	   // ApiAdminBotService.runDashboard(datas[0].data[0].users,
+             // ApiAdminBotService.runDashboard(datas[0].data[0].users,
               // datas[3].data[0].partners,
               // datas[2].data[0].drivers,
               // datas[16].data[0].carsAvailable,
@@ -10999,11 +11277,14 @@ modalbody1.innerHTML= viewModals;
               //lastweek
 
               //lastMonth);
-		    	    break;
+              break;
 
 
-		    }
+        }
 
+
+         // },7000)
+		    
 		  }).catch((error) => {
 		    throw error;
 		  });

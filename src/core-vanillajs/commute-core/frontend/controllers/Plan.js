@@ -175,25 +175,7 @@ window.getIdPlan = (item) =>{
             //startLoc = startLoc.formatted_address;
             console.log(startLoc)
             
-            // document.getElementById('city2').value = place.name;
-            // document.getElementById('cityLat').value = place.geometry.location.lat();
-            // document.getElementById('cityLng').value = place.geometry.location.lng();
-
-            // var geocoder = new google.maps.Geocoder();
-            // var place = autocomplete3.getPlace();
-            // var address = place.formatted_address;
-            // geocoder.geocode({ 'address': address }, function (results, status) {
-            //     if (status == google.maps.GeocoderStatus.OK) {
-            //         var latitude = results[0].geometry.location.lat();
-            //         var longitude = results[0].geometry.location.lng();
-            //         var mapOptions = { center: new google.maps.LatLng(latitude, longitude), zoom: 15, mapTypeId: google.maps.MapTypeId.ROADMAP };
-            //         //var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
-            //         //var marker = new google.maps.Marker({ position: new google.maps.LatLng(latitude, longitude), map: map });
-
-            //     } else {
-            //         alert("Request failed.")
-            //     }
-            // });
+            
         });
 
 
@@ -484,10 +466,10 @@ function formatDate(date) {
                                 car_type: car_type,
                                 model: carName,
                                 car_year:car_year,
-                                assigned_driver_phone ,
-                                assigned_driver_location,
-                                assigned_driver_name,
-                                assigned_driver_email,
+                                assigned_driver_phone: assigned_driver_phone || 'Not Assigned',
+                                assigned_driver_location: assigned_driver_location || '0.000,0.000',
+                                assigned_driver_name : assigned_driver_name || 'Not Assigned',
+                                assigned_driver_email: assigned_driver_email || "Not Assigned",
                                 plate_number: el.getAttribute("data-plate")
                             });
                            carIdsSet.push(id);
@@ -651,7 +633,8 @@ class WebsitePlanCategory {
   attachEvents() {
     if(document.getElementById("planpage")){
 
-       WebsitePlanCategory.runCarsCarousel();
+      if(localStorage.getItem("userToken")){
+         WebsitePlanCategory.runCarsCarousel();
        
        
 
@@ -845,15 +828,22 @@ class WebsitePlanCategory {
       
 
     }  
+
+      }
+
+       
   }
 
   indexPageController() {
-    const user = JSON.parse(localStorage.getItem('userToken'));
+    if(localStorage.getItem('userToken')){
+      const user = JSON.parse(localStorage.getItem('userToken'));
     console.log(user.user)
     if(user.user.user_type==='Individual'){
        return PlanCategoryModel.getAllIndividualPlans()
     }
      return PlanCategoryModel.getAllCoperatePlans()
+    }
+    
    
   }
 
@@ -907,16 +897,15 @@ class WebsitePlanCategory {
 
 
   saveItinerary(){
-     const user = JSON.parse(localStorage.getItem('userToken')) ; 
-       let PLAN_ID ='CMT-PLAN-' +  guidGenerator();
 
-       // if(localStorage.getItem("itins")){
-       //     localStorage.setItem("itins",JSON.stringi[{}]);
-       //   //localStorage.setItem('itins',JSON.stringify([{}]))
-       // } 
-       document.getElementById("drive-test-certificate").value = user.user.test_certificate;
-       
-       document.body.addEventListener('click', function(e){
+    if(localStorage.getItem('userToken')){
+       const user = JSON.parse(localStorage.getItem('userToken')) ;
+       let guid = guidGenerator() 
+       let PLAN_ID ='CMT-PLAN-' + guid.substring(guid.length -18,guid.length -1);
+
+        document.getElementById("drive-test-certificate").value = user.user.test_certificate;
+
+        document.body.addEventListener('click', function(e){
         
         if(e.target.id=="submitItinerary"){
           
@@ -1016,13 +1005,11 @@ class WebsitePlanCategory {
 
           createUserDriveTestDetail(drvUrl, userDriveTestData)
 
-         } 
-          
-       
+      }
 
 
-            
-            console.log(userPlanItineries)
+
+      console.log(userPlanItineries)
 
             
 
@@ -1051,10 +1038,11 @@ class WebsitePlanCategory {
                   </td>
                 </tr>`;
                 $(_tr).hide().insertAfter("#startPoint").fadeIn('slow');
-            
 
-               
-                console.log(ItineraryList)
+
+
+
+          console.log(ItineraryList)
                   let it_url = mainUrl + `/itinerary/${userOnline.user.id}/user`;
                return fetch(  it_url , {
               method: 'POST',
@@ -1089,22 +1077,22 @@ class WebsitePlanCategory {
        
                 })
 
-             //this.loadItineraries();
             
- 
-        }
 
-            
+      
+        } //target if
+
 
 
     });
 
-     // this.loadItineraries() 
-
-     // if(localStorage.getItem('plan')  && localStorage.getItem("itins")){
+ 
     
         
     WebsitePlanCategory.saveNewPlan(PLAN_ID) ;
+
+
+       } //main if
         // 
   
   }
@@ -1185,6 +1173,7 @@ class WebsitePlanCategory {
                     user_id: userOnline.user.email,
                     type: 'payment',
                     description: data_msg,
+                    for_users:false
                    
                     
                   };
@@ -1195,7 +1184,7 @@ class WebsitePlanCategory {
                  postNotification(notification_url,dataNotification);
 
             setTimeout(()=>{
-             // window.location.href="http://localhost:4000/dashboard";
+             window.location.href="http://localhost:4000/dashboard";
             },8000)
 
               

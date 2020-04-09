@@ -8,9 +8,10 @@ import FetchPromiseApi from './helpers/FetchPromiseApi';
 let activeUrl = getOnlineUrlConnection();
 export default class ApiWallet{
   static getUsersPaymentTrnx(){
+    GateKeepersForUser();
   	if(document.getElementById("payment-page")){
-	GateKeepersForUser();
-
+	
+ 
 
     const user = JSON.parse(localStorage.getItem('userToken'));
     let recordUrl;

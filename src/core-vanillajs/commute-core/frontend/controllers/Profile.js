@@ -39,6 +39,9 @@ class WebsiteProfile {
       console.log('cant find where to load data');
     }
 
+   }else{
+     //localStorage
+     // window.location.href='./'
    }
    
     

@@ -25,13 +25,13 @@ export class CarRepairRequest extends Component {
 
        <div className="content-page" id="spread-out">
          
-            <div className="content"  id="car-repair">
+            <div className="content animated animatedFadeInUp fadeInUp "  id="car-repair">
                 <div className="container">
                     <div className="m-t-15"></div>
 
 
                
-                    <div className="row">
+                    <div className="row animated animatedFadeInUp fadeInUp ">
                         <div className="col-sm-12">
                             <div className="card-box">
                                 <div className="row">
@@ -40,7 +40,7 @@ export class CarRepairRequest extends Component {
                                         <div className="m-b-30"></div>
 
 
-                                        <form role="form">
+                                        <form role="form" className="animated animatedFadeInUp fadeInUp ">
                                             <div className="form-group"  style={{display:"none"}}>
                                                 <label htmlFor="exampleInputEmail1">Email address</label>
                                                 <input type="email" className="form-control" id="email"
@@ -120,7 +120,7 @@ export class CarRepairRequest extends Component {
                                         </form>
                                     </div>
 
-                                    <div className="col-md-8">
+                                    <div className="col-md-8 animated animatedFadeInUp fadeInUp ">
                                         <div className="m-t-40"></div>
                                         <img  className="m-b-30 mechanic-img mech-img" src="public/assets/images/mechanic2.jpg" />
                                     </div>
@@ -138,7 +138,7 @@ export class CarRepairRequest extends Component {
 
 
 
-          <div id="con-close-modal" className="modal fade" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{display: "none"}}>
+          <div id="con-close-modal" className="modal fade " tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{display: "none"}}>
                                         <div className="modal-dialog"> 
                                             <div className="modal-content"> 
                                                 <div className="modal-header"> 

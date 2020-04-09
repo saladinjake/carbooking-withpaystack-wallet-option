@@ -2,12 +2,15 @@ let accountBalance;
 const postUrl="http://localhost:12000/api/v1/paystack/pay"
     alertify.set('notifier','position', 'top-left');
 'use strict';
+import WebsiteLogin from '../../core/Login'
 import WalletModel from '../models/WalletModel';
 
 function setOldBalance(balance){
 
-   const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch("http://localhost:12000/api/v1/old_balance/"+ user.user.id, {
+  if(localStorage.getItem('userToken')){
+
+    const user = JSON.parse(localStorage.getItem('userToken'))
+    return fetch("http://localhost:12000/api/v1/old_balance/"+ user.user.email, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -28,6 +31,10 @@ function setOldBalance(balance){
       .catch(error => {
         throw error;
       });
+
+  }
+
+   
 
 }
 
@@ -110,8 +117,10 @@ class Ewallet {
 
   static getBalance(){
      if(document.getElementById("wallet-page")){
-      const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch("http://localhost:12000/api/v1/balance/"+ user.user.id, {
+
+      if(localStorage.getItem('userToken')){
+          const user = JSON.parse(localStorage.getItem('userToken'))
+    return fetch("http://localhost:12000/api/v1/balance/"+ user.user.email, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -143,14 +152,18 @@ class Ewallet {
       .catch(error => {
         throw error;
       });
+      }
+      
     }
   }
 
   static getTransactions(){
     if(document.getElementById("wallet-page")){
+
+   if(localStorage.getItem('userToken')){
      const user = JSON.parse(localStorage.getItem('userToken'))
-    
-    return fetch("http://localhost:12000/api/v1/transactions", {
+
+     return fetch("http://localhost:12000/api/v1/transactions", {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -172,16 +185,22 @@ class Ewallet {
       .catch(error => {
         throw error;
       });
+    }
+    
+    
    }
   }
 
 
   attachEvents() {
-
+    
    //  document.getElementById("demo-foo-search").addEventListener("keyup",(e)=>{
    //   searchTable() 
    // })
-    
+
+   if(localStorage.getItem('userToken')){
+
+
     const user = JSON.parse(localStorage.getItem('userToken'))
 
      // if(user.user.roles!='user'){
@@ -259,17 +278,20 @@ class Ewallet {
 
 
     }
+
+   }
+    
  }
 
   indexPageController() {
+
+    
+
     //return WalletModel.topUp() 
+    if(localStorage.getItem('userToken')){
       const user = JSON.parse(localStorage.getItem('userToken'))
 
-
-    
-    
-
-    const fullname = document.getElementById("field-1").value;
+      const fullname = document.getElementById("field-1").value;
     const email = document.getElementById("field-2").value;
     const amount = document.getElementById("field-3").value;
     //const phone_number = document.getElementById('field_4').value
@@ -353,6 +375,13 @@ class Ewallet {
       .catch(error => {
         throw error;
       });
+    }
+
+
+    
+    
+
+    
   }
 
 }

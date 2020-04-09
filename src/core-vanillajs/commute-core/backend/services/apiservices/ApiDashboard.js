@@ -193,6 +193,7 @@ planClicked._id =0;
 
 
 function dashboard() {
+  GateKeepersForUser()
 
   $("#map-set").hide();
 
@@ -243,9 +244,32 @@ function dashboard() {
 
       Promise.all(promises)
         .then(datas => {
+            console.log(datas)
 
+            if(datas[0].error){
+              // alert('no itin'+ datas[0].error)
+              if(document.getElementById("dashboard")){
+              document.getElementById('tableviewItins').style.display="none"
+              document.getElementById('svgItins').style.display="block"
             
-            itinerary =[...new Set(datas[0].data[0].itinerary)] || [];
+            
+               //alert('no plans')
+               document.getElementById('tableviewPlans').style.display="none"
+               document.getElementById('svgPlans').style.display='block'
+
+              }
+            }else {
+
+              if(document.getElementById("dashboard")){
+
+              document.getElementById('tableviewItins').style.display="block"
+              document.getElementById('svgItins').style.display="none"
+              document.getElementById('svgPlans').style.display='none'
+
+            }
+
+
+              itinerary =[...new Set(datas[0].data[0].itinerary)] || [];
             plans = [...new Set(datas[1].data[0].plans)] ;
             console.log(JSON.stringify(plans)+"main plan")
             let currentPlan = plans[plans.length -1] || []; // last plan user embarked on
@@ -253,9 +277,6 @@ function dashboard() {
             localStorage.setItem('currentUserPlan', currentPlan);
 
             
-
-           
-           
 
             // console.log(datas)
            if(document.getElementById("dashboard")){
@@ -413,7 +434,10 @@ function dashboard() {
                             </div></a>`; 
                          
                 });
-                carbounds.innerHTML=car_record; 
+                 if(document.getElementById("car-chosen")){
+                    carbounds.innerHTML=car_record; 
+                 } 
+               
 
 
                   //itineries attached to plan
@@ -465,16 +489,24 @@ function dashboard() {
 
                             
                           }else{
-                            document.getElementById('start').disabled=true;
+
+                            if(document.getElementById('start')){
+                              document.getElementById('start').disabled=true;
+                            }
+                            
                             let msgBox =`<span class="label label-danger">Quotations has not yet been sent .</span>`;
                             
-                            document.getElementById("itin-ids").innerHTML = msgBox;
+
+                            if(document.getElementById("itin-ids")){
+                               document.getElementById("itin-ids").innerHTML = msgBox;
+                            }
+                            
                             
 
                             className="label-warning";
-                           
+                             let driver='No Driver Assigned',
                             
-
+                             
 
                             payButton=`<td class="">
                                     <a  href="#" onclick="setClickedItinerary(this)" data-driver="${planClicked.cars_on_plan[0].assigned_driver_name}" data-driver_email="${planClicked.cars_on_plan[0].assigned_driver_email}" data-driver-plate_num="${planClicked.cars_on_plan[0].assigned_driver_phone}" data-driver_loc="${planClicked.cars_on_plan[0].assigned_driver_location}" data-status="${item.status}"  data-id="${item.id}" data-travel_option="${item.travel_option}" data-pickup_time=${item.pickup_time} data-start_time="${formatDate(new Date(item.start_time))}" data-end_time="${item.end_time}"  data-start_location="${item.start_location}" data-destination="${item.destination}" data-drive_option="${item.drive_option}"  class="table-action-btn btn-custom btn-purple right-bar-toggle " ><i class="md md-chevron-right"></i></a>
@@ -493,13 +525,16 @@ function dashboard() {
                                 
                                                                                
                          </tr>`; 
-                         planned_itineraries.insertAdjacentHTML('beforeend', itineraries_record); 
+                         if(planned_itineraries){
+                            planned_itineraries.insertAdjacentHTML('beforeend', itineraries_record);
+                         }
+                          
                       });
 
 
                         
 
-                  let tablebody2 = document.getElementById('tablebody1');
+                  let tablebody2 = document.getElementById('tablebodyDetail');
                
                           let dataRequired = JSON.parse(localStorage.getItem('paymentOptions'))
 
@@ -568,7 +603,10 @@ function dashboard() {
 
                                               
                               </tr>`;
-                              tablebody1.insertAdjacentHTML('beforeend', template2);
+                              if(tablebody2){
+                                tablebody2.insertAdjacentHTML('beforeend', template2);
+                              }
+                              
                       });
 
                        //quotation will show here... load quotation with the given plan id
@@ -589,6 +627,10 @@ function dashboard() {
               
             
             }
+
+
+            }
+            
 
         })
         .catch(error => {

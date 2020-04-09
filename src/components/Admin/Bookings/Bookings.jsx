@@ -60,7 +60,7 @@ export  default class Bookings extends Component {
                                         <form role="form">
                                             <div className="form-group contact-search m-b-30">
                                                 <input type="text" id="search" className="form-control"
-                                                    placeholder="Search..." />
+                                                    placeholder="Search By Email..." />
                                                 <button type="submit" className="btn btn-white"><i
                                                         className="fa fa-search"></i></button>
                                             </div> 

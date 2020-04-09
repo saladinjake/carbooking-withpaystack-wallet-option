@@ -16,7 +16,7 @@ export class Home extends Component {
             
           
             <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 pull-right" >
-                <div className="card-box">
+                <div className="card-box animated animatedFadeInUp fadeInUp ">
                       <div className="panel-heading">
           <h1 className="text-custom m-t-40 m-b-20 text-left" style={{fontWeight:'700', letterSpacing:"3px", color: "rgb(126, 87, 194)"}}>Sign in</h1>
                 <a href="./signup" className="btn-link" style={{textDecoration:"none"}}>or create an account</a>
@@ -45,7 +45,7 @@ export class Home extends Component {
                                   
                                 </div>
 
-                                <form className="form-horizontal m-t-20" method="POST" action="http://localhost:12000/api/v1/auth/login">
+                                <form className="form-horizontal m-t-20 animated animatedFadeInUp fadeInUp " method="POST" action="http://localhost:12000/api/v1/auth/login">
 
                                   
                                   <div className="form-group ">
@@ -102,6 +102,14 @@ export class Home extends Component {
                                     </div>
                                   </div>
                                 </form>
+
+                                <div id="loader-container" className="loader-close">
+    <div className="loader"></div>
+    <div className="loader-text">loading...</div>
+  </div>
+  <div id="confirmation-container" className="confirmation-close">
+    <div className="confirmation">Login Successful</div>
+  </div>
 
 
                             </div>

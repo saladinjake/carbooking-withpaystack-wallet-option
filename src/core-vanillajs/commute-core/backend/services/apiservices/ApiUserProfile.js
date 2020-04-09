@@ -4,8 +4,11 @@ import FetchPromiseApi from './helpers/FetchPromiseApi';
 import getOnlineUrlConnection from './helpers/getOnlineUrlConnection';
 import MessageBoard from '../../../core/MessageBoard';
 let success_url= 'http://localhost:4000/dashboard';
+import $ from 'jquery';
 alertify.set('notifier','position', 'top-left');
 let activeUrl = getOnlineUrlConnection();
+
+
 
 
 class ApiUpdateProfile {
@@ -17,11 +20,11 @@ class ApiUpdateProfile {
 
 
     const user = JSON.parse(localStorage.getItem('userToken'));
-     let linkOfApi = activeUrl + '/profile/update/'+ user.user.id;
+     let linkOfApi = activeUrl + '/profile/update/'+ user.user.email;
      console.log(linkOfApi)
 
     if(document.getElementById('drivers-profile')){
-       linkOfApi = activeUrl + '/drivers-profile/update/'+ user.user.id;
+       linkOfApi = activeUrl + '/drivers-profile/update/'+ user.user.email;
     }
 
 
@@ -55,9 +58,24 @@ class ApiUpdateProfile {
           document.getElementById("certificate").value= userRecord.test_certificate
           document.getElementById('firstname').value = userRecord.firstname;
           document.getElementById('lastname').value= userRecord.lastname;
-          document.getElementById('user_type').value= userRecord.roles;
+          // document.getElementById('user_type').value= userRecord.roles;
           document.getElementById('username').value= userRecord.username;
           document.getElementById('avatar-img2').src= userRecord.avatar;
+
+          let idz='#user_type';
+    $( idz + " option").each(function () {
+        
+       // alert('hello')
+        let checkmate = userRecord.user_type
+        // console.log(checkmate)
+       //alert(checkmate)
+       //alert($(this).html())
+        if ($(this).html() == checkmate ) {
+          // alert('yes check mate'+ $(this).html() )
+            $(this).attr("selected", "selected");
+            return;
+        }
+    });
 
 
           if(document.getElementById('drivers-profile')){
@@ -91,12 +109,12 @@ class ApiUpdateProfile {
   static updateProfile(){
      GateKeepersForUser();
      const user = JSON.parse(localStorage.getItem('userToken'));
-     let linkOfApi = activeUrl + '/profile/update/'+ user.user._id;
+     let linkOfApi = activeUrl + '/profile/update/'+ user.user.email;
      console.log(linkOfApi)
 
 
       if(document.getElementById('drivers-profile')){
-       linkOfApi = activeUrl + '/drivers-profile/update/'+ user.user.id;
+       linkOfApi = activeUrl + '/drivers-profile/update/'+ user.user.email;
       }
 
 
@@ -109,8 +127,8 @@ class ApiUpdateProfile {
      let firstname =    document.getElementById('firstname').value;
      let lastname =    document.getElementById('lastname').value;
       //const othernames = document.getElementById('othernames').value;
-    // var user_typeSelect = document.getElementById('user_type');
-    // const user_type = user_typeSelect.options[user_typeSelect.selectedIndex].text;
+    var user_typeSelect = document.getElementById('user_type');
+    const user_type = user_typeSelect.options[user_typeSelect.selectedIndex].text;
 
      let username =    document.getElementById('username').value;
      let avatar = document.getElementById('file-input').value ;
@@ -237,7 +255,7 @@ class ApiUpdateProfile {
       passwordConfirm,
       firstname,
       lastname,
-      user_type: 'Individual Driver',
+      user_type: user_type,
       username,
       avatar,
       certificate

@@ -52,7 +52,7 @@ class ApiSaveOneRecord {
           },
           function(err) {
             console.log(err);
-            alert("Couldn't fetch location!");
+            // alert("Couldn't fetch location!");
             location = location;
           },
           { timeout: 7000 },

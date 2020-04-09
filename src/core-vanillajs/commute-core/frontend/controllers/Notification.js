@@ -12,7 +12,9 @@ function formatDate(date) {
 export default class Notification{
 	constructor(){}
 	attachEvents(){
-      let  user = JSON.parse(localStorage.getItem('userToken'))
+	 if(localStorage.getItem('userToken')){
+
+	 	let  user = JSON.parse(localStorage.getItem('userToken'))
 	  if(document.getElementById('notice')){
 			const urls = ["http://localhost:12000/api/v1/balance/"+ user.user.id, 
 	                      "http://localhost:12000/api/v1/notification/"+ user.user.email
@@ -85,7 +87,10 @@ export default class Notification{
 
 	}
 
+      
 	this.runeventHandler()
+
+}
 
  }
 

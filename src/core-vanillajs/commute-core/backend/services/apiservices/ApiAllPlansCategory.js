@@ -197,18 +197,51 @@ window.addEventPlan = (ev,el) =>{
   const recordCars = (items, displayBoard) => {
     console.log(items)
     items.forEach((item,i) => {
+      let className ='';
+      if(item.status=="Booked"){
+           className = "label-danger"
+        }else if(item.status=="Available"){
+           className = "label-success"
+        } else{
+           className = "label-warning"
+        } 
+
+        let className2 ='label-warning'
+        if(item.health_status=="Pending"){
+           className2 = "label-danger"
+        }else if(item.health_status=="Completed"){
+          className2 = "label-success"
+        }
+          
+        let className3='';
+        if(item.car_status=="Disabled"){
+           className3 = "label-danger"
+        }else if(item.car_status=="Active"){
+           className3 = "label-success"
+        } else{
+           className3 = "label-warning"
+        } 
+
       const eachRecord=`<div data-target="card" style="background:#fff; border-radius:12px"  class=" slide col-sm-6 col-md-6 col-lg-3 galleryImage" >
+                         
                          <a class="boxclose" id="btnc-${car_count}-boxclose" style="z-index:99999999999; margin-top:-19px"></a>
+                                
                                 <div class=" text-center">
                              <div class="pricing-header ">
-                                    <img src="${item.images}" style="width:120px;height:100px" /><br />
+                                    <img src="${ item.imagePath || item.images}" style="width:140px;height:130px" /><br />
+                                    <span class="label ${className}">${item.status}</span>
+                                  
+
                                   </div>
                                   <div class="col-lg-12 m-t-20">
                                   <div class="col-sm-12 col-md-12 col-lg-12 center-block text-center">
+                                  <br/>
                                   <div class="cars-info">
-                                             <h4 class="m-t-0 text-center"><a id="car-info-${car_count}" href="#" class="text-dark">${item.car_type} ${item.model}</a> </h4>
-                                         
+                                             
+                                             <h4 class="m-t-0 text-center"><a id="car-info-${car_count}" href="#" class="text-dark">${item.carModel || item.model}</a> </h4>
                                   </div>
+
+                                  
                                   </div></div>
                                   <input type="hidden" class="galleryImageInput" name="galleryImage[]" value="12345.png">
                                   <button onClick="carClickHandler();addCarSelectEvent(event,this);document.getElementById('next').disabled=false; document.getElementById('previous').disabled=false;" style=" left:20px;margin-left:30px; font-size:12px; margin:20px auto"  id="btnc-${car_count}" data-driver="${item.assigned_driver_name}" data-driver_email="${item.assigned_driver_email}" data-plate="${item.plate_number}" driver_location="${item.assigned_driver_location}" data-driver_phone="${item.assigned_driver_phone}" class="add-to-cart car-select-proven btn btn-primary waves-effect waves-light car-select" data-id="btnc-${car_count}" data-type2="car-select" data-price="${item.price}" data-type="${item.car_type}"  data-carmodel="${item.model}" data-image="${item.images}" data-caryear="${item.car_year}" data-id="1" >Select</button>

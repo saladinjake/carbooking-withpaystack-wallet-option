@@ -167,19 +167,7 @@ class MongoAppDemo {
       this.express.set('view engine', pug);
 
 
-   //not in use for simpicity 
-    // this.express.engine('.hbs', exphbs({
-    //     extname: '.hbs',
-    //     defaultLayout: 'main',
-    
-    // }));
-    // this.express.set('view engine', '.hbs');
-    // this.express.set('env', 'development');
-    // this.express.use(favicon(path.join(__dirname, 'favicon.png')));
-    //this.express.locals.apiKey = config.apiKey;
-  //   app.set('views', __dirname + '/views');
-  // app.set('view engine', 'jade');
-    // app.use(express.static(__dirname + '/public'));
+  
     
   }
 
@@ -189,39 +177,34 @@ class MongoAppDemo {
     const that = this;
     if (port) {
       this.port = port;
-      this.port = process.env.PORT || port;
+      this.port = port;
     }
 
 
-  let app = that.express;   
+     let app = that.express;  
 
 
+    io.listen(
+       that.express.listen(that.port, err => {
+          if (err) {
+            return console.log(err);
+          }
+          console.log(`server is listening on ${that.port}`);
+       })
+    );
+
+    that.express.io = io.on("connection", function(socket){
+      console.log("Socket connected: " + socket.id);
+    });
 
 
-   io.listen(
-     that.express.listen(that.port, err => {
-        if (err) {
-          return console.log(err);
-        }
-        console.log(`server is listening on ${that.port}`);
-     })
-  );
+// }); 
 
-  that.express.io = io.on("connection", function(socket){
-    console.log("Socket connected: " + socket.id);
-  });
+ 
 
-   
-
-
-   
-           
-
-      
-    
-
-  }
+   }
 }
+
 
 
 export { passport };

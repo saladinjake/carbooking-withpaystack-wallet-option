@@ -64,6 +64,17 @@ export class WalletAdmin extends Component {
                             <div className="m-t-10" style={{border:"1px solid #4c3392"}}></div>
                             <div className="col-lg-12 m-t-10" >
                                 <div className="card-box">
+
+                                <div className="form-inline m-b-20">
+                      <div className="row">
+                        
+                        <div className="col-sm-6 text-lg-center text-right pull-right">
+                          <div className="form-group">
+                              <input id="search" type="text" placeholder="User Email..." className="form-control input-sm" autocomplete="on" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                                    
     
                                     <table id="demo-foo-pagination" data-page-size="5" 

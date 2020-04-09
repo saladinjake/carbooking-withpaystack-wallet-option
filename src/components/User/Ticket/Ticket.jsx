@@ -26,7 +26,7 @@ export class TicketRequest extends Component {
 	  
 
 	       <div className="content-page" id="spread-out">
-	                <div className="content">
+	                <div className="content animated animatedFadeInUp fadeInUp ">
 	                  <div className="container">
 	                          
 	                        <div className="row" id="create-ticket">

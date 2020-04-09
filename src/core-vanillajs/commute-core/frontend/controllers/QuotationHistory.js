@@ -79,6 +79,7 @@ class QuotationHistory {
    //  document.getElementById("demo-foo-search").addEventListener("keyup",(e)=>{
    //   searchTable() 
    // })
+   if(localStorage.getItem('userToken')){
     
     const user = JSON.parse(localStorage.getItem('userToken'))
     if((!document.getElementById('signup_page') && !document.getElementById('loginpage') && !document.getElementById('pass_forgot_page') )){
@@ -108,34 +109,38 @@ class QuotationHistory {
 
 
           data.map((item,i)=>{
-            console.log(item.createdDate)
-            if(item.status=="Unpaid" ||  item.status=='Paid'){
+            //alert(item.has_updated)
+           if(item.status=="Unpaid" ||  item.status=='Paid'){
                              //item.price=`<span class="label label-table label-danger">${item.payment_status}</span>`;
                              if(item.has_updated=='Yes'){
 
                                 if(item.status=='Paid'){
+                                 let className="label-success";
                                  actionBtn = `<td class="">
                                        <a    data-amount="${item.price}"    data-reference="${item.reference}"   data-quotation_id="${item.quotation_id}" data-plan_id="${item.plan_id}" data-userbalance="${user.user.balance}" data-phone="${user.user.phoneNumber}" data-firstname="${user.user.firstname}" data-email="${user.user.email}" href="#"  class="label label-success" >Successful Payment</a>
                                  </td>`
-                               }else{
+                               }else if(item.status=="Unpaid"){
+                                let className="label-warning";
                                  actionBtn = `<td class="">
                                        <a onclick="setItem(this)"   data-amount="${item.price}"    data-reference="${item.reference}"   data-quotation_id="${item.quotation_id}" data-plan_id="${item.plan_id}" data-userbalance="${user.user.balance}" data-phone="${user.user.phoneNumber}" data-firstname="${user.user.firstname}" data-email="${user.user.email}" href="./pay-action"  class="btn btn-primary" >Make payment</a>
                                  </td>`
 
                                }
                              }else{
+                              let className="label-warning";
                                 actionBtn = `<td class="">
                                        <a onclick="setItem(this)"   data-amount="0"    data-reference=""   data-quotation_id="" data-plan_id="" data-userbalance="${user.user.balance}" data-phone="${user.user.phoneNumber}" data-firstname="${user.user.firstname}" data-email="${user.user.email}" href="#" disabled  class="btn btn-primary" >Awaiting Quotation</a>
                                  </td>`
                              }
                              
                            }else{
+
                              item.price= ` ${item.price}`;
                             actionBtn =`<td class="">
                                         ${item.price}  <span class="label label-success">${item.status}</span>                          
                                         </td>`
 
-
+                             let className="label-warning";
                            }
             eachRecord =`
                       <tr>
@@ -144,11 +149,12 @@ class QuotationHistory {
                           <td>${item.plan_id}</td>
                           <td>${item.amount} </td>
                           <td>${item.quotation_id}</td>
-                          ${actionBtn}
+                        <td><span class="label ${className}">${item.status}</span></td>
                           
                      </tr>`; 
              tablebody.insertAdjacentHTML('beforeend', eachRecord); 
           });
+
 
           
       })
@@ -156,7 +162,10 @@ class QuotationHistory {
     }
  }
 
+}
+
   indexPageController() {
+    if(localStorage.getItem('userToken')){
     //return WalletModel.topUp() 
       const user = JSON.parse(localStorage.getItem('userToken'))
 
@@ -242,6 +251,8 @@ class QuotationHistory {
         throw error;
       });
   }
+
+}
 
 }
 

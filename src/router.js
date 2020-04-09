@@ -41,6 +41,7 @@ import Admins from "./components/Admin/AdminMgt/users/Users";
 import AdminsDetail from "./components/Admin/AdminMgt/userDetail/UserDetail"
 import Partners from "./components/Admin/partnerMgt/users/Users";
 import PartnerDetail from "./components/Admin/partnerMgt/userDetail/UserDetail"
+import PartnersEarnings from  "./components/Admin/partnerMgt/users/Earnings"
 import Drivers from "./components/Admin/driverMgt/users/Users";
 import DriverDetail from "./components/Admin/driverMgt/userDetail/UserDetail"
 import CarMgt from './components/Admin/CarMgt/CarMgt';
@@ -95,6 +96,7 @@ import WalletHistoryAdmin from './components/Admin/Wallet/WalletHistoryAdmin'
 import QuoteSubscriptionHistoryAdmin from './components/Admin/Wallet/QuoteSubscriptionHistoryAdmin'
 
 import ActivityLogger from './components/Admin/ActivityLogger/ActivityLogger';
+import Mech from './components/Admin/Mech/users/Users';
 // import Previledges from  './components/Admin/Previledges/users/Users'
 import Previledges from "./components/Admin/Previledges/users/Users"
 
@@ -186,12 +188,14 @@ const Router = () => (
            <Route exact path="/admin-users" component={Users} />
            <Route exact path="/admin-users-detail" component={UserDetail} />
            <Route exact path="/admin-admins" component={Admins} />
+           <Route exact path="/admin-mech" component={Mech} />
            
            <Route exact path="/admin-admins-detail" component={AdminsDetail} />
            <Route exact path="/admin-drivers" component={Drivers} />
            <Route exact path="/admin-drivers-detail" component={DriverDetail} />
            <Route exact path="/admin-partners" component={Partners} />
            <Route exact path="/admin-partners-detail" component={PartnerDetail} />
+           <Route exact path="/admin-partners-earnings" component={PartnersEarnings} />
            <Route exact path="/admin-plan-package" component={PlanPackage} />
            <Route exact path="/admin-plan-package-detail" component={PlanPackageDetail} />
            <Route exact path="/admin-cars-mgt" component={CarMgt} />

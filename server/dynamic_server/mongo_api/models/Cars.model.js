@@ -8,6 +8,59 @@ let CarsSchema = new mongoose.Schema({
          
           default: 0
         },
+
+        car: {
+    type: Object
+  },
+  manufacturer: {
+    type: String,
+    
+  },
+  carModel: {
+    type: String,
+    
+  },
+  carYear: {
+    type: String,
+    
+  },
+  vehicleColor: {
+    type: String,
+    
+  },
+  plateNo: {
+    
+    type: String
+  },
+  inspectionDate: {
+    type: String,
+    default: new Date()
+    
+  },
+  inspectionTime: {
+    type: String,
+    default:'10.00 AM'
+    
+  },
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+    
+  },
+
+
+  carDescription: {
+    required: false,
+    type: String
+  },
+  imagePath: {
+    type: String
+  },
+  
+  date_created: {
+    type: Date,
+    default: Date.now
+  },
         car_type:{
           type: String,
           required:true
@@ -34,14 +87,43 @@ let CarsSchema = new mongoose.Schema({
         partner_id:{
           type: String
         },
+
+        partnerEmail:{
+          type:String,
+        },
+
+      
+       car_status:{
+        type:String,
+          enum:[
+           'Active',
+           'Disabled',
+           'Suspended'
+          ],
+          default:'Active'
+
+       },
+
+
+        //Inspection Status 
+        health_status:{
+          type:String,
+          enum:[
+           
+           'Completed',
+           'Pending'
+          ],
+          default:'Pending'
+        },
+        //booking status
         status:{
           type:String,
           enum:[
            'Booked',
            'Available',
-           'UnAvailable',
-           'Active'
-          ]
+           
+          ],
+          default:'Pending'
         },
         images: {
           type: String,

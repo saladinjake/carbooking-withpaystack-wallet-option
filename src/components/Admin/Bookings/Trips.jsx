@@ -60,7 +60,7 @@ export  default class Trips extends Component {
                                         <form role="form">
                                             <div className="form-group contact-search m-b-30">
                                                 <input type="text" id="search" className="form-control"
-                                                    placeholder="Search..." />
+                                                    placeholder="Search By Email..." />
                                                 <button type="submit" className="btn btn-white"><i
                                                         className="fa fa-search"></i></button>
                                             </div> 
@@ -80,7 +80,8 @@ export  default class Trips extends Component {
                                         <thead>
                                             <tr>
 
-                                                
+                                                <th data-toggle="true" className="col-lg-4">Username</th>
+                                                <th data-toggle="true" className="col-lg-4">Email</th>
 
                                                   <th data-toggle="true" className="col-lg-4">Created Date</th>
                                                     <th className="col-lg-2">Plan Category</th>

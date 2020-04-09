@@ -38,7 +38,7 @@ const FrontendRepoBootstrap = {
   PlanHistory: new WebsitePlanHistory(),
   PlanCategorySelect: new WebsitePlanCategory(),
   Faqs: new WebsiteFaqs(),
-  //InactivityLockScreen: new WebsiteInactivityLockScreen(),
+  // //InactivityLockScreen: new WebsiteInactivityLockScreen(),
   Feedback:  new WebsiteFeedback(),
   SOS: new WebsiteSOS(),
   PlanDetail: new WebsiteSingleRecord(),
@@ -46,9 +46,10 @@ const FrontendRepoBootstrap = {
   Ewallets: new Ewallet(),
   QuotationHistorys: new QuotationHistory(),
   PaymentHistorys: new PaymentHistory(),
-  PaymentWizardz: new PaymentWizard(),
-  Notice: new Notification(),
-  DriverBooking: new DriversAssignment()
+   PaymentWizardz: new PaymentWizard(),
+   Notice: new Notification(),
+
+  // DriverBooking: new DriversAssignment()
 
   
 };

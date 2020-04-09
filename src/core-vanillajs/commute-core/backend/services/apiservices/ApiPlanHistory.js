@@ -60,10 +60,13 @@ window.getPlanId = (item) =>{
 let planClicked;
 
 function ApiPlanHistory() {
+  GateKeepersForUser();
   if(document.getElementById("plan-history")){
+
+    if(localStorage.getItem('userToken')){
     const user = JSON.parse(localStorage.getItem('userToken'));
     //window.addEventListener('DOMContentLoaded', event => {
-      event.preventDefault();
+      //event.preventDefault();
       const urls = [
                     activeUrl + `/plans/${user.user.email}/user`
       ];
@@ -87,7 +90,7 @@ function ApiPlanHistory() {
       Promise.all(promises)
         .then(datas => {
              
-              const tablebody2 = document.getElementById('tablebody1');
+              const tablebody2 = document.getElementById('tablebodyB');
 
                
                      console.log(datas)
@@ -125,7 +128,7 @@ function ApiPlanHistory() {
                                               </td>`
                           }
                       template2 =`<tr>
-                                    <td class=""><a href="#">PLANID-${item._id}</a></td>
+                                    <td class=""><a href="#">${item.plan_id}</a></td>
                                         <td class="">${item.plan_category_name}   </td>
                                       
                                         <td class="">${formatDate(new Date(item.created_at))+ " " }</td>
@@ -149,6 +152,8 @@ function ApiPlanHistory() {
           throw error;
         });
     //});
+
+  }
 
   }
 }

@@ -78,7 +78,7 @@ export default class SingleRecord extends Component {
                           <th className="col-lg-2"></th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="tablebody1">
+                                            <tbody id="tablebodyDetail">
                                                 
                                              
                                               
