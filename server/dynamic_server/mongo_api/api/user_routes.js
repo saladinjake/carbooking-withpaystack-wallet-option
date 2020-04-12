@@ -496,7 +496,7 @@ this.router.get('/email/smtp/template', (req, res, next) => {
 
   this.router.post("/add-partner-earnings", //create done
     TokenVerification.adminAuthentication,
-    UserSanitizer.checkIfPartnerExists,
+    // UserSanitizer.checkIfPartnerExists,
     UserController.addPartnersEarningsByAdmin
   );
 

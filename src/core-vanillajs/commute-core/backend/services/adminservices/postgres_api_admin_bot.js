@@ -2632,6 +2632,106 @@ window.update_value_checked = (chk_bx) =>{
 
 }
 
+window.addEventEarnings = (o) =>{
+  let linkOfApi = activeUrl + o.dataset.url ;
+  const user =JSON.parse(localStorage.getItem("userToken"));
+
+
+   let vehiclePlateNo = document.getElementById("vehiclePlateNo"+ o.dataset.id).value,
+      vehicleId =document.getElementById("vehicleId"+ o.dataset.id).value,
+      vehicleName=document.getElementById("vehicleName"+ o.dataset.id).value,
+      paymentReference=document.getElementById("paymentReference"+ o.dataset.id).value,
+      PaymentAmount= document.getElementById("PaymentAmount"+ o.dataset.id).value;
+      const paymentDate = document.getElementById("paymentDate"+ o.dataset.id).value;
+      const partnerBankAccount = document.getElementById("partnerBankAccount"+ o.dataset.id).value;
+      //passwordConfirm =document.getElementById("confirmpassword"+ o.dataset.id).value,
+      
+   
+    
+    const partnerId = document.getElementById("partnerId"+ o.dataset.id).value;
+    const partnerEmail = document.getElementById("PartnerEmail"+ o.dataset.id).value;
+         
+    const status_x = document.getElementById("PaymentStatus"+ o.dataset.id);
+
+    const bnk = document.getElementById("partnerBankAccount"+ o.dataset.id);
+
+
+    document.getElementById("PaymentAmount"+ o.dataset.id).onkeyup = document.getElementById("PaymentAmount"+ o.dataset.id).onchange = enforceFloat;
+    document.getElementById("partnerBankAccount"+ o.dataset.id).onkeyup = document.getElementById("partnerBankAccount"+ o.dataset.id).onchange = enforceFloat;
+    document.getElementById('bankAccountNumber' + o.dataset.id).onkeyup = document.getElementById('bankAccountNumber' + o.dataset.id).onchange = enforceFloat;
+
+        //enforce that only a float can be inputed
+    function enforceFloat() {
+      var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
+      var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
+      if (!valid.test(this.value)) {
+        var n = this.value.match(number);
+        this.value = n ? n[0] : '';
+      }
+    }
+
+    
+     
+    const status = status_x.options[status_x.selectedIndex].text;
+    let prePostData =null;
+     prePostData ={
+            
+              paymentDate,
+              PaymentStatus:status,
+              PaymentAmount,
+              paymentReference,
+              partnerId,
+              partnerEmail,
+              partnerBankAccount:{
+
+                 bankAccount:bnk.options[bnk.selectedIndex].text,
+                 bankAccountNumber:partnerBankAccount,
+                 bankAccountName:document.getElementById('bankAccountName'+ o.dataset.id).value
+
+              },
+              vehicleId,
+              vehicleName,
+              vehiclePlateNo,
+              email:partnerEmail,
+        
+      };
+
+
+
+  fetch(linkOfApi, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'x-access-token': user.token,
+        },
+        body: JSON.stringify(prePostData),
+        mode:"cors",
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 201) {
+            // modal_view_id.style.display="none";
+            var notification = alertify.notify('Successfully created  user.', 'success', 5, function(){  console.log('dismissed'); });
+       
+
+            AuditTrail.sendLogInfo(user,prePostData.username, 'USER ENTITY  MODULE(USER/DRIVER/ADMIN)', 'Success', '201', 'POST')
+          
+
+
+          } else {
+
+
+  
+             AuditTrail.sendLogInfo(user,prePostData.username, 'USER ENTITY MODULE', 'Failed', '400', 'POST')
+          
+            
+            var notification = alertify.notify('Could not perform add operation.', 'error', 5, function(){  console.log('dismissed'); });
+
+          }
+        });
+}
+
 window.addEvent = (o) =>{
 	let linkOfApi = activeUrl + o.dataset.url ;
 	const user =JSON.parse(localStorage.getItem("userToken"));
@@ -3170,6 +3270,31 @@ document.getElementById("bankAccountName"+view_id).value=el.dataset.bankaccountn
             return;
         }
     });
+
+
+    let id= "#partnerBankAccount"+view_id;
+    $( id + " option").each(function () {
+        if ($(this).html() == el.dataset.partnerbankaccount) {
+            $(this).attr("selected", "selected");
+            return;
+        }
+    });
+
+
+
+     document.getElementById("PaymentAmount"+ el.dataset.id).onkeyup = document.getElementById("PaymentAmount"+ el.dataset.id).onchange = enforceFloat;
+    document.getElementById("partnerBankAccount"+ el.dataset.id).onkeyup = document.getElementById("partnerBankAccount"+ el.dataset.id).onchange = enforceFloat;
+    document.getElementById('bankAccountNumber' + el.dataset.id).onkeyup = document.getElementById('bankAccountNumber' + el.dataset.id).onchange = enforceFloat;
+
+        //enforce that only a float can be inputed
+function enforceFloat() {
+  var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
+  var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
+  if (!valid.test(this.value)) {
+    var n = this.value.match(number);
+    this.value = n ? n[0] : '';
+  }
+}
 
 
   //   if(document.getElementById("type"+ el.dataset.id)){
@@ -4493,16 +4618,40 @@ window.updateDataEarnings = (o) =>{
       vehicleId =document.getElementById("vehicleId"+ o.dataset.id).value,
       vehicleName=document.getElementById("vehicleName"+ o.dataset.id).value,
       paymentReference=document.getElementById("paymentReference"+ o.dataset.id).value,
-      //passwordConfirm =document.getElementById("confirmpassword"+ o.dataset.id).value,
       PaymentAmount= document.getElementById("PaymentAmount"+ o.dataset.id).value;
+      const paymentDate = document.getElementById("paymentDate"+ o.dataset.id).value;
+      const partnerBankAccount = document.getElementById("partnerBankAccount"+ o.dataset.id).value;
+      //passwordConfirm =document.getElementById("confirmpassword"+ o.dataset.id).value,
+      
    
-    const partnerBankAccount = document.getElementById("partnerBankAccount"+ o.dataset.id).value;
-    const partnerId = document.getElementById("partnerId"+ o.dataset.id).value;
-    const PartnerEmail = document.getElementById("PartnerEmail"+ o.dataset.id).value;
     
-    const status_x = document.getElementById("status"+ o.dataset.id);
+    const partnerId = document.getElementById("partnerId"+ o.dataset.id).value;
+    const partnerEmail = document.getElementById("PartnerEmail"+ o.dataset.id).value;
+         
+    const status_x = document.getElementById("PaymentStatus"+ o.dataset.id);
 
 
+
+
+
+     document.getElementById("PaymentAmount"+ o.dataset.id).onkeyup = document.getElementById("PaymentAmount"+ o.dataset.id).onchange = enforceFloat;
+    document.getElementById("partnerBankAccount"+ o.dataset.id).onkeyup = document.getElementById("partnerBankAccount"+ o.dataset.id).onchange = enforceFloat;
+    document.getElementById('bankAccountNumber' + o.dataset.id).onkeyup = document.getElementById('bankAccountNumber' + o.dataset.id).onchange = enforceFloat;
+
+        //enforce that only a float can be inputed
+function enforceFloat() {
+  var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
+  var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
+  if (!valid.test(this.value)) {
+    var n = this.value.match(number);
+    this.value = n ? n[0] : '';
+  }
+}
+
+
+   const bnk = document.getElementById("partnerBankAccount"+ o.dataset.id);
+
+                 
 
     
      
@@ -4511,15 +4660,15 @@ window.updateDataEarnings = (o) =>{
      prePostData ={
             
               paymentDate,
-              PaymentStatus,
+              PaymentStatus:status,
               PaymentAmount,
               paymentReference,
               partnerId,
               partnerEmail,
               partnerBankAccount:{
-                bankAccount:document.getElementById('bankAccount').value,
+                 bankAccount:bnk.options[bnk.selectedIndex].text,
                  bankAccountNumber:partnerBankAccount,
-                 bankAccountName:document.getElementById('bankAccountName').value
+                 bankAccountName:document.getElementById('bankAccountName'+ o.dataset.id).value
 
               },
               vehicleId,
@@ -4534,9 +4683,9 @@ window.updateDataEarnings = (o) =>{
   let modal_view_id = document.getElementById("con-close-modal-"+ view_id);
   
 
-    const validResult = Validator.validateSignup({...prePostData});
+    // const validResult = Validator.validateSignup({...prePostData});
 
-    if(validResult){
+    // if(validResult){
     fetch(linkOfApi, {
         method: 'PUT',
         headers: {
@@ -4552,7 +4701,7 @@ window.updateDataEarnings = (o) =>{
           console.log(data)
           if (data.success === "ok") {
             modal_view_id.style.display="none";
-            var notification = alertify.notify('Successfully updated user ', 'success', 5, function(){  console.log('dismissed'); });
+            var notification = alertify.notify('Successfully updated partners earnings', 'success', 5, function(){  console.log('dismissed'); });
                AuditTrail.sendLogInfo(user,prePostData.username, 'USER MODULE (ADMIN/USER/DRIVER)', 'Success', '201', 'PUT')
 
                 window.location.reload();
@@ -4565,10 +4714,10 @@ window.updateDataEarnings = (o) =>{
 
           }
         });
-   }else{
-    var notification = alertify.notify('unsuccessful update operation', 'error', 5, function(){  console.log('dismissed'); });
+   // }else{
+   //  var notification = alertify.notify('unsuccessful update operation', 'error', 5, function(){  console.log('dismissed'); });
 
-   }
+   // }
 
 
 }
@@ -5837,7 +5986,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                                          
                                                             <div class="form-group"> 
                                                                 <label for="field-2" class="control-label">Payment Date</label> 
-                                                                <input type="text" class="form-control" id="paymentDate${item._id}" placeholder="Doe"> 
+                                                                <input type="date" class="form-control" id="paymentDate${item._id}" placeholder="Doe"> 
                                                             </div>
 
                                                             <div class="form-group"> 
@@ -5849,7 +5998,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                                         
                                                             <div class="form-group"> 
                                                                 <label for="field-5" class="control-label">Payment Amount</label> 
-                                                                <input value="un" type="text" class="form-control" id="PaymentAmount${item._id}" placeholder="United States"> 
+                                                                <input value="" type="text" class="form-control" id="PaymentAmount${item._id}" placeholder="United States"> 
                                                             </div> 
 
 
@@ -5866,7 +6015,32 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
                                                             <div class="form-group"> 
                                                                 <label for="field-5" class="control-label">BankAccount</label> 
-                                                                <input type="text" class="form-control" id="partnerBankAccount${item._id}" placeholder="United States"> 
+                                                                <select class="form-control" id="partnerBankAccount${item._id}">
+                                                                        <option>Access Bank</option>
+                                                                         <option>Citibank</option>
+                                                                         <option>Diamond Bank</option>
+                                                                         <option>Dynamic Standard Bank</option>
+                                                                         <option>Ecobank Nigeria</option>
+                                                                          <option>Fidelity Bank Nigeria</option>
+                                                                           <option>First Bank of Nigeria</option>
+                                                                            <option>First City Monument Bank</option>
+                                                                             <option>Guaranty Trust Bank</option>
+
+                                                                              <option>Heritage Bank Plc</option> 
+                                                                              <option>Jaiz Bank</option> 
+                                                                              <option>Keystone Bank Limited</option>
+                                                                              <option>Providus Bank Plc</option>
+                                                                               <option>Stanbic IBTC Bank Nigeria Limited</option>
+                                                                                <option>Standard Chartered Bank</option>
+                                                                                 <option>Sterling Bank</option>
+                                                                                  <option>Suntrust Bank Nigeria Limited</option>
+                                                                                   <option>Union Bank of Nigeria</option>
+                                                                                    <option>United Bank for Africa</option>
+                                                                                     <option>Unity Bank Plc</option>
+                                                                                      <option>Wema Bank</option>
+                                                                                       <option>Zenith Bank</option>
+                                                                                        
+                                                                </select>
                                                             </div>
 
 

@@ -3839,7 +3839,7 @@ getUser = (req, res) => {
       
       let {
             
-              type,
+              
               paymentDate,
               PaymentStatus,
               PaymentAmount,
@@ -3859,7 +3859,7 @@ getUser = (req, res) => {
         
     const Newuser = new  EarningsModel({ 
       id: new AutoincrementId(EarningsModel).counter(), 
-       type,
+       
               paymentDate,
               PaymentStatus,
               PaymentAmount,
