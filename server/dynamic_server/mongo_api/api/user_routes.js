@@ -475,6 +475,39 @@ this.router.get('/email/smtp/template', (req, res, next) => {
     UserController.addPartnerByAdmin
   );
 
+
+
+    this.router.get("/admin-earnings", //read done
+    TokenVerification.adminAuthentication,
+    UserController.managePartnersEarnings
+  );
+
+  this.router.delete("/partners-earnings/:id/delete",//delete done
+    TokenVerification.adminAuthentication,
+    UserController.deletePartnersEarnings
+  )
+
+  this.router.put("/partners-earnings-detail/:id", //update done
+    TokenVerification.adminAuthentication,
+    UserController.managePartnersEarningsDetail
+  );
+
+ 
+
+  this.router.post("/add-partner-earnings", //create done
+    TokenVerification.adminAuthentication,
+    UserSanitizer.checkIfPartnerExists,
+    UserController.addPartnersEarningsByAdmin
+  );
+
+
+
+
+
+
+
+
+
   this.router.get("/admin-profile/:id", //read done
     TokenVerification.adminAuthentication,
     UserController.manageProfile

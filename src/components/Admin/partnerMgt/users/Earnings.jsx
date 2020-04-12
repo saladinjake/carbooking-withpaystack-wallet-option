@@ -34,7 +34,7 @@ export  default class Partners extends Component {
         <div className="content-page" id="first-view">
           
             <div className="content">
-                <div className="container" id="admin" data-pageid="admin-partners">
+                <div className="container" id="admin" data-pageid="admin-earnings">
 
                  
                     <div className="row">
@@ -53,7 +53,7 @@ export  default class Partners extends Component {
                                 <h4 className="m-t-0 header-title"><b>Partners Management</b></h4>
                                 <p className="text-muted m-b-30 font-13">
                                     Admin can manage the users registered on the System. Admin can add/modify/delete
-                                    any partner.
+                                    any partners earnings.
                                 </p>
                                 <div className="row">
                                     <div className="col-sm-8">
@@ -70,7 +70,7 @@ export  default class Partners extends Component {
                                         <a href="#custom-modal" id="add-new"
                                             className="btn btn-default btn-md waves-effect waves-light m-b-30"
                                             data-animation="fadein" data-plugin="custommodal" data-overlaySpeed="200"
-                                            data-overlayColor="#36404a"><i className="md md-add"></i> Add Partner</a>
+                                            data-overlayColor="#36404a"><i className="md md-add"></i> Add Earnings</a>
                                     </div>
                                 </div>
 
@@ -79,11 +79,13 @@ export  default class Partners extends Component {
                                            className="table toggle-circle table-hover">
                                         <thead>
 
-                                            <th>First Name</th>
-                                                    <th>Last Name</th>
+                                            <th>Date</th>
+                                                    <th>Partner Id</th>
                                                     <th>Email</th>
-                                                    <th>Phone Numbers</th>
-                                                    <th>Total Cars</th>
+                                                    <th>Bank Account</th>
+                                                    <th>Amount Paid</th>
+                                                    <th>Car Id</th>
+                                                    <th>Vehicle Plate No</th>
                                                     <th>Status</th>
                                                     <th style={{minWidth: "90px"}}>Action</th>
                                             

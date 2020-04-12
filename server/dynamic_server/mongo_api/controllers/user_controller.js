@@ -330,6 +330,29 @@ export default class UserController {
 
 
 
+  static managePartnersEarnings(request,response){
+    return UserService.managePartnersEarnings(request,response)
+  }
+
+  static deletePartnersEarnings(request,response){
+    return UserService.deletePartnersEarnings(request,response)
+  }
+
+  static addPartnersEarningsByAdmin(request,response){
+    return UserService.createNewPartnerEarnings(request,response)
+  }
+
+
+  static managePartnersEarningsDetail(request,response){
+    return UserService.managePartnersEarningsDetail(request,response)
+  }
+
+
+
+
+
+
+
   static managePlanPackage(request,response){
     return UserService.managePlanPackage(request,response)
   }

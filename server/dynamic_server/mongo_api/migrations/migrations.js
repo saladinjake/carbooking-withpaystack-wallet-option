@@ -33,6 +33,8 @@ class SeedFactory{
     this.seeders.seedRole(this.dummyData.previledgesA[1])
      this.seeders.seedRole(this.dummyData.previledgesA[2])
 
+     this.seeders.seedEarnings(this.dummyData.earnings[0])
+
 
     //this.seeders.seedInspectionAndDriveTest(this.dummyData.inspection[0],this.dummyData.driveTest[0])
 

@@ -11,6 +11,25 @@ var yesterdayStart = new Date();
 let oneWeekAgo = Date(new Date() - 7 * 60 * 60 * 24 * 1000);
 
 export default {
+ earnings:[
+  {
+    type:'ssss',
+              paymentDate: new Date(),
+              PaymentStatus: 'Successful',
+              PaymentAmount: '1000',
+              paymentReference:'CMT-PAY-94430943',
+              partnerId:'dsdk930493',
+              partnerEmail: 'juwavictord@gmail.com',
+              partnerBankAccount: {
+                bankAccount:"Fidelity Bank Nigeria",
+                bankAccountNumber:"0035845789",
+                 bankAccountName:"AGUF KEKEK"
+              },
+              vehicleId:'djdskjiqwq',
+              vehicleName:'0-3oewpoweo',
+              vehiclePlateNo:'dweopwope',
+  }
+ ],
 
  mechanicRequest: [{
   id:1,

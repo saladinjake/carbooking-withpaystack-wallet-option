@@ -24,6 +24,9 @@ import PaymentsModel from "../models/Payments.model";
 import QuotationsModel from "../models/Quotation.model";
 import QuoteModel from "../models/Quote.model";
 
+
+import EarningsModel from '../models/EarningsModel';
+
 import InspectionModel from '../models/Inspection.model';
 import DriveTestModel from '../models/DriveTest.model';
 
@@ -55,6 +58,22 @@ class Seeders{
 
             
 
+
+
+     },24000)
+  }
+
+
+  seedEarnings(earnings){
+     setTimeout(()  => {
+
+            EarningsModel.addEarnings(earnings,(err, collection) =>{
+                 if(err){
+                   console.log('could not create roles')
+                   console.log(err)
+                 }
+                 console.log(collection + "roles has been added")
+             });
 
 
      },24000)

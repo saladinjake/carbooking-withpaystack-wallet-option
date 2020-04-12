@@ -6,13 +6,14 @@ import Database from '../models/db';
 
 const csv = require('csv-parser');
 const uuidv4 = require('uuid/v4');
- const sgMail = require('@sendgrid/mail');
+const sgMail = require('@sendgrid/mail');
 
- var postmark = require("postmark");
+var postmark = require("postmark");
 
 
 
 import {passport ,express} from '../App'; 
+//import EarningsModel from '../models/EarningsModel';
 import AuditNotificationModel from '../models/AuditNotification.model';
 import UserPlanModel from '../models/UserPlan.model';
 import PlanModel from "../models/Plan.model";
@@ -3746,6 +3747,213 @@ getUser = (req, res) => {
       user.save(function (err,user) {
         if (err) { console.log(err) 
           return response.status(500).send({ msg: err.message }); }
+        console.log(user + 'hello')
+          //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
+          return response.status(200).send({success:'ok', msg: 'Successfully updated user profile.' });
+      }); 
+    });
+  }
+
+  
+  //partners earnings
+  static managePartnersEarnings(request,response){
+    EarningsModel.find()
+      .then(data => {
+        const earnings = data;
+        //console.log(partners +"partners available")
+        if (earnings.length === 0) {
+          return response.status(404).json({
+            status: 404,
+            error: 'User has no  record',
+          });
+        }
+        return response.status(200).json({
+          status: 200,
+          data: [
+            {
+              earnings,
+          
+              message: 'Successful',
+            },
+          ],
+        });
+      })
+      .catch(error =>
+        response.status(400).json({
+          status: 400,
+          error: ErrorHandler.errors().validationError,
+        }),
+      );
+  }
+
+  static deletePartnersEarnings(request,response){
+    EarningsModel.find({_id: request.params.id})
+      .then(data => {
+        const user = data;
+
+        if ( user.length <= 0) {
+          console.log(
+            JSON.stringify({
+              status: 404,
+              error: 'The user with the given id does not exists',
+            }),
+          );
+          return response.status(404).json({
+            status: 404,
+            error: 'The user with the given id does not exists',
+          });
+        }
+
+        EarningsModel.remove({_id: request.params.id})
+          .then(data => {
+            const deletedUser = data;
+            response.status(202).json({
+              status: 202,
+              data: [
+                {
+                  id: deletedUser._id,
+                  message: 'user record has been deleted',
+                },
+              ],
+            });
+          })
+          .catch(error =>{
+            console.log(error)
+            response.status(400).json({
+              status: 400,
+              error: ErrorHandler.errors().validationError,
+            });
+          });
+      })
+      .catch(error =>{
+         console.log(error)
+        response.status(400).json({
+          status: 400,
+          error: ErrorHandler.errors().validationError,
+        });
+      });
+  }
+
+
+  static createNewPartnersEarnings(request,response){
+      
+      let {
+            
+              type,
+              paymentDate,
+              PaymentStatus,
+              PaymentAmount,
+              paymentReference,
+              partnerId,
+              partnerEmail,
+              partnerBankAccount,
+              vehicleId,
+              vehicleName,
+              vehiclePlateNo,
+        
+
+      
+        
+        } = request.body;
+
+        
+    const Newuser = new  EarningsModel({ 
+      id: new AutoincrementId(EarningsModel).counter(), 
+       type,
+              paymentDate,
+              PaymentStatus,
+              PaymentAmount,
+              paymentReference,
+              partnerId,
+              partnerEmail,
+              partnerBankAccount,
+              vehicleId,
+              vehicleName,
+              vehiclePlateNo,
+      });
+
+     Newuser.save()
+      .then(data => {
+        const user = data;
+        const result = {
+          id: user.id,
+          email: user.email,
+          username: user.username,
+        };
+        
+        return response.status(201).json({
+          status: 201,
+          data: [
+            {
+              
+              user,
+            },
+          ],
+          message: 'User created successfully',
+        });
+      })
+      .catch(err => {
+        console.log(err+ 'error here')
+        response.status(400).json({
+          status: 400,
+          error: ErrorHandler.errors().validationError,
+        });
+      });
+    
+  }
+
+
+  static managePartnersEarningsDetail(request,response){
+      
+    const {
+       type,
+              paymentDate,
+              PaymentStatus,
+              PaymentAmount,
+              paymentReference,
+              partnerId,
+              partnerEmail,
+              partnerBankAccount,
+              vehicleId,
+              vehicleName,
+              vehiclePlateNo,
+    } = request.body;
+
+        
+
+    
+
+
+    EarningsModel.findOne({ _id:  request.params.id }, function (err, user) {
+
+      if(err){
+        return response.status(400).send({ msg: 'Some error occured.' });
+      }
+
+      if (!user) {
+        return response.status(400).send({ msg: 'We were unable to find a user with that email.' });
+      }
+
+     
+      
+      
+     
+      // Verify and save the user
+      user.type= type || user.type;
+      user.paymentDate= paymentDate || user.paymentDate;
+      user.PaymentStatus= PaymentStatus || user.PaymentStatus;
+      user.PaymentAmount= PaymentAmount || user.PaymentAmount;
+      user.paymentReference= paymentReference || user.paymentReference;
+      user.partnerId= partnerId || user.partnerId;
+      user.partnerEmail= partnerEmail || user.partnerEmail;
+      user.partnerBankAccount = partnerBankAccount || user.partnerBankAccount;
+      user.vehicleId = vehicleId || user.vehicleId;
+      user.vehicleName = vehicleName || user.vehicleName;
+      user.vehiclePlateNo = vehiclePlateNo || user.vehiclePlateNo;
+      
+      //user.isVerified = boolVerification || user.isVerified;
+      user.save(function (err,user) {
+        if (err) { return response.status(500).send({ msg: err.message }); }
         console.log(user + 'hello')
           //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
           return response.status(200).send({success:'ok', msg: 'Successfully updated user profile.' });
