@@ -58,11 +58,11 @@ class DbQuery {
     const { NODE_ENV } = process.env;
 
     if (NODE_ENV === 'development') {
-      this.dbLink = 'mongodb://localhost:27017/taxi_service_final' // 'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service' //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL   //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final';//config.development.database;
+      this.dbLink =  'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service' //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL   //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final';//config.development.database;
     } else if (NODE_ENV === 'test') {
-      this.dbLink = 'mongodb://localhost:27017/taxi_service_final' // 'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service' //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL  //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final'; //config.test.database;
+      this.dbLink =  'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service' //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL  //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final'; //config.test.database;
     } else {
-      this.dbLink = 'mongodb://localhost:27017/taxi_service_final' //  'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service'  //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final';  //config.production.database;
+      this.dbLink =  'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service'  //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final';  //config.production.database;
     }
     
     return this.dbLink;

@@ -2649,26 +2649,26 @@ window.addEventEarnings = (o) =>{
    
     
     const partnerId = document.getElementById("partnerId"+ o.dataset.id).value;
-    const partnerEmail = document.getElementById("PartnerEmail"+ o.dataset.id).value;
+    const partnerEmail_x = document.getElementById("PartnerEmail"+ o.dataset.id);
          
     const status_x = document.getElementById("PaymentStatus"+ o.dataset.id);
 
     const bnk = document.getElementById("partnerBankAccount"+ o.dataset.id);
 
 
-    document.getElementById("PaymentAmount"+ o.dataset.id).onkeyup = document.getElementById("PaymentAmount"+ o.dataset.id).onchange = enforceFloat;
-    document.getElementById("partnerBankAccount"+ o.dataset.id).onkeyup = document.getElementById("partnerBankAccount"+ o.dataset.id).onchange = enforceFloat;
-    document.getElementById('bankAccountNumber' + o.dataset.id).onkeyup = document.getElementById('bankAccountNumber' + o.dataset.id).onchange = enforceFloat;
+    // document.getElementById("PaymentAmount"+ o.dataset.id).onkeyup = document.getElementById("PaymentAmount"+ o.dataset.id).onchange = enforceFloat;
+    // document.getElementById("partnerBankAccount"+ o.dataset.id).onkeyup = document.getElementById("partnerBankAccount"+ o.dataset.id).onchange = enforceFloat;
+    // document.getElementById('bankAccountNumber' + o.dataset.id).onkeyup = document.getElementById('bankAccountNumber' + o.dataset.id).onchange = enforceFloat;
 
-        //enforce that only a float can be inputed
-    function enforceFloat() {
-      var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
-      var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
-      if (!valid.test(this.value)) {
-        var n = this.value.match(number);
-        this.value = n ? n[0] : '';
-      }
-    }
+    //     //enforce that only a float can be inputed
+    // function enforceFloat() {
+    //   var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
+    //   var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
+    //   if (!valid.test(this.value)) {
+    //     var n = this.value.match(number);
+    //     this.value = n ? n[0] : '';
+    //   }
+    // }
 
     
      
@@ -2681,7 +2681,7 @@ window.addEventEarnings = (o) =>{
               PaymentAmount,
               paymentReference,
               partnerId,
-              partnerEmail,
+              partnerEmail:partnerEmail_x.options[partnerEmail_x.selectedIndex].text,
               partnerBankAccount:{
 
                  bankAccount:bnk.options[bnk.selectedIndex].text,
@@ -3272,8 +3272,8 @@ document.getElementById("bankAccountName"+view_id).value=el.dataset.bankaccountn
     });
 
 
-    let id= "#partnerBankAccount"+view_id;
-    $( id + " option").each(function () {
+    let idxz= "#partnerBankAccount"+view_id;
+    $( idxz + " option").each(function () {
         if ($(this).html() == el.dataset.partnerbankaccount) {
             $(this).attr("selected", "selected");
             return;
@@ -3282,19 +3282,19 @@ document.getElementById("bankAccountName"+view_id).value=el.dataset.bankaccountn
 
 
 
-     document.getElementById("PaymentAmount"+ el.dataset.id).onkeyup = document.getElementById("PaymentAmount"+ el.dataset.id).onchange = enforceFloat;
-    document.getElementById("partnerBankAccount"+ el.dataset.id).onkeyup = document.getElementById("partnerBankAccount"+ el.dataset.id).onchange = enforceFloat;
-    document.getElementById('bankAccountNumber' + el.dataset.id).onkeyup = document.getElementById('bankAccountNumber' + el.dataset.id).onchange = enforceFloat;
+//      document.getElementById("PaymentAmount"+ el.dataset.id).onkeyup = document.getElementById("PaymentAmount"+ el.dataset.id).onchange = enforceFloat;
+//     document.getElementById("partnerBankAccount"+ el.dataset.id).onkeyup = document.getElementById("partnerBankAccount"+ el.dataset.id).onchange = enforceFloat;
+//     document.getElementById('bankAccountNumber' + el.dataset.id).onkeyup = document.getElementById('bankAccountNumber' + el.dataset.id).onchange = enforceFloat;
 
-        //enforce that only a float can be inputed
-function enforceFloat() {
-  var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
-  var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
-  if (!valid.test(this.value)) {
-    var n = this.value.match(number);
-    this.value = n ? n[0] : '';
-  }
-}
+//         //enforce that only a float can be inputed
+// function enforceFloat() {
+//   var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
+//   var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
+//   if (!valid.test(this.value)) {
+//     var n = this.value.match(number);
+//     this.value = n ? n[0] : '';
+//   }
+// }
 
 
   //   if(document.getElementById("type"+ el.dataset.id)){
@@ -4634,19 +4634,19 @@ window.updateDataEarnings = (o) =>{
 
 
 
-     document.getElementById("PaymentAmount"+ o.dataset.id).onkeyup = document.getElementById("PaymentAmount"+ o.dataset.id).onchange = enforceFloat;
-    document.getElementById("partnerBankAccount"+ o.dataset.id).onkeyup = document.getElementById("partnerBankAccount"+ o.dataset.id).onchange = enforceFloat;
-    document.getElementById('bankAccountNumber' + o.dataset.id).onkeyup = document.getElementById('bankAccountNumber' + o.dataset.id).onchange = enforceFloat;
+//      document.getElementById("PaymentAmount"+ o.dataset.id).onkeyup = document.getElementById("PaymentAmount"+ o.dataset.id).onchange = enforceFloat;
+//     document.getElementById("partnerBankAccount"+ o.dataset.id).onkeyup = document.getElementById("partnerBankAccount"+ o.dataset.id).onchange = enforceFloat;
+//     document.getElementById('bankAccountNumber' + o.dataset.id).onkeyup = document.getElementById('bankAccountNumber' + o.dataset.id).onchange = enforceFloat;
 
-        //enforce that only a float can be inputed
-function enforceFloat() {
-  var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
-  var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
-  if (!valid.test(this.value)) {
-    var n = this.value.match(number);
-    this.value = n ? n[0] : '';
-  }
-}
+//         //enforce that only a float can be inputed
+// function enforceFloat() {
+//   var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
+//   var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
+//   if (!valid.test(this.value)) {
+//     var n = this.value.match(number);
+//     this.value = n ? n[0] : '';
+//   }
+// }
 
 
    const bnk = document.getElementById("partnerBankAccount"+ o.dataset.id);
@@ -5899,7 +5899,7 @@ class ApiAdminBotService  {
     
   }
 
-  static runAdminPartnersEarnings(datas,previledges){
+  static runAdminPartnersEarnings(datas,partners,previledges){
 
 WarLockAdmin(previledges,'view_partners','manage_partners')
     noReadWrite(previledges,'manage_partners')
@@ -5909,6 +5909,22 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
    document.getElementById("search").addEventListener("keyup",(e)=>{
    	 searchTable() 
    })
+
+
+
+
+   let selectOptions_users = ``;
+
+    
+
+
+      [...new Set(partners)].map((item, i) => { 
+          selectOptions_users+=`<option data-with="${item._id}" id="${item._id}"  value="${item._id}">${item.email}</option>`; 
+          
+              
+      });
+
+      // $('#email').append(selectOptions_users);
     
     
     	console.log("loading users page")
@@ -5924,9 +5940,16 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
     }
 
 
+
+
+
+
+
+
     let className = null;
-  	datas.map((item, i) => {    
-  	    if(item.PaymentStatus=="Successful"){
+  	datas.map((item, i) => {  
+
+  	    if(item.PaymentStatus=="Completed"){
            className = "label-success"
   	    }else if(item.PaymentStatus=="Pending"){
            className = "label-warning"
@@ -5950,7 +5973,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                     <a onclick="deleteRecord(this)" data-id="${item._id}" data-url="/partners-earnings"  class="table-action-btn "><i class="md md-close"></i></a></td>
                 </tr>`;
 
-         viewModals += `
+         viewModals = `
 
         <div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
                                         <div class=" slimScrollBar" > 
@@ -5980,7 +6003,9 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
                                                             <div class="form-group"> 
                                                                 <label for="field-1" class="control-label">Partner Email</label> 
-                                                                <input type="text" class="form-control" id="PartnerEmail${item._id}" placeholder="Doe">
+                                                                <select type="text" class="form-control" id="PartnerEmail${item._id}">
+                                                                   ${selectOptions_users}
+                                                                </select>
                                                             </div> 
                                                         
                                                          
@@ -6015,30 +6040,29 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
                                                             <div class="form-group"> 
                                                                 <label for="field-5" class="control-label">BankAccount</label> 
-                                                                <select class="form-control" id="partnerBankAccount${item._id}">
-                                                                        <option>Access Bank</option>
-                                                                         <option>Citibank</option>
-                                                                         <option>Diamond Bank</option>
-                                                                         <option>Dynamic Standard Bank</option>
-                                                                         <option>Ecobank Nigeria</option>
-                                                                          <option>Fidelity Bank Nigeria</option>
-                                                                           <option>First Bank of Nigeria</option>
-                                                                            <option>First City Monument Bank</option>
-                                                                             <option>Guaranty Trust Bank</option>
-
-                                                                              <option>Heritage Bank Plc</option> 
-                                                                              <option>Jaiz Bank</option> 
-                                                                              <option>Keystone Bank Limited</option>
-                                                                              <option>Providus Bank Plc</option>
-                                                                               <option>Stanbic IBTC Bank Nigeria Limited</option>
-                                                                                <option>Standard Chartered Bank</option>
-                                                                                 <option>Sterling Bank</option>
-                                                                                  <option>Suntrust Bank Nigeria Limited</option>
-                                                                                   <option>Union Bank of Nigeria</option>
-                                                                                    <option>United Bank for Africa</option>
-                                                                                     <option>Unity Bank Plc</option>
-                                                                                      <option>Wema Bank</option>
-                                                                                       <option>Zenith Bank</option>
+                                                                <select data-style="btn-white" class="form-control" id="partnerBankAccount${item._id}">
+                                                                  <option>Access Bank</option>
+                                                                  <option>Citibank</option>
+                                                                  <option>Diamond Bank</option>
+                                                                  <option>Dynamic Standard Bank</option>
+                                                                  <option>Ecobank Nigeria</option>
+                                                                  <option>Fidelity Bank Nigeria</option>
+                                                                  <option>First Bank of Nigeria</option>
+                                                                  <option>First City Monument Bank</option>
+                                                                  <option>Guaranty Trust Bank</option>
+                                                                  <option>Heritage Bank Plc</option> 
+                                                                  <option>Jaiz Bank</option> 
+                                                                  <option>Keystone Bank Limited</option>
+                                                                  <option>Providus Bank Plc</option>
+                                                                  <option>Stanbic IBTC Bank Nigeria Limited</option>
+                                                                  <option>Standard Chartered Bank</option>
+                                                                  <option>Sterling Bank</option>
+                                                                  <option>Suntrust Bank Nigeria Limited</option>
+                                                                  <option>Union Bank of Nigeria</option>
+                                                                  <option>United Bank for Africa</option>
+                                                                  <option>Unity Bank Plc</option>
+                                                                  <option>Wema Bank</option>
+                                                                  <option>Zenith Bank</option>
                                                                                         
                                                                 </select>
                                                             </div>
@@ -6114,10 +6138,42 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                         </div>
                                     </div>
 		      `;
+
+         modalbody1.innerHTML+=viewModals;
+
+          $("#PartnerEmail" + item._id).on('change', function() {
+           // Set selected option as variable
+           var selectValue = $(this).text();
+
+         
+           
+
+           
+
+
+           let me =partners.filter((item)=>item._id== $(this).val())
+           
+           
+           document.getElementById("partnerId"+ item._id).value =me[0]._id;
+           
+            
+        });
+
+
+          document.getElementById("partnerId"+ item._id).style.disabled=true
+         document.getElementById("vehicleId"+ item._id).style.disabled=true   
+
+
     });
 
-    modalbody1.innerHTML=viewModals;
+
+
+    
     tablebody1.insertAdjacentHTML('beforeend', template2);
+
+
+
+
     
    
   }
@@ -11813,7 +11869,7 @@ modalB.innerHTML=viewModals;
              app.style.display="block"
            break; 
         case "admin-earnings":
-           ApiAdminBotService.runAdminPartnersEarnings(datas[34].data[0].earnings,previledgesRight)
+           ApiAdminBotService.runAdminPartnersEarnings(datas[34].data[0].earnings,datas[3].data[0].partners,previledgesRight)
              app.style.display="block"
            break;  
           default:

@@ -79,11 +79,11 @@ export  default class Partners extends Component {
                                            className="table toggle-circle table-hover">
                                         <thead>
 
-                                            <th>First Name</th>
-                                                    <th>Last Name</th>
+                                            <th>Name</th>
+                                                    
                                                     <th>Email</th>
                                                     <th>Phone Numbers</th>
-                                                    <th>Total Cars</th>
+                                                   
                                                     <th>Status</th>
                                                     <th style={{minWidth: "90px"}}>Action</th>
                                             

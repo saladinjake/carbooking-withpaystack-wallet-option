@@ -3851,10 +3851,11 @@ getUser = (req, res) => {
               vehicleName,
               vehiclePlateNo,
         
-
       
         
         } = request.body;
+
+        let pid = partnerId;
 
         
     const Newuser = new  EarningsModel({ 
@@ -3870,6 +3871,7 @@ getUser = (req, res) => {
               vehicleId,
               vehicleName,
               vehiclePlateNo,
+              partner: pid,
       });
 
      Newuser.save()
@@ -3905,6 +3907,7 @@ getUser = (req, res) => {
 
   static managePartnersEarningsDetail(request,response){
       
+
     const {
        type,
               paymentDate,
@@ -3917,9 +3920,10 @@ getUser = (req, res) => {
               vehicleId,
               vehicleName,
               vehiclePlateNo,
+              
     } = request.body;
 
-        
+        let pid = partnerId; 
 
     
 
@@ -3950,6 +3954,7 @@ getUser = (req, res) => {
       user.vehicleId = vehicleId || user.vehicleId;
       user.vehicleName = vehicleName || user.vehicleName;
       user.vehiclePlateNo = vehiclePlateNo || user.vehiclePlateNo;
+      user.partner = partnerId || user.partnerId;
       
       //user.isVerified = boolVerification || user.isVerified;
       user.save(function (err,user) {

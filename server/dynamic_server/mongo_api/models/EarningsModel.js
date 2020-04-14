@@ -10,7 +10,7 @@ let EarningsSchema = new mongoose.Schema({
         },
         paymentDate:{type: String},
 PaymentStatus:{type: String},
-PaymentAmount:{type: String},
+PaymentAmount:{type: Number},
 paymentReference:{type: String},
 partnerId:{type: String},
 partnerEmail:{type: String},
@@ -18,7 +18,11 @@ partnerBankAccount:{type: Object},
 vehicleId:{type: String},
 vehicleName:{type: String},
 vehiclePlateNo:{type: String},
-        
+        partner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "partner_collections",
+
+  },
 
       
         created_at : {
