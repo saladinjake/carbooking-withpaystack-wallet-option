@@ -8719,9 +8719,6 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                     </div>
 
 
-
-        
-
 		      `;
 
         tablebody1.insertAdjacentHTML('beforeend', template2);
