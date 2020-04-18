@@ -111,7 +111,7 @@ class BackendApp {
         
         let recordUrl;
         
-          recordUrl = 'http://localhost:12000/api/v1'+ `/faqs`; //this url is default test url for checking autorization via jwt token to see if user is still available on local storage
+          recordUrl = 'http://localhost:12000/api/v1'+ `/admin-users`; //this url is default test url for checking autorization via jwt token to see if user is still available on local storage
           //but inactive
       
         console.log('specific url: ' + recordUrl);

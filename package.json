@@ -70,7 +70,7 @@
     "test-vanillafront-watch": "npm run test -- --watch",
     "startzx": "npm run launch-it",
     "start": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT && nodemon --exec babel-node  server/dynamic_server/server.js",
-    "start-old": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT &&  npm run dbrun-migrations-mongoose && nodemon --exec babel-node -- server/dynamic_server/server.js",
+    "start-old": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT && nodemon --exec babel-node -- server/dynamic_server/server.js",
     "build": "npm run builda",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "coverage": "nyc reports --reporter=text-lcov | coveralls",

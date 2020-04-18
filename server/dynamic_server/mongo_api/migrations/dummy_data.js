@@ -13,7 +13,7 @@ let oneWeekAgo = Date(new Date() - 7 * 60 * 60 * 24 * 1000);
 export default {
  earnings:[
   {
-    type:'ssss',
+    
               paymentDate: new Date(),
               PaymentStatus: 'Successful',
               PaymentAmount: '1000',
@@ -439,7 +439,52 @@ coperatePlan: [{
 
 
   cars:[{
-     id :1,
+
+      id :1,
+  
+      car: {
+
+  car_name:'Hyundai Santa Fe Limited 4dr SUV AWD (3.3L 6cyl 6A) 2017',
+
+model_id:  '71129' ,
+
+model_make_id:'Hyundai',
+
+model_name:'Santa Fe',
+
+model_trim:'Limited 4dr SUV AWD (3.3L 6cyl 6A)',
+
+model_year:'2017',
+
+manufacturer:'',
+
+
+
+},
+
+
+carModel:'Santa Fe',
+
+carYear:'2017',
+
+vehicleColor:'black',
+
+plateNo:'kdskdsldlsk',
+
+inspectionDate: new Date(),
+
+inspectionTime: new Date(),
+
+carDescription:'describe me',
+
+imagePath: 'https://commute-bucket.s3.amazonaws.com/car5.jpg',
+
+creator:'hddddddsdsds',
+
+date_created:new Date(),
+partnerEmail:  'juwavictor@gmail.com',
+
+     
     car_type:'Black jack',
         car_year:'2012',
         color:'white',
@@ -469,133 +514,343 @@ coperatePlan: [{
         assigned_driver_phone: '08068291106',
          socket_id: 'default-id',
 
+
+
+
+
        
   },
   {
-     id :2,
-    car_type:'Toyota',
+
+      id :2,
+  
+      car: {
+
+  car_name:'Hyundai Santa Fe Limited 4dr SUV AWD (3.3L 6cyl 6A) 2017',
+
+model_id:  '71129' ,
+
+model_make_id:'Hyundai',
+
+model_name:'Santa Fe',
+
+model_trim:'Limited 4dr SUV AWD (3.3L 6cyl 6A)',
+
+model_year:'2017',
+
+manufacturer:'',
+
+
+
+},
+
+
+carModel:'Santa Fe',
+
+carYear:'2017',
+
+vehicleColor:'black',
+
+plateNo:'kdskdsldlsk',
+
+inspectionDate: new Date(),
+
+inspectionTime: new Date(),
+
+carDescription:'describe me',
+
+imagePath: 'https://commute-bucket.s3.amazonaws.com/car2.jpg',
+
+creator:'hddddddsdsds',
+
+date_created:new Date(),
+partnerEmail:  'juwavictor@gmail.com',
+
+     
+    car_type:'Black jack',
         car_year:'2012',
         color:'white',
-        model: 'acura',
-        model_make_id:'acura',
-        
-        
-        partner_id:'CMT-PARTNER-43345',
-         car_status:'Active',
-        health_status:'Completed',
-        status: 'Available',
-        images: 'https://commute-bucket.s3.amazonaws.com/car4.jpg',
-
-
-        plate_number : '3sa28ds9-32',
-        price:'30000',
-        license:'jdjsjds',
-
-        
-       isOwnedByCompany: false,
-       description: 'dummy description for this car',
+        model: 'abarth',
+        model_make_id:'abarth',
+        description: 'dummy description for this car',
         inspection_detail:'CMT-INSP-9943043',
-
-        assigned_driver_name: 'kudirat',
-        assigned_driver_id: '2',
-
-        assigned_driver_email: 'kudirat@gmail.com',
-        assigned_driver_location:'6.5355, 3.3087',
-        assigned_driver_phone: '08068291106',
-         socket_id: 'default-id',
         
-
-  },
-
-  {
-     id :3,
-    car_type:'Morris',
-        car_year:'2012',
-        color:'white',
-        model: 'audi',
-        model_make_id:'audi',
-        
-        partner_id:'CMT-PARTNER-223445',
-        car_status:'Active',
-        health_status:'Completed',
-        status: 'Available',
-        images: 'https://commute-bucket.s3.amazonaws.com/car3.jpg',
-        price:"170000",
-
-
-        plate_number : '232328ds9-32',
-        
-       isOwnedByCompany: false,
-       description: 'dummy description for this car',
-        inspection_detail:'CMT-INSP-9943043',
-
-        assigned_driver_name: 'kudirata',
-        assigned_driver_id: '3',
-        license:'jdjsjds',
-
-
-        assigned_driver_email: 'kudirata@gmail.com',
-        assigned_driver_location:'6.5355, 3.3087',
-        assigned_driver_phone: '08068291106',
-         socket_id: 'default-id',
-        
-  },
-
-
-
-  {
-     id :4,
-    car_type:'Ferari',
-        car_year:'2012',
-        color:'wine',
-        model: 'avanti',
-        model_make_id:'avanti',
-        partner_id:'CMT-PARTNER-54565',
+        partner_id:'CMT-PARTNER-12345',
         car_status:'Active',
         health_status:'Completed',
         status: 'Available',
         images: 'https://commute-bucket.s3.amazonaws.com/car2.jpg',
-        plate_number : '328ds9-32',
-       isOwnedByCompany: false,
-       price:"2000",
-       description: 'dummy description for this car',
-        inspection_detail:'CMT-INSP-9943043',
-        assigned_driver_name: 'kudiratu',
-
-        assigned_driver_email: 'kudiratu@gmail.com',
-        assigned_driver_location:'6.5355, 3.3087',
-        assigned_driver_phone: '08068291106',
-        assigned_driver_id: '4',
-         socket_id: 'default-id',
         license:'jdjsjds',
 
-  },
 
-  {
-     id :5,
-    car_type:'Rolls Royce',
-        car_year:'2012',
-        color:'wine',
-        model: 'austin',
-        model_make_id:'austin',
-        partner_id:'CMT-PARTNER-12RTR4',
-        car_status:'Active',
-        health_status:'Completed',
-        status: 'Available',
-        images: 'https://commute-bucket.s3.amazonaws.com/car5.jpg',
-        plate_number : '328ds9-32',
+        plate_number : '328ds9-32x',
+        
        isOwnedByCompany: false,
-       price:"2000",
-       description: 'dummy description for this car',
-        inspection_detail:'CMT-INSP-9943043',
+       price:"80000",
+       assigned_driver_id: '1',
+
         assigned_driver_name: 'saladin',
 
         assigned_driver_email: 'juwavictor@gmail.com',
         assigned_driver_location:'6.5355, 3.3087',
+        assigned_driver_phone: '08068291106',
          socket_id: 'default-id',
-        license:'jdjsjds',
-         
+
+
+
+
+
+       
+  },
+
+  {
+
+      id :3,
   
+      car: {
+
+  car_name:'Hyundai Santa Fe Limited 4dr SUV AWD (3.3L 6cyl 6A) 2017',
+
+model_id:  '71129' ,
+
+model_make_id:'Hyundai',
+
+model_name:'Santa Fe',
+
+model_trim:'Limited 4dr SUV AWD (3.3L 6cyl 6A)',
+
+model_year:'2017',
+
+manufacturer:'',
+
+
+
+},
+
+
+carModel:'Santa Fe',
+
+carYear:'2017',
+
+vehicleColor:'black',
+
+plateNo:'kdskdsldlsk',
+
+inspectionDate: new Date(),
+
+inspectionTime: new Date(),
+
+carDescription:'describe me',
+
+imagePath: 'https://commute-bucket.s3.amazonaws.com/car3.jpg',
+
+creator:'hddddddsdsds',
+
+date_created:new Date(),
+partnerEmail:  'juwavictor@gmail.com',
+
+     
+    car_type:'Black jack',
+        car_year:'2012',
+        color:'white',
+        model: 'abarth',
+        model_make_id:'abarth',
+        description: 'dummy description for this car',
+        inspection_detail:'CMT-INSP-9943043',
+        
+        partner_id:'CMT-PARTNER-12345',
+        car_status:'Active',
+        health_status:'Completed',
+        status: 'Available',
+        images: 'https://commute-bucket.s3.amazonaws.com/car3.jpg',
+        license:'jdjsjds',
+
+
+        plate_number : '328ds9-32x',
+        
+       isOwnedByCompany: false,
+       price:"80000",
+       assigned_driver_id: '1',
+
+        assigned_driver_name: 'saladin',
+
+        assigned_driver_email: 'juwavictor@gmail.com',
+        assigned_driver_location:'6.5355, 3.3087',
+        assigned_driver_phone: '08068291106',
+         socket_id: 'default-id',
+
+
+
+
+
+       
+  },
+
+
+  {
+
+      id :4,
+  
+      car: {
+
+  car_name:'Hyundai Santa Fe Limited 4dr SUV AWD (3.3L 6cyl 6A) 2017',
+
+model_id:  '71129' ,
+
+model_make_id:'Hyundai',
+
+model_name:'Santa Fe',
+
+model_trim:'Limited 4dr SUV AWD (3.3L 6cyl 6A)',
+
+model_year:'2017',
+
+manufacturer:'',
+
+
+
+},
+
+
+carModel:'Santa Fe',
+
+carYear:'2017',
+
+vehicleColor:'black',
+
+plateNo:'kdskdsldlsk',
+
+inspectionDate: new Date(),
+
+inspectionTime: new Date(),
+
+carDescription:'describe me',
+
+imagePath: 'https://commute-bucket.s3.amazonaws.com/car2.jpg',
+
+creator:'hddddddsdsds',
+
+date_created:new Date(),
+partnerEmail:  'juwavictor@gmail.com',
+
+     
+    car_type:'Black jack',
+        car_year:'2012',
+        color:'white',
+        model: 'abarth',
+        model_make_id:'abarth',
+        description: 'dummy description for this car',
+        inspection_detail:'CMT-INSP-9943043',
+        
+        partner_id:'CMT-PARTNER-12345',
+        car_status:'Active',
+        health_status:'Completed',
+        status: 'Available',
+        images: 'https://commute-bucket.s3.amazonaws.com/car2.jpg',
+        license:'jdjsjds',
+
+
+        plate_number : '328ds9-32x',
+        
+       isOwnedByCompany: false,
+       price:"80000",
+       assigned_driver_id: '1',
+
+        assigned_driver_name: 'saladin',
+
+        assigned_driver_email: 'juwavictor@gmail.com',
+        assigned_driver_location:'6.5355, 3.3087',
+        assigned_driver_phone: '08068291106',
+         socket_id: 'default-id',
+
+
+
+
+
+       
+  },
+
+  {
+
+      id :5,
+  
+      car: {
+
+  car_name:'Hyundai Santa Fe Limited 4dr SUV AWD (3.3L 6cyl 6A) 2017',
+
+model_id:  '71129' ,
+
+model_make_id:'Hyundai',
+
+model_name:'Santa Fe',
+
+model_trim:'Limited 4dr SUV AWD (3.3L 6cyl 6A)',
+
+model_year:'2017',
+
+manufacturer:'',
+
+
+
+},
+
+
+carModel:'Santa Fe',
+
+carYear:'2017',
+
+vehicleColor:'black',
+
+plateNo:'kdskdsldlsk',
+
+inspectionDate: new Date(),
+
+inspectionTime: new Date(),
+
+carDescription:'describe me',
+
+imagePath: 'https://commute-bucket.s3.amazonaws.com/car5.jpg',
+
+creator:'hddddddsdsds',
+
+date_created:new Date(),
+partnerEmail:  'juwavictor@gmail.com',
+
+     
+    car_type:'Black jack',
+        car_year:'2012',
+        color:'white',
+        model: 'abarth',
+        model_make_id:'abarth',
+        description: 'dummy description for this car',
+        inspection_detail:'CMT-INSP-9943043',
+        
+        partner_id:'CMT-PARTNER-12345',
+        car_status:'Active',
+        health_status:'Completed',
+        status: 'Available',
+        images: 'https://commute-bucket.s3.amazonaws.com/car5.jpg',
+        license:'jdjsjds',
+
+
+        plate_number : '328ds9-32x',
+        
+       isOwnedByCompany: false,
+       price:"80000",
+       assigned_driver_id: '1',
+
+        assigned_driver_name: 'saladin',
+
+        assigned_driver_email: 'juwavictor@gmail.com',
+        assigned_driver_location:'6.5355, 3.3087',
+        assigned_driver_phone: '08068291106',
+         socket_id: 'default-id',
+
+
+
+
+
+       
   },
   ],
   interventions:  [{

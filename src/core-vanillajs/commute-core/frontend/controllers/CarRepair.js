@@ -133,7 +133,7 @@ class IReporterWebsiteRepairs {
               let cars = data.data[0].carInfo;
 
               cars.map((item)=>{
-                   modelNameOptionX.push(item.model_name)
+                   modelNameOptionX.push(item.car_name)
               });
 
   modelNameOptionX = [...new Set(modelNameOptionX)];

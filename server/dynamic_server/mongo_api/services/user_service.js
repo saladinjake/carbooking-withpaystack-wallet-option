@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-//import mongoose from 'mongoose';
+
 import dotenv from 'dotenv';
 dotenv.config();
 import Database from '../models/db';
@@ -10,7 +10,7 @@ const sgMail = require('@sendgrid/mail');
 
 var postmark = require("postmark");
 
-
+import carsApi from './cars_api';
 
 import {passport ,express} from '../App'; 
 //import EarningsModel from '../models/EarningsModel';
@@ -2096,7 +2096,7 @@ static updateUsersItinerary(request,response){
   }
 
   static createPaymentDetail(request,response){
-
+    var PaymentModel = mongoose.model('PaymentModel', User);
 
     let {
         status,
@@ -2108,6 +2108,21 @@ static updateUsersItinerary(request,response){
                 email,
                 phone_number ,
     } = request.body;
+
+
+    // var user = new PaymentModel({ 
+    //   id: new AutoincrementId(PaymentModel).counter(), 
+    //     status:'Paid',
+    //             reference,
+    //             plan_id,
+    //             quotation_id,
+    //             amount,
+    //             username,
+    //             email,
+    //             phone_number,
+
+       
+    //  })
 
 
    
@@ -2127,7 +2142,7 @@ static updateUsersItinerary(request,response){
        
      });
 
-     PaymentModel.save()
+     NewItinerary.save()
       .then(data => {
         const user = data;
         const result = {
@@ -2469,12 +2484,23 @@ static updateUsersItinerary(request,response){
      NewNotificationModel.save()
       .then(data => {
         const user = data;
+
+
+         return response.status(201).json({
+                status: 201,
+                data: [
+                  {
+                    user,
+                    message: 'Get a specific user plan was successful',
+                  },
+                ],
+          });
         
 
-            UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
-                     username: user_id,
-                     detail: description
-            },user_id,201)
+            // UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
+            //          username: user_id,
+            //          detail: description
+            // },user_id,201)
 
 
         
@@ -2595,9 +2621,16 @@ getUser = (req, res) => {
         const users = data;
         console.log(users,"users available are here")
         if (users.length === 0) {
-          return response.status(404).json({
-            status: 404,
-            error: 'User has no  record',
+          return response.status(200).json({
+            status: 200,
+
+            data: [
+            {
+              users:[],
+          
+              message: 'Successful',
+            },
+          ],
           });
         }
         return response.status(200).json({
@@ -2856,9 +2889,15 @@ getUser = (req, res) => {
         const admins = data;
         console.log(admins+"admins available here admins")
         if (admins.length === 0) {
-          return response.status(404).json({
-            status: 404,
-            error: 'User has no  record',
+          return response.status(200).json({
+            status: 200,
+            data: [
+            {
+              admins:[],
+          
+              message: 'Successful',
+            },
+          ],
           });
         }
         return response.status(200).json({
@@ -3231,9 +3270,15 @@ getUser = (req, res) => {
         const drivers = data;
         console.log(drivers,"drivers are here")
         if (drivers.length === 0) {
-          return response.status(404).json({
-            status: 404,
-            error: 'User has no  record',
+          return response.status(200).json({
+            status: 200,
+            data: [
+            {
+              drivers:[],
+          
+              message: 'Successful',
+            },
+          ],
           });
         }
         return response.status(200).json({
@@ -3491,9 +3536,15 @@ getUser = (req, res) => {
         const partners = data;
         console.log(partners +"partners available")
         if (partners.length === 0) {
-          return response.status(404).json({
-            status: 404,
-            error: 'User has no  record',
+          return response.status(200).json({
+            status: 200,
+            data: [
+            {
+              partners:[],
+          
+              message: 'Successful',
+            },
+          ],
           });
         }
         return response.status(200).json({
@@ -3584,7 +3635,10 @@ getUser = (req, res) => {
           user_type,
           status,
           is_verified,
-          totalCars
+          totalCars,
+          bankAccount,
+          bankAccountName,
+          bankAccountNumber,
 
       
         } = request.body;
@@ -3616,7 +3670,11 @@ getUser = (req, res) => {
         roles: user_type,
         status :status,
         isVerified: boolVerification,
-        totalCars
+        totalCars,
+
+          bankAccount,
+          bankAccountName,
+          bankAccountNumber,
       });
 
      Newuser.save()
@@ -3666,7 +3724,12 @@ getUser = (req, res) => {
       email,
       address,
       status,
-      is_verified
+      is_verified,
+
+          bankAccount,
+          bankAccountName,
+          bankAccountNumber,
+
     } = request.body;
 
     if(is_verified=="false"){
@@ -3718,6 +3781,9 @@ getUser = (req, res) => {
       user.status = status|| user.status;
       user.address= address || user.address;
       user.totalCars = totalCars || user.totalCars;
+      user.bankAccount = bankAccount || user.bankAccount;
+      user.bankAccountName = bankAccountName || user.bankAccountName;
+      user.bankAccountNumber = bankAccountNumber || user.bankAccountNumber;
       //user.isVerified = boolVerification || user.isVerified;
       user.save(function (err,user) {
         if (err) { return response.status(500).send({ msg: err.message }); }
@@ -3762,9 +3828,15 @@ getUser = (req, res) => {
         const earnings = data;
         //console.log(partners +"partners available")
         if (earnings.length === 0) {
-          return response.status(404).json({
-            status: 404,
-            error: 'User has no  record',
+          return response.status(200).json({
+            status: 200,
+            data: [
+            {
+              earnings:[],
+          
+              message: 'Successful',
+            },
+          ],
           });
         }
         return response.status(200).json({
@@ -4105,9 +4177,15 @@ getUser = (req, res) => {
 
         console.log(individualPlans+ "individual available plans")
         if (individualPlans.length === 0) {
-          return response.status(404).json({
-            status: 404,
-            error: 'User has no  record',
+          return response.status(200).json({
+            status: 200,
+            data: [
+            {
+              individualPlans:[],
+          
+              message: 'Successful',
+            },
+          ],
           });
         }
 
@@ -4145,9 +4223,15 @@ getUser = (req, res) => {
 
         console.log(corporatePlans+ "coperatePlans available plans")
         if (corporatePlans.length === 0) {
-          return response.status(404).json({
-            status: 404,
-            error: 'User has no  record',
+          return response.status(200).json({
+            status: 200,
+            data: [
+            {
+              corporatePlans:[],
+          
+              message: 'Successful',
+            },
+          ],
           });
         }
 
@@ -4469,12 +4553,18 @@ getUser = (req, res) => {
         console.log(inspections)
 
         
-        // if (inspections.length === 0) {
-        //   return response.status(404).json({
-        //     status: 404,
-        //     error: 'User has no  record',
-        //   });
-        // }
+        if (inspections.length === 0) {
+          return response.status(200).json({
+            status: 200,
+            data: [
+            {
+              inspections:[],
+          
+              message: 'Successful',
+            },
+          ],
+          });
+        }
 
 
   
@@ -4666,12 +4756,18 @@ getUser = (req, res) => {
         const testDrive = data;
 
         console.log(testDrive+ "coperatePlans available plans")
-        // if (testDrive.length === 0) {
-        //   return response.status(404).json({
-        //     status: 404,
-        //     error: 'User has no  record',
-        //   });
-        // }
+       if (testDrive.length === 0) {
+          return response.status(200).json({
+            status: 200,
+            data: [
+            {
+              testDrive:[],
+          
+              message: 'Successful',
+            },
+          ],
+          });
+        }
 
 
   
@@ -4961,6 +5057,21 @@ getUser = (req, res) => {
     RolesAndPreviledgesModel.find()
       .then(data => {
         const users = data;
+
+
+        if (users.length === 0) {
+          return response.status(200).json({
+            status: 200,
+            data: [
+            {
+              previledges:[],
+          
+              message: 'Successful',
+            },
+          ],
+          });
+        }
+
         
 
 
@@ -4974,7 +5085,7 @@ getUser = (req, res) => {
               {
                 
               
-                previledges: users,
+                previledges: users ,
             
                 message: 'Successful',
               },
@@ -5437,7 +5548,7 @@ getUser = (req, res) => {
             status: 200,
             data: [
               {
-                
+                redFlag:[],
                 message: 'No SOS found',
               },
             ],
@@ -5626,7 +5737,7 @@ getUser = (req, res) => {
             status: 200,
             data: [
               {
-                // intervention,
+                intervention:[],
                 message: 'No records yet',
               },
             ],
@@ -5832,11 +5943,12 @@ getUser = (req, res) => {
         let faqs= data;
         console.log(faqs,"faqs")
         if (faqs.length === 0) {
+
           return response.status(200).json({
             status: 200,
             data: [
               {
-                
+                faqs:[],
                 message: 'All faqs was retrieved successfully',
               },
             ],
@@ -5853,7 +5965,7 @@ getUser = (req, res) => {
         });
       })
       .catch(err => {
-         console.log(err)
+         
         response.status(400).json({
           status: 400,
           error: ErrorHandler.errors().validationError,
@@ -5934,7 +6046,7 @@ getUser = (req, res) => {
             status: 200,
             data: [
               {
-              
+               carsAvailable:[],
                 message: 'All Cars was retrieved successfully',
               },
             ],
@@ -6067,7 +6179,29 @@ getUser = (req, res) => {
       plate_number,
       license,
       assigned_driver_id,
-      images
+      images,
+      car,
+
+      carModel,
+
+carYear,
+
+vehicleColor,
+
+plateNo,
+
+inspectionDate,
+
+inspectionTime,
+
+carDescription,
+
+imagePath,
+
+creator,
+
+date_created,
+partnerEmail,
 
     } = request.body;
     
@@ -6091,51 +6225,33 @@ getUser = (req, res) => {
       license,
       assigned_driver_id,
       images,
-
+      car,
 
       
 
-car: {
+      carModel,
 
-  car_name:car_type,
+carYear,
 
-model_id:car_model,
+vehicleColor,
 
-model_make_id:car_type,
+plateNo,
 
-model_name:car_model,
+inspectionDate,
 
-model_trim:car_model,
+inspectionTime,
 
-model_year:car_year,
+carDescription,
 
-manufacturer:'',
+imagePath,
+
+creator,
+
+date_created,
+partnerEmail,
 
 
 
-},
-
-
-carModel:car_model,
-
-carYear:car_year,
-
-vehicleColor:color,
-
-plateNo:plate_number,
-
-inspectionDate:'',
-
-inspectionTime:'',
-
-carDescription:description,
-
-imagePath: images,
-
-creator:partner_id,
-
-date_created:new Date(),
-partnerEmail:'',
 
 
 
@@ -6182,38 +6298,48 @@ partnerEmail:'',
 
  static  getCarsInfo(request,response){
 
-    const dataValues = [];
-    fs.createReadStream('cars_api_info.csv')
-      .pipe(csv())
-      .on('data', (row) => {
-        try{
-          dataValues.push(row)
-        }catch(e){
-           return  response.status(400).json({
-          status: 400,
-          data: [
-            {
-              
-              message: e,
-            },
-          ],
-        });
-        }
-        //console.log(row);
-      })
-      .on('end', () => {
-        //console.log('CSV file successfully processed');
-        //console.log(dataValues)
-        return   response.status(200).json({
+           return   response.status(200).json({
           status: 200,
           data: [
             {
-              carInfo: dataValues,
+              carInfo: carsApi,
               message: 'Created car record',
             },
           ],
         });
-      });
+
+    // const dataValues = [];
+    // fs.createReadStream('cars_api_info.csv')
+    //   .pipe(csv())
+    //   .on('data', (row) => {
+    //     try{
+    //       dataValues.push(row)
+    //     }catch(e){
+    //        return  response.status(400).json({
+    //       status: 400,
+    //       data: [
+    //         {
+              
+    //           message: e,
+    //         },
+    //       ],
+    //     });
+    //     }
+    //     //console.log(row);
+    //   })
+    //   .on('end', () => {
+    //     //console.log('CSV file successfully processed');
+    //     //console.log(dataValues)
+    //     return   response.status(200).json({
+    //       status: 200,
+    //       data: [
+    //         {
+    //           carInfo: dataValues,
+    //           message: 'Created car record',
+    //         },
+    //       ],
+    //     });
+    //   });
   }
 
 
@@ -6398,6 +6524,7 @@ partnerEmail:'',
 
 
   static createNewPartnerEarnings(request,response){
+    let mongoose = require('mongoose');
 
     const { paymentDate,
 PaymentStatus,
@@ -6419,9 +6546,10 @@ paymentReference,
 partnerId,
 partnerEmail,
 partnerBankAccount,
-vehicleId,
+vehicleId: mongoose.Types.ObjectId(vehicleId),
 vehicleName,
 vehiclePlateNo,
+partner: mongoose.Types.ObjectId(partnerId),
       });
 
     NewEarnings.save()
@@ -6953,9 +7081,15 @@ vehiclePlateNo,
         const itineraries = data;
         console.log(data+ "either empty itins")
         if (itineraries.length === 0) {
-          return response.status(404).json({
-            status: 404,
-            error: 'User has no itinerary record',
+          return response.status(200).json({
+            status: 200,
+            data: [
+            {
+              itineraries:[],
+          
+              message: 'Successful',
+            },
+          ],
           });
         }
         return response.status(200).json({
@@ -6985,9 +7119,15 @@ vehiclePlateNo,
         const usersPlan = data;
         console.log(data+ "either empty itins")
         if (usersPlan.length === 0) {
-          return response.status(404).json({
-            status: 404,
-            error: 'User has no plans record',
+          return response.status(200).json({
+            status: 200,
+            data: [
+            {
+              usersPlan:[],
+          
+              message: 'Successful',
+            },
+          ],
           });
         }
 
@@ -7653,9 +7793,14 @@ static showUserInfo(request,response){
        
         const userInfo = data; //related
         if (userInfo.length <= 0) {
-                return response.status(404).json({
-                  status: 404,
-                  error: 'The user with the given id does not exists',
+                return response.status(200).json({
+                  status: 200,
+                  data: [
+                  {
+                    userInfo,
+                    message: 'Get a specific user was successful',
+                  },
+                ],
                 });
         }
         return response.status(200).json({
@@ -7688,13 +7833,18 @@ static getTrails(request,response){
         
        
         const audit = data; //related
-        // if (audit.length <= 0) {
-        //         return response.status(404).json({
-        //           status: 404,
-        //           error: 'The user with the given id does not exists',
-        //         });
+        if (audit.length <= 0) {
+                return response.status(200).json({
+                  status: 200,
+                  data: [
+                  {
+                    audit,
+                    message: 'Get a specific user was successful',
+                  },
+                ],
+                });
 
-        // }
+        }
       
 
 

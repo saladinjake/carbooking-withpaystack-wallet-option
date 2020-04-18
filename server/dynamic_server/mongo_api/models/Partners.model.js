@@ -26,6 +26,9 @@ let PartnerSchema = new mongoose.Schema({
   address:{
     type:String
   },
+  bankAccount:{type : String},
+  bankAccountName:{type: String},
+  bankAccountNumber: { type: String},
   status:{
         type:String,
         enum:[
@@ -49,6 +52,9 @@ let PartnerSchema = new mongoose.Schema({
         type: String,
   
         
+    },
+    phone:{
+      type: String
     },
     passwordResetToken: { type: String},
     passwordResetExpires: { type: Date },

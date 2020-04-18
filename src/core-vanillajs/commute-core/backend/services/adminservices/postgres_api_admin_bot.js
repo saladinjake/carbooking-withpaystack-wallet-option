@@ -14,6 +14,56 @@ let datapromise;
 
 let usersFoundId;
 
+window.setCarDetailsOnearning = (el)=>{
+   var selectedOption = el.options[el.selectedIndex];
+  var name = selectedOption.getAttribute('data-id');
+
+          
+           
+   document.getElementById("vehiclePlateNo"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-vehicleplateno');
+   document.getElementById("vehicleName"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-vehiclename');
+             
+}
+
+
+window.setCarDetail = (el)=>{
+   var selectedOption = el.options[el.selectedIndex];
+  var name = selectedOption.getAttribute('data-id');
+
+
+            
+           
+             document.getElementById("car_model_id"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-id');
+             document.getElementById("car_model_name"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-value');
+             document.getElementById("car_model_trim"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-trim');
+             //document.getElementById("car_year"+ idz).value =$(el).el.options[el.selectedIndex].dataset.year
+
+}
+
+
+window.setEarningsDetail = (el)=>{
+   var selectedOption = el.options[el.selectedIndex];
+  
+
+            
+           
+  document.getElementById("partnerBankAccount"+ el.getAttribute('data-id')).value = selectedOption.getAttribute('data-bankaccount') || 'Not Given';
+  document.getElementById("bankAccountName"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-bankaccountname') || 'Not Given';
+  document.getElementById("bankAccountNumber"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-bankaccountnumber') || 'Not Given';
+  document.getElementById("partnerId"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-id') || 'Not Given';
+  document.getElementById("paymentReference"+ el.getAttribute('data-id')).value ='CMT-REF-'+ guidGenerator() || 'Not Given'
+
+
+  if(typeof(document.getElementById("partnerBankAccount"+ el.getAttribute('data-id')).value)=='undefined'){
+     var notification = alertify.notify('Please fill in the bank account detail for this user ', 'error', 5, function(){  console.log('dismissed'); });
+      setTimeout(()=>{
+        window.localtion.href="/admin-partners"
+      },2000)               
+  }
+
+}
+
+
 
 var LoadMore = function(userOptions) {
   this.options = {
@@ -2257,7 +2307,7 @@ function postNotification(postUrl,prePostData){
     })
       .then(response => response.json())
       .then(data => {
-        if (data.status === 201) {
+        if (data.status === 201 || data.status === 200) {
         	console.log(data)
           //MessageBoard.displayMsg('Form submitted succesfully');
           var notification = alertify.notify('Successful transaction.', 'success', 5, function(){  console.log('dismissed'); });
@@ -2274,11 +2324,12 @@ function postNotification(postUrl,prePostData){
         } else {
            AuditTrail.sendLogInfo(user,prePostData.email, 'Notification', 'Success', '400', 'POST')
           //MessageBoard.displayMsg(data.error);
-          var notification = alertify.notify('Failed to send quotation to user', 'error', 5, function(){  console.log('dismissed'); });
+          var notification = alertify.notify('Failed to send notfication to user', 'error', 5, function(){  console.log('dismissed'); });
 			           
         }
       })
       .catch(error => {
+        console.log(error)
         throw error;
       });
 }
@@ -2579,6 +2630,8 @@ const addClick = () =>{
 
 	})
 
+  
+
 	
 }
 
@@ -2637,8 +2690,10 @@ window.addEventEarnings = (o) =>{
   const user =JSON.parse(localStorage.getItem("userToken"));
 
 
+
+
    let vehiclePlateNo = document.getElementById("vehiclePlateNo"+ o.dataset.id).value,
-      vehicleId =document.getElementById("vehicleId"+ o.dataset.id).value,
+      vehicleId_x =document.getElementById("vehicleId"+ o.dataset.id),
       vehicleName=document.getElementById("vehicleName"+ o.dataset.id).value,
       paymentReference=document.getElementById("paymentReference"+ o.dataset.id).value,
       PaymentAmount= document.getElementById("PaymentAmount"+ o.dataset.id).value;
@@ -2647,7 +2702,7 @@ window.addEventEarnings = (o) =>{
       //passwordConfirm =document.getElementById("confirmpassword"+ o.dataset.id).value,
       
    
-    
+    let partnerEmail='';    
     const partnerId = document.getElementById("partnerId"+ o.dataset.id).value;
     const partnerEmail_x = document.getElementById("PartnerEmail"+ o.dataset.id);
          
@@ -2670,31 +2725,60 @@ window.addEventEarnings = (o) =>{
     //   }
     // }
 
+    let vehicle = vehicleId_x.options[vehicleId_x.selectedIndex].text;
+    vehicle = vehicle.split('-');
+    vehicle = vehicle[1];
+
     
      
     const status = status_x.options[status_x.selectedIndex].text;
+    let amt = new Number(PaymentAmount);
     let prePostData =null;
      prePostData ={
             
               paymentDate,
               PaymentStatus:status,
-              PaymentAmount,
+              PaymentAmount: amt,
               paymentReference,
               partnerId,
               partnerEmail:partnerEmail_x.options[partnerEmail_x.selectedIndex].text,
               partnerBankAccount:{
 
-                 bankAccount:bnk.options[bnk.selectedIndex].text,
-                 bankAccountNumber:partnerBankAccount,
+                 bankAccount:bnk.value,
+                 bankAccountNumber:document.getElementById('bankAccountNumber'+ o.dataset.id).value,
                  bankAccountName:document.getElementById('bankAccountName'+ o.dataset.id).value
 
               },
-              vehicleId,
+              vehicleId: vehicle,
               vehicleName,
               vehiclePlateNo,
               email:partnerEmail,
         
       };
+
+
+      if(partnerEmail_x.options[partnerEmail_x.selectedIndex].text=='--select--'){
+        var notification = alertify.notify('Select a valid email.', 'error', 5, function(){  console.log('dismissed'); });
+
+        return false;
+      }
+
+      if(vehicleId_x.options[vehicleId_x.selectedIndex].text=='--select--'){
+        var notification = alertify.notify('Select a valid email.', 'error', 5, function(){  console.log('dismissed'); });
+
+        return false
+      }
+
+
+      if(isNaN(amt)){
+
+        var notification = alertify.notify('Enter a valid amount.', 'error', 5, function(){  console.log('dismissed'); });
+
+        return false
+
+      }
+
+      console.log(prePostData)
 
 
 
@@ -2712,7 +2796,7 @@ window.addEventEarnings = (o) =>{
         .then(data => {
           if (data.status === 201) {
             // modal_view_id.style.display="none";
-            var notification = alertify.notify('Successfully created  user.', 'success', 5, function(){  console.log('dismissed'); });
+            var notification = alertify.notify('Successfully created  partners earnings.', 'success', 5, function(){  console.log('dismissed'); });
        
 
             AuditTrail.sendLogInfo(user,prePostData.username, 'USER ENTITY  MODULE(USER/DRIVER/ADMIN)', 'Success', '201', 'POST')
@@ -2774,8 +2858,8 @@ window.addEvent = (o) =>{
     let isVerified = document.getElementById("is_verified"+o.dataset.id).value;
     is_verified = isVerified;
     console.log(is_verified+ "ddsds")
-    
-
+    let totalCars = 1;
+ 
     
    
     const certificate = document.getElementById("certificate"+ o.dataset.id).value;
@@ -2789,20 +2873,31 @@ window.addEvent = (o) =>{
     if(document.getElementById("address"+ o.dataset.id)){
       address = document.getElementById("address"+ o.dataset.id).value;
 
+      let bankAccount_x = document.getElementById('bankAccount'+ o.dataset.id) ;
+    let bankAccountName = document.getElementById('bankAccountName'+ o.dataset.id).value ;
+     let bankAccountNumber = document.getElementById('bankAccountNumber'+ o.dataset.id).value ;
+
+
       prePostData ={
-      	  firstname,
-	      lastname,
-	      username,
-	      email,
-	      password,
-	      phoneNumber,
-	      avatar,
-	      certificate,
-	      user_type,
-	      status,
-	      address,
-	      is_verified
+          firstname,
+        lastname,
+        username,
+        email,
+        password,
+        phoneNumber,
+        avatar,
+        certificate,
+        user_type,
+        status,
+        address,
+        is_verified,
+        totalCars: 1,
+        bankAccountNumber,
+        bankAccountName,
+        bankAccount: bankAccount_x.options[bankAccount_x.selectedIndex].text,
       };
+
+      
     }else{
      prePostData ={
       	  firstname,
@@ -2841,11 +2936,13 @@ window.addEvent = (o) =>{
 	      .then(data => {
 	        if (data.status === 201) {
 	          modal_view_id.style.display="none";
-	          var notification = alertify.notify('Successfully created  user.', 'success', 5, function(){  console.log('dismissed'); });
+	          var notification = alertify.notify('Successfully created  resource. Please wait...', 'success', 9, function(){  console.log('dismissed'); });
 	     
 
        AuditTrail.sendLogInfo(user,prePostData.username, 'USER ENTITY  MODULE(USER/DRIVER/ADMIN)', 'Success', '201', 'POST')
-          
+            setTimeout(()=>{
+              window.location.reload()
+            },3000)
 
 
 	        } else {
@@ -3133,6 +3230,7 @@ window.updateRecordView = (el)=>{
 	document.getElementById("phone"+view_id).value=el.dataset.phone;
 	document.getElementById("certificate"+view_id).value= el.dataset.certificate;
   document.getElementById("certificate"+view_id).style.disabled=true
+
 	document.getElementById("username"+view_id).value= el.dataset.username;
 
 
@@ -3192,6 +3290,34 @@ window.updateRecordView = (el)=>{
 
     let totalCars=0;
 	if(document.getElementById("address"+view_id)){
+      let usern = el.dataset.firstname;
+      if(usern.indexOf(' ')){
+        usern = usern.split(' ');
+        document.getElementById("firstname"+view_id).value = usern[0];
+        document.getElementById("lastname"+view_id).value = usern[1] || usern[0];
+
+      }
+
+
+      let idza= "#bankAccount"+ el.dataset.id;
+    $( idza + " option").each(function () {
+        if ($(this).html() == el.dataset.bankaccount) {
+            $(this).attr("selected", "selected");
+            return;
+        }
+    });
+
+
+      // document.getElementById('bankAccount'+ view_id).value = el.dataset.bankAccount;
+    document.getElementById('bankAccountName'+ view_id).value = el.dataset.bankaccountname;
+document.getElementById('bankAccountNumber'+ view_id).value = el.dataset.bankaccountnumber;
+
+
+      
+
+      
+
+
       document.getElementById("address"+ view_id).value= el.dataset.address;
     }
 
@@ -3234,6 +3360,19 @@ window.updateRecordViewEarnings = (el)=>{
    // $('.mebox').not($(showme).closest('.mebox')).addClass('noOpacity');
 
    $('.mebox').not(showme).hide();
+
+
+   $(".PartnerEmail").on('change', function() {
+           // Set selected option as variable
+           var selectValue = $(this).text();
+
+           alert('hello')
+
+         
+           
+           
+            
+    });
 
 
    
@@ -3626,6 +3765,11 @@ window.viewCarRecordTemplate = (el)=>{
 	document.getElementById("description"+view_id).value= el.dataset.description;
 	document.getElementById("inspection_detail"+view_id).value= el.dataset.inspection_detail;
     document.getElementById("partner_id"+view_id).value= el.dataset.partner_id;
+ 
+ document.getElementById("car_model_trim"+view_id).value= el.dataset.trim;
+document.getElementById("car_model_name"+view_id).value= el.dataset.model;
+  document.getElementById("car_model_id"+view_id).value= el.dataset.model_make_id;
+  
 
  document.getElementById("inputLicense"+view_id).value= el.dataset.license;
     //document.getElementById("user-id").innerHTML="CMT-CAR-"+ view_id.substring(-5,view_id.length);
@@ -3649,7 +3793,7 @@ document.getElementById('car').src=el.dataset.old_car
     });
 
 
-    let ida3= "#health_status"+ el.dataset.id;
+    let ida3= "#car_status"+ el.dataset.id;
     $( ida3 + " option").each(function () {
         if ($(this).html() == el.dataset.car_status) {
             $(this).attr("selected", "selected");
@@ -3659,29 +3803,31 @@ document.getElementById('car').src=el.dataset.old_car
 
 
 
-     let id2= "#car_model"+ view_id;
+     let id2= "#partner_id"+ view_id;
     $( id2 + " option").each(function () {
-        if ($(this).html() == el.dataset.model) {
+        if ($(this).html() == el.dataset.partner_id) {
             $(this).attr("selected", "selected");
             return;
+        }else{
+           $(this).html('owned by company') 
         }
     });
 
-     let id4= "#car_model_make"+ view_id;
-    $( id4 + " option").each(function () {
-        if ($(this).html() == el.dataset.model_make_id) {
-            $(this).attr("selected", "selected");
-            return;
-        }
-    });
+    //  let id4= "#car_model_make"+ view_id;
+    // $( id4 + " option").each(function () {
+    //     if ($(this).html() == el.dataset.model_make_id) {
+    //         $(this).attr("selected", "selected");
+    //         return;
+    //     }
+    // });
 
-     let id3= "#car_type"+ view_id;
-    $( id3 + " option").each(function () {
-        if ($(this).html() == el.dataset.car_type) {
-            $(this).attr("selected", "selected");
-            return;
-        }
-    });
+    //  let id3= "#car_type"+ view_id;
+    // $( id3 + " option").each(function () {
+    //     if ($(this).html() == el.dataset.car_type) {
+    //         $(this).attr("selected", "selected");
+    //         return;
+    //     }
+    // });
 
     let idz='#drivers'+ view_id;
     $( idz + " option").each(function () {
@@ -3721,38 +3867,51 @@ window.updateCarRecordTemplate = (o) =>{
 
 
 
-  const status_x = document.getElementById("status"+ o.dataset.id);
+    
+         const status_x = document.getElementById("status"+ o.dataset.id);
   const health_x = document.getElementById("health_status"+ o.dataset.id);
   const car_status_x = document.getElementById("car_status"+ o.dataset.id);
 
-  const model_make = document.getElementById("car_model_make" + o.dataset.id);
-
-  const car_model = document.getElementById("car_model" + o.dataset.id)
-
-   const model_make_id = document.getElementById("car_model_make" + o.dataset.id)
-
-  const color = document.getElementById("color" + o.dataset.id)
-
-   const plate_number = document.getElementById("plate_number" + o.dataset.id)
-
-   const car_year = document.getElementById("car_year" + o.dataset.id)
-
-   const drivers = document.getElementById("drivers" + o.dataset.id)
-
-   const description = document.getElementById("description" + o.dataset.id)
-
-   const license = document.getElementById("inputLicense" + o.dataset.id)
-
-   const partner_id = document.getElementById("partner_id" + o.dataset.id)
-      const inspection_detail = document.getElementById("inspection_detail" + o.dataset.id)
-      let driv = drivers.options[drivers.selectedIndex].text.split('-')
+ 
+      
+       
 
 
-       let avatar = document.getElementById('image-file'+ o.dataset.id).value ;
+
+
+    const model_make = document.getElementById("car_model_make" + o.dataset.id);
+
+    const model_make_id = document.getElementById("car_model_id" + o.dataset.id);
+
+    const car_model = document.getElementById("car_model_name" + o.dataset.id);
+
+    const car_model_trim = document.getElementById("car_model_trim" + o.dataset.id)
+
+    const car_year = document.getElementById("car_year" + o.dataset.id)
+
+    const color = document.getElementById("color" + o.dataset.id)
+
+    const plate_number = document.getElementById("plate_number" + o.dataset.id)
+
+    
+
+    const drivers = document.getElementById("drivers" + o.dataset.id)
+
+    const description = document.getElementById("description" + o.dataset.id)
+
+    const license = document.getElementById("inputLicense" + o.dataset.id)
+
+    const partner_id_x = document.getElementById("partner_id" + o.dataset.id);
+    let partid = partner_id_x.options[partner_id_x.selectedIndex]
+    const inspection_detail = document.getElementById("inspection_detail" + o.dataset.id)
+    let driv = drivers.options[drivers.selectedIndex].text.split('-')
+
+
+    let avatar = document.getElementById('image-file'+ o.dataset.id).value ;
    
      
-       var fullPath = avatar;
-       var filename = fullPath.replace(/^.*[\\\/]/, '');
+    var fullPath = avatar;
+    var filename = fullPath.replace(/^.*[\\\/]/, '');
       
 
        
@@ -3768,31 +3927,121 @@ window.updateCarRecordTemplate = (o) =>{
      
      if(avatar.length<=0){
        images = oldcar;
-      
+        //var notification = alertify.notify('Upload an image for the car', 'error', 5, function(){  console.log('dismissed'); });
+
+      // return false;
      }
+
+     if( status_x.options[status_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+     if( status_x.options[status_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+     if( status_x.options[status_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+          if( status_x.options[status_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+     if( health_x.options[health_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+     if( car_status_x.options[car_status_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+
+      let partEmail = partid.text.split('-');
+      partEmail = partEmail[1];
+
 
     const prePostData = {
       color: color.value,
-      model: car_model.options[car_model.selectedIndex].text,
+      model: car_model.value,
       status: status_x.options[status_x.selectedIndex].text,
       health_status: health_x.options[health_x.selectedIndex].text,
       car_status: car_status_x.options[car_status_x.selectedIndex].text,
-      car_type: model_make.options[model_make.selectedIndex].text,
-      car_model: car_model.options[car_model.selectedIndex].text,
-      model_make_id: model_make_id.options[model_make_id.selectedIndex].text,
+     
+      car_type: model_make_id.value,
+      car_model: car_model.value,
       description: description.value,
       car_year: car_year.value,
       assigned_driver_name: driv[0],
       assigned_driver_email: driv[1],
       assigned_driver_phone: drivers.options[drivers.selectedIndex].value,
-      partner_id: partner_id.value,
+      partner_id: partid.getAttribute('id'),
       inspection_detail: inspection_detail.value,
       plate_number: plate_number.value,
       license: license.value,
       assigned_driver_id: drivers.options[drivers.selectedIndex].getAttribute('id'),
       images:images,
 
+
+
+      car: {
+
+  car_name:model_make.options[model_make.selectedIndex].text,
+
+model_id:  model_make_id.value ,
+
+model_make_id:model_make_id.value,
+
+model_name:car_model.value,
+
+model_trim:car_model_trim.value,
+
+model_year:car_year.value,
+
+manufacturer:'',
+
+
+
+},
+
+
+carModel:car_model.value,
+
+carYear:car_year.value,
+
+vehicleColor:color.value,
+
+plateNo:plate_number.value,
+
+inspectionDate: new Date(),
+
+inspectionTime: new Date(),
+
+carDescription:description.value,
+
+imagePath: images,
+
+creator:partid.getAttribute('id'),
+
+date_created:new Date(),
+partnerEmail:  partEmail,
+
+
     };
+
+
 
 
 
@@ -3953,6 +4202,9 @@ window.viewRecordTemplate = (el)=>{
                 return;
             }
         });
+
+        document.getElementById('location'+ view_id ).value = el.dataset.location;
+        document.getElementById('carbrand'+ view_id ).value = el.dataset.carbrand;
 
 
 
@@ -4156,7 +4408,7 @@ window.addRecordEvent = (o) =>{
 
 
                  setTimeout(()=>{
-                              window.location.reload();
+                              // window.location.reload();
                          },4000)
 
 
@@ -4407,17 +4659,32 @@ window.addCarRecordEvent = (o) =>{
 
  
   
-    const status_x = document.getElementById("status"+ o.dataset.id);
+         const status_x = document.getElementById("status"+ o.dataset.id);
+  const health_x = document.getElementById("health_status"+ o.dataset.id);
+  const car_status_x = document.getElementById("car_status"+ o.dataset.id);
+
+ 
+      
+       
+
+
+
 
     const model_make = document.getElementById("car_model_make" + o.dataset.id);
 
-    const car_model = document.getElementById("car_model" + o.dataset.id)
+    const model_make_id = document.getElementById("car_model_id" + o.dataset.id);
+
+    const car_model = document.getElementById("car_model_name" + o.dataset.id);
+
+    const car_model_trim = document.getElementById("car_model_trim" + o.dataset.id)
+
+    const car_year = document.getElementById("car_year" + o.dataset.id)
 
     const color = document.getElementById("color" + o.dataset.id)
 
     const plate_number = document.getElementById("plate_number" + o.dataset.id)
 
-    const car_year = document.getElementById("car_year" + o.dataset.id)
+    
 
     const drivers = document.getElementById("drivers" + o.dataset.id)
 
@@ -4425,7 +4692,8 @@ window.addCarRecordEvent = (o) =>{
 
     const license = document.getElementById("inputLicense" + o.dataset.id)
 
-    const partner_id = document.getElementById("partner_id" + o.dataset.id)
+    const partner_id_x = document.getElementById("partner_id" + o.dataset.id);
+    let partid = partner_id_x.options[partner_id_x.selectedIndex]
     const inspection_detail = document.getElementById("inspection_detail" + o.dataset.id)
     let driv = drivers.options[drivers.selectedIndex].text.split('-')
 
@@ -4455,24 +4723,112 @@ window.addCarRecordEvent = (o) =>{
       return false;
      }
 
+     if( status_x.options[status_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+     if( status_x.options[status_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+     if( status_x.options[status_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+          if( status_x.options[status_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+     if( health_x.options[health_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+     if( car_status_x.options[car_status_x.selectedIndex].text =='--Select Status--'){
+       var notification = alertify.notify('Status required', 'error', 5, function(){  console.log('dismissed'); });
+
+      return false;
+     }
+
+
+      let partEmail = partid.text;
+      // partEmail = partEmail[1];
+
 
     const prePostData = {
       color: color.value,
-      model: car_model.options[car_model.selectedIndex].text,
+      model: car_model.value,
       status: status_x.options[status_x.selectedIndex].text,
-      car_type: model_make.options[model_make.selectedIndex].text,
-      car_model: car_model.options[car_model.selectedIndex].text,
+      health_status: health_x.options[health_x.selectedIndex].text,
+      car_status: car_status_x.options[car_status_x.selectedIndex].text,
+     
+      car_type: model_make_id.value,
+      car_model: car_model.value,
       description: description.value,
       car_year: car_year.value,
       assigned_driver_name: driv[0],
       assigned_driver_email: driv[1],
       assigned_driver_phone: drivers.options[drivers.selectedIndex].value,
-      partner_id: partner_id.value,
+      partner_id: partid.getAttribute('id'),
       inspection_detail: inspection_detail.value,
       plate_number: plate_number.value,
       license: license.value,
       assigned_driver_id: drivers.options[drivers.selectedIndex].getAttribute('id'),
-      images:images
+      images:images,
+
+
+
+      car: {
+
+  car_name:model_make.options[model_make.selectedIndex].text,
+
+model_id:  model_make_id.value ,
+
+model_make_id:model_make_id.value,
+
+model_name:car_model.value,
+
+model_trim:car_model_trim.value,
+
+model_year:car_year.value,
+
+manufacturer:'',
+
+
+
+},
+
+
+carModel:car_model.value,
+
+carYear:car_year.value,
+
+vehicleColor:color.value,
+
+plateNo:plate_number.value,
+
+inspectionDate: new Date(),
+
+inspectionTime: new Date(),
+
+carDescription:description.value,
+
+imagePath: images,
+
+creator:partid.getAttribute('id'),
+
+date_created:new Date(),
+partnerEmail:  partEmail,
+
 
     };
 
@@ -4501,7 +4857,7 @@ window.addCarRecordEvent = (o) =>{
                  
                 AuditTrail.sendLogInfo(user,'', 'CAR MGT', 'Success', '201', 'POST')
  
-                    window.location.reload();
+                     window.location.reload();
                // ApiDeleteOneStatusRecord.redirect(recordOfType);
               } else {
 
@@ -4783,6 +5139,11 @@ window.updateData = (o) =>{
       address = document.getElementById("address"+ o.dataset.id).value;
       let totalCars = document.getElementById("totalCars"+ o.dataset.id).value;
 
+     let bankAccount_x = document.getElementById('bankAccount'+ o.dataset.id) ;
+    let bankAccountName = document.getElementById('bankAccountName'+ o.dataset.id).value ;
+     let bankAccountNumber = document.getElementById('bankAccountNumber'+ o.dataset.id).value ;
+
+
       prePostData ={
       	  firstname,
 	      lastname,
@@ -4796,7 +5157,10 @@ window.updateData = (o) =>{
 	      status,
 	      address,
 	      is_verified,
-	      totalCars
+	      totalCars,
+        bankAccountNumber,
+        bankAccountName,
+        bankAccount: bankAccount_x.options[bankAccount_x.selectedIndex].text,
       };
     }else{
      prePostData ={
@@ -5295,7 +5659,168 @@ class ApiAdminBotService  {
   	const modalbody1 = document.getElementById("modalbody1");
 
   	if(datas.length<=0){
+        let item ={_id: 'jdskj83829309-02032' };
+        let AviewModals ='';
+        AviewModals += `
+
+        <div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                        <div class="slimScrollBar" > 
+                                            <div class=""> 
+                                                <div class=""> 
+                                                    <button id="close-id" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                                    <h4 class="modal-title">User Detail</h4> 
+                                                </div> 
+                                                <div class=""> 
+                                                    <div class="row"> 
+
+
+                                                    <div class="form-group" style="">
+                                        <label for="profileImage" class="col-sm-4 control-label"></label>
+                                        <div class="col-sm-7">
+                                           <input type="hidden" id="avatar-url" name="avatar-url" defaultValue="./public/assets/images/avatar.png"  />
+                                            <img  id="preview" style="border:1px solid gray;width:100px" src="./public/assets/images/avatar.png" alt="Avatar" class="avatar" />
+                                             <p id="status">Please select a file</p>  
+
+                                               
+                                             
+
+                                                  <div class="upload-btn-wrapper">
+
+                                                      <input onchange="initUpload()" type="file" name="myfile" id="file-input"  />
+                                                       <label htmlFor="myfile"><img src="/public/assets/images/camera.png"  style="width:50px;height:50px" id="clickme" />
+                                                       </label>
+                                                      
+                                                    </div>
+
+                                            <ul  id="displayImages"></ul>
+
+                                        </div>
+                                    </div>  </div>
+                                    <br/>
+
+                                        
+
+
+
+                                    
+                                   
+                                                       
+                                                    </div> 
+                                                    <div class="row"> 
+                                                        <div class="col-md-12"> 
+
+                                                            <div class="form-group ">
+                                          <label for="position">Status</label>
+                                          <select id="status${item._id}" class="form-control" data-style="btn-white">
+                                              <option>Active</option>
+                                              <option>Disabled</option>
+                                              <option>Suspended</option>
+                                              <option>Dormant</option>
+                                          </select>
+                                          </div>
+
+
+                                          <div class="form-group"> 
+                                                                <label for="field-1" class="control-label">First Name</label> 
+                                                                <input type="text" class="form-control" id="firstname${item._id}" placeholder="Doe">
+                                                            </div> 
+
+                                          <div class="form-group"> 
+                                                                <label for="field-2" class="control-label">Last Name</label> 
+                                                                <input type="text" class="form-control" id="lastname${item._id}" placeholder="Doe"> 
+                                                            </div> 
+
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Email</label> 
+                                                                <input type="text" class="form-control" id="email${item._id}" placeholder="Address"> 
+                                                            </div> 
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Username</label> 
+                                                                <input type="text" class="form-control" id="username${item._id}" placeholder="Address"> 
+                                                            </div> 
+
+                                                            
+
+
+                                                          
+                                                           
+                                     
+                                                           
+                                                            <div class="form-group ">
+                                          <label for="position">User Type</label>
+                                          <select id="type${item._id}" class="form-control" data-style="btn-white">
+                                              <option>Individual</option>
+                                              <option>Corporate</option>
+                                              
+                                          </select>
+                                          </div>
+
+
+                                          
+                                                            <div class="form-group"> 
+                                                                <label for="field-4" class="control-label">User certificate</label> 
+                                                                <input type="text" class="form-control" id="certificate${item._id}" placeholder="Boston"> 
+                                                                  <div><a href="#" onclick="genCert(this)" data-id="${item._id}"  >Generate Test Certificate</a></div>
+                                                            </div> 
+                                                         
+
+                                                         
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Phone</label> 
+                                                                <input type="text" class="form-control" id="phone${item._id}" placeholder="United States"> 
+                                                            </div> 
+                                                     
+
+                                                        
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Password</label> 
+                                                                <input value="unchanged" type="password" class="form-control" id="password${item._id}" placeholder="United States"> 
+                                                            </div> 
+                                                      
+                                                        
+                                                        
+                                                        
+                                                             <div style="display:none" class="checkbox checkbox-primary"> 
+                                                                 
+                                                                <input data-id="${item._id}" onchange="update_value_checked(this)" data-url="/admin-users-detail-verification" type="checkbox" class="" id="is_verified${item._id}" value="false"> 
+                                                                <label for="field-3" class="control-label">User Verification  </label>
+                                                            </div> 
+                                                       
+                                                        
+
+                                                        </div> 
+                                                    </div> 
+                                                    <div class="row"> 
+                                                        
+                                                        
+
+                                                    </div> 
+                                                    <div class="row"> 
+                                                        
+
+                                                    </div> 
+                                                </div> 
+                                                <div class="modal-footer">
+                                                <button onclick="addEvent(this)" data-id="${item._id}" data-url="/admin-add-user" id="create" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
+                                                     <button id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                                                    <button onclick="updateData(this)" data-id="${item._id}" data-url="/admin-users-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                    </div>
+
+
+
+        
+
+          `;
+
+       modalbody1.innerHTML=AviewModals;
       return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+    
+      
     }
   	
 
@@ -5515,7 +6040,161 @@ class ApiAdminBotService  {
   	const modalbody1 = document.getElementById("modalbody1");
 
   	if(datas.length<=0){
+        let item ={_id: 'jdskj83829309-02032' };
+        let AviewModals ='';
+        AviewModals += `
+
+        <div style="display:none"  id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                        <div class=" slimScrollBar" > 
+                                            <div class=""> 
+                                                <div class=""> 
+                                                    <button id="close-id" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                                    <h4 class="modal-title">Admin User Detail</h4> 
+                                                </div> 
+                                               <div class=""> 
+                                                    <div class="row"> 
+
+
+                                                    <div class="form-group" style="">
+                                        <label for="profileImage" class="col-sm-4 control-label"></label>
+                                        <div class="col-sm-7">
+                                           <input type="hidden" id="avatar-url" name="avatar-url" defaultValue="./public/assets/images/avatar.png"  />
+                                            <img  id="preview" style="border:1px solid gray;width:100px" src="./public/assets/images/avatar.png" alt="Avatar" class="avatar" />
+                                             <p id="status">Please select a file</p>  
+
+                                               
+                                             
+
+                                                  <div class="upload-btn-wrapper">
+
+                                                      <input onchange="initUpload()" type="file" name="myfile" id="file-input"  />
+                                                       <label htmlFor="myfile"><img src="/public/assets/images/camera.png"  style="width:50px;height:50px" id="clickme" />
+                                                       </label>
+                                                      
+                                                    </div>
+
+                                            <ul  id="displayImages"></ul>
+
+                                        </div>
+                                    </div>  </div>
+                                    <br/>
+
+
+                                    
+                                                         
+                                                            <div class="form-group"> 
+                                                                <label for="field-1" class="control-label">Name</label> 
+                                                                <input type="text" class="form-control" id="firstname${item._id}" placeholder="Doe">
+                                                            </div> 
+                                                        
+                                                        
+                                                            <div class="form-group"> 
+                                                                <label for="field-2" class="control-label">Surname</label> 
+                                                                <input type="text" class="form-control" id="lastname${item._id}" placeholder="Doe"> 
+                                                            </div> 
+                                                     
+                                                    </div> 
+                                                    <div class="row"> 
+                                                        <div class="col-md-12"> 
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Email</label> 
+                                                                <input type="text" class="form-control" id="email${item._id}" placeholder="Address"> 
+                                                            </div> 
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Username</label> 
+                                                                <input type="text" class="form-control" id="username${item._id}" placeholder="Address"> 
+                                                            </div> 
+
+
+                                                          
+                                                           <div class="form-group ">
+                                          <label for="position">Status</label>
+                                          <select id="status${item._id}" class="form-control" data-style="btn-white">
+                                              <option>Active</option>
+                                              <option>Disabled</option>
+                                              <option>Suspended</option>
+                                               <option>Dormant</option>
+                                          </select>
+                                          </div>
+                                     
+                                                           
+                                                             <div class="form-group ">
+                                          <label for="position">User Role</label>
+                                          <select id="type${item._id}" class="form-control" data-style="btn-white" data-usergroups="${new_rolesSet}">
+                                              ${roles_option}
+                                          </select>
+                                          </div>
+
+                                                        </div> 
+                                                    </div> 
+                                                    <div class="row"> 
+                                                        
+
+                                                         
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Phone</label> 
+                                                                <input type="text" class="form-control" id="phone${item._id}" placeholder="United States"> 
+                                                            </div> 
+                                                    
+
+                                                     
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Password</label> 
+                                                                <input value="unchanged" type="password" class="form-control" id="password${item._id}" placeholder="United States"> 
+                                                            </div> 
+                                                   
+
+                                                           
+
+                                                               <div style="display:none" class="checkbox checkbox-primary"> 
+                                                                 
+                                                                <input data-id="${item._id}" onchange="update_value_checked(this)" data-url="/admin-admins-detail-verification" type="checkbox" class="" id="is_verified${item._id}" value="false"> 
+                                                                <label for="field-3" class="control-label">User Verification  </label>
+                                                            </div> 
+                                                         
+                                                         
+                                                        
+                                                        
+
+                                                     
+                                                            <div class="form-group"> 
+                                                                 
+                                                                <input type="hidden" class="form-control" id="certificate${item._id}" placeholder="Boston"> 
+                                                            </div> 
+                                                       
+                                                             
+
+
+
+                                                        
+
+                                                    </div> 
+                                                    <div class="row"> 
+                                                        
+
+                                                    </div> 
+                                                </div> 
+                                                
+                                                <div class="modal-footer">
+                                                <button id="create" onclick="addEvent(this)" data-id="${item._id}" data-url="/add-admin" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
+                                                     <button id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                                                    <button onclick="updateData(this)" data-id="${item._id}" data-url="/admin-admins-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                    </div>
+
+
+
+        
+
+          `;
+
+       modalbody1.innerHTML=AviewModals;
       return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+    
+      
     }
   	
     
@@ -5721,8 +6400,158 @@ class ApiAdminBotService  {
   	const modalbody1 = document.getElementById("modalbody1");
 
   	if(datas.length<=0){
+        let item ={_id: 'jdskj83829309-02032' };
+        let AviewModals ='';
+        AviewModals += `
+
+        <div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                        <div class="slimScrollBar"> 
+                                            <div class=""> 
+                                                <div class="modal-header"> 
+                                                    <button id="close-id" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                                    <h4 class="modal-title">Driver User Detail</h4> 
+                                                </div> 
+                                                <div class=""> 
+                                                    <div class="row"> 
+
+                                                     <br/><br/>
+                                                    <div class="form-group" style="">
+                                        <label for="profileImage" class="col-sm-4 control-label"></label>
+                                        <div class="col-sm-7">
+                                           <input type="hidden" id="avatar-url" name="avatar-url" defaultValue="./public/assets/images/avatar.png"  />
+                                            <img  id="preview" style="border:1px solid gray;width:100px" src="./public/assets/images/avatar.png" alt="Avatar" class="avatar" />
+                                             <p id="status">Please select a file</p>  
+
+                                               
+                                             
+
+                                                  <div class="upload-btn-wrapper">
+
+                                                      <input onchange="initUpload()" type="file" name="myfile" id="file-input"  />
+                                                       <label htmlFor="myfile"><img src="/public/assets/images/camera.png"  style="width:50px;height:50px" id="clickme" />
+                                                       </label>
+                                                      
+                                                    </div>
+
+                                            <ul  id="displayImages"></ul>
+
+                                        </div>
+                                    </div>  </div>
+                                    <br/>
+                                                        
+                                                            <div class="form-group"> 
+                                                                <label for="field-1" class="control-label">Name</label> 
+                                                                <input type="text" class="form-control" id="firstname${item._id}" placeholder="Doe">
+                                                            </div> 
+                                                  
+                                                       
+                                                            <div class="form-group"> 
+                                                                <label for="field-2" class="control-label">Last Name</label> 
+                                                                <input type="text" class="form-control" id="lastname${item._id}" placeholder="Doe"> 
+                                                           
+                                                        </div> 
+                                                    </div> 
+                                                    <div class="row"> 
+                                                        <div class="col-md-12"> 
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Email</label> 
+                                                                <input type="text" class="form-control" id="email${item._id}" placeholder="Address"> 
+                                                            </div> 
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Username</label> 
+                                                                <input type="text" class="form-control" id="username${item._id}" placeholder="Address"> 
+                                                            </div> 
+
+
+                                                          
+                                                           <div class="form-group ">
+                                          <label for="position">Status</label>
+                                          <select id="status${item._id}" class="form-control" data-style="btn-white">
+                                              <option>Active</option>
+                                              <option>Disabled</option>
+                                              <option>Suspended</option>
+                                              <option>Dormant</option>
+                                          </select>
+                                          </div>
+                                     
+                                                           
+                                                            <div class="form-group ">
+                                          <label for="position">User Type</label>
+                                          <select id="type${item._id}" class="form-control" data-style="btn-white">
+                                              <option>Commute Driver</option>
+                                              <option>Individual Driver</option>
+                                              <option>Other Organization Driver</option>
+                                          </select>
+                                          </div>
+
+
+                                               <div class="form-group" style="display:none"> 
+                                                                <label for="field-4" class="control-label">Assigned Cars/Plate No</label> 
+                                                                <input type="text" value="Not Assigned" class="form-control" id="certificate${item._id}" placeholder="Boston"> 
+                                                            </div> 
+                                                       
+
+                                                       
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Phone</label> 
+                                                                <input type="text" class="form-control" id="phone${item._id}" placeholder="United States"> 
+                                                            </div> 
+                                                       
+
+                                                        
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Password</label> 
+                                                                <input value="unchanged" type="password" class="form-control" id="password${item._id}" placeholder="United States"> 
+                                                            </div> 
+                                                      
+
+                                                        
+                                                             <div style="display:none" class="checkbox checkbox-primary"> 
+                                                                 
+                                                                <input data-id="${item._id}" data-url="/admin-drivers-detail-verification" onchange="update_value_checked(this)" type="checkbox" class="" id="is_verified${item._id}" value="false"> 
+                                                                <label for="field-3" class="control-label">User Verification  </label>
+                                                            </div> 
+                                                       
+                                                        
+
+
+                                                        </div> 
+                                                    </div> 
+                                                    <div class="row"> 
+                                                        
+                                                       
+
+                                                        
+
+                                                    </div> 
+                                                    <div class="row"> 
+                                                        
+
+                                                    </div> 
+                                                </div> 
+                                                <div class="modal-footer">
+                                                <button id="create" onclick="addEvent(this)" data-id="${item._id}" data-url="/add-driver" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
+                                                     <button id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                                                    <button onclick="updateData(this)" data-id="${item._id}" data-url="/admin-drivers-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                    </div>
+
+
+
+
+        
+
+          `;
+
+       modalbody1.innerHTML=AviewModals;
       return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+    
+      
     }
+    
   	
     
     let className = null;
@@ -5833,9 +6662,9 @@ class ApiAdminBotService  {
 									                        </div>
 
 
-									                             <div class="form-group"> 
+									                             <div class="form-group" style="display:none"> 
                                                                 <label for="field-4" class="control-label">Assigned Cars/Plate No</label> 
-                                                                <input type="text" class="form-control" id="certificate${item._id}" placeholder="Boston"> 
+                                                                <input type="text" value="Not Assigned" class="form-control" id="certificate${item._id}" placeholder="Boston"> 
                                                             </div> 
                                                        
 
@@ -5899,7 +6728,7 @@ class ApiAdminBotService  {
     
   }
 
-  static runAdminPartnersEarnings(datas,partners,previledges){
+  static runAdminPartnersEarnings(datas,partners,cars,previledges){
 
 WarLockAdmin(previledges,'view_partners','manage_partners')
     noReadWrite(previledges,'manage_partners')
@@ -5915,11 +6744,20 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
    let selectOptions_users = ``;
 
+   console.log(cars)
+
+   let selectedCars ='';
+   [...new Set(cars)].map((item, i) => { 
+          selectedCars+=`<option data-id="${item._id}" data-vehicleplateno="${item.plate_number || item.plateNumber }" id="${item._id}"  data-vehiclename="${item.model || item.Model}">${item.model || item.Model}-${item._id}</option>`; 
+          
+              
+      });
+
     
 
 
       [...new Set(partners)].map((item, i) => { 
-          selectOptions_users+=`<option data-with="${item._id}" id="${item._id}"  value="${item._id}">${item.email}</option>`; 
+          selectOptions_users+=`<option data-id="${item._id}" data-partnerid="${item._id}" data-bankaccount="${item.bankAccount}" data-bankaccountname="${item.bankAccountName}" data-bankaccountnumber="${item.bankAccountNumber}" id="${item._id}"  value="${item._id}">${item.email}</option>`; 
           
               
       });
@@ -5935,8 +6773,175 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
   	const tablebody1 = document.getElementById('tablebody1');
   	const modalbody1 = document.getElementById("modalbody1");
 
-  	if(datas.length<=0){
+  	
+    if(datas.length<=0){
+        let item ={_id: 'jdskj83829309-02032' };
+        let AviewModals ='';
+        AviewModals += `
+
+        <div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                        <div class=" slimScrollBar" > 
+                                            <div class=""> 
+                                                <div class=""> 
+                                                    <button id="close-id" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                                    <h4 class="modal-title">Partners Earnings Detail</h4> 
+                                                </div> 
+                                                <div class=""> 
+                                                    <div class="row"> 
+
+
+                                                    <div class="form-group" style="">
+                                                                            </div>  </div>
+                                    <br/>
+                                                     <div class="col-md-12"> 
+                                                           <div class="form-group ">
+                                          <label for="position">Status</label>
+                                          <select id="PaymentStatus${item._id}" class="form-control" data-style="btn-white">
+                                              <option>Completed</option>
+                                              <option>Ongoing</option>
+                                              <option>Pending</option>
+                                               
+                                          </select>
+                                          </div>
+                                     
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-1" class="control-label">Partner Email</label> 
+                                                                <select data-id="${item._id}" onchange="setEarningsDetail(this)"   class="selectpicker form-control" data-style="btn-white" id="PartnerEmail${item._id}" >
+                                                                   <option>--select--</option>
+                                                                   ${selectOptions_users}
+                                                                </select>
+                                                            </div> 
+                                                        
+                                                         
+                                                            <div class="form-group"> 
+                                                                <label for="field-2" class="control-label">Payment Date</label> 
+                                                                <input type="date" class="form-control" id="paymentDate${item._id}" placeholder="Doe"> 
+                                                            </div>
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-4" class="control-label">Partner Id</label> 
+                                                                <input disabled type="text" class="form-control" id="partnerId${item._id}" placeholder="Boston"> 
+                                                            </div> 
+                                                        
+                                                             
+                                                        
+                                                            
+                                                        
+                                                             
+
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Payment Ref</label> 
+                                                                <input disabled type="text" class="form-control" id="paymentReference${item._id}" placeholder="email"> 
+                                                            </div> 
+
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">BankAccount</label> 
+                                              
+                                                                 
+
+                                                                 
+                                                                <input disabled type="text" class="form-control" id="partnerBankAccount${item._id}" placeholder="email"> 
+                                                             
+                                                            </div>
+
+
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Bank Account Number</label> 
+                                                                <input disabled type="text" class="form-control" id="bankAccountNumber${item._id}" placeholder="email"> 
+                                                            </div> 
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Bank Account Name</label> 
+                                                                <input disabled type="text" class="form-control" id="bankAccountName${item._id}" placeholder="email"> 
+                                                            </div> 
+
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Payment Amount</label> 
+                                                                <input value="" type="text" class="form-control" id="PaymentAmount${item._id}" placeholder="United States"> 
+                                                            </div> 
+
+
+
+
+                          
+
+                                                            
+
+                                                             <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Vehicle/Car Id</label> 
+                                                                
+
+                                                            <select data-id="${item._id}" onchange="setCarDetailsOnearning(this)" type="text" class="form-control " id="vehicleId${item._id}"  >
+                                                                 <option>--select--</option>
+                                                                 ${selectedCars}
+                                                            </select>
+
+                                                            </div>
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Vehicle Name</label> 
+                                                                
+
+                                                            <input disabled type="text" class="form-control " id="vehicleName${item._id}" >
+
+                                                            </div> 
+
+
+
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">PlateNo</label> 
+                                                                <input disabled type="text" class="form-control" id="vehiclePlateNo${item._id}" placeholder="0"> 
+                                                            </div>
+                                                          
+                                                           
+                                                           
+                                                           <!-- <div class="form-group " style="display:none">
+                                          <label for="position">User Role</label>
+                                          <select id="type${item._id}" class="form-control" data-style="btn-white">
+                                              <option> Individual Partner</option>
+                                              <option>Organizational Partner</option>
+                                              
+                                          </select>
+                                          </div>-->
+
+                                                        
+                                                         
+                                                          </div> 
+                                                    </div> 
+
+                                                     
+                                                     
+                                                    
+                                                    <div class="row"> 
+                                                        
+
+                                                    </div> 
+                                                </div> 
+                                                <div class="modal-footer">
+                                                <button onclick="addEventEarnings(this)" data-id="${item._id}" data-url="/add-partner-earnings" id="create" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
+                                                      <button id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                                                    <button onclick="updateDataEarnings(this)" data-id="${item._id}" data-url="/partners-earnings-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                    </div>
+
+
+
+        
+
+          `;
+
+       modalbody1.innerHTML=AviewModals;
       return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+    
+      
     }
 
 
@@ -5959,17 +6964,17 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
   	    	className="label-pink"
   	    }         
         template2 +=`<tr class="notification">
-                    <td class="">${formatDate( new Date( item.paymentDate ) ) }</td>
-                    <td class="">${item.partnerId}</td>
-                    <td class="">${item.partnerEmail}</td>
-                    <td class="">${item.partnerBankAccount.bankAccountName}</td>
-                    <td>${item.PaymentAmount}</td>
-                    <td class="">${item.vehicleId }</td>
-                    <td>${item.vehiclePlateNo}</td>
+                    <td class="">${formatDate( new Date( item.paymentDate ) ) || '' }</td>
+                    <td class="">${item.partnerId || ''}</td>
+                    <td class="">${item.partnerEmail || ''}</td>
+                    <td class="">${item.partnerBankAccount.bankAccount || ''}</td>
+                    <td>${item.paymentAmount || ''}</td>
+                    <td class="">${item.vehicleId || '' }</td>
+                    <td>${item.vehiclePlateNo || ''}</td>
                     
-                    <td class=""><span class="label ${className}">${item.PaymentStatus}</span></td>
+                    <td class=""><span class="label ${className}">${item.paymentStatus || ''}</span></td>
                     
-                    <td class=""><a onclick="updateRecordViewEarnings(this)" data-toggle="modal" data-bankaccountname="${item.partnerBankAccount.bankAccountName}" data-bankaccountnumber="${item.partnerBankAccount.bankAccountNumber}" data-vehicleId="${item.vehicleId}"  data-vehiclePlateNo="${item.vehiclePlateNo}"   data-id="${item._id}" data-PaymentAmount="${item.PaymentAmount}" data-partneremail="${item.partnerEmail}" data-partnerBankAccount="${item.partnerBankAccount.bankAccount}" data-PartnerEmail="${item.PartnerEmail}" data-paymentReference="${item.paymentReference}"  data-paymentdate="${formatDate(new Date(item.paymentDate))}" data-paymentid="${item.paymentId}" data-partnerid="${item.partnerId}" data-vehicleName="${item.vehicleName}"  class="table-action-btn"><i class="md md-edit"></i></a>
+                    <td class=""><a onclick="updateRecordViewEarnings(this)" data-toggle="modal" data-bankaccountname="${item.partnerBankAccount.bankAccountName || ''}" data-bankaccountnumber="${item.partnerBankAccount.bankAccountNumber || ''}" data-vehicleId="${item.vehicleId || ''}"  data-vehiclePlateNo="${item.vehiclePlateNo || ''}"   data-id="${item._id}" data-PaymentAmount="${item.PaymentAmount || ''}" data-partneremail="${item.partnerEmail || ''}" data-partnerBankAccount="${item.partnerBankAccount.bankAccount || ''}" data-PartnerEmail="${item.PartnerEmail || ''}" data-paymentReference="${item.paymentReference || ''}"  data-paymentdate="${formatDate(new Date(item.paymentDate)) || ''}" data-paymentid="${item.paymentId || ''}" data-partnerid="${item.partnerId || ''}" data-vehicleName="${item.vehicleName || ''}"  class="table-action-btn"><i class="md md-edit"></i></a>
                     <a onclick="deleteRecord(this)" data-id="${item._id}" data-url="/partners-earnings"  class="table-action-btn "><i class="md md-close"></i></a></td>
                 </tr>`;
 
@@ -6003,7 +7008,8 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
                                                             <div class="form-group"> 
                                                                 <label for="field-1" class="control-label">Partner Email</label> 
-                                                                <select type="text" class="form-control" id="PartnerEmail${item._id}">
+                                                                <select data-id="${item._id}" onchange="setEarningsDetail(this)"   class="selectpicker form-control" data-style="btn-white" id="PartnerEmail${item._id}" >
+                                                                   <option>--select--</option>
                                                                    ${selectOptions_users}
                                                                 </select>
                                                             </div> 
@@ -6040,31 +7046,12 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
                                                             <div class="form-group"> 
                                                                 <label for="field-5" class="control-label">BankAccount</label> 
-                                                                <select data-style="btn-white" class="form-control" id="partnerBankAccount${item._id}">
-                                                                  <option>Access Bank</option>
-                                                                  <option>Citibank</option>
-                                                                  <option>Diamond Bank</option>
-                                                                  <option>Dynamic Standard Bank</option>
-                                                                  <option>Ecobank Nigeria</option>
-                                                                  <option>Fidelity Bank Nigeria</option>
-                                                                  <option>First Bank of Nigeria</option>
-                                                                  <option>First City Monument Bank</option>
-                                                                  <option>Guaranty Trust Bank</option>
-                                                                  <option>Heritage Bank Plc</option> 
-                                                                  <option>Jaiz Bank</option> 
-                                                                  <option>Keystone Bank Limited</option>
-                                                                  <option>Providus Bank Plc</option>
-                                                                  <option>Stanbic IBTC Bank Nigeria Limited</option>
-                                                                  <option>Standard Chartered Bank</option>
-                                                                  <option>Sterling Bank</option>
-                                                                  <option>Suntrust Bank Nigeria Limited</option>
-                                                                  <option>Union Bank of Nigeria</option>
-                                                                  <option>United Bank for Africa</option>
-                                                                  <option>Unity Bank Plc</option>
-                                                                  <option>Wema Bank</option>
-                                                                  <option>Zenith Bank</option>
-                                                                                        
-                                                                </select>
+                                              
+                                                                 
+
+                                                                 
+                                                                <input type="text" class="form-control" id="partnerBankAccount${item._id}" placeholder="email"> 
+                                                             
                                                             </div>
 
 
@@ -6141,30 +7128,21 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
          modalbody1.innerHTML+=viewModals;
 
-          $("#PartnerEmail" + item._id).on('change', function() {
-           // Set selected option as variable
-           var selectValue = $(this).text();
 
-         
-           
-
-           
+        
+          
 
 
-           let me =partners.filter((item)=>item._id== $(this).val())
-           
-           
-           document.getElementById("partnerId"+ item._id).value =me[0]._id;
-           
-            
-        });
-
-
-          document.getElementById("partnerId"+ item._id).style.disabled=true
-         document.getElementById("vehicleId"+ item._id).style.disabled=true   
+         //  document.getElementById("partnerId"+ item._id).style.disabled=true
+         // document.getElementById("vehicleId"+ item._id).style.disabled=true   
 
 
     });
+
+
+
+      
+  
 
 
 
@@ -6203,10 +7181,203 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
     const modalbody1 = document.getElementById("modalbody1");
 
     if(datas.length<=0){
+        let item ={_id: 'jdskj83829309-02032' };
+        let AviewModals ='';
+        AviewModals += `
+
+        <div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                        <div class=" slimScrollBar" > 
+                                            <div class=""> 
+                                                <div class=""> 
+                                                    <button id="close-id" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                                    <h4 class="modal-title">Partners Detail</h4> 
+                                                </div> 
+                                                <div class=""> 
+                                                    <div class="row"> 
+
+
+                                                    <div class="form-group" style="">
+                                        <label for="profileImage" class="col-sm-4 control-label"></label>
+                                        <div class="col-sm-7">
+                                           <input type="hidden" id="avatar-url" name="avatar-url" defaultValue="./public/assets/images/avatar.png"  />
+                                            <img  id="preview" style="border:1px solid gray;width:100px" src="./public/assets/images/avatar.png" alt="Avatar" class="avatar" />
+                                             <p id="status">Please select a file</p>  
+
+                                               
+                                             
+
+                                                  <div class="upload-btn-wrapper">
+
+                                                      <input onchange="initUpload()" type="file" name="myfile" id="file-input"  />
+                                                       <label htmlFor="myfile"><img src="/public/assets/images/camera.png"  style="width:50px;height:50px" id="clickme" />
+                                                       </label>
+                                                      
+                                                    </div>
+
+                                            <ul  id="displayImages"></ul>
+
+                                        </div>
+                                    </div>  </div>
+                                    <br/>
+                                                     <div class="col-md-12"> 
+                                                           <div class="form-group ">
+                                          <label for="position">Status</label>
+                                          <select id="status${item._id}" class="form-control" data-style="btn-white">
+                                              <option>Active</option>
+                                              <option>Disabled</option>
+                                              <option>Suspended</option>
+                                               <option>Dormant</option>
+                                          </select>
+                                          </div>
+                                     
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-1" class="control-label">First Name</label> 
+                                                                <input type="text" class="form-control" id="firstname${item._id}" placeholder="Doe">
+                                                            </div> 
+                                                        
+                                                         
+                                                            <div class="form-group" > 
+                                                                <label for="field-2" class="control-label">Last Name</label> 
+                                                                <input type="text" class="form-control" id="lastname${item._id}" placeholder="Doe"> 
+                                                            </div>
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-4" class="control-label">Business Name</label> 
+                                                                <input type="text" class="form-control" id="certificate${item._id}" placeholder="Boston"> 
+                                                            </div> 
+
+
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">BankAccount</label> 
+                                                                <select data-style="btn-white" class="form-control" id="bankAccount${item._id}">
+                                                                  <option>Access Bank</option>
+                                                                  <option>Citibank</option>
+                                                                  <option>Diamond Bank</option>
+                                                                  <option>Dynamic Standard Bank</option>
+                                                                  <option>Ecobank Nigeria</option>
+                                                                  <option>Fidelity Bank Nigeria</option>
+                                                                  <option>First Bank of Nigeria</option>
+                                                                  <option>First City Monument Bank</option>
+                                                                  <option>Guaranty Trust Bank</option>
+                                                                  <option>Heritage Bank Plc</option> 
+                                                                  <option>Jaiz Bank</option> 
+                                                                  <option>Keystone Bank Limited</option>
+                                                                  <option>Providus Bank Plc</option>
+                                                                  <option>Stanbic IBTC Bank Nigeria Limited</option>
+                                                                  <option>Standard Chartered Bank</option>
+                                                                  <option>Sterling Bank</option>
+                                                                  <option>Suntrust Bank Nigeria Limited</option>
+                                                                  <option>Union Bank of Nigeria</option>
+                                                                  <option>United Bank for Africa</option>
+                                                                  <option>Unity Bank Plc</option>
+                                                                  <option>Wema Bank</option>
+                                                                  <option>Zenith Bank</option>
+                                                                                        
+                                                                </select>
+                                                            </div>
+
+
+                                                            <div class="form-group" > 
+                                                                <label for="field-2" class="control-label">Account Name</label> 
+                                                                <input type="text" class="form-control" id="bankAccountName${item._id}" placeholder="Doe"> 
+                                                            </div>
+
+                                                            <div class="form-group" > 
+                                                                <label for="field-2" class="control-label">Account Number</label> 
+                                                                <input type="text" class="form-control" id="bankAccountNumber${item._id}" placeholder="Doe"> 
+                                                            </div>
+                                                        
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Phone</label> 
+                                                                <input type="text" class="form-control" id="phone${item._id}" placeholder="United States"> 
+                                                            </div> 
+                                                        
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Password</label> 
+                                                                <input value="unchanged" type="password" class="form-control" id="password${item._id}" placeholder="United States"> 
+                                                            </div> 
+                                                        
+                                                             <div class="checkbox checkbox-primary" style="display:none"> 
+                                                                 
+                                                                <input data-id="${item._id}" data-url="/admin-partners-detail-verification"  onchange="update_value_checked(this)" type="checkbox" class="" id="is_verified${item._id}" value="false"> 
+                                                                <label for="field-3" class="control-label">User Verification  </label>
+                                                            </div> 
+
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Email</label> 
+                                                                <input type="text" class="form-control" id="email${item._id}" placeholder="email"> 
+                                                            </div> 
+
+                                                            <div class="form-group" > 
+                                                                
+                                                                <input  type="hidden"  class="form-control" id="username${item._id}" value="saladinjake"> 
+                                                            </div> 
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Address</label> 
+                                                                
+
+                                                            <textarea class="form-control autogrow" id="address${item._id}" placeholder="Give an office address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+
+                                                            </div> 
+
+
+                                                            <div class="form-group" style="display:none"> 
+                                                                <label for="field-3" class="control-label">Minimum No of Cars</label> 
+                                                                <input type="number" class="form-control" id="totalCars${item._id}" value="1" placeholder="0"> 
+                                                            </div>
+                                                          
+                                                           
+                                                           
+                                                            <div class="form-group " style="display:none">
+                                          <label for="position">User Role</label>
+                                          <select id="type${item._id}" class="form-control" data-style="btn-white">
+                                              <option> Individual Partner</option>
+                                              <option>Organizational Partner</option>
+                                              
+                                          </select>
+                                          </div>
+
+                                                        
+                                                         
+                                                          </div> 
+                                                    </div> 
+
+                                                     
+                                                     
+                                                    
+                                                    <div class="row"> 
+                                                        
+
+                                                    </div> 
+                                                </div> 
+                                                <div class="modal-footer">
+                                                <button onclick="addEvent(this)" data-id="${item._id}" data-url="/add-partner" id="create" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
+                                                      <button id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                                                    <button onclick="updateData(this)" data-id="${item._id}" data-url="/admin-partners-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                    </div>
+
+
+
+
+        
+
+          `;
+
+       modalbody1.innerHTML=AviewModals;
       return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+    
+      
     }
     
     let className = null;
+    let avt ='';
     datas.map((item, i) => {    
         if(item.status=="Active"){
            className = "label-success"
@@ -6216,17 +7387,25 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
           className = "label-danger"
         } else{
           className="label-pink"
-        }         
+        }
+
+        if(item.avatar.length>0){
+           avt = item.avatar.startsWith("https://") ? item.avatar : "https://commute-bucket.s3.amazonaws.com/" + item.avatar          
+        }else{
+          avt = 'https://commute-bucket.s3.amazonaws.com/'+ 'saladinjake.jpg';
+        }
+         
+         
         template2 +=`<tr class="notification">
                     <td class="">${item.firstName || item.name}</td>
                    
                     <td class="">${item.email}</td>
-                    <td class="">${item.businessName}</td>
+                    <td class="">${item.businessName || '' }</td>
                     <td class="">${item.phoneNumber || item.phone}</td>
                     
                     <td class=""><span class="label ${className}">${item.status}</span></td>
                     
-                    <td class=""><a onclick="updateRecordView(this)" data-toggle="modal" data-isVerified="${item.isVerified}" data-totalCars="${item.totalCars}"  data-avatar="https://commute-bucket.s3.amazonaws.com/${item.avatar}"   data-id="${item._id}" data-totalCars="${item.totalCars}" data-firstname="${item.firstName}" data-lastname="${item.lastName}" data-email="${item.email}" data-phone="${item.phoneNumber}" data-username="${item.userName}" data-address="${item.address}" data-status="${item.status}" data-certificate="${item.businessName}"  class="table-action-btn"><i class="md md-edit"></i></a>
+                    <td class=""><a onclick="updateRecordView(this)"  data-bankaccount="${item.bankAccount || '' }"  data-bankaccountname="${item.bankAccountName || '' }"  data-bankaccountnumber="${item.bankAccountNumber|| ''}" data-toggle="modal" data-isVerified="${item.isVerified|| 'No'}" data-totalCars="${item.totalCars}"  data-avatar="${avt|| item.avatar}"   data-id="${item._id}" data-totalCars="${item.totalCars}" data-firstname="${item.firstName || item.name }" data-lastname="${item.lastName || item.name }" data-email="${item.email}" data-phone="${item.phoneNumber || item.phone}" data-username="${item.userName || item.name }" data-address="${item.address || ''}" data-status="${item.status}" data-certificate="${item.businessName || ''}"  class="table-action-btn"><i class="md md-edit"></i></a>
                     <a onclick="deleteRecord(this)" data-id="${item._id}" data-url="/partners"  class="table-action-btn "><i class="md md-close"></i></a></td>
                 </tr>`;
         
@@ -6294,6 +7473,49 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                                                 <label for="field-4" class="control-label">Business Name</label> 
                                                                 <input type="text" class="form-control" id="certificate${item._id}" placeholder="Boston"> 
                                                             </div> 
+
+
+
+                                                                      <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Bank Account</label> 
+                                                                <select data-style="btn-white" class="form-control" id="bankAccount${item._id}">
+                                                                  <option>Access Bank</option>
+                                                                  <option>Citibank</option>
+                                                                  <option>Diamond Bank</option>
+                                                                  <option>Dynamic Standard Bank</option>
+                                                                  <option>Ecobank Nigeria</option>
+                                                                  <option>Fidelity Bank Nigeria</option>
+                                                                  <option>First Bank of Nigeria</option>
+                                                                  <option>First City Monument Bank</option>
+                                                                  <option>Guaranty Trust Bank</option>
+                                                                  <option>Heritage Bank Plc</option> 
+                                                                  <option>Jaiz Bank</option> 
+                                                                  <option>Keystone Bank Limited</option>
+                                                                  <option>Providus Bank Plc</option>
+                                                                  <option>Stanbic IBTC Bank Nigeria Limited</option>
+                                                                  <option>Standard Chartered Bank</option>
+                                                                  <option>Sterling Bank</option>
+                                                                  <option>Suntrust Bank Nigeria Limited</option>
+                                                                  <option>Union Bank of Nigeria</option>
+                                                                  <option>United Bank for Africa</option>
+                                                                  <option>Unity Bank Plc</option>
+                                                                  <option>Wema Bank</option>
+                                                                  <option>Zenith Bank</option>
+                                                                                        
+                                                                </select>
+                                                            </div>
+
+
+                                                            <div class="form-group" > 
+                                                                <label for="field-2" class="control-label">Account Name</label> 
+                                                                <input type="text" class="form-control" id="bankAccountName${item._id}" placeholder="Doe"> 
+                                                            </div>
+
+                                                            <div class="form-group" > 
+                                                                <label for="field-2" class="control-label">Account Number</label> 
+                                                                <input type="text" class="form-control" id="bankAccountNumber${item._id}" placeholder="Doe"> 
+                                                            </div>
+
                                                         
                                                             <div class="form-group"> 
                                                                 <label for="field-5" class="control-label">Phone</label> 
@@ -6302,7 +7524,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                                         
                                                             <div class="form-group"> 
                                                                 <label for="field-5" class="control-label">Password</label> 
-                                                                <input value="unchanged" type="text" class="form-control" id="password${item._id}" placeholder="United States"> 
+                                                                <input value="unchanged" type="password" class="form-control" id="password${item._id}" placeholder="United States"> 
                                                             </div> 
                                                         
                                                              <div class="checkbox checkbox-primary"> 
@@ -6317,9 +7539,9 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                                                 <input type="text" class="form-control" id="email${item._id}" placeholder="email"> 
                                                             </div> 
 
-                                                            <div class="form-group"> 
+                                                            <div class="form-group" > 
                                                                 <label for="field-3" class="control-label">Username</label> 
-                                                                <input type="text" class="form-control" id="username${item._id}" placeholder="username"> 
+                                                                <input type="hidden"  class="form-control" id="username${item._id}"  value="saladinjake"> 
                                                             </div> 
 
                                                             <div class="form-group"> 
@@ -6331,7 +7553,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                                             </div> 
 
 
-                                                            <div class="form-group"> 
+                                                            <div class="form-group" style="display:none"> 
                                                                 <label for="field-3" class="control-label">Minimum No of Cars</label> 
                                                                 <input type="number" class="form-control" id="totalCars${item._id}" value="1" placeholder="0"> 
                                                             </div>
@@ -6835,7 +8057,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                          <td class=""><a onclick="viewRecordTemplate(this)" href="#" id="plancat${item._id}" data-id="${item._id}" data-url="/admin-sos-detail" class=""><b>${formatDate(new Date(item.created_at))} </b></a> </td>
                           
                           <td class="">CMT-USER- ${item.username}</td>
-                           <td class="">${item.plate_number}</td>
+                           <td class="">${item.email}</td>
                            
                            <td class="">${item.location}</td>
                            <td class=""><span class="label ${className}">${item.status}</span></td>
@@ -6895,7 +8117,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                                         </div>
 
 									                        <div class=""> 
-                                                            <div class="form-group"> 
+                                                            <div class="form-group" style="display:none"> 
                                                                 <label for="field-4" class="control-label">Plate Number</label> 
                                                                 <input type="text" disabled class="form-control" id="plate_number${item._id}" placeholder="AE-GX-2211"> 
                                                             </div> 
@@ -7106,9 +8328,193 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
   	const tablebody1 = document.getElementById('tablebody1');
   	const modalbody1 = document.getElementById("modalbody1");
     
-    if(data.length<=0){
+    if(datas.length<=0){
+        let item ={_id: 'jdskj83829309-02032' };
+        let AviewModals ='';
+        AviewModals += `
+
+        <div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                        <div class="slimScrollBar"> 
+                                            <div > 
+                                                <div class=""> 
+                                                    <button id="close-id" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                                   
+                                                </div> 
+                                                <div class=""> 
+                                                    <div class="row"> 
+
+
+                                                             <div class="form-group">
+                                          <label for="position">Email</label>
+                                          <select data-id="${item._id}" onchange="autofill(this)" id="email${item._id}" class="form-control" data-style="btn-white">
+                                              <option>--Select an email user--</option>
+                                              ${selectOptions_users}
+                                               
+                                          </select>
+                                          </div>
+
+                                                       <div class="form-group">
+                                          <label for="position">Username</label>
+                                          <input  type="text" disabled class="form-control" id="username${item._id}" placeholder="unlimited"> 
+                                          </div>
+
+                                          <div class=""> 
+                                                              <div class="form-group"> 
+                                                                  <label for="field-4" class="control-label">Phone</label> 
+                                                                  <input type="text" disabled class="form-control" id="phone_number${item._id}" placeholder="AE-GX-2211"> 
+                                                              </div> 
+                                                            </div>
+
+
+                                          <div class=""> 
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Ticket ID</label> 
+                                                                <input  type="text" disabled class="form-control" id="ticket_id${item._id}" placeholder="unlimited"> 
+                                                            </div> 
+                                                        </div>
+
+                                                         
+                                          <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Created Date</label> 
+                                                                <input  type="date"  class="form-control" id="date${item._id}" placeholder="unlimited"> 
+                                          </div> 
+
+
+                                           <div class="form-group"> 
+                                                                <label for="field-4" class="control-label">Subject</label> 
+                                                                <input type="text" disabled class="form-control" id="subject${item._id}" placeholder="AE-GX-2211"> 
+                                                            </div> 
+                                            
+                                                        
+
+                                                         
+                                                            <div class="form-group" style="display:none">  
+                                                                <label for="field-4" class="control-label">User ID</label> 
+                                                                <input type="text" disabled class="form-control" id="user_id${item._id}" placeholder="saladin"> 
+                                                            </div> 
+                                                      
+
+                                          
+                                                           
+                                                        </div>
+                                             
+
+                                                    <div class="row"> 
+
+                                                        
+
+                                                       
+                                                        
+                                                       
+
+
+
+                                      
+                                                        
+
+
+                                                        
+
+                                                    </div> 
+                                                    <div class="row"> 
+                                                        <div class="col-md-12"> 
+
+
+                                                           
+
+                                                            
+
+                                                            
+
+                                                            <br/>
+
+
+                                                         <div class="form-group">
+                                          <label for="position">Category</label>
+                                          <select id="category${item._id}" class="form-control" data-style="btn-white">
+                                              <option>General Enquiries</option>
+                                              <option>Technical Support</option>
+                                              <option>Feedback</option>
+                                               
+                                          </select>
+                                          </div>
+
+                                                         <div class="form-group">
+                                          <label for="position">Status</label>
+                                          <select id="status${item._id}" class="form-control" data-style="btn-white">
+                                              <option>Pending</option>
+                                              <option>Ongoing</option>
+                                              <option>Completed</option>
+                                               
+                                          </select>
+                                          </div>
+
+
+                                          <div class="form-group">
+                                          <label for="position">Assigned Admin</label>
+                                          <select id="assigned_to${item._id}" class="form-control" data-style="btn-white">
+                                              ${selectOptions}
+                                               
+                                          </select>
+                                          </div>
+
+                                          <br/>
+
+                                          <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Response</label> 
+                                                                
+
+                                                            <textarea  class="form-control autogrow" id="response${item._id}" placeholder="Response" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+
+                                                            </div> 
+
+                                                            
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Ticket Complaints</label> 
+                                                                
+
+                                                            <textarea disabled class="form-control autogrow" id="comment${item._id}" placeholder="Description" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+
+                                                            </div> 
+
+
+
+                                                            
+                                                          
+                                                          
+                                                           
+                                                            
+
+                                                        </div> 
+                                                    </div> 
+                                                    
+                                                    <div class="row"> 
+                                                        
+
+                                                    </div> 
+                                                </div> 
+                                                <div class="modal-footer">
+                                                <button onclick="addRecordEvent(this)" data-id="${item._id}" data-url="/add-ticket" id="create" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
+                                                     <button style="display:none; opacity:0" onclick="deleteData(this)" data-id="${item._id}" data-url="/tickets" id="delete" type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Delete</button> 
+                                                    <button id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                                                    <button onclick="updateRecordTemplate(this)" data-id="${item._id}" data-url="/admin-ticket-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                    </div>
+
+
+
+        
+
+          `;
+
+       modalbody1.innerHTML=AviewModals;
       return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+    
+      
     }
+    
 
   	data.map((item, i) => { 
   		let className='';
@@ -7327,11 +8733,11 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
   }
 
 
-   static runAdminFaqs(datas,previledges){
+      static runAdminFaqs(datas,previledges){
 
      WarLockAdmin(previledges,'view_faqs','manage_faqs')
          noReadWrite(previledges,'manage_faqs')
-  	GateKeepersForAdmin();
+    GateKeepersForAdmin();
     document.getElementById('add-new').addEventListener('click',(e)=>{
       //$('.mebox').show()
 
@@ -7356,28 +8762,103 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
        document.getElementById("second-view").style.display="block";
 
     })
-  	//addSOS()
-  	document.getElementById("search").addEventListener("keyup",(e)=>{
-   	 searchTable() 
+    //addSOS()
+    document.getElementById("search").addEventListener("keyup",(e)=>{
+     searchTable() 
    })
-  	
-  		
+    
+      
 
-	  	let data = [...datas]
+      let data = [...datas]
 
 
 
-	            let template2 ='';
+              let template2 ='';
     let viewModals = '';
     
-  	const tablebody1 = document.getElementById('tablebody1');
-  	const modalbody1 = document.getElementById("modalbody1");
+    const tablebody1 = document.getElementById('tablebody1');
+    const modalbody1 = document.getElementById("modalbody1");
     
-    if(data.length<=0){
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
-    }
+    if(datas.length<=0){
+        let item ={_id: 'jdskj83829309-02032' };
+        let AviewModals ='';
+        AviewModals += `
 
-  	data.map((item, i) => { 
+        <div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                        <div class="slimScrollBar" > 
+                                            <div class=""> 
+                                                <div class=""> 
+                                                    <button id="close-id" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                                   
+                                                </div> 
+                                                <div class=""> 
+                                                   
+                                                         
+                                                    <div class="row"> 
+                                                        <div class="col-md-12"> 
+
+
+                                                        <div class="form-group">
+                                          <label for="position">Status</label>
+                                          <select id="status${item._id}" class="form-control" data-style="btn-white">
+                                              <option>Active</option>
+                                              <option>Disabled</option>
+                                              
+                                               
+                                          </select>
+                                          </div>
+                                                            
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Question</label> 
+                                                                
+
+                                                            <textarea  class="form-control autogrow" id="question${item._id}" placeholder="Questions" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+
+                                                            </div> 
+
+
+                                                            <div class="form-group"> 
+                                                                <label for="field-3" class="control-label">Answers</label> 
+                                                                
+
+                                                            <textarea class="form-control autogrow" id="answers${item._id}" placeholder="Answers" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+
+                                                            </div> 
+                                                          
+                                                          
+                                                           
+                                                            
+
+                                                        </div> 
+                                                    </div> 
+                                                    
+                                                    <div class="row"> 
+                                                        
+
+                                                    </div> 
+                                                </div> 
+                                                <div class="modal-footer">
+                                                <button onclick="addRecordEvent(this)" data-id="${item._id}" data-url="/add-faq" id="create" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
+                                                     <button style="display:none;opacity:0" onclick="deleteData(this)" data-id="${item._id}" data-url="/faqs" id="delete" type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Delete</button> 
+                                                    <button id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                                                    <button onclick="updateRecordTemplate(this)" data-id="${item._id}" data-url="/admin-faqs-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                    </div>
+
+        
+
+          `;
+
+       modalbody1.innerHTML=AviewModals;
+      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+    
+      
+    }
+    
+
+    data.map((item, i) => { 
       let className = "label-success"
         if(item.status=="Active"){
              className ='label-success';
@@ -7386,7 +8867,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
           }else{
             className="label-warning"
           } 
-  		template2 =`<tr>
+      template2 =`<tr>
                          <td class=""><a onclick="viewRecordTemplate(this)" href="#" id="plancat${item._id}" data-id="${item._id}" data-url="/admin-faq-detail" class=""><b>${formatDate(new Date(item.created_at))} </b></a> </td>
                           
                           <td class=""> ${item.question}</td>
@@ -7467,7 +8948,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
         
 
-		      `;
+          `;
 
         tablebody1.insertAdjacentHTML('beforeend', template2);
     });
@@ -7479,35 +8960,35 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
     //add tiny mice to faq
 
     $(document).ready(function () {
-			    if($("#elm1").length > 0){
-			        tinymce.init({
-			            selector: "textarea",
-			            theme: "modern",
-			            height:300,
-			            plugins: [
-			                "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
-			                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-			                "save table contextmenu directionality emoticons template paste textcolor"
-			            ],
-			            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons", 
-			            style_formats: [
-			                {title: 'Bold text', inline: 'b'},
-			                {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
-			                {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
-			                {title: 'Example 1', inline: 'span', classes: 'example1'},
-			                {title: 'Example 2', inline: 'span', classes: 'example2'},
-			                {title: 'Table styles'},
-			                {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
-			            ]
-			        });    
-			    }  
-			});
+          if($("#elm1").length > 0){
+              tinymce.init({
+                  selector: "textarea",
+                  theme: "modern",
+                  height:300,
+                  plugins: [
+                      "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                      "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                      "save table contextmenu directionality emoticons template paste textcolor"
+                  ],
+                  toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons", 
+                  style_formats: [
+                      {title: 'Bold text', inline: 'b'},
+                      {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+                      {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+                      {title: 'Example 1', inline: 'span', classes: 'example1'},
+                      {title: 'Example 2', inline: 'span', classes: 'example2'},
+                      {title: 'Table styles'},
+                      {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+                  ]
+              });    
+          }  
+      });
 
 
   }
 
 
-  static runAdminCarsMgt(datas,carsInfo,drivers,previledges){
+  static runAdminCarsMgt(datas,carsInfo,drivers,partners,previledges){
 
 WarLockAdmin(previledges,'view_cars','manage_cars')
 
@@ -7525,6 +9006,11 @@ noReadWrite(previledges,'manage_cars')
   
 
   console.log(drivers)
+   let selectOptionsPart ='';
+  partners.map((item, i) => { 
+      selectOptionsPart+=`<option data-username="${item.name || item.firstname}" data-email="${item.email}" id="${item._id}" >${item.email}</option>`; 
+          
+    });
 
   driv.map((item, i) => { 
       selectOptionsDrivers+=`<option data-username="${item.username}" data-email="${item.email}" id="${item._id}" value="${item.phone_number}">${item.username}-${item.email}</option>`; 
@@ -7539,54 +9025,22 @@ noReadWrite(previledges,'manage_cars')
     let car_year = [];
 
    carsInfo.map((item)=>{
-     carCategory.push(item.model_make_id)
+     carCategory.push(item.car_name)
    });
    carCategory = [...new Set(carCategory)];
 
   let modelOption=``;
 
-  carCategory.map((item)=>{
-     modelOption+=`<option>${item}</option>`
+ 
+
+  carsInfo.map((item)=>{
+     modelOption+=`<option data-value="${item.model_name}" data-year="${item.year}" data-trim="${item.model_trim}" data-id="${item.model_make_id}">${item.car_name}</option>`
 
   })
 
 
 
-  carsInfo.map((item)=>{
-     modelNameOptionX.push(item.model_name)
-   });
-
-  modelNameOptionX = [...new Set(modelNameOptionX)];
-
-  console.log(modelNameOptionX)
-
-
-  let modelNameOption=``;
-
-  modelNameOptionX.map((item)=>{
-     modelNameOption+=`<option>${item}</option>`
-
-  });
-
-
-
-  carsInfo.map((item)=>{
-     car_year.push(item.model_year)
-   });
-
-  //car_year = [new Set(car_year)];
-
-
-  let model_year=``;
-
-  car_year.map((item)=>{
-     model_year+=`<option>${item}</option>`
-
-  });
-
-
-
-
+ 
 
 
 
@@ -7654,13 +9108,13 @@ noReadWrite(previledges,'manage_cars')
                           <td class=""><span class="label ${className3}">${ item.car_status}</span></td>
                            <td><img  style="width:100px;height:100px" src="${item.imagePath || item.images}" /></td>
                            <td class="">
-                               <a onclick="viewCarRecordTemplate(this)" data-car_status="${item.car_status}" data-health_status="${item.health_status}" data-model_make_id="${item.carModel || item.model_make_id}" data-old_car="${ item.imagePath || item.images}" href="#" data-model="${ item.carModel  || item.model}" data-car_type="${ item.carModel || item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name}-${item.assigned_driver_email}" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${ item.creator || item.partner_id}" data-model="${ item.carModel || item.model}"  data-car_year="${ item.carYear  || item.car_year}" data-color="${ item.vehicleColor || item.color}"  data-status="${item.status}" data-plate_number="${ item.plateNo || item.plate_number}" data-inspection_detail="${item.inspection_detail}" data-description="${ item.carDescription || item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${ item.plateNo || item.license}" data-url="/admin-car-mgt-detail" class="table-action-btn"><i class="md md-edit"></i></a>
+                               <a onclick="viewCarRecordTemplate(this)" data-car_status="${item.car_status}" data-health_status="${item.health_status}" data-model_make_id="${ item.model_make_id || item.car.model_id}" data-trim="${ item.car_type}" data-old_car="${ item.imagePath || item.images}" href="#" data-model="${ item.carModel  || item.car_type }" data-trim="${item.car_type}" data-car_type="${ item.carModel || item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name}-${item.assigned_driver_email}" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${ item.partnerEmail || 'owned by company'}" data-model="${ item.carModel || item.model}"  data-car_year="${ item.carYear  || item.car_year}" data-color="${ item.vehicleColor || item.color}"  data-status="${item.status}" data-plate_number="${ item.plateNo || item.plate_number}" data-inspection_detail="${item.inspection_detail}" data-description="${ item.carDescription || item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${ item.plateNo || item.license}" data-url="/admin-car-mgt-detail" class="table-action-btn"><i class="md md-edit"></i></a>
                                 <a onclick="deleteRecord(this)" data-id="${item._id}" data-url="/cars"  id="delete" class="table-action-btn "><i class="md md-close"></i></a></td>
                            
                            </td>
                    </tr>`;
 
-      viewModals+=  `<div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+      viewModals=  `<div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
                                         <div class="slimScrollBar" style=""> 
                                             <div class=""> 
                                                 <div class=""> 
@@ -7675,6 +9129,7 @@ noReadWrite(previledges,'manage_cars')
                                                     <label for="position">Car Booking Status</label>
                                                     <div>
                                                     <select id="status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
+                                                       <option>--Select Status--</option>
                                                        <option>Booked</option>
                                                       
                                                        <option>Available</option>
@@ -7690,7 +9145,7 @@ noReadWrite(previledges,'manage_cars')
                                                     <label for="position">Inspection Status</label>
                                                     <div>
                                                     <select id="health_status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
-                                                       
+                                                        <option>--Select Status--</option>
                                                        <option>Pending</option>
                                                        <option>Completed</option>
                                                        
@@ -7705,7 +9160,7 @@ noReadWrite(previledges,'manage_cars')
                                                     <label for="position">Car Status</label>
                                                     <div>
                                                     <select id="car_status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
-                                                       
+                                                        <option>--Select Status--</option>
                                                        <option>Active</option>
                                                        <option>Disabled</option>
                                                        <option>Suspended</option>
@@ -7715,27 +9170,55 @@ noReadWrite(previledges,'manage_cars')
                                                     </select></div>
                                             </div>
                                         </div>
+
+                                        <div class="form-group">
+                                <label for="inputColor">Partner Id</label>
+                                <select id="partner_id${item._id}" type="text" class="form-control" id="" >
+                                    ${selectOptionsPart}
+                                </select>
+                              </div>
 								                  
 								                        <div class="form-group">
                                         <div class="m-t-20">
-                                                    <label for="position">Car Make</label>
+                                                    <label for="position">Vehicle</label>
                                                     <div>
-                                                    <select id="car_model_make${item._id}" class="selectpicker form-control" data-style="btn-white" >
+                                                    <select data-id="${item._id}" onchange="setCarDetail(this)"    id="car_model_make${item._id}" class="selectpicker form-control" data-style="btn-white" >
                                                         ${modelOption}
                                                     </select></div>
                                             </div>
                                         </div>
 
+                                        
+
 
                                         <div class="form-group">
+                                            <label for="inputColor">Model Id</label>
+                                            <input disabled id="car_model_id${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Model Name</label>
+                                            <input disabled id="car_model_name${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Trim Model</label>
+                                            <input disabled id="car_model_trim${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                         <div class="form-group">
                                         <div class="m-t-20">
-                                                    <label for="position">Car Model</label>
+                                                    <label for="position">Car Year</label>
                                                     <div>
-                                                    <select id="car_model${item._id}" class="selectpicker form-control" data-style="btn-white" >
-                                                        ${modelNameOption}
-                                                    </select></div>
+
+                                                    <input  id="car_year${item._id}" type="text" class="form-control"  >
+                                        
+                                                    
+                                                    </div>
                                             </div>
                                         </div>
+
+                                        
 
 
 								    
@@ -7749,17 +9232,7 @@ noReadWrite(previledges,'manage_cars')
 								                            <input id="plate_number${item._id}" type="text" class="form-control"  >
 								                        </div>
 								                        
-								                        <div class="form-group">
-                                        <div class="m-t-20">
-                                                    <label for="position">Car Year</label>
-                                                    <div>
-
-                                                    <input id="car_year${item._id}" type="text" class="form-control"  >
-                                        
-                                                    
-                                                    </div>
-                                            </div>
-                                        </div>
+								                       
 
                                                        
 
@@ -7768,7 +9241,7 @@ noReadWrite(previledges,'manage_cars')
                                         <div class="m-t-20">
                                                     <label for="position">Driver Assigned</label>
                                                     <div >
-                                                    <select id="drivers${item._id}" class="selectpicker form-control" data-style="btn-white">
+                                                    <select  id="drivers${item._id}" class="selectpicker form-control" data-style="btn-white">
                                                         <option>--Select Driver--</option>
                                                         ${selectOptionsDrivers}
                                                     </select></div>
@@ -7790,10 +9263,7 @@ noReadWrite(previledges,'manage_cars')
 								                        </div>
 														</div>
 														
-														<div class="form-group">
-																<label for="inputColor">Partner Id</label>
-																<input id="partner_id${item._id}" type="text" class="form-control" id="" >
-															</div>
+														
 															
 															<div class="form-group">
 																	<label for="">Car Inspection Details</label>
@@ -7831,7 +9301,18 @@ noReadWrite(previledges,'manage_cars')
 		      `;
 
         tablebody1.insertAdjacentHTML('beforeend', template2);
+
+        modalbody1.innerHTML+=viewModals;
+
+
+        $("#car_model_make" + item._id).on('change', function() {
+            alert("am here")
+              
+        });
+
     });
+
+    
 
     $('#publisher').on('change', function(e) {
       let selector = $(this).val();
@@ -7839,7 +9320,7 @@ noReadWrite(previledges,'manage_cars')
       $("#site > option").filter(function(){return $(this).data('pub') == selector}).show();
     });
 
-    modalbody1.innerHTML=viewModals;
+    
 
   }
 
@@ -8123,7 +9604,7 @@ noReadWrite(previledges,'manage_cars')
   static runAdminInspectionAdd(url='add-inspection', users, partners,previledges){
     WarLockAdmin(previledges,'view_car_inspection','manage_car_inspection')
    // WarLockAdmin('view_users','manage_users')
-        noReadWrite(previledges,'manage_car_inspection')
+      noReadWrite(previledges,'manage_car_inspection')
     let selectboxData = users;
     if(url='add-inspection'){
       selectboxData = partners;
@@ -8404,8 +9885,8 @@ noReadWrite(previledges,'manage_cars')
 
   static runAdminInspection(datas,previledges){
 
-     WarLockAdmin('view_car_inspection','manage_car_inspection')
-         noReadWrite('manage_car_inspection')
+     WarLockAdmin(previledges,'view_car_inspection','manage_car_inspection')
+         noReadWrite(previledges,'manage_car_inspection')
     GateKeepersForAdmin();
       console.log("loading plan page")
     document.getElementById("search").addEventListener("keyup",(e)=>{
@@ -11437,7 +12918,7 @@ modalbody1.innerHTML= viewModals;
               <td class="">${formatDate(new Date(item.created_at))}</td>
               <td class=""><span class="label ${className}">${item.status}</span></td>
               <td>
-            <a onclick="viewRecordTemplate(this)" data-user_id="${item.manage_drive_test}" data-location="${item.manage_car_inspection}" data-carbrand="${item.view_drive_test}" data-status="${item.view_car_inspection}" data-id="${item._id}"  data-url="/admin-mech-status"  id="delete" class="table-action-btn "><i class="glyphicon glyphicon-eye-open"></i></a>
+            <a onclick="viewRecordTemplate(this)" data-user_id="${item.user_id}" data-location="${item.location}" data-carbrand="${item.carbrand}" data-status="${item.status}" data-id="${item._id}"  data-url="/admin-mech-status"  id="delete" class="table-action-btn "><i class="glyphicon glyphicon-eye-open"></i></a>
                            
         
           </td>
@@ -11476,8 +12957,29 @@ viewModals+=  `<div style="display:none" id="con-close-modal-${item._id}" class=
                                                
                                           </select>
                                           </div>
+
+
+
+
+                                          
+                                                            <div class="form-group"> 
+                                                                <label for="field-4" class="control-label">Location</label> 
+                                                                <input disabled type="text" class="form-control" id="location${item._id}" placeholder="Boston"> 
+                                                                  <div></div>
+                                                            </div> 
+                                                         
+
+                                                         
+                                                            <div class="form-group"> 
+                                                                <label for="field-5" class="control-label">Car brand</label> 
+                                                                <input disabled type="text" class="form-control" id="carbrand${item._id}" placeholder="United States"> 
+                                                            </div> 
+                                                     
+
+                                                        
                                                             
-                                                            
+
+                                                         
 
                                                           
                                                           
@@ -11800,6 +13302,7 @@ modalB.innerHTML=viewModals;
            ApiAdminBotService.runAdminCarsMgt(datas[16].data[0].carsAvailable, 
             datas[23].data[0].carInfo,
             datas[2].data[0].drivers,
+             datas[3].data[0].partners,
             previledgesRight
 
             )
@@ -11869,7 +13372,7 @@ modalB.innerHTML=viewModals;
              app.style.display="block"
            break; 
         case "admin-earnings":
-           ApiAdminBotService.runAdminPartnersEarnings(datas[34].data[0].earnings,datas[3].data[0].partners,previledgesRight)
+           ApiAdminBotService.runAdminPartnersEarnings(datas[34].data[0].earnings,datas[3].data[0].partners,datas[16].data[0].carsAvailable,previledgesRight)
              app.style.display="block"
            break;  
           default:

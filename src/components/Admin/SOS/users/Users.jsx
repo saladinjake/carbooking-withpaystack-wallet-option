@@ -80,7 +80,7 @@ export  default class SOSADMIN extends Component {
                                                
                                                 <th>Date</th>
                                                 <th>User Name</th>
-                                                <th>Car Plate No.</th>
+                                                <th>User Email</th>
                                     
                                                 <th style={{marginLeft: "-80px"}}>Location</th>
                                                 <th>Status</th>

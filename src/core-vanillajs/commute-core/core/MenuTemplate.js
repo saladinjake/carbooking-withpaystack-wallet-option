@@ -120,7 +120,7 @@ export default class MenuTemplate{
                            </li>
 
                            <li>
-                               <a href="./admin-partners-earnings" class="waves-effect"><i class="ti-money"></i> <span>  Earnings</span>
+                               <a href="./admin-partners-earnings" class="waves-effect"><i class="fa fa-money"></i> <span>  Earnings</span>
                             </a>
                            </li>
                            </ul>
@@ -198,14 +198,14 @@ export default class MenuTemplate{
                         </li>
 
                         <li class="has_sub ">
-                                <a href="./admin-mech" class="waves-effect"><i class="ti-car"></i> <span> Mechanic Request
+                                <a href="./admin-mech" class="waves-effect"><i class="fa fa-wrench"></i> <span> Mechanic Request
                                      </span> </a>
                         </li>
 
                          
 
                         <li class="has_sub">
-                            <a href="./admin-inspection" class="waves-effect"><i class="ti-car"></i> <span> Car Inspections
+                            <a href="./admin-inspection" class="waves-effect"><i class="md md-thumb-up"></i> <span> Car Inspections
                                 </span></a>    
                         </li>
 

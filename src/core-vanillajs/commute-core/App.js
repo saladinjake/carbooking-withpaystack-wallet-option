@@ -127,8 +127,9 @@ class FrontEndApp {
                 
 
 
+                if(item.for_users==true){
 
-                let markup =`   <div class="pull-left p-r-10" style="">
+                  let markup =`   <div class="pull-left p-r-10" style="">
                                                     <em class="fa fa-diamond noti-primary"></em>
                                                  </div>
                                                  <div class="media-body">
@@ -140,6 +141,9 @@ class FrontEndApp {
                                                  </div><hr/>`;
 
                  $( "#notice_board" ).append( $( markup ) ) 
+
+                }
+                
               })
             }
 

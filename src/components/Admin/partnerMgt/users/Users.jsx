@@ -82,6 +82,7 @@ export  default class Partners extends Component {
                                             <th>Name</th>
                                                     
                                                     <th>Email</th>
+                                                    <th>Business Name</th>
                                                     <th>Phone Numbers</th>
                                                    
                                                     <th>Status</th>

@@ -121,7 +121,9 @@ export default class Recorder {
     let options = { mimeType: 'video/webm;codecs=vp9' };
     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
       console.log(`${options.mimeType} is not Supported`);
-      options = { mimeType: 'video/webm;codecs=vp8' };
+    
+
+      options = { mimeType: 'video/webm;codecs=vp9' };
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
         console.log(`${options.mimeType} is not Supported`);
         options = { mimeType: 'video/webm' };
@@ -312,6 +314,8 @@ static launch_toast(address) {
               phone_number
             };
 
+            console.log(sosRequest)
+
             Recorder.launch_toast(address);
 
 
@@ -320,52 +324,52 @@ static launch_toast(address) {
  // '<div class="pop"><div class="cl"><i class="fas fa-times"></i></div><div class="message">' + 'Your address at ' +  address ' has been sent.</div>' +
  //  '</div></div>';
 
-        if(document.getElementById('drivers-sos')){
-          POST_URL = "http://localhost:12000/api/v1/drivers-sos";
-        }
+        // if(document.getElementById('drivers-sos')){
+        //   POST_URL = "http://localhost:12000/api/v1/drivers-sos";
+        // }
                
-        fetch(POST_URL, {
-            method: 'POST',
-            headers: {
-              'Access-Control-Allow-Headers': 'x-access-token',
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'x-access-token': me.token,
-            },
-            mode: 'cors',
-            body: JSON.stringify(sosRequest),
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.status === 422) {
-              console.log("field required")
-              //MessageBoard.displayMsg( data.error);
-              var notification = alertify.notify('field required upload', 'error', 5, function(){  console.log('dismissed'); });
+        // fetch(POST_URL, {
+        //     method: 'POST',
+        //     headers: {
+        //       'Access-Control-Allow-Headers': 'x-access-token',
+        //       'Accept': 'application/json',
+        //       'Content-Type': 'application/json',
+        //       'x-access-token': me.token,
+        //     },
+        //     mode: 'cors',
+        //     body: JSON.stringify(sosRequest),
+        //   })
+        //   .then(response => response.json())
+        //   .then(data => {
+        //     if (data.status === 422) {
+        //       console.log("field required")
+        //       //MessageBoard.displayMsg( data.error);
+        //       var notification = alertify.notify('field required upload', 'error', 5, function(){  console.log('dismissed'); });
        
-            } else if (data.status === 200) {
-              console.log("success..")
-               var notification = alertify.notify("SOS has been created", 'success', 5, function(){  console.log('dismissed'); });
+        //     } else if (data.status === 200) {
+        //       console.log("success..")
+        //        var notification = alertify.notify("SOS has been created", 'success', 5, function(){  console.log('dismissed'); });
        
-              //MessageBoard.displayMsg("Notification has been sent to you");
-              if(document.getElementById('drivers-sos')){
-                   setTimeout(()=>{
-                       window.location.replace("http://localhost:4000/drivers-sos-history")
-                 },2000)
-               }
-              setTimeout(()=>{
-                window.location.replace("http://localhost:4000/sos-history")
-              },2000)
+        //       //MessageBoard.displayMsg("Notification has been sent to you");
+        //       if(document.getElementById('drivers-sos')){
+        //            setTimeout(()=>{
+        //                window.location.replace("http://localhost:4000/drivers-sos-history")
+        //          },2000)
+        //        }
+        //       setTimeout(()=>{
+        //         window.location.replace("http://localhost:4000/sos-history")
+        //       },2000)
               
               
-            } else {
-              console.log(data.error)
-              //MessageBoard.displayMsg(data.error);
-              //Router.redirect('login.html');
-            }
-          })
-          .catch(error => {
-            throw error;
-          });                     // speak the address
+        //     } else {
+        //       console.log(data.error)
+        //       //MessageBoard.displayMsg(data.error);
+        //       //Router.redirect('login.html');
+        //     }
+        //   })
+        //   .catch(error => {
+        //     throw error;
+        //   });                     // speak the address
   }
 
 

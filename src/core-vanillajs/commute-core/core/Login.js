@@ -131,34 +131,35 @@ class WebsiteLogin {
 
     //finally check if token has expired then log user out
     if(localStorage.getItem('userToken')){
-        const user = JSON.parse(localStorage.getItem('userToken'));
+        // const user = JSON.parse(localStorage.getItem('userToken'));
         
-        let recordUrl;
+        // let recordUrl;
         
-          recordUrl = 'http://localhost:12000/api/v1'+ `/faqs`; //this url is default test url for checking autorization via jwt token to see if user is still available on local storage
-          //but inactive
+        //   recordUrl = 'http://localhost:12000/api/v1'+ `/admin-users`; //this url is default test url for checking autorization via jwt token to see if user is still available on local storage
+        //   //but inactive
       
-        console.log('specific url: ' + recordUrl);
+        // console.log('specific url: ' + recordUrl);
 
-        fetch(recordUrl, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'x-access-token': user.token,
-          },
-          mode: 'cors',
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.status === 403) { //if it falls back that user is unauthorized to view this page
-              localStorage.clear();
-               window.location.href="/";
-            }
-          })
-          .catch(error => {
-            throw error;
-          });
+        // fetch(recordUrl, {
+        //   method: 'GET',
+        //   headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json',
+        //     'x-access-token': user.token,
+        //   },
+        //   mode: 'cors',
+        // })
+        //   .then(response => response.json())
+        //   .then(data => {
+        //     if (data.status === 403) { //if it falls back that user is unauthorized to view this page
+        //       localStorage.clear();
+        //        window.location.href="/";
+        //     }
+        //   })
+        //   .catch(error => {
+        //     console.log(error)
+        //     throw error;
+        //   });
 
     }
     

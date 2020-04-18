@@ -24,7 +24,7 @@ export default class Notification{
 	          fetch(url, {
 	            method: 'GET',
 	            headers: {
-	              Accept: 'application/json',
+	              'Accept': 'application/json',
 	              'Content-Type': 'application/json',
 	              'x-access-token': user.token,
 	            },
@@ -36,7 +36,7 @@ export default class Notification{
 	        .then(datas => {
 
 
-	            let userDetail = datas[0].data[0].accountBalance
+	            // let userDetail = datas[0].data[0].accountBalance
 	            let userNotifications = datas[1].data[0].tranx
 	            console.log(userNotifications )
 

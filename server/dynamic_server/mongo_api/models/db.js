@@ -57,8 +57,8 @@ class DbQuery {
   connect() {
     const { NODE_ENV } = process.env;
 
-    if (NODE_ENV === 'development') {
-      this.dbLink =  'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service' //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL   //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final';//config.development.database;
+    if (NODE_ENV === 'development') {  //'mongodb://localhost:27017/taxi_service_final'
+      this.dbLink =   'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service' //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL   //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final';//config.development.database;
     } else if (NODE_ENV === 'test') {
       this.dbLink =  'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service' //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL  //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final'; //config.test.database;
     } else {

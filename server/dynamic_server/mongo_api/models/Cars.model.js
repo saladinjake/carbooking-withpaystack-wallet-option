@@ -50,7 +50,7 @@ let CarsSchema = new mongoose.Schema({
 
 
   carDescription: {
-    required: false,
+    // required: false,
     type: String
   },
   imagePath: {
@@ -63,11 +63,11 @@ let CarsSchema = new mongoose.Schema({
   },
         car_type:{
           type: String,
-          required:true
+          // required:true
         },
         car_year:{
           type: String,
-          required:true
+          // required:true
         },
         color:{
           type: String,
