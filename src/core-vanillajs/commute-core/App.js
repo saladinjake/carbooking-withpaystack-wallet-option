@@ -121,13 +121,16 @@ class FrontEndApp {
             let userNotifications = datas[1].data[0].tranx
             console.log(userNotifications )
 
+            let counter =0;
+
             if(userNotifications.length>0){
                  userNotifications.map((item,i)=>{
 
                 
 
 
-                if(item.for_users==true){
+                if(item.for_users==true && item.type!="payment"){
+                  counter+=1;
 
                   let markup =`   <div class="pull-left p-r-10" style="">
                                                     <em class="fa fa-diamond noti-primary"></em>
@@ -152,7 +155,7 @@ class FrontEndApp {
             document.getElementById('balance-seen').innerHTML = '₦ '+ value;
           
             let count = document.getElementById("notifyCount");
-            count.innerHTML = userNotifications.length;
+            count.innerHTML =  counter; //userNotifications.length;
         })
 
       

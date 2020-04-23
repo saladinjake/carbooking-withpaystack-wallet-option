@@ -456,11 +456,14 @@ model_trim:'Limited 4dr SUV AWD (3.3L 6cyl 6A)',
 
 model_year:'2017',
 
-manufacturer:'',
+
 
 
 
 },
+vehicleIdentificationNumber: 'ddasdswe',
+
+manufacturer:'Hyundai',
 
 
 carModel:'Santa Fe',
@@ -471,9 +474,11 @@ vehicleColor:'black',
 
 plateNo:'kdskdsldlsk',
 
-inspectionDate: new Date(),
 
-inspectionTime: new Date(),
+
+inspectionDate: '12/12/12',
+
+inspectionTime: '12:02:AM',
 
 carDescription:'describe me',
 
@@ -538,11 +543,12 @@ model_trim:'Limited 4dr SUV AWD (3.3L 6cyl 6A)',
 
 model_year:'2017',
 
-manufacturer:'',
+
 
 
 
 },
+vehicleIdentificationNumber: 'ddasdswe',
 
 
 carModel:'Santa Fe',
@@ -555,7 +561,13 @@ plateNo:'kdskdsldlsk',
 
 inspectionDate: new Date(),
 
-inspectionTime: new Date(),
+manufacturer:'Hyundai',
+
+inspectionDate: '12/12/12',
+
+inspectionTime: '12:02:AM',
+
+
 
 carDescription:'describe me',
 
@@ -621,11 +633,12 @@ model_trim:'Limited 4dr SUV AWD (3.3L 6cyl 6A)',
 
 model_year:'2017',
 
-manufacturer:'',
+
 
 
 
 },
+vehicleIdentificationNumber: 'ddasdswdswee',
 
 
 carModel:'Santa Fe',
@@ -636,9 +649,12 @@ vehicleColor:'black',
 
 plateNo:'kdskdsldlsk',
 
-inspectionDate: new Date(),
+manufacturer:'Hyundai',
 
-inspectionTime: new Date(),
+inspectionDate: '12/12/12',
+
+inspectionTime: '12:02:AM',
+
 
 carDescription:'describe me',
 
@@ -705,11 +721,12 @@ model_trim:'Limited 4dr SUV AWD (3.3L 6cyl 6A)',
 
 model_year:'2017',
 
-manufacturer:'',
+
 
 
 
 },
+vehicleIdentificationNumber: 'ddasdswewewecxer',
 
 
 carModel:'Santa Fe',
@@ -720,9 +737,12 @@ vehicleColor:'black',
 
 plateNo:'kdskdsldlsk',
 
-inspectionDate: new Date(),
+manufacturer:'Hyundai',
 
-inspectionTime: new Date(),
+inspectionDate: '12/12/12',
+
+inspectionTime: '12:02:AM',
+
 
 carDescription:'describe me',
 
@@ -788,11 +808,12 @@ model_trim:'Limited 4dr SUV AWD (3.3L 6cyl 6A)',
 
 model_year:'2017',
 
-manufacturer:'',
+
 
 
 
 },
+vehicleIdentificationNumber: 'ddewexcxasdswe',
 
 
 carModel:'Santa Fe',
@@ -803,9 +824,11 @@ vehicleColor:'black',
 
 plateNo:'kdskdsldlsk',
 
-inspectionDate: new Date(),
+manufacturer:'Hyundai',
 
-inspectionTime: new Date(),
+inspectionDate: '12/12/12',
+
+inspectionTime: '12:02:AM',
 
 carDescription:'describe me',
 
@@ -845,11 +868,6 @@ partnerEmail:  'juwavictor@gmail.com',
         assigned_driver_location:'6.5355, 3.3087',
         assigned_driver_phone: '08068291106',
          socket_id: 'default-id',
-
-
-
-
-
        
   },
   ],

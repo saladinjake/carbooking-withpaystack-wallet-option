@@ -59,14 +59,14 @@ export  default class CarInspection extends Component {
                                     <div className="col-sm-8">
                                         <form role="form">
                                             <div className="form-group contact-search m-b-30">
-                                                <input type="text" id="search" className="form-control"
+                                                <input type="text" id="search" className="form-control product-search"
                                                     placeholder="Search..." />
                                                 <button type="submit" className="btn btn-white"><i
                                                         className="fa fa-search"></i></button>
                                             </div> 
                                         </form>
                                     </div>
-                                    <div className="col-sm-4">
+                                    <div className="col-sm-4" style={{display: "none"}}>
                                         <a href="./admin-inspection-detail" 
                                             className="btn btn-default btn-md waves-effect waves-light m-b-30"
                                            ><i className="md md-add"></i> Add Inspection</a>
@@ -74,29 +74,19 @@ export  default class CarInspection extends Component {
                                 </div>
 
                                 <div className="table-responsive table-bordered">
-                                    <table className="table table-actions-bar" id="demo-foo-pagination" data-page-size="5" 
-                                           className="table toggle-circle table-hover">
-                                        <thead>
-                                            <tr>
-                                                
-                                                <th>Car ID</th>
-                                                <th>Date</th>
-                                                <th>Partner Email</th>
-                                                <th>Partner Username</th>
-                                                <th>Partner Phone</th>
-                                                <th>Time</th>
-                                                <th>Status</th>
-                                                <th style={{minWidth: "90px"}}>Action</th>
-                                            </tr>
-                                        </thead>
 
-                                        <tbody id="tablebody1">
+                                    <div id="tablebody1">
                                             
 
 
 
-                                        </tbody>
+                                        </div>
 
+                                    <table style={{display:"none"}} className="table table-actions-bar" id="demo-foo-pagination" data-page-size="5" 
+                                           className="table toggle-circle table-hover">
+                                        
+
+                                        
                                         <tfoot>
                                             <tr>
                                                 <td colSpan="5">
@@ -141,6 +131,37 @@ export  default class CarInspection extends Component {
 
 
 
+                       
+
+
+
+
+                            <div className="m-b-15" id="main-display">
+                                
+
+                                
+
+
+
+
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div style={{display:"none"}} className="content-page" id="second-view">
            
             <div className="content">
@@ -167,6 +188,17 @@ export  default class CarInspection extends Component {
                                    
                                      <div id="modalbody1"></div>
                                    
+                                </div>
+                            </div>
+
+
+                            <div className="col-lg-6 m-t-10" >
+                                <div className="card-box">
+                                   
+                                        <div className="card-box">
+                                            <img src="" id="car" className="responsive"/>
+                                        </div>
+                                    
                                 </div>
                             </div>
     

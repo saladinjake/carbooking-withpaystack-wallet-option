@@ -40,7 +40,7 @@ export class Logger extends Component {
 
                                        <div className="container">
   <div className="row">
-    <div className="main" style={{height:"400px",overflow:"scroll"}}>
+    <div className="main" style={{height:"350px",overflow:"scroll"}}>
       <h2>Activity</h2>
 
     

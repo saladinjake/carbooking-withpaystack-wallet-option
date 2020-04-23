@@ -20,33 +20,25 @@ export default class Logger{
         let logMessage=``;
         if(userEntity!=''){
 			if(MethodType=='GET'){
-	           logMessage =`${adminEntity.user.username}/${adminEntity.user.email} operation on the user , ${userEntity} regarding the module action 
-
-	           on ${ModuleEntity} on ${formatDate(new Date())} has a status of ${status} labeled ${messageType} while trying to fetch the resource.`
+	           logMessage =`Successful request made by ${adminEntity.user.username}/${adminEntity.user.email}. Action : get request fetch operation  on the  resource.`
 			}else if(MethodType=='POST'){
 
-				logMessage =`${adminEntity.user.username}/${adminEntity.user.email} operation on the user , ${userEntity} regarding the module action 
+				logMessage =`${adminEntity.user.username}/${adminEntity.user.email} operation on creating a resource/entity , ${userEntity} regarding the module action 
 
-	           on ${ModuleEntity} on ${formatDate(new Date())} has a status of ${status} labeled ${messageType} while trying to create the resource.`
+	           on ${ModuleEntity} on ${formatDate(new Date())} `
 
 			}else if(MethodType=='PUT'){
 
-				logMessage =`${adminEntity.user.username}/${adminEntity.user.email} operation on the user , ${userEntity} regarding the module action 
-
-	           on ${ModuleEntity} on ${formatDate(new Date())} has a status of ${status} labeled ${messageType} while trying to update the resource.`
+				logMessage =`${adminEntity.user.username}/${adminEntity.user.email} operation  on ${formatDate(new Date())} has a status of ${status} labeled ${messageType} while trying to update the resource.`
 
 			}else if(MethodType=='DELETE'){
-				logMessage =`${adminEntity.user.username}/${adminEntity.user.email} operation on the user , ${userEntity} regarding the module action 
-
-	           on ${ModuleEntity} on ${formatDate(new Date())} has a status of ${status} labeled ${messageType} while trying to delete the resource.`
+				logMessage =`${adminEntity.user.username}/${adminEntity.user.email} operation on ${formatDate(new Date())} has a status of ${status} labeled ${messageType} while trying to delete the resource.`
 
 			}
 
         }else{
 
-        	logMessage =`${adminEntity.user.username}/${adminEntity.user.email} operation regarding the module action 
-
-	           on ${ModuleEntity} on ${formatDate(new Date())} has a status of ${status} labeled ${messageType} while trying to create the resource.`
+        	logMessage =`${adminEntity.user.username}/${adminEntity.user.email} operation on ${formatDate(new Date())} has a status of ${status} labeled ${messageType} while trying to create the resource.`
  
 
         }

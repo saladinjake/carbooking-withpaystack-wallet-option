@@ -5,7 +5,24 @@ import getOnlineUrlConnection from '../apiservices/helpers/getOnlineUrlConnectio
 import $ from 'jquery';
 //import carsInfo from "./helpers/cars_info";
 import Validator from "./helpers/validator";
-import AuditTrail from './helpers/Logger'
+import AuditTrail from './helpers/Logger';
+import AdminBash from './AdminBash';
+import {
+  addInspection,
+  viewInspectionUpdate,
+  RolesUpdateAction,
+  RolesAddAction,
+  RolesUpdate,
+  viewPreviledges,
+
+  addClickStartNew,
+  setCarDetailsOnearning,
+  setCarDetail,
+  setEarningsDetail,
+  autofill,
+  update_value_checked_previledges,
+  updateInspectionAction,
+} from './globals.fn'
 
 
 let datapromise;
@@ -14,56 +31,48 @@ let datapromise;
 
 let usersFoundId;
 
-window.setCarDetailsOnearning = (el)=>{
-   var selectedOption = el.options[el.selectedIndex];
-  var name = selectedOption.getAttribute('data-id');
 
-          
-           
-   document.getElementById("vehiclePlateNo"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-vehicleplateno');
-   document.getElementById("vehicleName"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-vehiclename');
-             
+const searchCars = () =>{
+$("#search").on('keyup', function(){
+  var matcher = new RegExp($(this).val(), 'gi');
+  $('.product-list-box').show().not(function(){
+      return matcher.test($(this).find('.text-dark, .text-muted').text())
+  }).hide();
+  });
 }
 
 
-window.setCarDetail = (el)=>{
-   var selectedOption = el.options[el.selectedIndex];
-  var name = selectedOption.getAttribute('data-id');
+window.viewCarDetail = (el) =>{
 
 
-            
-           
-             document.getElementById("car_model_id"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-id');
-             document.getElementById("car_model_name"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-value');
-             document.getElementById("car_model_trim"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-trim');
-             //document.getElementById("car_year"+ idz).value =$(el).el.options[el.selectedIndex].dataset.year
+  $('input.example').on('change', function() {
+    $('input.example').not(this).prop('checked', false);  
+});
 
-}
+  $('#create').show()
 
+  document.getElementById("carset").style.display="block"
+   
+    //data-plate_no="${item.plateNo || item.plate_number}" 
+    //data-desc="${item.description || item.carDescription}" 
+    //data-image="${item.images || item.imagePath}" 
+    //data-name="${item.car.car_name}" data-carid="${item._id}"
+    document.getElementById("name").innerHTML = el.dataset.name
+    // document.getElementById("id").innerHTML = el.dataset.id
+    document.getElementById("desc").innerHTML = el.dataset.desc 
+    document.getElementById("plate_no").innerHTML = el.dataset.plate_no
+    document.getElementById("imgcar").src = el.dataset.image
+    document.getElementById("car_id").innerHTML  = el.dataset.carid
 
-window.setEarningsDetail = (el)=>{
-   var selectedOption = el.options[el.selectedIndex];
-  
-
-            
-           
-  document.getElementById("partnerBankAccount"+ el.getAttribute('data-id')).value = selectedOption.getAttribute('data-bankaccount') || 'Not Given';
-  document.getElementById("bankAccountName"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-bankaccountname') || 'Not Given';
-  document.getElementById("bankAccountNumber"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-bankaccountnumber') || 'Not Given';
-  document.getElementById("partnerId"+ el.getAttribute('data-id')).value =selectedOption.getAttribute('data-id') || 'Not Given';
-  document.getElementById("paymentReference"+ el.getAttribute('data-id')).value ='CMT-REF-'+ guidGenerator() || 'Not Given'
-
-
-  if(typeof(document.getElementById("partnerBankAccount"+ el.getAttribute('data-id')).value)=='undefined'){
-     var notification = alertify.notify('Please fill in the bank account detail for this user ', 'error', 5, function(){  console.log('dismissed'); });
-      setTimeout(()=>{
-        window.localtion.href="/admin-partners"
-      },2000)               
-  }
+    localStorage.setItem('chosenCar',JSON.stringify({
+      name: el.dataset.name,
+      plate_no: el.dataset.plate_no,
+      car_id: el.dataset.carid
+    }))
+    
+    
 
 }
-
-
 
 var LoadMore = function(userOptions) {
   this.options = {
@@ -112,18 +121,25 @@ LoadMore.prototype.loadData = function(gottenData) {
       self.triggerFeedback(false);
       var totalResults =  gottenData.length  //data.results.length;
       var items = [];
+      var className ='';
       var dataArr = gottenData.splice(self._index, self.options.pageSize); // data.results.splice(self._index, self.options.pageSize);
       if (dataArr.length > 0) {
         $.each(dataArr, function(key, item) {
+          if(item.message_type=='Success'){
+            className ='label-success'
+          }else{
+            className="label-danger"
+          }
           items.push(`<li  className="row  loadmore  card">
-          <div className="profile col-xs-2 pull-right">
+          <!--<div className="profile col-xs-2 pull-right">
             <img src="${item.avatar}"  style="height:100px;width:100px"/>
-          </div>
-          <div className="activity-content col-xs-10  ">
-            <div className="inner">
-              <span className="date">${item.date} || ${item.message_type}</span>
-              <div className="name">${item.admin}</div>
-              <div className="content">
+          </div>-->
+          <div class="activity-content col-xs-10  ">
+            <div class="inner">
+              <span class="date">Date : ${item.date} </span>
+              <p>Status: <span class="label ${className}">${item.message_type}</span></p>
+              <div class="name">${item.admin}</div>
+              <div class="content">
                 <p>
                    ${item.logMessage}
                 </p>
@@ -375,19 +391,6 @@ function getUserdetail(email){
 
 
 
-window.autofill =(o)=>{
-  //alert(o.options[o.selectedIndex].value)
-  document.getElementById('username'+o.dataset.id).value = o.options[o.selectedIndex].value
-  document.getElementById('phone_number'+o.dataset.id).value = o.options[o.selectedIndex].dataset.with
-
-  if(!document.getElementById('ticket_id'+o.dataset.id).value){
-    document.getElementById('ticket_id'+o.dataset.id).value = 'CMT-REPORT-'+ guidGenerator()
-  }
-
-  document.getElementById('comment'+o.dataset.id).disabled=false
-
-  
-}
 
 
 function updateUsersTestCenter(url, prePostData){
@@ -623,1439 +626,6 @@ function WarLockAdmin(previledges,roleName,permName){
 
 
 
-
-window.update_value_checked_previledges= (chk_bx) =>{
-  // chk_bx.value ="false";
-
-  //       if(chk_bx.checked)
-  //       {
-  //          chk_bx.value="true";
-  //       }
-  //       else{
-  //          chk_bx.value="false";
-  //       }
-        
-     //removed this code functionality and replaced it    
-
-}
-
-
-window.updateInspectionAction = (o) =>{
-        let view_id = o.dataset.id
-        let linkOfApi = "http://localhost:12000/api/v1" + o.dataset.url + '/' + o.dataset.id
-
-        const email_x = document.getElementById("email"+view_id)
-
-        
-       const username_x = document.getElementById("username"+view_id) ;
-
-   const description=      document.getElementById("description"+view_id).value 
-        
-       const date = document.getElementById("date"+view_id).value 
-
-        const phone_number = document.getElementById("phone_number"+view_id).value 
-
-
-  const time =        document.getElementById("time"+view_id).value 
-
-     const car_id =   document.getElementById("car_id"+view_id).value 
-        
-      const  status_x = document.getElementById("status"+view_id)
-
-
-
-
-
-     
-
-
-      if( !date){
-        var notification = alertify.notify('Date required.', 'error', 5, function(){  console.log('dismissed'); });
-
-         return false;
-      }
-
-      if(!car_id){
-        var notification = alertify.notify('car id/plate number required.', 'error', 5, function(){  console.log('dismissed'); });
-
-         return false;
-
-
-      }
-
-
-          const prePostData = {
-            username: username_x.value,
-            email: email_x.value,
-            phone_number: phone_number,
-            description: description,
-            createdDate: date,
-            time: time,
-            status: status_x.options[status_x.selectedIndex].text,
-            car_id,
-          };
-
-
-
-
-
-         
-
-          const user =JSON.parse(localStorage.getItem("userToken"));
-
-          
-          fetch(linkOfApi, {
-              method: 'PUT',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'x-access-token': user.token,
-              },
-              body: JSON.stringify(prePostData),
-              mode:"cors",
-            })
-              .then(response => response.json())
-              .then(data => {
-                console.log(data)
-                if (data.status == 200) {
-
-                   AuditTrail.sendLogInfo(user, prePostData.email, 'Inspection Module', 'Success', '201', 'PUT')
-                  
-                  var notification = alertify.notify('Successfully created inspection ', 'success', 5, function(){  console.log('dismissed'); });
-                      
-                  setTimeout(()=>{
-                    window.location.reload();
-                  },2000)
-                      
-
-                
-                      }else{
-                      AuditTrail.sendLogInfo(user, prePostData.username, 'Inspection Module', 'Failed', '200', 'PUT')
-         
-                  
-                  var notification = alertify.notify('Could not perform update operation.', 'error', 5, function(){  console.log('dismissed'); });
-
-                }
-              }).catch(e=> console.log(e));
-
-}
-
-
-
-
-window.viewPreviledges = (el) =>{
-
-  console.log(el.dataset)
-
-  let view_id = el.dataset.id;
-  console.log(view_id+ "dsjdjjs")
-  let modal_view_id = document.getElementById("con-close-modala-"+ view_id);
-  modal_view_id.style.display="block";
-
-  let showme ="#con-close-modala-"+ view_id
-  let notme ='#con-close-modalla'+ view_id
-
-  let form_previledge = document.getElementById('con-close-modalla'+ view_id)
-  form_previledge.style.display='block'
-
-   // $('.mebox').not($(showme).closest('.mebox')).addClass('noOpacity');
-
-   $('.form-horizontal').not(notme).hide();
-
-
-
-
-
-
-    document.getElementById("first-view").style.display="none";
-    document.getElementById("second-view").style.display="none";
-    document.getElementById("third-view").style.display="block";
-
-
-    if(el.dataset.payments=="yes"){
-      
-        var element = document.getElementById("payments"+el.dataset.id);
-        element.checked = 1;
-
-
-        
-    }
-
-
-    if(el.dataset.transactions=="yes"){
-      
-        var element = document.getElementById("transactions"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.partners=="yes"){
-      
-        var element = document.getElementById("partners"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.sos=="yes"){
-      
-        var element = document.getElementById("sos"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.bookings=="yes"){
-      
-        var element = document.getElementById("bookings"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.drivers=="yes"){
-      
-        var element = document.getElementById("drivers"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-    if(el.dataset.quotations=="yes"){
-      
-        var element = document.getElementById("quotations"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-    if(el.dataset.packages=="yes"){
-      
-        var element = document.getElementById("packages"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.cars=="yes"){
-      
-        var element = document.getElementById("cars"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-
-    if(el.dataset.users=="yes"){
-      
-        var element = document.getElementById("users"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.admins=="yes"){
-      
-        var element = document.getElementById("admins"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.settings=="yes"){
-      
-        var element = document.getElementById("settings"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.faqs=="yes"){
-      
-        var element = document.getElementById("faqs"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-    if(el.dataset.tickets=="yes"){
-      
-        var element = document.getElementById("tickets"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-   
-
-    if(el.dataset.drivetest=="yes"){
-       var element = document.getElementById("drivetest"+el.dataset.id);
-        element.checked = 1;
-    }
-
-
-    if(el.dataset.inspection=="yes"){
-       var element = document.getElementById("inspection"+el.dataset.id);
-        element.checked = 1;
-    }
-
-
-
-
-
-
-
-
-
-
-    //managements
-
-
-
-    if(el.dataset.mpayments=="yes"){
-      
-        var element = document.getElementById("mpayments"+el.dataset.id);
-        element.checked = 1;
-
-
-        
-    }
-
-
-    if(el.dataset.mtransactions=="yes"){
-      
-        var element = document.getElementById("mtransactions"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.mpartners=="yes"){
-      
-        var element = document.getElementById("mpartners"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.msos=="yes"){
-      
-        var element = document.getElementById("msos"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.mbookings=="yes"){
-      
-        var element = document.getElementById("mbookings"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.mdrivers=="yes"){
-      
-        var element = document.getElementById("mdrivers"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-    if(el.dataset.mquotations=="yes"){
-      
-        var element = document.getElementById("mquotations"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-    if(el.dataset.mpackages=="yes"){
-      
-        var element = document.getElementById("mpackages"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.mcars=="yes"){
-      
-        var element = document.getElementById("mcars"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-
-    if(el.dataset.musers=="yes"){
-      
-        var element = document.getElementById("musers"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.madmins=="yes"){
-      
-        var element = document.getElementById("madmins"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.msettings=="yes"){
-      
-        var element = document.getElementById("msettings"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.mfaqs=="yes"){
-      
-        var element = document.getElementById("mfaqs"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-    if(el.dataset.mtickets=="yes"){
-      
-        var element = document.getElementById("mtickets"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-   
-
-
-    if(el.dataset.mdrivetest=="yes"){
-      
-        var element = document.getElementById("mdrivetest"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-    if(el.dataset.minspection=="yes"){
-      
-        var element = document.getElementById("minspection"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-     var save = document.getElementById("saveChanges"+el.dataset.id);
-
-
-     save.addEventListener('click', function(e){
-      e.preventDefault()
-        let view_bookings,
-          view_quotations,
-          view_payments,
-          view_drivers,
-          view_sos,
-          view_partners,
-          view_package,
-          view_transactions,
-          view_cars,
-          view_tickets,
-          view_faqs,
-          view_settings,
-          view_users,
-          view_admins,
-          view_drive_test,
-          view_car_inspection,
-
-
-
-
-          manage_bookings,
-          manage_quotations,
-          manage_payments,
-          manage_drivers,
-          manage_sos,
-         manage_partners,
-          manage_package,
-         manage_transactions,
-          manage_cars,
-          manage_tickets,
-          manage_faqs,
-          manage_settings,
-          manage_users,
-          manage_admins,
-
-          manage_car_inspection,
-          manage_drive_test;
-
-
-        let payments = document.getElementById("payments"+el.dataset.id),
-            transactions = document.getElementById("transactions"+el.dataset.id),
-            quotations = document.getElementById("quotations"+el.dataset.id),
-            drivers =document.getElementById("drivers"+el.dataset.id),
-            partners =document.getElementById("partners"+el.dataset.id),
-            sos =document.getElementById("sos"+el.dataset.id),
-            packages =document.getElementById("packages"+el.dataset.id),
-            bookings =document.getElementById("bookings"+el.dataset.id),
-        cars =document.getElementById("cars"+el.dataset.id),
-
-         users =document.getElementById("users"+el.dataset.id),
-         admins =document.getElementById("admins"+el.dataset.id),
-         tickets =document.getElementById("tickets"+el.dataset.id),
-         settings =document.getElementById("settings"+el.dataset.id),
-         faqs =document.getElementById("faqs"+el.dataset.id),
-         drivetest =document.getElementById("drivetest"+el.dataset.id),
-         inspection =document.getElementById("inspection"+el.dataset.id);
-         
-
-
-
-
-         let mpayments = document.getElementById("mpayments"+el.dataset.id),
-            mtransactions = document.getElementById("mtransactions"+el.dataset.id),
-            mquotations = document.getElementById("mquotations"+el.dataset.id),
-            mdrivers =document.getElementById("mdrivers"+el.dataset.id),
-            mpartners =document.getElementById("mpartners"+el.dataset.id),
-            msos =document.getElementById("msos"+el.dataset.id),
-            mpackages =document.getElementById("mpackages"+el.dataset.id),
-            mbookings =document.getElementById("mbookings"+el.dataset.id),
-        mcars =document.getElementById("mcars"+el.dataset.id),
-
-         musers =document.getElementById("musers"+el.dataset.id),
-         madmins =document.getElementById("madmins"+el.dataset.id),
-         mtickets =document.getElementById("mtickets"+el.dataset.id),
-         msettings =document.getElementById("msettings"+el.dataset.id),
-         mfaqs =document.getElementById("mfaqs"+el.dataset.id),
-
-         mdrivetest =document.getElementById("mdrivetest"+el.dataset.id),
-         minspection =document.getElementById("minspection"+el.dataset.id);
-         
-
-
-
-  
-
-        if(cars.checked)
-        {
-           view_cars="yes";
-        }
-        else{
-           view_cars="no";
-        }
-
-
-        if(bookings.checked)
-        {
-           view_bookings="yes";
-        }
-        else{
-           view_bookings="no";
-        }
-
-        if(packages.checked)
-        {
-           view_package="yes";
-        }
-        else{
-           view_package="no";
-        }
-
-        if(partners.checked)
-        {
-           view_partners="yes";
-        }
-        else{
-           view_partners="no";
-        }
-
-        if(sos.checked)
-        {
-           view_sos="yes";
-        }
-        else{
-           view_sos="no";
-        }
-
-        if(quotations.checked)
-        {
-           view_quotations="yes";
-        }
-        else{
-           view_quotations="no";
-        }
-
-        if(transactions.checked)
-        {
-           view_transactions="yes";
-        }
-        else{
-           view_transactions="no";
-        }
-
-        if(payments.checked){
-          view_payments= 'yes'
-        }else{
-          view_payments='no'
-        }
-
-
-        if(drivers.checked)
-        {
-           view_drivers="yes";
-        }
-        else{
-           view_drivers="no";
-        }
-
-
-
-
-        if(users.checked)
-        {
-           view_users="yes";
-        }
-        else{
-           view_users="no";
-        }
-
-        if(admins.checked)
-        {
-           view_admins="yes";
-        }
-        else{
-           view_admins="no";
-        }
-
-        if(faqs.checked)
-        {
-           view_faqs="yes";
-        }
-        else{
-           view_faqs="no";
-        }
-
-        if(tickets.checked)
-        {
-           view_tickets="yes";
-        }
-        else{
-           view_tickets="no";
-        }
-
-        if(settings.checked)
-        {
-           view_settings="yes";
-        }
-        else{
-           view_settings="no";
-        }
-
-
-
-        if(drivetest.checked)
-        {
-           view_drive_test="yes";
-        }
-        else{
-           view_drive_test="no";
-        }
-
-
-        if(inspection.checked)
-        {
-           view_car_inspection="yes";
-        }
-        else{
-           view_car_inspection="no";
-        }
-
-
-
-
-
-
-        //manager
-
-
-        if(mcars.checked)
-        {
-           manage_cars="yes";
-        }
-        else{
-           manage_cars="no";
-        }
-
-
-        if(mbookings.checked)
-        {
-           manage_bookings="yes";
-        }
-        else{
-           manage_bookings="no";
-        }
-
-        if(mpackages.checked)
-        {
-           manage_package="yes";
-        }
-        else{
-           manage_package="no";
-        }
-
-        if(mpartners.checked)
-        {
-           manage_partners="yes";
-        }
-        else{
-           manage_partners="no";
-        }
-
-        if(msos.checked)
-        {
-           manage_sos="yes";
-        }
-        else{
-           manage_sos="no";
-        }
-
-        if(mquotations.checked)
-        {
-           manage_quotations="yes";
-        }
-        else{
-           manage_quotations="no";
-        }
-
-        if(mtransactions.checked)
-        {
-           manage_transactions="yes";
-        }
-        else{
-           manage_transactions="no";
-        }
-
-        if(mpayments.checked){
-          manage_payments= 'yes'
-        }else{
-          manage_payments='no'
-        }
-
-
-        if(mdrivers.checked)
-        {
-           manage_drivers="yes";
-        }
-        else{
-           manage_drivers="no";
-        }
-
-
-
-
-        if(musers.checked)
-        {
-           manage_users="yes";
-        }
-        else{
-           manage_users="no";
-        }
-
-        if(madmins.checked)
-        {
-           manage_admins="yes";
-        }
-        else{
-           manage_admins="no";
-        }
-
-        if(mfaqs.checked)
-        {
-           manage_faqs="yes";
-        }
-        else{
-           manage_faqs="no";
-        }
-
-        if(mtickets.checked)
-        {
-           manage_tickets="yes";
-        }
-        else{
-           manage_tickets="no";
-        }
-
-        if(msettings.checked)
-        {
-           manage_settings="yes";
-        }
-        else{
-           manage_settings="no";
-        }
-
-
-
-        if(mdrivetest.checked)
-        {
-           view_drive_test="yes";
-        }
-        else{
-           view_drive_test="no";
-        }
-
-
-        if(minspection.checked)
-        {
-           manage_car_inspection="yes";
-        }
-        else{
-           manage_car_inspection="no";
-        }
-
-
-
-        const user =JSON.parse(localStorage.getItem("userToken"));
-        let linkOfApi = 'http://localhost:12000/api/v1/admin-previledges-update/'+ el.dataset.id  ;
-
-
-        let status_x = document.getElementById('status'+ el.dataset.id);
-        let status =status_x.options[status_x.selectedIndex].text;
-
-        let previledges_info = el.dataset.role;
-
-        // alert(chk_bx.value)
-
-      
-
-  
-
-       let  prePostData ={
-          view_bookings,
-          view_quotations,
-          view_transactions,
-          view_payments,
-          view_drivers,
-          view_sos,
-          view_partners,
-          view_package,
-          view_cars,
-          previledges_info,
-          view_settings,
-          view_faqs,
-          view_admins,
-          view_users,
-          view_tickets,
-          view_drive_test,
-          view_car_inspection,
-          status,
-
-          manage_bookings,
-          manage_quotations,
-          manage_payments,
-          manage_drivers,
-          manage_sos,
-         manage_partners,
-          manage_package,
-         manage_transactions,
-          manage_cars,
-          manage_tickets,
-          manage_faqs,
-          manage_settings,
-          manage_users,
-          manage_admins,
-          manage_drive_test,
-          manage_car_inspection
-        };
-
-        console.log(prePostData)
-
-        localStorage.setItem('usergroup',previledges_info)
-
-
-
-
-        
-
-
-
-
-        fetch(linkOfApi, {
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'x-access-token': user.token,
-        },
-        body: JSON.stringify(prePostData),
-        mode:"cors",
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
-          if (data.status ===200) {
-           // let modal_view_id = document.getElementsByClassName("mebox");
-           // modal_view_id[0].style.display="none";
-            //document.getElementById("gtd").classList.remove("overlay")
-
-            localStorage.setItem('previledges',JSON.stringify(prePostData))
-
-             var notification = alertify.notify('Successful updated of user previledges', 'success', 5, function(){  console.log('dismissed'); });
-               
-               var notification = alertify.notify('All users for this roles has been modified successfully.', 'success', 5, function(){  console.log('dismissed'); });
-             
-             // setTimeout(()=>{
-             //  window.location.reload()
-             // },2000)
-            AuditTrail.sendLogInfo(user,'', 'Roles And Previledges/Edit Mode', 'Success', '201', 'PUT')
-                  
-          }else{
-                      AuditTrail.sendLogInfo(user, '', 'Roles And Previledges/Edit Mode', 'Failed', '200', 'PUT')
-         
-            
-            var notification = alertify.notify('Could not perform update operation', 'error', 5, function(){  console.log('dismissed'); });
-
-          }
-        }).catch(e=> console.log(e));
-
-     })
-
-
-
-
-}
-
-
-
-window.RolesUpdate =(el) =>{
-
-
-  let view_id = el.dataset.id;
-  console.log(view_id+ "dsjdjjs")
-  let modal_view_id = document.getElementById("con-close-modal-"+ view_id);
-  modal_view_id.style.display="block";
-
-  let showme ="#con-close-modal-"+ view_id
-
-  $('.mebox').not(showme).hide();
-
-  document.getElementById("first-view").style.display="none";
-  document.getElementById("second-view").style.display="block";
-
-
-  document.getElementById("role"+view_id).value= el.dataset.info
-        
-  document.getElementById("description"+view_id).value = el.dataset.description;
-
-
-
-
-    if(el.dataset.payments=="yes"){
-      
-        var element = document.getElementById("payments"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.transactions=="yes"){
-      
-        var element = document.getElementById("transactions"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.sos=="yes"){
-      
-        var element = document.getElementById("sos"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.bookings=="yes"){
-      
-        var element = document.getElementById("bookings"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.drivers=="yes"){
-      
-        var element = document.getElementById("drivers"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-    if(el.dataset.quotations=="yes"){
-      
-        var element = document.getElementById("quotations"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-    if(el.dataset.packages=="yes"){
-      
-        var element = document.getElementById("packages"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.cars=="yes"){
-      
-        var element = document.getElementById("cars"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    // if(el.dataset.transactions=="yes"){
-      
-    //     var element = document.getElementById("transactions"+el.dataset.id);
-    //     element.checked = 1;
-        
-    // }
-
-
-    if(el.dataset.users=="yes"){
-      
-        var element = document.getElementById("users"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.admins=="yes"){
-      
-        var element = document.getElementById("admins"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.settings=="yes"){
-      
-        var element = document.getElementById("settings"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.faqs=="yes"){
-      
-        var element = document.getElementById("faqs"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-    if(el.dataset.tickets=="yes"){
-      
-        var element = document.getElementById("tickets"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-
-
-
-
-
-
-
-    //managements
-
-
-
-    if(el.dataset.mpayments=="yes"){
-      
-        var element = document.getElementById("mpayments"+el.dataset.id);
-        element.checked = 1;
-
-
-        
-    }
-
-
-    if(el.dataset.mtransactions=="yes"){
-      
-        var element = document.getElementById("mtransactions"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.mpartners=="yes"){
-      
-        var element = document.getElementById("mpartners"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.msos=="yes"){
-      
-        var element = document.getElementById("msos"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.mbookings=="yes"){
-      
-        var element = document.getElementById("mbookings"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.mdrivers=="yes"){
-      
-        var element = document.getElementById("mdrivers"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-    if(el.dataset.mquotations=="yes"){
-      
-        var element = document.getElementById("mquotations"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-    if(el.dataset.mpackages=="yes"){
-      
-        var element = document.getElementById("mpackages"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-    if(el.dataset.mcars=="yes"){
-      
-        var element = document.getElementById("mcars"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-
-
-    if(el.dataset.musers=="yes"){
-      
-        var element = document.getElementById("musers"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.madmins=="yes"){
-      
-        var element = document.getElementById("madmins"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.msettings=="yes"){
-      
-        var element = document.getElementById("msettings"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-    if(el.dataset.mfaqs=="yes"){
-      
-        var element = document.getElementById("mfaqs"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-    if(el.dataset.mtickets=="yes"){
-      
-        var element = document.getElementById("mtickets"+el.dataset.id);
-        element.checked = 1;
-        
-    }
-
-
-     // AuditTrail.sendLogInfo(user, '', 'Roles And Previledges/View Mode', 'Success', '201', 'PUT')
-                  
-          
-
-
-
-
-}
-
-window.RolesAddAction = (t) =>{
-
-
-  let view_id = t.dataset.id;
-
-   
- let linkOfApi ='http://localhost:12000/api/v1/' + t.dataset.url ;
-
- let usergroups_old =document.getElementById("role"+view_id).dataset.usergroups_old
- usergroups_old = usergroups_old.split(',')
- 
- //alert(typeof(usergroups_old))
-
-
-  let previledges_info =document.getElementById("role"+view_id).value;
-        
- let previledges_description = document.getElementById("description"+view_id).value ;
-
-
- if(!previledges_description.length){
-
-   var notification = alertify.notify('Description required. .', 'error', 5, function(){  console.log('dismissed'); });
- 
- }
-
-
- if(!previledges_info.length){
-
-   var notification = alertify.notify('Role title required. .', 'error', 5, function(){  console.log('dismissed'); });
-   return false;
-
- }
-
- let prePostData ={
-  previledges_info,
-  previledges_description,
-  usergroups_old: usergroups_old
- }
-
-
-  const user =JSON.parse(localStorage.getItem("userToken"));
-
-  fetch(linkOfApi, {
-              method: 'Post',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'x-access-token': user.token,
-              },
-              body: JSON.stringify(prePostData),
-              mode:"cors",
-            })
-              .then(response => response.json())
-              .then(data => {
-                console.log(data)
-                if (data.status === 201) {
-                  
-                  var notification = alertify.notify('Successfully created user role.', 'success', 5, function(){  console.log('dismissed'); });
-                      
-                   AuditTrail.sendLogInfo(user, prePostData.email, 'UserGroup > Roles And Previledges/Create Mode', 'Success', '201', 'PUT')
-                      
-                  setTimeout(()=>{
-                    window.location.href="./admin-previledges"
-                  },4000)
-                      
-
-                         
-          }else{
-                      AuditTrail.sendLogInfo(user, '', 'UserGroup > Roles And Previledges/Create Mode', 'Failed', '200', 'PUT')
-         
-                  
-                  var notification = alertify.notify('Could not perform update operation. Ensure the fields are filled in correctly.', 'error', 5, function(){  console.log('dismissed'); });
-
-                }
-              }).catch(e=> console.log(e));
-
-
-}
-
-
-window.RolesUpdateAction =(t) =>{
-
-
-
-  let view_id = t.dataset.id;
-
-
- let linkOfApi ='http://localhost:12000/api/v1/' + t.dataset.url + '/' + t.dataset.id
-
-
-  let previledges_info =document.getElementById("role"+view_id).value
-        
- let previledges_description = document.getElementById("description"+view_id).value ;
-
-
- if(!previledges_description.length){
-
-  var notification = alertify.notify('Description required. .', 'error', 5, function(){  console.log('dismissed'); });
-  return false;
-
- }
-
-
- if(!previledges_info.length){
-
-  var notification = alertify.notify('Role title required. .', 'error', 5, function(){  console.log('dismissed'); });
-   return false;
-
- }
-
- let prePostData ={
-  previledges_info,
-  previledges_description
- }
-
-
-  const user =JSON.parse(localStorage.getItem("userToken"));
-
-          
-          fetch(linkOfApi, {
-              method: 'PUT',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'x-access-token': user.token,
-              },
-              body: JSON.stringify(prePostData),
-              mode:"cors",
-            })
-              .then(response => response.json())
-              .then(data => {
-                console.log(data)
-                if (data.success === 'ok') {
-                  
-                  var notification = alertify.notify('Successfully updated roles.', 'success', 5, function(){  console.log('dismissed'); });
-                      
-                 
-                      
-
-                 AuditTrail.sendLogInfo(user,'', 'UserGroup > Roles And Previledges/EDIT Mode', 'Success', '201', 'PUT')
-                      
-                  setTimeout(()=>{
-                      window.history.back();
-                  },4000)
-                      
-
-                         
-          }else{
-                      AuditTrail.sendLogInfo(user, '', 'UserGroup > Roles And Previledges/EDIT Mode', 'Failed', '400', 'PUT')
-         
-                  
-                  var notification = alertify.notify('Could not perform update operation. Ensure the fields are filled in correctly.', 'error', 5, function(){  console.log('dismissed'); });
-
-                }
-              }).catch(e=> {alert(e)});
-
-
-
-}
-
-
-window.viewInspectionUpdate = (el) =>{
-
-
-  let view_id = el.dataset.id;
-  console.log(view_id+ "dsjdjjs")
-  let modal_view_id = document.getElementById("con-close-modal-"+ view_id);
-  modal_view_id.style.display="block";
-
-  let showme ="#con-close-modal-"+ view_id
-
-   // $('.mebox').not($(showme).closest('.mebox')).addClass('noOpacity');
-
-   $('.mebox').not(showme).hide();
-
-
-    document.getElementById("first-view").style.display="none";
-    document.getElementById("second-view").style.display="block";
-
-
- 
-
-
-          
-
-        
-        document.getElementById("email"+view_id).value= el.dataset.email
-        
-        document.getElementById("username"+view_id).value = el.dataset.username;
-
-        document.getElementById("description"+view_id).value = el.dataset.description
-        
-        document.getElementById("date"+view_id).value = el.dataset.date
-
-        document.getElementById("phone_number"+view_id).value = el.dataset.phone
-
-
-        document.getElementById("time"+view_id).value = el.dataset.time
-
-        document.getElementById("car_id"+view_id).value = el.dataset.car_id
-        
-       
-
-
-          // const prePostData = {
-          //   username: username,
-          //   email: email,
-          //   phone_number: phone_number,
-          //   description: description,
-          //   createdDate: createdDate,
-          //   time: time,
-          //   status,
-          //   car_id,
-          // };
-
-
-
-
-
-         
-
-          // const user =JSON.parse(localStorage.getItem("userToken"));
-
-          
-          // fetch(linkOfApi, {
-          //     method: 'POST',
-          //     headers: {
-          //       'Accept': 'application/json',
-          //       'Content-Type': 'application/json',
-          //       'x-access-token': user.token,
-          //     },
-          //     body: JSON.stringify(prePostData),
-          //     mode:"cors",
-          //   })
-          //     .then(response => response.json())
-          //     .then(data => {
-          //       console.log(data)
-          //       if (data.status === 201) {
-                  
-          //         var notification = alertify.notify('Successfully created inspection ', 'success', 5, function(){  console.log('dismissed'); });
-                      
-          //         setTimeout(()=>{
-          //           window.history.back();
-          //         },2000)
-                      
-
-          //        // ApiDeleteOneStatusRecord.redirect(recordOfType);
-          //       } else {
-                  
-          //         var notification = alertify.notify('Could not perform update operation. Ensure the plan selected is correct.', 'error', 5, function(){  console.log('dismissed'); });
-
-          //       }
-          //     }).catch(e=> console.log(e));
-
-        //  AuditTrail.sendLogInfo(user,'', 'UserGroup > Roles And Previledges/EDIT Mode', 'Success', '201', 'PUT')
-                      
-                 
-
-}
-
-
-window.addInspection = () =>{
-
-  document.getElementById("add-new").addEventListener("click",(e)=>{
-      
-     
-  })
-
-
-
-}
 
 
 function sanitize(strings, ...values) {
@@ -2390,7 +960,7 @@ function showhide(id) {
 
 let activeUrl = getOnlineUrlConnection();
 
-alertify.set('notifier','position', 'top-left');
+alertify.set('notifier','position', 'bottom-right');
 
 window.addMethodTrigger = false;
 
@@ -2581,16 +1151,26 @@ window.addCloseEffect2= (el)=>{
 const addClick = () =>{
 
 	
-
+    // $('.hello').hide()
 
 	 addMethodTrigger = true;
+
+   if(document.getElementById('car')){
+     
+     $('.review-car').hide()
+     document.getElementById('car').src='https://commute-bucket.s3.amazonaws.com/unnamed.jpg';
+   }
+
+
+   
+
+   
 
    if(document.getElementById("user-id")){
       document.getElementById("user-id").innerHTML="";
     
-    
-  //if(document.getElementById("user-id")){
-  document.getElementById("user-id").innerHTML='';
+       //if(document.getElementById("user-id")){
+     document.getElementById("user-id").innerHTML='';
    }
 	 
     
@@ -2599,8 +1179,16 @@ const addClick = () =>{
    //}
 	document.getElementById("add-new").addEventListener("click",(e)=>{
 	 $('.mebox').hide();
+
+
+  
        document.getElementById("create").style.visibility="visible";
        document.getElementById("create").style.display="block";
+
+       // if(document.getElementById('car')){
+       //    document.getElementById("create").style.disabled=true
+       //     document.getElementById("create").disabled=true
+       // }
 	   document.getElementById("update").style.visibility="hidden";
 	   //document.getElementById("delete").style.visibility="hidden";
 	   document.getElementById("cancle").style.visibility="hidden";
@@ -2623,6 +1211,13 @@ const addClick = () =>{
 		    elements[ii].value = "";
 		  }
 		}
+
+
+    if(document.getElementById("carsme")){
+       $('.hello').hide()
+        $('#create').hide()
+
+   }
 
 	   document.getElementById("first-view").style.display="none";
        document.getElementById("second-view").style.display="block";
@@ -2690,11 +1285,17 @@ window.addEventEarnings = (o) =>{
   const user =JSON.parse(localStorage.getItem("userToken"));
 
 
+   let carItem = JSON.parse(localStorage.getItem('chosenCar')) || {
+    name: '',
+      plate_no: '',
+      car_id: ''
+   };
+
+   let vehiclePlateNo = carItem.plate_no,
+      vehicleId_x =carItem.car_id,
+      vehicleName= carItem.name,
 
 
-   let vehiclePlateNo = document.getElementById("vehiclePlateNo"+ o.dataset.id).value,
-      vehicleId_x =document.getElementById("vehicleId"+ o.dataset.id),
-      vehicleName=document.getElementById("vehicleName"+ o.dataset.id).value,
       paymentReference=document.getElementById("paymentReference"+ o.dataset.id).value,
       PaymentAmount= document.getElementById("PaymentAmount"+ o.dataset.id).value;
       const paymentDate = document.getElementById("paymentDate"+ o.dataset.id).value;
@@ -2704,7 +1305,7 @@ window.addEventEarnings = (o) =>{
    
     let partnerEmail='';    
     const partnerId = document.getElementById("partnerId"+ o.dataset.id).value;
-    const partnerEmail_x = document.getElementById("PartnerEmail"+ o.dataset.id);
+    const partnerEmail_x = document.getElementById("idpat-"+ o.dataset.id);
          
     const status_x = document.getElementById("PaymentStatus"+ o.dataset.id);
 
@@ -2725,14 +1326,14 @@ window.addEventEarnings = (o) =>{
     //   }
     // }
 
-    let vehicle = vehicleId_x.options[vehicleId_x.selectedIndex].text;
-    vehicle = vehicle.split('-');
-    vehicle = vehicle[1];
+    // let vehicle = vehicleId_x.options[vehicleId_x.selectedIndex].text;
+    // vehicle = vehicle.split('-');
+    // vehicle = vehicle[1];
 
     
      
     const status = status_x.options[status_x.selectedIndex].text;
-    let amt = new Number(PaymentAmount);
+    let amt = parseInt(PaymentAmount,10);
     let prePostData =null;
      prePostData ={
             
@@ -2749,7 +1350,7 @@ window.addEventEarnings = (o) =>{
                  bankAccountName:document.getElementById('bankAccountName'+ o.dataset.id).value
 
               },
-              vehicleId: vehicle,
+              vehicleId: vehicleId_x,
               vehicleName,
               vehiclePlateNo,
               email:partnerEmail,
@@ -2763,11 +1364,11 @@ window.addEventEarnings = (o) =>{
         return false;
       }
 
-      if(vehicleId_x.options[vehicleId_x.selectedIndex].text=='--select--'){
-        var notification = alertify.notify('Select a valid email.', 'error', 5, function(){  console.log('dismissed'); });
+      // if(vehicleId_x.options[vehicleId_x.selectedIndex].text=='--select--'){
+      //   var notification = alertify.notify('Select a valid email.', 'error', 5, function(){  console.log('dismissed'); });
 
-        return false
-      }
+      //   return false
+      // }
 
 
       if(isNaN(amt)){
@@ -2796,11 +1397,14 @@ window.addEventEarnings = (o) =>{
         .then(data => {
           if (data.status === 201) {
             // modal_view_id.style.display="none";
-            var notification = alertify.notify('Successfully created  partners earnings.', 'success', 5, function(){  console.log('dismissed'); });
+            var notification = alertify.notify('Successfully created  partners earnings. Please wait...', 'success', 5, function(){  console.log('dismissed'); });
        
 
             AuditTrail.sendLogInfo(user,prePostData.username, 'USER ENTITY  MODULE(USER/DRIVER/ADMIN)', 'Success', '201', 'POST')
           
+            setTimeout(()=>{
+              window.location.reload()
+            },3000)
 
 
           } else {
@@ -3316,9 +1920,13 @@ document.getElementById('bankAccountNumber'+ view_id).value = el.dataset.bankacc
       
 
       
+     if(el.dataset.address=='undefined'){
+      document.getElementById("address"+ view_id).value=  'Enter your address';
+     }
 
+     document.getElementById("address"+ view_id).value= el.dataset.address ||  'Enter your address';
 
-      document.getElementById("address"+ view_id).value= el.dataset.address;
+      
     }
 
     if( document.getElementById("totalCars"+ view_id)){
@@ -3362,17 +1970,13 @@ window.updateRecordViewEarnings = (el)=>{
    $('.mebox').not(showme).hide();
 
 
-   $(".PartnerEmail").on('change', function() {
-           // Set selected option as variable
-           var selectValue = $(this).text();
+   $('.hello').show()
 
-           alert('hello')
+   $('#carset').hide()
 
-         
-           
-           
-            
-    });
+
+   
+ 
 
 
    
@@ -3382,7 +1986,7 @@ window.updateRecordViewEarnings = (el)=>{
   //document.getElementById("delete").style.visibility="visible";
   document.getElementById("cancle").style.visibility="visible";
 
-  document.getElementById("PartnerEmail"+view_id).value=el.dataset.partneremail;
+  // document.getElementById("PartnerEmail"+view_id).value=el.dataset.partneremail;
   document.getElementById("paymentDate"+view_id).value=el.dataset.paymentdate;
   document.getElementById("vehiclePlateNo"+view_id).value=el.dataset.vehicleplateno;
   document.getElementById("vehicleId"+view_id).value=el.dataset.vehicleid;
@@ -3411,9 +2015,18 @@ document.getElementById("bankAccountName"+view_id).value=el.dataset.bankaccountn
     });
 
 
-    let idxz= "#partnerBankAccount"+view_id;
+    let id3= "#PaymentStatus"+ el.dataset.id;
+    $( id3 + " option").each(function () {
+        if ($(this).html() == el.dataset.partneremail) {
+            $(this).attr("selected", "selected");
+            return;
+        }
+    });
+
+
+    let idxz= "#idpat-"+view_id;
     $( idxz + " option").each(function () {
-        if ($(this).html() == el.dataset.partnerbankaccount) {
+        if ($(this).html() == el.dataset.partneremail) {
             $(this).attr("selected", "selected");
             return;
         }
@@ -3421,41 +2034,20 @@ document.getElementById("bankAccountName"+view_id).value=el.dataset.bankaccountn
 
 
 
-//      document.getElementById("PaymentAmount"+ el.dataset.id).onkeyup = document.getElementById("PaymentAmount"+ el.dataset.id).onchange = enforceFloat;
-//     document.getElementById("partnerBankAccount"+ el.dataset.id).onkeyup = document.getElementById("partnerBankAccount"+ el.dataset.id).onchange = enforceFloat;
-//     document.getElementById('bankAccountNumber' + el.dataset.id).onkeyup = document.getElementById('bankAccountNumber' + el.dataset.id).onchange = enforceFloat;
-
-//         //enforce that only a float can be inputed
-// function enforceFloat() {
-//   var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
-//   var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
-//   if (!valid.test(this.value)) {
-//     var n = this.value.match(number);
-//     this.value = n ? n[0] : '';
-//   }
-// }
-
-
-  //   if(document.getElementById("type"+ el.dataset.id)){
-   
-
-
-
-  //       let idz= "#type"+ el.dataset.id;
-  //       $( idz + " option").each(function () {
-  //           if ($(this).html() == el.dataset.roles) {
-  //               $(this).attr("selected", "selected");
-  //               return;
-  //           }
-  //       });
-
-         
-
-  // }
 
 
   document.getElementById("first-view").style.display="none";
        document.getElementById("second-view").style.display="block";
+
+
+
+
+$('h1.spacing').on('mouseenter', function(){
+  $(this).toggleClass('spaced');
+});
+
+
+
     
 
  
@@ -3742,6 +2334,7 @@ window.viewCarRecordTemplate = (el)=>{
 
 	let showme ="#con-close-modal-"+ view_id
 
+
 	 // $('.mebox').not($(showme).closest('.mebox')).addClass('noOpacity');
 
 	 $('.mebox').not(showme).hide();
@@ -3757,23 +2350,28 @@ window.viewCarRecordTemplate = (el)=>{
     // document.getElementById("model"+view_id).value=el.dataset.model;
 
 
-	document.getElementById("plate_number"+view_id).value=el.dataset.plate_number;
-	document.getElementById("car_year"+view_id).value=el.dataset.car_year;
+	document.getElementById("plate_number"+view_id).value=el.dataset.plate_number || '';
+	document.getElementById("car_year"+view_id).value=el.dataset.car_year || "";
 	// document.getElementById("car_type"+view_id).value= el.dataset.car_type;
-	document.getElementById("color"+view_id).value= el.dataset.color;
+	document.getElementById("color"+view_id).value= el.dataset.color || '';
 
-	document.getElementById("description"+view_id).value= el.dataset.description;
-	document.getElementById("inspection_detail"+view_id).value= el.dataset.inspection_detail;
-    document.getElementById("partner_id"+view_id).value= el.dataset.partner_id;
+	document.getElementById("description"+view_id).value= el.dataset.description || '';
+	document.getElementById("inspection_detail"+view_id).value= el.dataset.inspection_detail || '';
+    document.getElementById("partner_id"+view_id).value= el.dataset.partner_id || '';
  
- document.getElementById("car_model_trim"+view_id).value= el.dataset.trim;
-document.getElementById("car_model_name"+view_id).value= el.dataset.model;
-  document.getElementById("car_model_id"+view_id).value= el.dataset.model_make_id;
+ document.getElementById("car_model_trim"+view_id).value= el.dataset.trim || '';
+document.getElementById("car_model_name"+view_id).value= el.dataset.model || '';
+  document.getElementById("car_model_id"+view_id).value= el.dataset.model_make_id || '';
   
 
- document.getElementById("inputLicense"+view_id).value= el.dataset.license;
-    //document.getElementById("user-id").innerHTML="CMT-CAR-"+ view_id.substring(-5,view_id.length);
+ document.getElementById("inputLicense"+view_id).value= el.dataset.license || '';
+document.getElementById("inspection_date"+ view_id).value=el.dataset.inspection_date || '';
+document.getElementById("inspection_time"+ view_id).value= el.dataset.inspection_time || '';
     
+
+document.getElementById("tin"+ view_id).value= el.dataset.tin || '';
+
+
 document.getElementById('car').src=el.dataset.old_car
     let id= "#status"+ el.dataset.id;
     $( id + " option").each(function () {
@@ -3805,11 +2403,11 @@ document.getElementById('car').src=el.dataset.old_car
 
      let id2= "#partner_id"+ view_id;
     $( id2 + " option").each(function () {
-        if ($(this).html() == el.dataset.partner_id) {
+        if ($(this).attr('id') == el.dataset.partner_id) {
             $(this).attr("selected", "selected");
             return;
         }else{
-           $(this).html('owned by company') 
+           // $(this).html('owned by company') 
         }
     });
 
@@ -3905,6 +2503,13 @@ window.updateCarRecordTemplate = (o) =>{
     let partid = partner_id_x.options[partner_id_x.selectedIndex]
     const inspection_detail = document.getElementById("inspection_detail" + o.dataset.id)
     let driv = drivers.options[drivers.selectedIndex].text.split('-')
+   
+
+    const inspectionDate = document.getElementById("inspection_date" + o.dataset.id).value
+
+    const inspectionTime = document.getElementById("inspection_time" + o.dataset.id).value
+    let vehicleIdentificationNumber =  document.getElementById("tin"+ o.dataset.id).value;
+
 
 
     let avatar = document.getElementById('image-file'+ o.dataset.id).value ;
@@ -3993,6 +2598,9 @@ window.updateCarRecordTemplate = (o) =>{
       license: license.value,
       assigned_driver_id: drivers.options[drivers.selectedIndex].getAttribute('id'),
       images:images,
+      inspectionDate,
+      inspectionTime,
+      vehicleIdentificationNumber,
 
 
 
@@ -4025,9 +2633,9 @@ vehicleColor:color.value,
 
 plateNo:plate_number.value,
 
-inspectionDate: new Date(),
+// inspectionDate: new Date(),
 
-inspectionTime: new Date(),
+// inspectionTime: new Date(),
 
 carDescription:description.value,
 
@@ -4696,6 +3304,8 @@ window.addCarRecordEvent = (o) =>{
     let partid = partner_id_x.options[partner_id_x.selectedIndex]
     const inspection_detail = document.getElementById("inspection_detail" + o.dataset.id)
     let driv = drivers.options[drivers.selectedIndex].text.split('-')
+    
+    let vehicleIdentificationNumber =  document.getElementById("tin"+ o.dataset.id).value;
 
 
     let avatar = document.getElementById('image-file'+ o.dataset.id).value ;
@@ -4764,6 +3374,12 @@ window.addCarRecordEvent = (o) =>{
       // partEmail = partEmail[1];
 
 
+          const inspectionDate = document.getElementById("inspection_date" + o.dataset.id).value;
+
+    const inspectionTime = document.getElementById("inspection_time" + o.dataset.id).value
+
+
+
     const prePostData = {
       color: color.value,
       model: car_model.value,
@@ -4784,6 +3400,9 @@ window.addCarRecordEvent = (o) =>{
       license: license.value,
       assigned_driver_id: drivers.options[drivers.selectedIndex].getAttribute('id'),
       images:images,
+      inspectionDate,
+      inspectionTime,
+      vehicleIdentificationNumber,
 
 
 
@@ -4816,9 +3435,6 @@ vehicleColor:color.value,
 
 plateNo:plate_number.value,
 
-inspectionDate: new Date(),
-
-inspectionTime: new Date(),
 
 carDescription:description.value,
 
@@ -4970,9 +3586,20 @@ window.updateDataEarnings = (o) =>{
     const user =JSON.parse(localStorage.getItem("userToken"));
 
 
-   let vehiclePlateNo = document.getElementById("vehiclePlateNo"+ o.dataset.id).value,
-      vehicleId =document.getElementById("vehicleId"+ o.dataset.id).value,
-      vehicleName=document.getElementById("vehicleName"+ o.dataset.id).value,
+   let carItem = JSON.parse(localStorage.getItem('chosenCar')) || {
+    name: '',
+      plate_no: '',
+      car_id: ''
+   };
+
+   let vehiclePlateNo = carItem.plate_no,
+      vehicleId_x =carItem.car_id,
+      vehicleName= carItem.name,
+
+
+   // let vehiclePlateNo = document.getElementById("vehiclePlateNo"+ o.dataset.id).value,
+      vehicleId = vehicleId_x, //document.getElementById("vehicleId"+ o.dataset.id).value,
+      // vehicleName=document.getElementById("vehicleName"+ o.dataset.id).value,
       paymentReference=document.getElementById("paymentReference"+ o.dataset.id).value,
       PaymentAmount= document.getElementById("PaymentAmount"+ o.dataset.id).value;
       const paymentDate = document.getElementById("paymentDate"+ o.dataset.id).value;
@@ -4982,7 +3609,7 @@ window.updateDataEarnings = (o) =>{
    
     
     const partnerId = document.getElementById("partnerId"+ o.dataset.id).value;
-    const partnerEmail = document.getElementById("PartnerEmail"+ o.dataset.id).value;
+    const partnerEmail = document.getElementById("idpat-"+ o.dataset.id).value;
          
     const status_x = document.getElementById("PaymentStatus"+ o.dataset.id);
 
@@ -5022,7 +3649,7 @@ window.updateDataEarnings = (o) =>{
               partnerId,
               partnerEmail,
               partnerBankAccount:{
-                 bankAccount:bnk.options[bnk.selectedIndex].text,
+                 bankAccount:bnk.value,
                  bankAccountNumber:partnerBankAccount,
                  bankAccountName:document.getElementById('bankAccountName'+ o.dataset.id).value
 
@@ -5060,7 +3687,7 @@ window.updateDataEarnings = (o) =>{
             var notification = alertify.notify('Successfully updated partners earnings', 'success', 5, function(){  console.log('dismissed'); });
                AuditTrail.sendLogInfo(user,prePostData.username, 'USER MODULE (ADMIN/USER/DRIVER)', 'Success', '201', 'PUT')
 
-                window.location.reload();
+                // window.location.reload();
            // ApiDeleteOneStatusRecord.redirect(recordOfType);
           } else {
              AuditTrail.sendLogInfo(user,prePostData.username, 'USER MODULE (ADMIN/USER/DRIVER)', 'Failed', '201', 'PUT')
@@ -5361,30 +3988,7 @@ const profileUpdate = (o)=>{
 }
 
 function searchTable(trId=0) {
-  // // Declare variables
-  // var input, filter, table, tr, td, i, txtValue;
-  // input = document.getElementById("search");
-  // filter = input.value.toUpperCase();
-  // table = document.getElementById("tablebody1");
-  // tr = table.getElementsByTagName("tr");
-  // console.log("working")
-  // // Loop through all table rows, and hide those who don't match the search query
-  // for (i = 0; i < tr.length; i++) {
-  //   if(trId){
-  //     td = tr[i].getElementsByTagName("td")[trId];
-  //   }else{
-  //     td = tr[i].getElementsByTagName("td")[0];
-  //   }
-    
-  //   if (td) {
-  //     txtValue = td.textContent || td.innerText;
-  //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-  //       tr[i].style.display = "";
-  //     } else {
-  //       tr[i].style.display = "none";
-  //     }
-  //   }
-  // }
+
 
   // $(document).ready(function(){
 
@@ -5519,25 +4123,38 @@ class ApiAdminBotService  {
 
   	let template1 ='', template2 ='', template3 ='';
 
+
+
+
+    if(totalItineraries.length<=0){
+        
+
+
+           tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
+    
+      
+    }
+    
+
   	totalItineraries.map((item, i) => {            
         
     
         let className='';
 
-        if(item.status=="Ongoing"){
+        if(item.status=="Ongoing" || item.status=="Paid"){
                              
                 className=`label-danger`;
          }else if(item.status=="Completed"){
                           
                 className= `label-success`;
-        }else{
+        }else {
                             
               className=`label-warning`;
          }
         eachRecord = `
                           <tr id="${i}">
                                 <td>${formatDate(new Date(item.created_at))} </td>
-                                 <td>${item.username}</td>
+                                
                                   <td>${item.email}</td>
                           <td>${item.plan_category}</td>
                           <td>${item.start_location} </td>
@@ -5550,23 +4167,37 @@ class ApiAdminBotService  {
    });
        
     //const modalbody1 = document.getElementById("modalbody1");
+
+  
+  if(ticketList.length<=0){
+        
+
+
+            tablebody2.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
+    
+      
+    }
+    
+
+
     
     
 
   	ticketList.map((item, i) => { 
   		let className = "label-success"
-  	    if(item.status=="Active"){
+  	    if(item.status=="Completed"){
            className = "label-success"
-  	    }else{
-           className = "label-warning"
-  	    }           
+  	    }else if(item.status=="Ongoing"){
+           className = "label-danger"
+  	    } else{
+          className = "label-warning"
+        }          
         template2 =`<tr>
                          <td><a onclick="viewPlan(this)" href="#" id="plancat${item._id}" data-id="${item._id}" data-url="/admin-ticket-detail" class=""><b>${formatDate(new Date(item.created_at))} </b></a> </td>
                           
                           <td>CMT-USER- ${item.user_id}</td>
                            <td>${item.category}</td>
  
-                           <td class="">${item.comment}</td>
                            <td class="">${item.subject}</td>
                            <td class="">CMT-RECORD-${item._id.substring(-12,item._id.length)}</td>
                            <td><span class="label ${className}">${item.status}</span></td>
@@ -5617,22 +4248,31 @@ class ApiAdminBotService  {
 
     if(notice.length>0){
         document.getElementById("notifyCount").innerHTML=notice.length
-        notice.map((item,i)=>{
-                let markup =`   <div class="pull-left p-r-10" style="" id="${i}">
-                
-                                                 </div>
-                                                 <div class="media-body">
-                                                    <h5 class="media-heading">Quotation Notification<span class="label label-default pull-right">New </span></h5>
-                                                    <hr/>
-                                                    <p class="m-0">
-                                                        <small>${ item.description.substring(0,150)}...<a id="plan-current-5e8904789ee841375ce073f3" onclick="" data-id="5e8904789ee841375ce073f3" href="./admin-bookings" class="table-action-btn btn-custom btn-purple"><i class="md md-chevron-right"></i></a></small>
-                                                    </p>
-                                                 </div><hr/>`;
+         let counter = 0;
+        
+            notice.map((item,i)=>{
+                    if(item.type=="payment"){
+                      counter+=1;
+                      let markup =`   <div class="pull-left p-r-10" style="" id="${i}">
+                      
+                                                       </div>
+                                                       <div class="media-body">
+                                                          <h5 class="media-heading" style="margin-left:4px; ">Quotation Notification<span class="label label-default pull-right" style="margin-right:12px">New </span></h5>
+                                                          <hr/>
+                                                          <p class="m-0" >
+                                                              <small style="">${ item.description.substring(0,150)}...<a id="plan-current-5e8904789ee841375ce073f3" onclick="" data-id="5e8904789ee841375ce073f3" href="./admin-bookings" class="table-action-btn btn-custom btn-purple"><i class="md md-chevron-right"></i></a></small>
+                                                          </p>
+                                                       </div><hr/>`;
 
-                 $( "#notice_board" ).append( $( markup ) ) 
+                       $( "#notice_board" ).append( $( markup ) ) 
 
-                  $( "#notice_board2" ).append( $( markup ) ) 
-              })
+                        $( "#notice_board2" ).append( $( markup ) ) 
+
+                      }
+                  })
+
+        
+        document.getElementById("notifyCount").innerHTML=counter
     }
   
 
@@ -5818,7 +4458,7 @@ class ApiAdminBotService  {
           `;
 
        modalbody1.innerHTML=AviewModals;
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     
       
     }
@@ -6192,11 +4832,12 @@ class ApiAdminBotService  {
           `;
 
        modalbody1.innerHTML=AviewModals;
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     
       
     }
-  	
+  
+
     
     
   	datas.map((item, i) => { 
@@ -6547,7 +5188,7 @@ class ApiAdminBotService  {
           `;
 
        modalbody1.innerHTML=AviewModals;
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     
       
     }
@@ -6733,11 +5374,24 @@ class ApiAdminBotService  {
 WarLockAdmin(previledges,'view_partners','manage_partners')
     noReadWrite(previledges,'manage_partners')
 
+
+    document.getElementById("close-id").addEventListener("click", (e)=>{
+       // alert('chosen')
+      document.getElementById("carset").style.display="none"
+    })
+
+    document.getElementById("taken").addEventListener("click", (e)=>{
+       // alert('chosen')
+      document.getElementById("carset").style.display="none"
+    })
+
     GateKeepersForAdmin();
     addClick()
    document.getElementById("search").addEventListener("keyup",(e)=>{
    	 searchTable() 
    })
+
+   document.getElementById('carset').style.display="none"
 
 
 
@@ -6746,12 +5400,22 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
    console.log(cars)
 
+   let carsR ='';
+
    let selectedCars ='';
    [...new Set(cars)].map((item, i) => { 
-          selectedCars+=`<option data-id="${item._id}" data-vehicleplateno="${item.plate_number || item.plateNumber }" id="${item._id}"  data-vehiclename="${item.model || item.Model}">${item.model || item.Model}-${item._id}</option>`; 
+          selectedCars+=`<option data-id="${item.creator}" data-vehicleplateno="${item.plate_number || item.plateNumber }" id="${item._id}"  data-vehiclename="${item.model || item.Model}">${item.car.car_name || item.Model}-${item._id}</option>`; 
           
+
+          carsR+=`
+              <li onclick="viewCarDetail(this)"  data-id="${item.creator}" data-plate_no="${item.plateNo || item.plate_number}" data-desc="${item.description || item.carDescription}" data-image="${item.images || item.imagePath}" data-name="${item.car.car_name}" data-carid="${item._id}" id="${item._id}"   class="classless"><input class="example" type="checkbox" id="cb${i+1}" data-id="${item.creator}" />
+                <label class="classless" for="cb${i+1}"><img    style="height:80px; width:70px" src="${item.images}" /></label>
+              </li>`;
               
       });
+   document.getElementById("carsme").innerHTML = carsR;
+
+   let passedCars = {cars: cars};
 
     
 
@@ -6805,13 +5469,15 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                           </div>
                                      
 
+                                                            
+
                                                             <div class="form-group"> 
                                                                 <label for="field-1" class="control-label">Partner Email</label> 
-                                                                <select data-id="${item._id}" onchange="setEarningsDetail(this)"   class="selectpicker form-control" data-style="btn-white" id="PartnerEmail${item._id}" >
+                                                                <select id="idpat-${item._id}" data-id="${item._id}" onchange="setEarningsDetail(this)"   class="selectpicker form-control" data-style="btn-white" id="PartnerEmail${item._id}" >
                                                                    <option>--select--</option>
                                                                    ${selectOptions_users}
                                                                 </select>
-                                                            </div> 
+                                                            </div>  
                                                         
                                                          
                                                             <div class="form-group"> 
@@ -6939,7 +5605,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
           `;
 
        modalbody1.innerHTML=AviewModals;
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     
       
     }
@@ -6954,11 +5620,11 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
     let className = null;
   	datas.map((item, i) => {  
 
-  	    if(item.PaymentStatus=="Completed"){
+  	    if(item.paymentStatus=="Completed" || item.paymentStatus=="Success"){
            className = "label-success"
-  	    }else if(item.PaymentStatus=="Pending"){
+  	    }else if(item.paymentStatus=="Pending"){
            className = "label-warning"
-  	    } else if(item.PaymentStatus=="Ongoing"){
+  	    } else if(item.paymentStatus=="Ongoing"){
   	    	className = "label-danger"
   	    } else{
   	    	className="label-pink"
@@ -6974,7 +5640,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                     
                     <td class=""><span class="label ${className}">${item.paymentStatus || ''}</span></td>
                     
-                    <td class=""><a onclick="updateRecordViewEarnings(this)" data-toggle="modal" data-bankaccountname="${item.partnerBankAccount.bankAccountName || ''}" data-bankaccountnumber="${item.partnerBankAccount.bankAccountNumber || ''}" data-vehicleId="${item.vehicleId || ''}"  data-vehiclePlateNo="${item.vehiclePlateNo || ''}"   data-id="${item._id}" data-PaymentAmount="${item.PaymentAmount || ''}" data-partneremail="${item.partnerEmail || ''}" data-partnerBankAccount="${item.partnerBankAccount.bankAccount || ''}" data-PartnerEmail="${item.PartnerEmail || ''}" data-paymentReference="${item.paymentReference || ''}"  data-paymentdate="${formatDate(new Date(item.paymentDate)) || ''}" data-paymentid="${item.paymentId || ''}" data-partnerid="${item.partnerId || ''}" data-vehicleName="${item.vehicleName || ''}"  class="table-action-btn"><i class="md md-edit"></i></a>
+                    <td class=""><a onclick="updateRecordViewEarnings(this)" data-toggle="modal" data-bankaccountname="${item.partnerBankAccount.bankAccountName || ''}" data-bankaccountnumber="${item.partnerBankAccount.bankAccountNumber || ''}" data-vehicleId="${item.vehicleId || ''}"  data-vehicleplateno="${item.vehiclePlateNo || ''}"   data-id="${item._id}" data-paymentamount="${item.paymentAmount || ''}" data-partneremail="${item.partnerEmail || ''}" data-partnerBankAccount="${item.partnerBankAccount.bankAccount || ''}" data-PartnerEmail="${item.PartnerEmail || ''}" data-paymentReference="${item.paymentReference || ''}"  data-paymentdate="${formatDate(new Date(item.paymentDate)) || ''}" data-paymentid="${item.paymentId || ''}" data-partnerid="${item.partnerId || ''}" data-vehiclename="${item.vehicleName || ''}"  class="table-action-btn"><i class="md md-edit"></i></a>
                     <a onclick="deleteRecord(this)" data-id="${item._id}" data-url="/partners-earnings"  class="table-action-btn "><i class="md md-close"></i></a></td>
                 </tr>`;
 
@@ -7008,7 +5674,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
                                                             <div class="form-group"> 
                                                                 <label for="field-1" class="control-label">Partner Email</label> 
-                                                                <select data-id="${item._id}" onchange="setEarningsDetail(this)"   class="selectpicker form-control" data-style="btn-white" id="PartnerEmail${item._id}" >
+                                                                <select id="idpat-${item._id}" data-id="${item._id}" onchange="setEarningsDetail(this)"   class="selectpicker form-control" data-style="btn-white" id="PartnerEmail${item._id}" >
                                                                    <option>--select--</option>
                                                                    ${selectOptions_users}
                                                                 </select>
@@ -7068,26 +5734,26 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
                           
 
-                                                            <div class="form-group"> 
+                                                            <div class="form-group hello" > 
                                                                 <label for="field-3" class="control-label">Vehicle Name</label> 
                                                                 
 
-                                                            <input type="text" class="form-control " id="vehicleName${item._id}" placeholder="Give an office address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                                            <input type="text" class="form-control " id="vehicleName${item._id}" />
 
                                                             </div> 
 
 
 
-                                                             <div class="form-group"> 
+                                                             <div class="form-group hello"> 
                                                                 <label for="field-3" class="control-label">Vehicle/Car Id</label> 
                                                                 
 
-                                                            <input type="text" class="form-control " id="vehicleId${item._id}" placeholder="Give an office address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                                            <input type="text" class="form-control " id="vehicleId${item._id}"  />
 
                                                             </div>
 
 
-                                                            <div class="form-group"> 
+                                                            <div class="form-group hello"> 
                                                                 <label for="field-3" class="control-label">PlateNo</label> 
                                                                 <input type="text" class="form-control" id="vehiclePlateNo${item._id}" placeholder="0"> 
                                                             </div>
@@ -7127,6 +5793,20 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 		      `;
 
          modalbody1.innerHTML+=viewModals;
+
+         //
+
+          $("#idpat" + item._id).on('change', function() {
+            // let selectedPartner = document.getElementById("#idpat" + item._id);
+            // selectedPartner = selected.options[selected.selectedIndex];
+            // let partners_cars = cars.filter(item =>{
+            //     item.creator = selectedPartner.getAttribute('id')
+            // })
+
+
+            alert("testing..." )
+              
+        });
 
 
         
@@ -7371,7 +6051,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
           `;
 
        modalbody1.innerHTML=AviewModals;
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     
       
     }
@@ -7405,7 +6085,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                     
                     <td class=""><span class="label ${className}">${item.status}</span></td>
                     
-                    <td class=""><a onclick="updateRecordView(this)"  data-bankaccount="${item.bankAccount || '' }"  data-bankaccountname="${item.bankAccountName || '' }"  data-bankaccountnumber="${item.bankAccountNumber|| ''}" data-toggle="modal" data-isVerified="${item.isVerified|| 'No'}" data-totalCars="${item.totalCars}"  data-avatar="${avt|| item.avatar}"   data-id="${item._id}" data-totalCars="${item.totalCars}" data-firstname="${item.firstName || item.name }" data-lastname="${item.lastName || item.name }" data-email="${item.email}" data-phone="${item.phoneNumber || item.phone}" data-username="${item.userName || item.name }" data-address="${item.address || ''}" data-status="${item.status}" data-certificate="${item.businessName || ''}"  class="table-action-btn"><i class="md md-edit"></i></a>
+                    <td class=""><a onclick="updateRecordView(this)"  data-bankaccount="${item.bankAccount || '' }"  data-bankaccountname="${item.bankAccountName || '' }"  data-bankaccountnumber="${item.bankAccountNumber|| ''}" data-toggle="modal" data-isVerified="${item.isVerified|| 'No'}" data-totalCars="${item.totalCars}"  data-avatar="${avt|| item.avatar}"   data-id="${item._id}" data-totalCars="${item.totalCars}" data-firstname="${item.firstName || item.name }" data-lastname="${item.lastName || item.name }" data-email="${item.email}" data-phone="${item.phoneNumber || item.phone}" data-username="${item.userName || item.name }" data-address="${item.address || 'Enter your address'}" data-status="${item.status}" data-certificate="${item.businessName || ''}"  class="table-action-btn"><i class="md md-edit"></i></a>
                     <a onclick="deleteRecord(this)" data-id="${item._id}" data-url="/partners"  class="table-action-btn "><i class="md md-close"></i></a></td>
                 </tr>`;
         
@@ -7860,7 +6540,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
   	const modalbody1 = document.getElementById("modalbody1");
 
   	if(data.length<=0){
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     }
 
 
@@ -8022,7 +6702,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
   	const tablebody1 = document.getElementById('tablebody1');
   	const modalbody1 = document.getElementById("modalbody1");
   	if(data.length<=0){
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     }
 
     console.log(data)
@@ -8510,7 +7190,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
           `;
 
        modalbody1.innerHTML=AviewModals;
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     
       
     }
@@ -8730,7 +7410,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
   }
 
 
-      static runAdminFaqs(datas,previledges){
+  static runAdminFaqs(datas,previledges){
 
      WarLockAdmin(previledges,'view_faqs','manage_faqs')
          noReadWrite(previledges,'manage_faqs')
@@ -8849,7 +7529,7 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
           `;
 
        modalbody1.innerHTML=AviewModals;
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     
       
     }
@@ -8956,30 +7636,30 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
     //add tiny mice to faq
 
-    $(document).ready(function () {
-          if($("#elm1").length > 0){
-              tinymce.init({
-                  selector: "textarea",
-                  theme: "modern",
-                  height:300,
-                  plugins: [
-                      "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
-                      "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                      "save table contextmenu directionality emoticons template paste textcolor"
-                  ],
-                  toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons", 
-                  style_formats: [
-                      {title: 'Bold text', inline: 'b'},
-                      {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
-                      {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
-                      {title: 'Example 1', inline: 'span', classes: 'example1'},
-                      {title: 'Example 2', inline: 'span', classes: 'example2'},
-                      {title: 'Table styles'},
-                      {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
-                  ]
-              });    
-          }  
-      });
+    // $(document).ready(function () {
+    //       if($("#elm1").length > 0){
+    //           tinymce.init({
+    //               selector: "textarea",
+    //               theme: "modern",
+    //               height:300,
+    //               plugins: [
+    //                   "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+    //                   "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+    //                   "save table contextmenu directionality emoticons template paste textcolor"
+    //               ],
+    //               toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons", 
+    //               style_formats: [
+    //                   {title: 'Bold text', inline: 'b'},
+    //                   {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+    //                   {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+    //                   {title: 'Example 1', inline: 'span', classes: 'example1'},
+    //                   {title: 'Example 2', inline: 'span', classes: 'example2'},
+    //                   {title: 'Table styles'},
+    //                   {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+    //               ]
+    //           });    
+    //       }  
+    //   });
 
 
   }
@@ -9056,7 +7736,7 @@ noReadWrite(previledges,'manage_cars')
   	const modalbody1 = document.getElementById("modalbody1");
     
     if(data.length<=0){
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     }
 
   	data.map((item, i) => { 
@@ -9071,9 +7751,11 @@ noReadWrite(previledges,'manage_cars')
 
         let className2 ='label-warning'
         if(item.health_status=="Pending"){
-           className2 = "label-danger"
+           className2 = "label-warning"
         }else if(item.health_status=="Completed"){
           className2 = "label-success"
+        }else{
+          className2 = "label-danger"
         }
           
         let className3='';
@@ -9105,13 +7787,14 @@ noReadWrite(previledges,'manage_cars')
                           <td class=""><span class="label ${className3}">${ item.car_status}</span></td>
                            <td><img  style="width:100px;height:100px" src="${item.imagePath || item.images}" /></td>
                            <td class="">
-                               <a onclick="viewCarRecordTemplate(this)" data-car_status="${item.car_status}" data-health_status="${item.health_status}" data-model_make_id="${ item.model_make_id || item.car.model_id}" data-trim="${ item.car_type}" data-old_car="${ item.imagePath || item.images}" href="#" data-model="${ item.carModel  || item.car_type }" data-trim="${item.car_type}" data-car_type="${ item.carModel || item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name}-${item.assigned_driver_email}" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${ item.partnerEmail || 'owned by company'}" data-model="${ item.carModel || item.model}"  data-car_year="${ item.carYear  || item.car_year}" data-color="${ item.vehicleColor || item.color}"  data-status="${item.status}" data-plate_number="${ item.plateNo || item.plate_number}" data-inspection_detail="${item.inspection_detail}" data-description="${ item.carDescription || item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${ item.plateNo || item.license}" data-url="/admin-car-mgt-detail" class="table-action-btn"><i class="md md-edit"></i></a>
+                               <a onclick="viewCarRecordTemplate(this)" data-tin="${item.vehicleIdentificationNumber}" data-inspection_date="${item.inspectionDate }" data-inspection_time="${item.inspectionTime}" data-car_status="${item.car_status}" data-health_status="${item.health_status}" data-model_make_id="${ item.model_make_id || item.car.model_id}" data-trim="${ item.car.model_trim}" data-old_car="${ item.imagePath || item.images}" href="#" data-model="${ item.carModel  || item.car_type }"  data-car_type="${ item.carModel || item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name}-${item.assigned_driver_email}" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${ item.creator || 'owned by company'}" data-model="${ item.carModel || item.model}"  data-car_year="${ item.carYear  || item.car_year}" data-color="${ item.vehicleColor || item.color}"  data-status="${item.status}" data-plate_number="${ item.plateNo || item.plate_number}" data-inspection_detail="${item.inspection_detail || 'No comment.' }" data-description="${ item.carDescription || item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${ item.plateNo || item.license}" data-url="/admin-car-mgt-detail" class="table-action-btn"><i class="md md-edit"></i></a>
                                 <a onclick="deleteRecord(this)" data-id="${item._id}" data-url="/cars"  id="delete" class="table-action-btn "><i class="md md-close"></i></a></td>
                            
                            </td>
                    </tr>`;
+        
 
-      viewModals=  `<div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+      viewModals=`<div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
                                         <div class="slimScrollBar" style=""> 
                                             <div class=""> 
                                                 <div class=""> 
@@ -9215,6 +7898,13 @@ noReadWrite(previledges,'manage_cars')
                                             </div>
                                         </div>
 
+
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Vehicle Identification Number</label>
+                                            <input id="tin${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
                                         
 
 
@@ -9264,8 +7954,20 @@ noReadWrite(previledges,'manage_cars')
 															
 															<div class="form-group">
 																	<label for="">Car Inspection Details</label>
-																	<input id="inspection_detail${item._id}" type="text" class="form-control" id="" >
+																	<textarea id="inspection_detail${item._id}" type="text" class="form-control"  >Inspection detail</textarea>
 															</div>
+
+
+                              <div class="form-group">
+                                  <label for="">Car Inspection Date</label>
+                                  <input  id="inspection_date${item._id}" type="text" class="form-control" placeholder="MM/DD/YYYY" >
+                              </div>
+
+
+                              <div class="form-group">
+                                  <label for="">Car Inspection Time</label>
+                                  <input id="inspection_time${item._id}" type="text" class="form-control" placeholder="HH:MM:AM/PM" >
+                              </div>
 
 
 
@@ -9275,7 +7977,7 @@ noReadWrite(previledges,'manage_cars')
                               </div>
 
 
-                              <img src="${item.images}" id="img${item._id}" title="cars are here" data-carinfo="hello car"  style="width:100px;height:100px" /><span id="oldcar">old car profile</span>
+                              <img class="review-car" src="${item.images}"  id="img${item._id}" title="cars are here" data-carinfo="hello car"  style="width:100px;height:100px" /><span id="oldcar">old car profile</span>
 								    
 								               <br/>         
 								                        
@@ -9302,10 +8004,10 @@ noReadWrite(previledges,'manage_cars')
         modalbody1.innerHTML+=viewModals;
 
 
-        $("#car_model_make" + item._id).on('change', function() {
-            alert("am here")
+        // $("#car_model_make" + item._id).on('change', function() {
+        //     alert("am here")
               
-        });
+        // });
 
     });
 
@@ -9880,16 +8582,58 @@ noReadWrite(previledges,'manage_cars')
 
   }
 
-  static runAdminInspection(datas,previledges){
+  static runAdminInspection(datas,carsInfo,drivers,partners,previledges){
 
      WarLockAdmin(previledges,'view_car_inspection','manage_car_inspection')
          noReadWrite(previledges,'manage_car_inspection')
     GateKeepersForAdmin();
-      console.log("loading plan page")
-    document.getElementById("search").addEventListener("keyup",(e)=>{
-      searchTable() 
+     document.getElementById("search").addEventListener("keyup",(e)=>{
+      searchCars() 
     })
-      
+    addClick()
+
+     let selectOptionsDrivers = ``;
+  let driv = [...new Set(drivers)]
+  
+
+  console.log(drivers)
+   let selectOptionsPart ='';
+  partners.map((item, i) => { 
+      selectOptionsPart+=`<option data-username="${item.name || item.firstname}" data-email="${item.email}" id="${item._id}" >${item.email}</option>`; 
+          
+    });
+
+  driv.map((item, i) => { 
+      selectOptionsDrivers+=`<option data-username="${item.username}" data-email="${item.email}" id="${item._id}" value="${item.phone_number}">${item.username}-${item.email}</option>`; 
+          
+    });
+
+
+    console.log(carsInfo)
+
+    let carCategory = []; 
+    let modelNameOptionX = []; 
+    let car_year = [];
+
+   carsInfo.map((item)=>{
+     carCategory.push(item.car_name)
+   });
+   carCategory = [...new Set(carCategory)];
+
+  let modelOption=``;
+
+ 
+
+  carsInfo.map((item)=>{
+     modelOption+=`<option data-value="${item.model_name}" data-year="${item.year}" data-trim="${item.model_trim}" data-id="${item.model_make_id}">${item.car_name}</option>`
+
+  })
+
+
+
+ 
+
+
 
 
     
@@ -9898,46 +8642,90 @@ noReadWrite(previledges,'manage_cars')
     let viewModals = '';
 
 
+   // let driversC = [...drivers];
+  
 
     
     const tablebody1 = document.getElementById('tablebody1');
     const modalbody1 = document.getElementById("modalbody1");
     
-    // if(data.length<=0){
-    //   return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
-    // }
+    
+    if(data.length<=0){
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
+    }
 
     data.map((item, i) => { 
-     let className='';
+      let className = "label-success"
+        if(item.status=="Booked"){
+           className = "label-danger"
+        }else if(item.status=="Available"){
+           className = "label-success"
+        } else{
+           className = "label-warning"
+        } 
 
-        if(item.status=="Ongoing"){
-                             
-                className=`label-danger`;
-         }else if(item.status=="Completed"){
-                          
-                className= `label-success`;
+        let className2 ='label-warning'
+        if(item.health_status=="Pending"){
+           className2 = "label-warning"
+        }else if(item.health_status=="Completed"){
+          className2 = "label-success"
         }else{
-                            
-              className=`label-warning`;
-         }      
-        template2 =`<tr>
-                         
-                          <td class="">${item.car_id}</td>
-                          <td class="">${item.createdDate}</td>
-                          <td class="">${item.email}</td>
-                          <td class="">${item.username}</td>
-                           <td class="">${item.phone_number}</td>
-                           <td class="">${item.time}</td>
- 
-                           <td class=""><span class="label ${className}">${item.status}</span></td>
-                           <td class="">
-                               <a onclick="viewInspectionUpdate(this)" href="#" data-car_id="${item.car_id}" data-username="${item.username}" data-phone="${item.phone_number}" data-email="${item.email}" data-date="${formatDate(new Date(item.createdDate))}"  data-description="${item.description}"  data-status="${item.status}" id="plancat${item._id}" data-time="${item.time}" data-id="${item._id}" data-url="/admin-inspection-detail" class="table-action-btn"><i class="md md-edit"></i></a>
-                                <a onclick="deleteRecord(this)" data-id="${item._id}" data-url="/inspection"  id="delete" class="table-action-btn "><i class="md md-close"></i></a></td>
-                           
-                           </td>
-                   </tr>`;
+          className2 = "label-danger"
+        }
+          
+        let className3='';
+        if(item.car_status=="Disabled"){
+           className3 = "label-danger"
+        }else if(item.car_status=="Active"){
+           className3 = "label-success"
+        } else{
+           className3 = "label-warning"
+        }
 
-      viewModals+=  `<div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+        if(item.status=="Pending"){
+          item.health_status= 'Pending'
+          item.status="Available"
+        } 
+
+        // let itemv = JSON.stringify(data);
+
+
+
+    
+        template2 =`
+
+                           <div style=""  class="col-sm-6 col-lg-3 col-md-4 mobiles" >
+
+
+                                       
+                                    <div class="product-list-box thumb">
+                                        <a href="#" class="image-popup" title="Screenshot-1">
+                                            <img style="height:200px; " src="${item.imagePath || item.images}" class="thumb-img" alt="work-thumbnail" />
+                                        </a>
+
+                                        <div class="product-action">
+                                            <a href="#" class="btn btn-success btn-sm" onclick="viewInspectionUpdate(this);" href="#" data-contime="${item.confirmedInspectionTime}" data-condate="${item.confirmedInspectionDate}" data-id="${item._id}" data-inspection_date="${item.inspectionDate }" data-inspection_time="${item.inspectionTime}" data-car_status="${item.car_status}" data-health_status="${item.health_status}" data-model_make_id="${ item.model_make_id || item.car.model_id}" data-trim="${ item.car.model_trim}" data-old_car="${ item.imagePath || item.images}" href="#" data-model="${ item.carModel  || item.car_type }"  data-car_type="${ item.carModel || item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name }-${item.assigned_driver_email }" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${ item.creator || 'owned by company'}" data-model="${ item.carModel || item.model}"  data-car_year="${ item.carYear  || item.car_year}" data-color="${ item.vehicleColor || item.color}"  data-status="${item.status}" data-plate_number="${ item.plateNo || item.plate_number}" data-inspection_detail="${item.inspection_detail || 'No comment.' }" data-description="${ item.carDescription || item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${ item.plateNo || item.license}" data-url="/admin-car-mgt-detail" class="table-action-btn"><i class="md md-mode-edit"></i></a>
+                                <a href="#" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
+                                        </div>
+
+                                       
+                                        <div class="detail">
+                                            <h4 class="m-t-0"><a href="" class="text-dark">${ item.car.car_name  }</a> </h4>
+                                            <div class="rating">
+                                                <ul class="list-inline">
+                                                    <li><span class="label ${className2}">${ item.health_status}</span></li>
+                                                    
+                                                </ul>
+                                            </div>
+                                            <h5 class="m-0"> <span class="text-muted"> ${ item.car.model_make_id}</span></h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                  `;
+        
+
+         viewModals+=`<div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
                                         <div class="slimScrollBar" style=""> 
                                             <div class=""> 
                                                 <div class=""> 
@@ -9949,75 +8737,184 @@ noReadWrite(previledges,'manage_cars')
                                         
                                         <div class="form-group">
                                         <div class="m-t-20">
-                                                    <label for="position">Car Status</label>
+                                                    <label for="position">Car Booking Status</label>
                                                     <div>
-                                                    <select id="status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
-                                                       <option>Pending</option>
-                                                       <option>Completed</option>
+                                                    <select disabled id="status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
+                                                       <option>--Select Status--</option>
+                                                       <option>Booked</option>
                                                       
+                                                       <option>Available</option>
+                                                       
 
                                                        
                                                     </select></div>
                                             </div>
                                         </div>
-                                  
-                                        
-                                           <div class="form-group">
-                                            <label for="inputColor">Car ID</label>
-                                            <input disabled id="car_id${item._id}" type="text" class="form-control"  value="Blue">
+
+
+                                        <div class="m-t-20">
+                                                    <label for="position">Inspection Status</label>
+                                                    <div>
+                                                    <select id="health_status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
+                                                        <option>--Select Status--</option>
+                                                       <option>Pending</option>
+                                                       <option>Completed</option>
+                                                       
+
+                                                       
+                                                    </select></div>
+                                            </div>
                                         </div>
 
-                    
+
                                         <div class="form-group">
-                                            <label for="inputColor">Partner Name</label>
-                                            <input disabled id="username${item._id}" type="text" class="form-control"  value="Blue">
+                                            <label for="inputColor">Confirmed Inspection Date</label>
+                                            <input  id="condate${item._id}" type="date" class="form-control"  value="Blue">
                                         </div>
 
-                                        <div class="form-group ">
-                                            <label for="inputColor">Partner Email</label>
-                                            <input disabled id="email${item._id}" type="text" class="form-control"  value="Blue">
+                                        <div class="form-group">
+                                            <label for="inputColor">Confirmed Inspection Time</label>
+                                            <input  id="contime${item._id}" type="time" class="form-control"  value="Blue">
                                         </div>
-                                        
+
+
+                                        <div class="m-t-20">
+                                                    <label for="position">Car Status</label>
+                                                    <div>
+                                                    <select disabled id="car_status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
+                                                        <option>--Select Status--</option>
+                                                       <option>Active</option>
+                                                       <option>Disabled</option>
+                                                       <option>Suspended</option>
+                                                       
+
+                                                       
+                                                    </select></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                <label for="inputColor">Partner Id</label>
+                                <select disabled id="partner_id${item._id}" type="text" class="form-control" id="" >
+                                    ${selectOptionsPart}
+                                </select>
+                              </div>
+                                  
                                         <div class="form-group">
                                         <div class="m-t-20">
-                                                    <label for="position">Partner Phone</label>
+                                                    <label for="position">Vehicle</label>
+                                                    <div>
+                                                    <select disabled data-id="${item._id}" onchange="setCarDetail(this)"    id="car_model_make${item._id}" class="selectpicker form-control" data-style="btn-white" >
+                                                        ${modelOption}
+                                                    </select></div>
+                                            </div>
+                                        </div>
+
+                                        
+
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Model Id</label>
+                                            <input disabled id="car_model_id${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Model Name</label>
+                                            <input disabled id="car_model_name${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Trim Model</label>
+                                            <input disabled id="car_model_trim${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                         <div class="form-group">
+                                        <div class="m-t-20">
+                                                    <label for="position">Car Year</label>
                                                     <div>
 
-                                                    <input disabled id="phone_number${item._id}" type="text" class="form-control"  value="Blue">
+                                                    <input disabled  id="car_year${item._id}" type="text" class="form-control"  >
                                         
                                                     
                                                     </div>
                                             </div>
                                         </div>
 
+                                        
+
+
+                    
+                                        <div class="form-group">
+                                            <label for="inputColor">Color</label>
+                                            <input disabled id="color${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <label for="inputColor">Plate Number</label>
+                                            <input disabled id="plate_number${item._id}" type="text" class="form-control"  >
+                                        </div>
+                                        
+                                       
+
                                                        
 
-                                       
-                                      
+
+                                      <div class="form-group" style="display:none">
+                                        <div class="m-t-20">
+                                                    <label for="position">Driver Assigned</label>
+                                                    <div >
+                                                    <select  id="drivers${item._id}" class="selectpicker form-control" data-style="btn-white">
+                                                        <option>--Select Driver--</option>
+                                                        ${selectOptionsDrivers}
+                                                    </select></div>
+                                            </div>
+                                        </div>
+                                        <br/><br/>
                     
                                         <div class="">
                                         <div class="form-group">
-                                            <label for="inputCarDescription">Description</label>
+                                            <label for="inputCarDescription">Car Description</label>
                                             <textarea disabled id="description${item._id}" class="form-control autogrow" id="inputCarDescription" placeholder="The car is neat and the engine is working properly." style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
                                         </div>
 
                                         <br/>
-                                        <div class="form-group">
-                                            <label for="inputLicense">Time</label>
-                                            <input type="time" disabled class="form-control" id="time${item._id}" value="AB 294 XD">
-                                            
-                                        </div>
-
-                                         <div class="form-group">
-                                            <label for="inputLicense">Date</label>
-                                            <input type="text" disabled class="form-control" id="date${item._id}" value="AB 294 XD">
+                                        <div class="form-group" style="display:none">
+                                            <label for="inputLicense">License Plate Number</label>
+                                            <input disabled type="text" class="form-control" id="inputLicense${item._id}" >
                                             
                                         </div>
                             </div>
                             
-                           
+                            
+                              
+                              <div class="form-group">
+                                  <label for="">Car Inspection Details</label>
+                                  <textarea disabled id="inspection_detail${item._id}" type="text" class="form-control"  >Inspection detail</textarea>
+                              </div>
+
+
+                              <div class="form-group">
+                                  <label for="">Car Inspection Date</label>
+                                  <input  disabled id="inspection_date${item._id}" type="text" class="form-control" placeholder="MM/DD/YYYY" >
+                              </div>
+
+
+                              <div class="form-group">
+                                  <label for="">Car Inspection Time</label>
+                                  <input disabled id="inspection_time${item._id}" type="text" class="form-control" placeholder="HH:MM:AM/PM" >
+                              </div>
+
+
+
+                              <div class="form-group" style="display:none">
+                              <label class="control-label">Upload Image</label>
+                              <input disabled onchange="initCarUpload(this)" data-id="${item._id}" type="file" class="filestyle" data-placeholder="No file" id="image-file${item._id}">
+                              </div>
+
+
+                              <img style="display:none" class="review-car" src="${item.images}"  id="img${item._id}" title="cars are here" data-carinfo="hello car"  style="width:100px;height:100px" /><span id="oldcar"></span>
                     
-                                        
+                               <br/>         
                                         
                                         
                                 </div> 
@@ -10025,7 +8922,7 @@ noReadWrite(previledges,'manage_cars')
                                                 <button style="display:none" style="margin-right:5px;display:none" onclick="addCarRecordEvent(this)" data-id="${item._id}" data-url="/add-cars" id="create" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
                                                      <button style="display:none" style="margin-right:5px;" onclick="deleteData(this)" data-id="${item._id}" data-url="/faqs" id="delete" type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Delete</button> 
                                                     <button style="margin-right:5px;" id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
-                                                    <button style="margin-right:5px;" onclick="updateInspectionAction(this)" data-id="${item._id}" data-url="/admin-inspection-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
+                                                    <button style="margin-right:5px;" data-old_car="${item.images}" onclick="updateInspectionAction(this)" data-id="${item._id}" data-url="/admin-inspection-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
                                                 </div> 
                                             </div> 
                                         </div>
@@ -10040,17 +8937,377 @@ noReadWrite(previledges,'manage_cars')
         tablebody1.insertAdjacentHTML('beforeend', template2);
     });
 
-    $('#publisher').on('change', function(e) {
-      let selector = $(this).val();
-      $("#site > option").hide();
-      $("#site > option").filter(function(){return $(this).data('pub') == selector}).show();
-    });
-
+   
     modalbody1.innerHTML=viewModals;
 
     	
   
   }
+
+
+
+  static runAdminCarRetrieval(datas,carsInfo,drivers,partners,previledges){
+
+     WarLockAdmin(previledges,'view_car_inspection','manage_car_inspection')
+         noReadWrite(previledges,'manage_car_inspection')
+    GateKeepersForAdmin();
+     document.getElementById("search").addEventListener("keyup",(e)=>{
+      searchCars() 
+    })
+    addClick()
+
+     let selectOptionsDrivers = ``;
+  let driv = [...new Set(drivers)]
+  
+
+  console.log(drivers)
+   let selectOptionsPart ='';
+  partners.map((item, i) => { 
+      selectOptionsPart+=`<option data-username="${item.name || item.firstname}" data-email="${item.email}" id="${item._id}" >${item.email}</option>`; 
+          
+    });
+
+  driv.map((item, i) => { 
+      selectOptionsDrivers+=`<option data-username="${item.username}" data-email="${item.email}" id="${item._id}" value="${item.phone_number}">${item.username}-${item.email}</option>`; 
+          
+    });
+
+
+    console.log(carsInfo)
+
+    let carCategory = []; 
+    let modelNameOptionX = []; 
+    let car_year = [];
+
+   carsInfo.map((item)=>{
+     carCategory.push(item.car_name)
+   });
+   carCategory = [...new Set(carCategory)];
+
+  let modelOption=``;
+
+ 
+
+  carsInfo.map((item)=>{
+     modelOption+=`<option data-value="${item.model_name}" data-year="${item.year}" data-trim="${item.model_trim}" data-id="${item.model_make_id}">${item.car_name}</option>`
+
+  })
+
+
+
+ 
+
+
+
+
+    
+  let data = [...datas]
+  let template2 ='';
+    let viewModals = '';
+
+
+   // let driversC = [...drivers];
+  
+
+    
+    const tablebody1 = document.getElementById('tablebody1');
+    const modalbody1 = document.getElementById("modalbody1");
+    
+    
+    if(data.length<=0){
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
+    }
+
+    data.map((item, i) => { 
+      let className = "label-success"
+        if(item.status=="Booked"){
+           className = "label-danger"
+        }else if(item.status=="Available"){
+           className = "label-success"
+        } else{
+           className = "label-warning"
+        } 
+
+        let className2 ='label-warning'
+        if(item.health_status=="Pending"){
+           className2 = "label-warning"
+        }else if(item.health_status=="Completed"){
+          className2 = "label-success"
+        }else{
+          className2 = "label-danger"
+        }
+          
+        let className3='';
+        if(item.car_status=="Disabled"){
+           className3 = "label-danger"
+        }else if(item.car_status=="Active"){
+           className3 = "label-success"
+        } else{
+           className3 = "label-warning"
+        }
+
+        if(item.status=="Pending"){
+          item.health_status= 'Pending'
+          item.status="Available"
+        } 
+
+        // let itemv = JSON.stringify(data);
+
+
+
+    
+        template2 =`
+
+                           <div style=""  class="col-sm-6 col-lg-3 col-md-4 mobiles" >
+
+
+                                       
+                                    <div class="product-list-box thumb">
+                                        <a href="#" class="image-popup" title="Screenshot-1">
+                                            <img style="height:200px; " src="${item.imagePath || item.images}" class="thumb-img" alt="work-thumbnail" />
+                                        </a>
+
+                                        <div class="product-action">
+                                            <a href="#" class="btn btn-success btn-sm" onclick="viewRetrievalUpdate(this);" href="#" data-contime="${item.confirmedInspectionTime}" data-condate="${item.confirmedInspectionDate}" data-id="${item._id}" data-inspection_date="${item.inspectionDate }" data-inspection_time="${item.inspectionTime}" data-car_status="${item.car_status}" data-health_status="${item.health_status}" data-model_make_id="${ item.model_make_id || item.car.model_id}" data-trim="${ item.car.model_trim}" data-old_car="${ item.imagePath || item.images}" href="#" data-model="${ item.carModel  || item.car_type }"  data-car_type="${ item.carModel || item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name }-${item.assigned_driver_email }" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${ item.creator || 'owned by company'}" data-model="${ item.carModel || item.model}"  data-car_year="${ item.carYear  || item.car_year}" data-color="${ item.vehicleColor || item.color}"  data-status="${item.status}" data-plate_number="${ item.plateNo || item.plate_number}" data-inspection_detail="${item.inspection_detail || 'No comment.' }" data-description="${ item.carDescription || item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${ item.plateNo || item.license}" data-url="/admin-car-mgt-detail" class="table-action-btn"><i class="md md-mode-edit"></i></a>
+                                <a href="#" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
+                                        </div>
+
+                                       
+                                        <div class="detail">
+                                            <h4 class="m-t-0"><a href="" class="text-dark">${ item.car.car_name  }</a> </h4>
+                                            <div class="rating">
+                                                <ul class="list-inline">
+                                                    <li><span class="label ${className2}">${ item.health_status}</span></li>
+                                                    
+                                                </ul>
+                                            </div>
+                                            <h5 class="m-0"> <span class="text-muted"> ${ item.car.model_make_id}</span></h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                  `;
+        
+
+         viewModals+=`<div style="display:none" id="con-close-modal-${item._id}" class="fade in mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                        <div class="slimScrollBar" style=""> 
+                                            <div class=""> 
+                                                <div class=""> 
+                                                    <button id="close-id" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                                    
+                                                </div> 
+                                                
+                                                <div class=" text-left">
+                                        
+                                        <div class="form-group">
+                                        <div class="m-t-20">
+                                                    <label for="position">Car Booking Status</label>
+                                                    <div>
+                                                    <select disabled id="status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
+                                                       <option>--Select Status--</option>
+                                                       <option>Booked</option>
+                                                      
+                                                       <option>Available</option>
+                                                       
+
+                                                       
+                                                    </select></div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="m-t-20">
+                                                    <label for="position">Inspection Status</label>
+                                                    <div>
+                                                    <select disabled id="health_status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
+                                                        <option>--Select Status--</option>
+                                                       <option>Pending</option>
+                                                       <option>Completed</option>
+                                                       
+
+                                                       
+                                                    </select></div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group" style="display:none">
+                                            <label for="inputColor">Confirmed Inspection Date</label>
+                                            <input  id="condate${item._id}" type="date" class="form-control"  value="Blue">
+                                        </div>
+
+                                        <div class="form-group"  style="display:none">
+                                            <label for="inputColor">Confirmed Inspection Time</label>
+                                            <input  id="contime${item._id}" type="time" class="form-control"  value="Blue">
+                                        </div>
+
+
+                                        <div class="m-t-20">
+                                                    <label for="position">Car Status</label>
+                                                    <div>
+                                                    <select disabled id="car_status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
+                                                        <option>--Select Status--</option>
+                                                       <option>Active</option>
+                                                       <option>Disabled</option>
+                                                       <option>Suspended</option>
+                                                       
+
+                                                       
+                                                    </select></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                <label for="inputColor">Partner Id</label>
+                                <select disabled id="partner_id${item._id}" type="text" class="form-control" id="" >
+                                    ${selectOptionsPart}
+                                </select>
+                              </div>
+                                  
+                                        <div class="form-group">
+                                        <div class="m-t-20">
+                                                    <label for="position">Vehicle</label>
+                                                    <div>
+                                                    <select disabled data-id="${item._id}" onchange="setCarDetail(this)"    id="car_model_make${item._id}" class="selectpicker form-control" data-style="btn-white" >
+                                                        ${modelOption}
+                                                    </select></div>
+                                            </div>
+                                        </div>
+
+                                        
+
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Model Id</label>
+                                            <input disabled id="car_model_id${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Model Name</label>
+                                            <input disabled id="car_model_name${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Trim Model</label>
+                                            <input disabled id="car_model_trim${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                         <div class="form-group">
+                                        <div class="m-t-20">
+                                                    <label for="position">Car Year</label>
+                                                    <div>
+
+                                                    <input disabled  id="car_year${item._id}" type="text" class="form-control"  >
+                                        
+                                                    
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        
+
+
+                    
+                                        <div class="form-group">
+                                            <label for="inputColor">Color</label>
+                                            <input disabled id="color${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <label for="inputColor">Plate Number</label>
+                                            <input disabled id="plate_number${item._id}" type="text" class="form-control"  >
+                                        </div>
+                                        
+                                       
+
+                                                       
+
+
+                                      <div class="form-group" style="display:none">
+                                        <div class="m-t-20">
+                                                    <label for="position">Driver Assigned</label>
+                                                    <div >
+                                                    <select  id="drivers${item._id}" class="selectpicker form-control" data-style="btn-white">
+                                                        <option>--Select Driver--</option>
+                                                        ${selectOptionsDrivers}
+                                                    </select></div>
+                                            </div>
+                                        </div>
+                                        <br/><br/>
+                    
+                                        <div class="">
+                                        <div class="form-group">
+                                            <label for="inputCarDescription">Car Description</label>
+                                            <textarea disabled id="description${item._id}" class="form-control autogrow" id="inputCarDescription" placeholder="The car is neat and the engine is working properly." style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                        </div>
+
+                                        <br/>
+                                        <div class="form-group" style="display:none">
+                                            <label for="inputLicense">License Plate Number</label>
+                                            <input disabled type="text" class="form-control" id="inputLicense${item._id}" >
+                                            
+                                        </div>
+                            </div>
+                            
+                            
+                              
+                              <div class="form-group">
+                                  <label for="">Car Inspection Details</label>
+                                  <textarea disabled id="inspection_detail${item._id}" type="text" class="form-control"  >Inspection detail</textarea>
+                              </div>
+
+
+                              <div class="form-group">
+                                  <label for="">Car Inspection Date</label>
+                                  <input  disabled id="inspection_date${item._id}" type="text" class="form-control" placeholder="MM/DD/YYYY" >
+                              </div>
+
+
+                              <div class="form-group">
+                                  <label for="">Car Inspection Time</label>
+                                  <input disabled id="inspection_time${item._id}" type="text" class="form-control" placeholder="HH:MM:AM/PM" >
+                              </div>
+
+
+
+                              <div class="form-group" style="display:none">
+                              <label class="control-label">Upload Image</label>
+                              <input disabled onchange="initCarUpload(this)" data-id="${item._id}" type="file" class="filestyle" data-placeholder="No file" id="image-file${item._id}">
+                              </div>
+
+
+                              <img style="display:none" class="review-car" src="${item.images}"  id="img${item._id}" title="cars are here" data-carinfo="hello car"  style="width:100px;height:100px" /><span id="oldcar"></span>
+                    
+                               <br/>         
+                                        
+                                        
+                                </div> 
+                                                <div style="clear:both;display:table;margin-right:0px">
+                                                <button style="display:none" style="margin-right:5px;display:none" onclick="addCarRecordEvent(this)" data-id="${item._id}" data-url="/add-cars" id="create" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
+                                                     <button style="display:none" style="margin-right:5px;" onclick="deleteData(this)" data-id="${item._id}" data-url="/faqs" id="delete" type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Delete</button> 
+                                                    <button style="margin-right:5px;" id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                                                    <button style="margin-right:5px;" data-old_car="${item.images}" onclick="updateInspectionAction(this)" data-id="${item._id}" data-url="/admin-inspection-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                    </div>
+
+
+
+        
+
+          `;
+
+        tablebody1.insertAdjacentHTML('beforeend', template2);
+    });
+
+   
+    modalbody1.innerHTML=viewModals;
+
+      
+  
+  }
+
 
   static runSettings(datas,previledges){
    
@@ -10457,6 +9714,10 @@ noReadWrite(previledges,'manage_cars')
     let viewModals ='';
     let template2;
     let className=``;
+
+    if(plans.length<=0){
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
+    }
     plans.map((item, i) => {
                            //console.log(item)
                            if(item.status=="Unpaid"){
@@ -11876,6 +11137,10 @@ document.getElementById("search").addEventListener("keyup",(e)=>{
     let template2;
     let eachRecord=``;
 
+    if(datas.length<=0){
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
+    }
+
 
           datas.map((item,i)=>{
             console.log(item.createdDate)
@@ -12059,6 +11324,11 @@ modalbody1.innerHTML= viewModals;
     let eachRecord=``;
     let className="label-success";
     let payNow='';
+
+    if(datas.length<=0){
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
+    }
+
   	datas.map((item,i)=>{
             console.log(item.createdDate)
             if(item.status=="Paid"){
@@ -12249,8 +11519,10 @@ modalbody1.innerHTML= viewModals;
 
 
     
-    // if(data.length<=0){
-    //   return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+    if(data.length<=0){
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
+    }// if(data.length<=0){
+    //   return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     // }
 
     data.map((item, i) => { 
@@ -12429,7 +11701,7 @@ modalbody1.innerHTML= viewModals;
     let previledgesModal = document.getElementById("modalbody2");
 
     if(data.length<=0){
-      return tablebody1.innerHTML = `<h6 style="text-align:center">No records Yet</h6>`;
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
     }
 
     let actionableRoles =``;
@@ -12807,11 +12079,9 @@ modalbody1.innerHTML= viewModals;
     if(data.length>0){
                  data.map((item,i)=>{
 
-                
+                  if(item.type=="payment"){
 
-
-
-                let markup =`   <div class="pull-left p-r-10" style="" id="${i}">
+                     let markup =`   <div class="pull-left p-r-10" style="" id="${i}">
                                                     <em class="fa fa-diamond noti-primary"></em>
                                                  </div>
                                                  <div class="media-body">
@@ -12822,7 +12092,15 @@ modalbody1.innerHTML= viewModals;
                                                     </p>
                                                  </div><hr/>`;
 
-                 $( "#notice_board" ).append( $( markup ) ) 
+                 $( "#notice_board" ).append( $( markup ) )
+
+                  }
+
+                
+
+
+
+                 
 
                   //$( "#notice_board2" ).append( $( markup ) ) 
               })
@@ -12843,39 +12121,7 @@ modalbody1.innerHTML= viewModals;
       loadMore.init(dataTrails);
 
 
-    // let data = [...dataTrails]
-    // let htmlConstruct =''
-    // data.map((item, i) => { 
-      
-
-
-
-    // htmlConstruct +=`<li  className="row  loadmore  card">
-    //       <div className="profile col-xs-2 pull-right">
-    //         <img src="${item.avatar}"  style="height:100px;width:100px"/>
-    //       </div>
-    //       <div className="activity-content col-xs-10  ">
-    //         <div className="inner">
-    //           <span className="date">${item.date} || ${item.message_type}</span>
-    //           <div className="name">${item.admin}</div>
-    //           <div className="content">
-    //             <p>
-    //                ${item.logMessage}
-    //             </p>
-    //              <p>
-    //               Module: ${item.module_name} || status: ${item.status}
-    //             </p>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <hr/>
-    //     </li>`;
-
-
-    //   })
-    // document.getElementById("loadbase").innerHTML = htmlConstruct;
-
-
+    
 
 
 
@@ -12893,6 +12139,10 @@ modalbody1.innerHTML= viewModals;
     let modalB = document.getElementById('modalbody1')
 
     console.log(items)
+
+    if(items.length<=0){
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
+    }
 
     items.forEach((item) => {
         if(item.status=="Completed"){
@@ -13022,385 +12272,7 @@ modalB.innerHTML=viewModals;
 
 
   static runEndpoints(){
-  	GateKeepersForAdmin();
-
-
-    if(document.getElementById("add-new")){
-	  	document.getElementById("add-new").addEventListener("click",(e)=>{
-
-        if(document.getElementById('user-id')){
-          document.getElementById('user-id').innerHTML="";
-        }
-	      
-
-	      document.getElementById("first-view").style.display="none";
-
-
-	      const loader = document.getElementById("loader");
-          // loader.style.display = 'block';
-          //  loader.style.zIndex="9999999";
-
-
-		    setTimeout(()=>{
-		      loader.style.display = 'none';
-		      document.getElementById("second-view").style.display="block";
-		    },2000)
-		     
-
-	    })
-	 }
-   let app =document.getElementById('app')
-   // app.style.display="none"
-   app.style.display="block"
-    ApiAdminBotService.goBack()
-    const loader = document.getElementById("loader");
-     // loader.style.display = 'block';
-     // loader.style.zIndex="9999999";
-
-     // document.getElementsByClassName('loader')[0].style.display="block"
-  	
-		window.addEventListener('load', (event) => {
-		  //event.preventDefault();
-		  const user = JSON.parse(localStorage.getItem('userToken'));
-		  if (!user) {
-		    window.location.href = '/';
-		  }
-
-      if(user.user.roles!='user'){
-            
-
-                if(document.getElementById("balance")){
-                      document.getElementById("balance").style.display="none"
-                }
-
-                if(document.getElementById("new-balance")){
-                document.getElementById("new-balance").style.display="none"
-              }
-          
-
-          }else{
-                    if(document.getElementById("balance")){
-                      document.getElementById("balance").style.display="block"
-                }
-
-                if(document.getElementById("new-balance")){
-                document.getElementById("new-balance").style.display="block"
-                 }
-
-          }
-		  const urls = [
-	         activeUrl + `/admin-users`,
-	     	 activeUrl + `/admin-admins`,
-	     	 activeUrl+ `/admin-drivers`,
-	     	 activeUrl+ `/admin-partners`,
-	     	 activeUrl+`/admin-profile/`+ user.user._id,
-	     	 activeUrl+ `/admin-plan-package`,
-	     	 activeUrl+ `/admin-plan-package-corporate`,
-	     	 activeUrl+`/admin-sos`,
-	     	 activeUrl+ `/admin-tickets`,
-	     	 activeUrl+`/admin-faqs`,
-	     	 activeUrl+`/admin-settings-google`,
-	     	 activeUrl+ `/admin-settings-facebook`,
-	     	 activeUrl+`/admin-settings-paystack`,
-	     	 activeUrl+`/admin-settings-email`,
-	     	 activeUrl+`/admin-settings-bucket`,
-	     	 activeUrl+`/admin-settings-instagram`,
-	     	 activeUrl+`/admin-cars-mgt`,	     	 
-	     	 activeUrl+ `/admin-itineraries`,
-	     	 activeUrl+ `/admin-users-plan`,
-             
-
-	     	 activeUrl+ `/admin-sales-today`,
-	     	 activeUrl+ `/payment-history`,
-	     	 activeUrl+ `/payment-payments`,
-	     	 activeUrl+ `/payment-quotations`,
-	     	 activeUrl+ `/get-cars-info`,
-          activeUrl+`/admin-inspection`,
-         activeUrl+`/admin-drive-test`,
-          activeUrl+`/admin-previledges`,
-			   activeUrl+ `/admin-sales-yesterday`,
-         activeUrl+ `/admin-sales-lastweek`,
-         activeUrl+ `/admin-users-month-ago`,
-         activeUrl+`/get-trails`,
-         activeUrl+`/get-all-notification`,
-         activeUrl+ '/profile-admin-rights/update/'+ user.user.email+ '/permission/'+ user.user.roles,
-         activeUrl+ '/get-all-cars-repair-request',
-         activeUrl+ '/admin-earnings',
-
-
-
-
-	     	 
-	     	
-	     	
-	     	
-	     	
-	     	 
-	     	 
-		  ];
-
-		   const page_id_attribute = document.getElementById("admin").getAttribute("data-pageid")
-           const pageId=page_id_attribute;
-           console.log("my id:"+ pageId)
-		   
-
-		  const promises = urls.map(url => fetch(url, {
-		    method: 'GET',
-            headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json',
-              'x-access-token': user.token,
-           },
-           mode: 'cors',
-		  }).then(response => response.json()));
-
-		  Promise.all(promises).then((datas) => {
-		     
-
-         document.getElementById('gtd').style.display="none" 
-         document.querySelector("#gtd").style.visibility = "visible"; 
-        document.querySelector("#gtd").style.opacity = 1;  
-
-         //first set the right previledges
-         let previledgesRight = datas[32].data[0].userInfo;
-
-        
-
-         localStorage.setItem('previledges', JSON.stringify(previledgesRight))
-		    
-		     console.log(datas)
-
-         // setTimeout(()=>{
-          loader.style.display = 'none';
-          document.getElementById('gtd').style.display="block"
-
-          switch(pageId){
-           //switches for views
-          case "admin-dashboard":
-             ApiAdminBotService.runDashboard(
-              datas[0].data[0].users,
-              datas[3].data[0].partners,
-              datas[2].data[0].drivers,
-              datas[16].data[0].carsAvailable,
-              datas[8].data[0].intervention,
-              datas[17].data[0].itineraries,
-              //today
-              datas[19].data[0].todaySales,
-
-              //yesterday
-              datas[27].data[0].yesterdaysSales,
-
-              //lastweek
-              datas[28].data.weeklySales,
-
-              //lastMonth
-
-               datas[29].data.lastMonth,
-              datas[31].data[0].allNotification
-               //[]
-              );
-             app.style.display="block"
-   
-             break;
-          case "admin-users":
-
-            
-
-            ApiAdminBotService.runAdminUsers(datas[0].data[0].users,previledgesRight);
-              app.style.display="block"
-            break;
-          case "admin-admins":
-            ApiAdminBotService.runAdminAdmins(datas[1].data[0].admins,previledgesRight)
-              app.style.display="block"
-            break;
-          case "admin-drivers":
-            ApiAdminBotService.runAdminDrivers(datas[2].data[0].drivers,datas[16].data[0].carsAvailable,previledgesRight)
-              app.style.display="block"
-            break;
-          case "admin-partners":
-            ApiAdminBotService.runAdminPartners(datas[3].data[0].partners,previledgesRight)
-              app.style.display="block"
-            break;
-          case "admin-profile":
-            ApiAdminBotService.runAdminProfile(datas[4].data[0].profile)
-              app.style.display="block"
-            break;  
-          case "admin-plan-package":
-            ApiAdminBotService.runPlanPackage(datas[5].data[0].individualPlans, datas[6].data[0].corporatePlans ,previledgesRight);
-              app.style.display="block"
-            break;
-          case "admin-sos":
-          console.log(datas[7].data[0].redFlag)
-           ApiAdminBotService.runAdminSOS(datas[7].data[0].redFlag,previledgesRight);
-             app.style.display="block"
-           break;
-          case "admin-tickets":
-           ApiAdminBotService.runAdminTickets(datas[8].data[0].intervention, datas[1].data[0].admins,datas[0].data[0].users,previledgesRight);
-             app.style.display="block"
-            break;
-           
-          case "admin-enquiries":
-           let ticket = datas[8].data[0].intervention;
-           const enquiries = ticket.filter((item)=>item.category==="General Enquiries")
-           console.log("here in enquiries"+ enquiries)
-           ApiAdminBotService.runAdminTickets(enquiries, datas[1].data[0].admins,datas[0].data[0].users,previledgesRight);
-             app.style.display="block"
-            break;
-           
-
-          case "admin-feedback":
-           let ticketFeed = datas[8].data[0].intervention;
-           const feedback = ticketFeed.filter((item)=>item.category==="Feedback")
-           ApiAdminBotService.runAdminTickets(feedback, datas[1].data[0].admins,datas[0].data[0].users,previledgesRight);
-             app.style.display="block"
-            
-           break;
-
-           case "admin-technical-support":
-            let ticketTech =  datas[8].data[0].intervention;
-                  const technicalSupport = ticketTech.filter((item)=>item.category=="Feedback");
-            ApiAdminBotService.runAdminTickets(technicalSupport, datas[1].data[0].admins,datas[0].data[0].users,previledgesRight);
-              app.style.display="block"
-            break;
-          case "admin-faqs":
-            ApiAdminBotService.runAdminFaqs(datas[9].data[0].faqs,previledgesRight);
-              app.style.display="block"
-            break;
-
-          case "admin-settings-google":
-            ApiAdminBotService.runSettings(datas[10].data[0].googleSettings,previledgesRight);
-              app.style.display="block"
-            break;
-                case "admin-settings-facebook":
-            ApiAdminBotService.runSettings(datas[11].data[0].facebookSettings,previledgesRight);
-              app.style.display="block"
-            break;
-
-                case "admin-settings-paystack":
-            ApiAdminBotService.runSettings(datas[12].data[0].paystackSettings,previledgesRight);
-              app.style.display="block"
-            break;
-          case "admin-settings-email":
-            ApiAdminBotService.runSettings(datas[13].data[0].sendgridSettings,previledgesRight);
-              app.style.display="block"
-            break;
-
-                case "admin-settings-bucket":
-            ApiAdminBotService.runSettings(datas[14].data[0].awsSettings,previledgesRight);
-              app.style.display="block"
-            break;
-
-                case "admin-settings-instagram":
-            ApiAdminBotService.runSettings(datas[15].data[0].instagramSettings,previledgesRight);
-              app.style.display="block"
-            break;
-
-          case "admin-cars-mgt" :
-           ApiAdminBotService.runAdminCarsMgt(datas[16].data[0].carsAvailable, 
-            datas[23].data[0].carInfo,
-            datas[2].data[0].drivers,
-             datas[3].data[0].partners,
-            previledgesRight
-
-            )
-             app.style.display="block"
-           break;
-          case "admin-bookings" :
-           ApiAdminBotService.runAdminPlans( datas[18].data[0].usersPlan,previledgesRight)
-             app.style.display="block"
-           break;
-
-          case "plan-detail-admin":
-            ApiAdminBotService.runAdminPlansDetail(datas[18].data[0].usersPlan,previledgesRight);
-              app.style.display="block"
-             break;
-
-          case "plan-manual-bookings-admin":
-            ApiAdminBotService.runAdminPlansManualBookings(datas[16].data[0].carsAvailable, datas[0].data[0].users,previledgesRight);
-              app.style.display="block"
-             break;
-
-          case "admin-itineraries":
-                   ApiAdminBotService.runAdminItineraries(datas[17].data[0].itineraries, datas[2].data[0].drivers,previledgesRight)
-                     app.style.display="block"
-             break;
-          case "admin-wallets":
-           ApiAdminBotService.runAdminWallets(datas[20].data[0].wallets,previledgesRight)
-             app.style.display="block"
-             break;
-          case "admin-payments":
-           ApiAdminBotService.runAdminPayments(datas[21].data[0].payments,previledgesRight)
-             app.style.display="block"
-             break;
-          case "admin-quotations":
-           ApiAdminBotService.runAdminQuotations(datas[22].data[0].quotations,previledgesRight)
-             app.style.display="block"
-            break;
-          case "admin-redo-inspection":
-           ApiAdminBotService.runAdminInspection(datas[24].data[0].inspections,previledgesRight) //24
-             app.style.display="block"
-           break;
-          case "admin-inspection-add":
-           ApiAdminBotService.runAdminInspectionAdd( 'add-inspection' , datas[0].data[0].users, datas[3].data[0].partners,previledgesRight) //24
-             app.style.display="block"
-           break;
-           case "admin-drive-test-add":
-           ApiAdminBotService.runAdminDriveTestAdd('add-drive-test', datas[0].data[0].users, datas[3].data[0].partners,previledgesRight) //24
-             app.style.display="block"
-           break; 
-          case "admin-drive-test":
-           ApiAdminBotService.runAdminDriveTest(datas[25].data[0].testDrive, datas[0].data[0].users,previledgesRight)//25
-             app.style.display="block"
-           break;
-         case "admin-previledges":
-           ApiAdminBotService.runAdminPreviledges(datas[26].data[0].previledges,previledgesRight)
-             app.style.display="block"
-           break; 
-        case "admin-logs":
-           ApiAdminBotService.runAdminActivityTrail(datas[30].data[0].audit)
-             app.style.display="block"
-           break;
-        case "admin-notification":
-           ApiAdminBotService.runAdminNotification(datas[31].data[0].allNotification)
-             app.style.display="block"
-           break; 
-        case "admin-repairs":
-           ApiAdminBotService.runAdminRepairs(datas[33].data[0].mech)
-             app.style.display="block"
-           break; 
-        case "admin-earnings":
-           ApiAdminBotService.runAdminPartnersEarnings(datas[34].data[0].earnings,datas[3].data[0].partners,datas[16].data[0].carsAvailable,previledgesRight)
-             app.style.display="block"
-           break;  
-          default:
-            app.style.display="block"
-             window.location.href='./admin'
-             // ApiAdminBotService.runDashboard(datas[0].data[0].users,
-              // datas[3].data[0].partners,
-              // datas[2].data[0].drivers,
-              // datas[16].data[0].carsAvailable,
-              // datas[8].data[0].intervention,
-              // datas[17].data[0].itineraries,
-              // //today
-              // datas[19].data[0].todaySales,
-
-              //yesterday
-
-              //lastweek
-
-              //lastMonth);
-              break;
-
-
-        }
-
-
-         // },7000)
-		    
-		  }).catch((error) => {
-		    throw error;
-		  });
-	});
+  	//AdminBash.start();
 
   }
 

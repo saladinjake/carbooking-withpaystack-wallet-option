@@ -42,6 +42,16 @@ let CarsSchema = new mongoose.Schema({
     default:'10.00 AM'
     
   },
+  
+
+  confirmedInspectionDate: {
+    type: String,
+    default: new Date()
+  },
+  confirmedInspectionTime: {
+     type: String,
+    default:'10.00 AM'
+  },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
@@ -90,6 +100,10 @@ let CarsSchema = new mongoose.Schema({
 
         partnerEmail:{
           type:String,
+        },
+
+        vehicleIdentificationNumber: {
+          type: String,
         },
 
       

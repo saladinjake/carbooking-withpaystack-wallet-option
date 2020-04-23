@@ -156,7 +156,7 @@ export  default class AdminDashboard extends Component {
                                         <thead>
                                             <tr>
                                                 <th>Created</th>
-                                                <th>Username</th>
+                                               
                                                 <th>Email</th>
                                                 <th>Package Category</th>
                                                 <th>Start Location</th>
@@ -227,7 +227,7 @@ export  default class AdminDashboard extends Component {
                                                 <th>Date/Time</th>
                                                 <th>User ID</th>
                                                     <th>Ticket Type</th>
-                                                    <th>Date Time</th><th>Subject</th>
+                                                    <th>Subject</th>
                                                     <th>TicketID</th>
                                                     <th>Status</th>
                                                 

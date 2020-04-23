@@ -5,7 +5,7 @@ import FetchPromiseApi from './helpers/FetchPromiseApi';
 import getOnlineUrlConnection from './helpers/getOnlineUrlConnection';
 import $ from 'jquery';
 const emailRegularExpression = /\S+@\S+\.\S+/;
-alertify.set('notifier','position', 'top-left');
+alertify.set('notifier','position', 'bottom-left');
 
 let activeUrl = getOnlineUrlConnection();
 const admin_url = "http://localhost:4000"+ '/admin-dashboard';
@@ -63,9 +63,7 @@ class ApiLoginService {
       .then(response => response.json())
       .then(data => {
         if (data.status === 422) {
-           showLoader()
-  showConfirmation()
-  resetLogin()
+           // swal("Good job!", "You clicked the button!", "success");
 
           setTimeout(()=>{
             dome2.disabled=false;
@@ -83,12 +81,13 @@ class ApiLoginService {
           localStorage.setItem('userToken', JSON.stringify(data.data[0]));
 
 
-          showLoader()
-  showConfirmation()
-  resetLogin()
+       
 
 
           MessageBoard.displayMsg(data.message);
+
+          // swal("Good job!", "You clicked the button!", "success");
+
           var notification = alertify.notify(data.message, 'success', 5, function(){  console.log('dismissed'); });
 
 
@@ -109,6 +108,9 @@ class ApiLoginService {
           //   ? (window.location.replace(admin_url) )
           //   : (window.location.replace(user_dashpane));
         }else if(data.status==409){
+
+          // swal("Good job!", "You clicked the button!", "success");
+
           MessageBoard.displayMsg(data.error);
           var notification = alertify.notify(data.error, 'error', 5, function(){  console.log('dismissed'); });
           setTimeout(()=>{
@@ -116,24 +118,22 @@ class ApiLoginService {
             dome2.innerHTML='LOG IN';
           },4000)
 
-           showLoader()
-  showConfirmation()
-  resetLogin()
+      
         }
         else if(data.status==404){
           MessageBoard.displayMsg(data.error);
+          // swal("Good job!", "You clicked the button!", "success");
           var notification = alertify.notify(data.error, 'error', 5, function(){  console.log('dismissed'); });
           setTimeout(()=>{
             dome2.disabled=false;
             dome2.innerHTML='LOG IN';
           },4000)
 
-           showLoader()
-  showConfirmation()
-  resetLogin()
+           
         }
          else if(data.status==400){
           console.log(data)
+          // swal("Good job!", "You clicked the button!", "success");
           MessageBoard.displayMsg("credentials entered could not be found.");
           var notification = alertify.notify("credentials entered could not be found.", 'error', 5, function(){  console.log('dismissed'); });
          setTimeout(()=>{
@@ -143,9 +143,7 @@ class ApiLoginService {
           // MessageBoard.displayMsg(data.error );
           //Router.redirect('./');
 
-           showLoader()
-  showConfirmation()
-  resetLogin()
+          
         }
       })
       .catch(error => {
@@ -155,6 +153,7 @@ class ApiLoginService {
           },4000)
         //throw error;
         MessageBoard.displayMsg(error + 'here');
+        // swal("Good job!", "You clicked the button!", "success");
       });
   }
 

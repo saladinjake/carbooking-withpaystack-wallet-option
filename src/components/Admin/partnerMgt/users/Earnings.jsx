@@ -179,6 +179,48 @@ export  default class Partners extends Component {
                                    
                                 </div>
                             </div>
+
+
+                             <div className="col-lg-6 m-t-10" >
+
+
+                                        <div id="carset"  className="card-box box"  style={{marginTop:"350px"}}>
+
+                                        <button id="close-id"  type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+                                        
+    <img style={{  display: "block",marginLeft: "auto",marginRight: "auto",
+  width: "40%"}}  src=""  id="imgcar"  /><br/>
+
+                                          <div style={{marginLeft:"30px", fontSize:"15px"}}>Car Name: <span id="name" ></span></div><br/>
+
+                                          <div   style={{marginLeft:"30px",fontSize:"15px" }}>Car Id: <span id="car_id"></span></div><br/>
+
+                                          <div   style={{marginLeft:"30px", fontSize:"15px"}}>Car Description: <span id="desc"></span></div><br/>
+
+                                           <div   style={{marginLeft:"30px",fontSize:"15px"}}>Plate No:<span id="plate_no"></span></div><br/>
+
+                                           <button id="taken" className="btn btn-success pull-right">Chosen ✓</button>
+                                        </div>
+
+                                <div className="card-box" style={{ display:"none"}} id="viewboard">
+                                        <h4>Select a car to add earnings</h4>
+                                        <hr/>
+                                        <div className="card-box" >
+                                            <ul id="carsme"></ul>
+                                        </div>
+
+
+                                      
+                                    
+                                </div>
+                            </div>
+
+
+
+
+
+
     
                           
     
@@ -186,6 +228,9 @@ export  default class Partners extends Component {
     
                         </div>
                     </div>
+
+
+                    
     
     
 

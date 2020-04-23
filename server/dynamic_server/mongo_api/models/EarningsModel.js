@@ -23,7 +23,9 @@ vehiclePlateNo:{type: String},
     ref: "partner_collections",
 
   },
-  vehicle:{type: String},
+  vehicle:{type: mongoose.Schema.Types.ObjectId,
+    ref: "cars_collections",
+  },
 
       
         created_at : {

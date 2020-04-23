@@ -80,6 +80,7 @@ import  SOSService  from "./sos_service";
 
 import MailConfig from '../config/email';
 
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 var gmailTransport = MailConfig.GmailTransport;
 var smtpTransport = MailConfig.SMTPTransport;
@@ -116,23 +117,24 @@ export class UserService {
   static NotificationEmail( request, response,templateDir, replacements,userEmail,STATUS=201){
    //MailConfig.ViewOption(gmailTransport,hbs);
     let HelperOptions = {
-      from: "tester@softclo.com", //'"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',
+      from:    process.env.SMTP_USER_NAME,         //"tester@softclo.com", //'"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',
       to:  userEmail, //'Joshua.adedoyin@softclo.com',
-      subject: 'Hellow world!',
+      subject: 'Notification',
       html: 'test',
       context: {
         name:"COMMUTE TAXI",
-        email: "tester@softclo.com",
+        email: process.env.SMTP_USER_NAME,   // "tester@softclo.com",
         address: "3A DOTUN CLOSE, IKEJA LAGOS"
       }
     };
+
 //     Signed out
 // Adedoyin Joshua
 //joshadedoyin.aj@gmail.com
    
     readHTMLFile(__dirname + templateDir, function(err, html) {
                 var template = handlebars.compile(html);
-                var replacements = replacements;
+               // var replacements = replacements;
                 var htmlToSend = template(replacements);
                 
                 HelperOptions.html = htmlToSend;
@@ -145,7 +147,7 @@ export class UserService {
                       console.log("email is send");
                       console.log(info);
                       //res.json(info)
-                      return response.status(STATUS).send({status: STATUS ,success:'ok', msg: 'Successfully updated  .', data: info });
+                      //return response.status(STATUS).send({status: STATUS ,success:'ok', msg: 'Successfully updated  .', data: info });
                      // return res.status(STATUS).send({ msg: "successfully sent you a password reset link", status:'ok',data: info }); 
                 
                 });
@@ -4017,8 +4019,8 @@ getUser = (req, res) => {
       // Verify and save the user
       user.type= type || user.type;
       user.paymentDate= paymentDate || user.paymentDate;
-      user.PaymentStatus= PaymentStatus || user.PaymentStatus;
-      user.PaymentAmount= PaymentAmount || user.PaymentAmount;
+      user.paymentStatus= PaymentStatus || user.PaymentStatus;
+      user.paymentAmount= PaymentAmount || user.PaymentAmount;
       user.paymentReference= paymentReference || user.paymentReference;
       user.partnerId= partnerId || user.partnerId;
       user.partnerEmail= partnerEmail || user.partnerEmail;
@@ -4546,7 +4548,7 @@ getUser = (req, res) => {
         
 
 
-    InspectionModel.find()
+    CarsModel.find({health_status:{'$ne':'Completed'}})
       .then(data => {
         const inspections = data;
 
@@ -4598,7 +4600,10 @@ getUser = (req, res) => {
 
   static manageInspectionDetail(request,response){
      const {
-           status, 
+           health_status, 
+           confirmedInspectionDate,
+           confirmedInspectionTime,
+           partnerEmail
            // description,
            //  username, email,
            //  time, createdDate,
@@ -4607,16 +4612,25 @@ getUser = (req, res) => {
 
           } = request.body
 
-    InspectionModel.findOne({ _id:  request.params.id }, function (err, plan) {
+    CarsModel.findOne({ _id:  request.params.id }, function (err, plan) {
 
         if (!plan) {
           return response.status(400).send({ msg: 'We were unable to find a plan with that id.' });
         }
 
  
-        plan.status= status || plan.status;
-        // plan.description= description || plan.description;
-     
+        plan.health_status= health_status || plan.health_status;
+        plan.confirmedInspectionTime= confirmedInspectionTime || plan.confirmedInspectionTime;
+        plan.confirmedInspectionDate = confirmedInspectionDate || plan.confirmedInspectionDate;     
+        
+        let date = plan.confirmedInspectionDate;
+        let time = plan.confirmedInspectionTime;
+
+        console.log(confirmedInspectionTime, plan.confirmedInspectionDate)
+        if(plan.status=='Pending'){
+            plan.status = 'Available' ;     
+        
+        }
         // plan.username= username || plan.username;
         // plan.email= email || plan.email;
         // plan.time = time || plan.time;
@@ -4625,9 +4639,21 @@ getUser = (req, res) => {
         plan.save(function (err,user) {
           if (err) { 
             console.log(err)
+
             return response.status(500).send({ msg: err.message });
           }
-          return response.status(200).send({ status:200, success:'ok', msg: 'Successfully updated user profile.' });
+
+          //send email to partner
+
+          UserService.NotificationEmail(request,response,'/views/templates/inspection_confirmation.html', {
+                     username: partnerEmail,
+                     confirmedInspectionDate: date,
+                    confirmedInspectionTime:time,
+                    link:'http://localhost:4000/' 
+            },partnerEmail,200)
+
+
+            return response.status(200).send({ status:200, success:'ok', msg: 'Successfully updated user profile.' });
         }); 
       });
   }
@@ -6088,7 +6114,11 @@ getUser = (req, res) => {
       plate_number,
       license,
       assigned_driver_id,
-      images
+      images,
+      inspectionDate,
+      vehicleIdentificationNumber,
+
+inspectionTime,
 
     } = request.body;
 
@@ -6122,7 +6152,10 @@ getUser = (req, res) => {
                       plate_number: plate_number || redId.plate_number,
                       license: license || redId.license,
                       assigned_driver_id: assigned_driver_id || redId.assigned_driver_id,
-                      images: images || redId.images
+                      images: images || redId.images,
+                      inspectionDate: inspectionDate || redId.inspectionDate,
+                      vehicleIdentificationNumber: vehicleIdentificationNumber || redId.vehicleIdentificationNumber,
+                      inspectionTime : inspectionTime || redId.inspectionTime ,
                       //images
                   
                 }).then(data => {
@@ -6183,6 +6216,7 @@ getUser = (req, res) => {
       car,
 
       carModel,
+      vehicleIdentificationNumber,
 
 carYear,
 
@@ -6230,6 +6264,7 @@ partnerEmail,
       
 
       carModel,
+      vehicleIdentificationNumber,
 
 carYear,
 
@@ -6249,22 +6284,6 @@ creator,
 
 date_created,
 partnerEmail,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -6540,8 +6559,8 @@ vehiclePlateNo,} = request.body;
     const NewEarnings = new EarningsModel({ 
             id:  new AutoincrementId(EarningsModel).counter(),
             paymentDate,
-PaymentStatus,
-PaymentAmount,
+paymentStatus: PaymentStatus,
+paymentAmount: PaymentAmount,
 paymentReference,
 partnerId,
 partnerEmail,
@@ -6550,6 +6569,8 @@ vehicleId: mongoose.Types.ObjectId(vehicleId),
 vehicleName,
 vehiclePlateNo,
 partner: mongoose.Types.ObjectId(partnerId),
+vehicle: mongoose.Types.ObjectId(vehicleId),
+date_created: new Date(),
       });
 
     NewEarnings.save()

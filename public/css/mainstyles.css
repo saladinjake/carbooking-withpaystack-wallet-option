@@ -2383,3 +2383,107 @@ path{
   height: auto;
   margin:0px auto;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ul#carsme {
+  list-style-type: none;
+}
+
+li.classless {
+  display: inline-block;
+}
+
+input[type="checkbox"][id^="cb"] {
+  display: none;
+}
+
+ label.classless {
+  border: 1px solid #fff;
+  padding: 10px;
+  display: block;
+  position: relative;
+  margin: 10px;
+  cursor: pointer;
+}
+ 
+ label.classless:before {
+  background-color: white;
+  color: white;
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  border: 1px solid grey;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  line-height: 28px;
+  transition-duration: 0.4s;
+  transform: scale(0);
+}
+
+label.classless img {
+  height: 100px;
+  width: 100px;
+  transition-duration: 0.2s;
+  transform-origin: 50% 50%;
+}
+
+:checked + label {
+  border-color: #ddd;
+}
+
+:checked + label:before {
+  content: "✓";
+  background-color: grey;
+  transform: scale(1);
+}
+
+:checked + label img {
+  transform: scale(0.9);
+  box-shadow: 0 0 5px #333;
+  z-index: -1;
+}
+
+
+
+
+#fade-in {
+  height: 150px;
+  width: 1px;
+  opacity: 0;
+  transition: all .75s ease;
+}
+
+#fade-in.show {
+  opacity: 1;
+  height: 150px;
+  width: 500px;
+}
+
+
+
+h4.spacing {
+  letter-spacing: 0;
+  opacity: .5;
+  transition: all .75s ease-out;
+}
+
+h4.spacing.spaced {
+  opacity: 1;
+  letter-spacing: 3px;
+}

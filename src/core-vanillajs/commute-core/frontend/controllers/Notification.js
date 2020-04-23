@@ -42,7 +42,7 @@ export default class Notification{
 
 	            if(userNotifications.length>0){
                     userNotifications.map((item,i)=>{
-
+                   if(item.for_users==true && item.type!="payment"){
 	                let markup =`
 	                
 
@@ -74,6 +74,8 @@ export default class Notification{
               `;
 
 	               $( "#addAcc" ).append( $( markup ) ) 
+	           }
+	           
 	            })
 
 	            }

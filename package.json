@@ -107,7 +107,8 @@
     "migration-mongoose-seed-deploy-back": " node ./buildfolder/dynamic_server/mongo_api/migrations/migrations.js",
     "dbrun-migrations-mongoose-deploy-back": "npm run migration-mongoose-seed-deploy-back",
     "build-server-back": "babel -d ./buildfolder ./server -s",
-    "builda-back": "npm run clean && npm run build-server-back && npm run up"
+    "builda-back": "npm run clean && npm run build-server-back && npm run up",
+    "production-deploy-front": "npm run build-front && scp -r ./dist-reactive/* root@167.71.131.172:/var/www/commute-app/html"
   },
   "repository": {
     "type": "git",
