@@ -50,10 +50,10 @@ export  default class AdminCarRequest extends Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="card-box">
-                                <h4 className="m-t-0 header-title"><b>Inspection Management</b></h4>
+                                <h4 className="m-t-0 header-title"><b>Retrieval Management</b></h4>
                                 <p className="text-muted m-b-30 font-13">
                                     Admin can manage the plan registered on the System. Admin can add/modify/delete
-                                    any inspection detail.
+                                    any Car Retrieval detail.
                                 </p>
                                 <div className="row">
                                     <div className="col-sm-8">
