@@ -8989,7 +8989,7 @@ noReadWrite(previledges,'manage_cars')
  
 
   carsInfo.map((item)=>{
-     modelOption+=`<option data-value="${item.model_name}" data-year="${item.year}" data-trim="${item.model_trim}" data-id="${item.model_make_id}">${item.car_name}</option>`
+     modelOption+=`<option data-car_id="${item._id}" data-value="${item.car.model_name}" data-year="${item.carYear}" data-trim="${item.car.model_trim}" data-id="${item.car.model_make_id}">${item.car.car_name}</option>`
 
   })
 
@@ -9303,6 +9303,10 @@ noReadWrite(previledges,'manage_cars')
 
    
     modalbody1.innerHTML=viewModals;
+
+
+
+    
 
       
   

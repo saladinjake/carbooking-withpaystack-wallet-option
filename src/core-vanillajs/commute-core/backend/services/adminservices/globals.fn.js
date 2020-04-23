@@ -1783,7 +1783,106 @@ document.getElementById('car').src=el.dataset.old_car
     });
 
      document.getElementById("first-view").style.display="none";
-    document.getElementById("second-view").style.display="block";               
+    document.getElementById("second-view").style.display="block"; 
+
+
+    document.getElementById("reclaim").addEventListener('click', (e)=>{
+      // alert('mee')
+
+
+
+     let partna = document.getElementById("partner_id"+ view_id);
+     partna =partna.options[partna.selectedIndex];
+     let name = partna.getAttribute('data-username');
+     let emaila = partna.text;
+     let pid = partna.getAttribute('id');
+
+
+     let vcar = document.getElementById("car_model_make"+ view_id);
+     vcar = vcar.options[vcar.selectedIndex];
+     let car_names = vcar.text;
+     let carId = vcar.getAttribute('data-car_id')
+
+
+
+
+
+     //if the retrival status is empty or new then enable retieve btn
+
+
+
+
+
+
+
+
+
+  
+  
+
+      let prePostData = {
+        status:'Pending',
+  
+        date_created: new Date(),
+        retrievalComments: 'Admin revoked car',
+        vehiclePlateNo:el.dataset.plate_number,
+        vehicleName: car_names,
+        vehicleID: carId,
+        vehicle: carId,
+        partner: pid,
+        partnerID: pid,
+        partnerName: name,
+        partnerEmail: emaila,
+        retrievalDate: new Date(),
+  
+      }
+
+
+      console.log(prePostData)
+
+
+      //create a post for retrieval
+      let linkOfApi = "http://localhost:12000/api/v1/admin-new-car-revoke"
+
+
+      const user =JSON.parse(localStorage.getItem("userToken"));
+
+      fetch(linkOfApi, {
+              method: 'Post',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': user.token,
+              },
+              body: JSON.stringify(prePostData),
+              mode:"cors",
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data)
+                if (data.status === 201) {
+                  
+                  var notification = alertify.notify('Successfully revoked .', 'success', 5, function(){  console.log('dismissed'); });
+                      
+                   AuditTrail.sendLogInfo(user, prePostData.partnerName, 'Car Revoke/Create Mode', 'Success', '201', 'PUT')
+                      
+                  setTimeout(()=>{
+                    window.location.reload()
+                  },4000)
+                      
+
+                         
+          }else{
+                      AuditTrail.sendLogInfo(user, '', 'UserGroup > Roles And Previledges/Create Mode', 'Failed', '200', 'PUT')
+         
+                  
+                  var notification = alertify.notify('Could not perform update operation. Ensure the fields are filled in correctly.', 'error', 5, function(){  console.log('dismissed'); });
+
+                }
+              }).catch(e=> console.log(e));
+
+
+    })              
 
 }
 

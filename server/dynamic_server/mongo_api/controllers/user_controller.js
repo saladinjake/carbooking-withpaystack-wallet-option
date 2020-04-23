@@ -689,7 +689,9 @@ export default class UserController {
 
 
 
-
+  static revokecar(request,response){
+    return UserService.revokecar(request,response)
+  }
 
 
 

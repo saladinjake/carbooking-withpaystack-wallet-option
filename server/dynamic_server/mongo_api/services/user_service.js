@@ -15,6 +15,7 @@ import carsApi from './cars_api';
 import {passport ,express} from '../App'; 
 //import EarningsModel from '../models/EarningsModel';
 import AuditNotificationModel from '../models/AuditNotification.model';
+import Retrieval from '../models/Retrival.model';
 import UserPlanModel from '../models/UserPlan.model';
 import PlanModel from "../models/Plan.model";
 import ItineraryModel from '../models/Itinerary.model';
@@ -7945,7 +7946,72 @@ static createTrail(request,response){
 
 
 
+static revokecar(request,response){
 
+  let { 
+
+    status,
+  
+        date_created,
+        retrievalComments,
+        vehiclePlateNo,
+        vehicleName,
+        vehicleID,
+        vehicle,
+        partner,
+        partnerID,
+        partnerName,
+        partnerEmail,
+        retrievalDate,
+    } = request.body;
+
+    
+
+    const RetrievalTrail = new Retrieval({ 
+      id: new AutoincrementId(Retrieval).counter(), 
+      
+    status,
+  
+        date_created,
+        retrievalComments,
+        vehiclePlateNo,
+        vehicleName,
+        vehicleID,
+        vehicle,
+        partner,
+        partnerID,
+        partnerName,
+        partnerEmail,
+        retrievalDate,
+       });
+
+  
+     RetrievalTrail.save()
+      .then(data => {
+        const user = data;
+        return response.status(201).json({
+                status: 201,
+                data: [
+                  {
+                    user,
+                    message: 'AUDIT SUCCESSFULLY CREATED',
+                  },
+                ],
+          });
+        
+
+        
+      })
+      .catch(err => {
+        console.log(err+ 'error here')
+        response.status(400).json({
+          status: 400,
+          error: ErrorHandler.errors().validationError,
+        });
+      });
+
+
+}
 
 
 

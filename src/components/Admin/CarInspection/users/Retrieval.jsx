@@ -177,7 +177,7 @@ export  default class AdminCarRequest extends Component {
                             <div className="col-lg-12 card-box">
                             <div className="col-lg-2 pull-left"><a href="#" 
                             className="btn btn-default waves-effect waves-light pull-left m-b-10 goback"><i className="md  md-chevron-left"></i> Back to List</a> </div>
-                            <div className="col-lg-8"><h4 className="m-b-10 header-title">Inspection Detail <span className="m-l-10 text-purple font-13"><b id="user-id"></b></span></h4></div>
+                            <div className="col-lg-8"><h4 className="m-b-10 header-title">Car Detail <span className="m-l-10 text-purple font-13"><b id="user-id"></b></span></h4></div>
                             <div className="col-lg-2 pull-right"><div className="btn-group pull-right m-t-0">
                                     
                                 </div> </div>
@@ -197,14 +197,24 @@ export  default class AdminCarRequest extends Component {
                                    
                                         <div className="card-box">
                                             <img src="" id="car" className="responsive"/>
+
+                                           
                                         </div>
+
+                                        
 
                                         
                                     
                                 </div>
 
 
-                                <h4>Car Retrieval Form</h4>
+                                <button id="reclaim" className="btn btn-danger  pull-left">Revoke Car</button>
+
+
+                                        <button id="unreclaim" className="btn btn-success pull-right">Unrevoke Car</button>
+
+
+                                {/*<h4>Car Retrieval Form</h4>
                                 <form className="form-horizontal" role="form" data-parsley-validate noValidate>
                                 
                                         <div className="form-group col-sm-12">
@@ -221,30 +231,20 @@ export  default class AdminCarRequest extends Component {
                                         <div className="form-group col-sm-12">
                                             <label htmlFor="" className="col-sm-4 control-label">Car ID</label>
                                             <div className="col-sm-7">
-                                                <input type="text" required  parsley-type="text" className="form-control" id="car_id" />
+                                                <input disabled type="text" required  parsley-type="text" className="form-control" id="car_id" />
                                             </div>
                                         </div>
 
     
                                         
 
-                                         <div className="form-group col-sm-12">
-                                            <label htmlFor="" className="col-sm-4 control-label">Partner's Email</label>
-                                            <div className="col-sm-7">
-                                               <select className="form-control" id="email">
-                                                 <option>--Select an email user--</option>
-                                                        
-                                                    </select>
-                                            </div>
-                                        </div>
+                                        
 
     
                                         <div className="form-group col-sm-12">
-                                            <label htmlFor="" className="col-sm-4 control-label">Partner's Username </label>
+                                            <label htmlFor="" className="col-sm-4 control-label">Partner's Email </label>
                                             <div className="col-sm-7">
-                                                <select className="form-control" id="username" disabled>
-                                                       
-                                                    </select>
+                                                <input disabled type="text" id="partneremail" parsley-type="text" className="form-control" />
                                             </div>
                                         </div>
 
@@ -259,7 +259,7 @@ export  default class AdminCarRequest extends Component {
                                         <div className="form-group col-sm-12">
                                             <label htmlFor="" className="col-sm-4 control-label">Inspection Date</label>
                                             <div className="col-sm-7">
-                                                <input type="date" required  parsley-type="text" className="form-control" id="created_date"  />
+                                                <input disabled type="date" required  parsley-type="text" className="form-control" id="created_date"  />
                                             </div>
                                         </div>
 
@@ -275,13 +275,13 @@ export  default class AdminCarRequest extends Component {
     
                                         <div className="form-group">
                                             <div className="col-sm-offset-4 col-sm-8">
-                                                <button type="submit" id="savemesa" className="add-opt btn btn-danger waves-effect waves-light">
-                                                    Retrieve Car
+                                                <button type="submit" id="savemeq" className="add-opt btn btn-primary waves-effect waves-light">
+                                                    Update Changes
                                                 </button>
                                                
                                             </div>
                                         </div> 
-                                    </form>
+                                    </form>*/}
 
 
 

@@ -389,7 +389,7 @@ export default class AdminBash{
            break;
         case "admin-retrievals":
            ApiAdminBotService.runAdminCarRetrieval(datas[16].data[0].carsAvailable,
-            datas[23].data[0].carInfo,
+            datas[16].data[0].carsAvailable,
             datas[2].data[0].drivers,
              datas[3].data[0].partners,
             previledgesRight

@@ -996,6 +996,13 @@ this.router.get('/email/smtp/template', (req, res, next) => {
     );
 
 
+     // 
+     this.router.post('/admin-new-car-revoke',
+      TokenVerification.adminAuthentication,
+      UserController.revokecar
+    );
+
+
 
     //update driver socket id
     this.router.put("/driverLocationSocket/:id", function(req, res, next){
