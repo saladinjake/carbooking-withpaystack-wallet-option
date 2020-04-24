@@ -2099,7 +2099,7 @@ static updateUsersItinerary(request,response){
   }
 
   static createPaymentDetail(request,response){
-    var PaymentModel = mongoose.model('PaymentModel', User);
+    // var PaymentModel = mongoose.model('PaymentModel', User);
 
     let {
         status,
@@ -2133,7 +2133,7 @@ static updateUsersItinerary(request,response){
     
     const NewItinerary = new PaymentModel({ 
       id: new AutoincrementId(PaymentModel).counter(), 
-        status:'Paid',
+        status:'Successful',
                 reference,
                 plan_id,
                 quotation_id,

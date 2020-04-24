@@ -1782,6 +1782,19 @@ document.getElementById('car').src=el.dataset.old_car
         }
     });
 
+
+     let hasBeenRevoked = false;
+     if(el.dataset.revoked =="true"){
+       hasBeenRevoked = true;
+       document.getElementById("reclaim").disabled=true
+       document.getElementById("inuse").style.display="none"
+     }else{
+      hasBeenRevoked = false;
+      document.getElementById("reclaim").disabled=false
+      document.getElementById("notinuse").style.display="none"
+     }
+
+
      document.getElementById("first-view").style.display="none";
     document.getElementById("second-view").style.display="block"; 
 
@@ -1791,8 +1804,15 @@ document.getElementById('car').src=el.dataset.old_car
 
 
 
+
      let partna = document.getElementById("partner_id"+ view_id);
      partna =partna.options[partna.selectedIndex];
+     let allowed = false;
+     // if(partna.text== ""){
+     //    var notification = alertify.notify('Sorry Cars not added by partners cant be revoked.', 'error', 5, function(){  console.log('dismissed'); });
+     //        allowed =true;      
+     //   return false;
+     // }
      let name = partna.getAttribute('data-username');
      let emaila = partna.text;
      let pid = partna.getAttribute('id');
@@ -1842,13 +1862,19 @@ document.getElementById('car').src=el.dataset.old_car
 
 
       //create a post for retrieval
-      let linkOfApi = "http://localhost:12000/api/v1/admin-new-car-revoke"
-
+      let linkOfApi = "http://localhost:12000/api/v1/admin-new-car-revoke";
+      let linkOfApi2 = "http://localhost:12000/api/v1/admin-car-revoke-check/"+ prePostData.vehicleID;
+      
+      console.log(linkOfApi2)
 
       const user =JSON.parse(localStorage.getItem("userToken"));
+      
 
-      fetch(linkOfApi, {
-              method: 'Post',
+      if(allowed == true){
+
+
+        fetch(linkOfApi, {
+              method: 'POST',
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -1882,7 +1908,56 @@ document.getElementById('car').src=el.dataset.old_car
               }).catch(e=> console.log(e));
 
 
-    })              
+
+
+             let prePostData2 = {
+               hasBeenRevoked: true,
+             };
+              fetch(linkOfApi2, {
+              method: 'PUT',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': user.token,
+              },
+              body: JSON.stringify(prePostData2),
+              mode:"cors",
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data)
+                if (data.status === 201) {
+                  
+                  var notification = alertify.notify('Successfully revoked .', 'success', 5, function(){  console.log('dismissed'); });
+                      
+                   AuditTrail.sendLogInfo(user, prePostData.partnerName, 'Car Revoke/Create Mode', 'Success', '201', 'PUT')
+                      
+                  setTimeout(()=>{
+                    window.location.reload()
+                  },4000)
+                      
+
+                         
+          }else{
+                      AuditTrail.sendLogInfo(user, '', 'UserGroup > Roles And Previledges/Create Mode', 'Failed', '200', 'PUT')
+         
+                  
+                  var notification = alertify.notify('Could not perform update operation. Ensure the fields are filled in correctly.', 'error', 5, function(){  console.log('dismissed'); });
+
+                }
+              }).catch(e=> console.log(e));
+
+
+      }
+      
+
+    })       
+
+
+    //update revoke status 
+
+
+
 
 }
 

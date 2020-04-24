@@ -117,7 +117,7 @@ export default class PaymentWizard{
            
           
              setTimeout(()=>{
-              window.location.href="./plan-history"
+              // window.location.href="./plan-history"
              },10000)
           },
           onClose: function(){
@@ -331,7 +331,7 @@ export default class PaymentWizard{
      },3000)
 
          setTimeout(()=>{
-          window.location.href="./plan-history"
+          // window.location.href="./plan-history"
          },10000)
         })
 

@@ -9,6 +9,11 @@ let CarsSchema = new mongoose.Schema({
           default: 0
         },
 
+        hasBeenRevoked:{
+          type:Boolean,
+          default: false,
+        },
+
         car: {
     type: Object
   },

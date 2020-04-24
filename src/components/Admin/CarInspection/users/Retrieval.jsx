@@ -198,7 +198,9 @@ export  default class AdminCarRequest extends Component {
                                         <div className="card-box">
                                             <img src="" id="car" className="responsive"/>
 
-                                           
+                                           <span id="notinuse" className="label label-danger">Car has been revoked</span>
+
+                                           <span id="inuse" className="label label-success">Car still in use</span>
                                         </div>
 
                                         

@@ -80,7 +80,7 @@ export  default class Partners extends Component {
                                         <thead>
 
                                             <th>Date</th>
-                                                    <th>Partner Id</th>
+                                                    
                                                     <th>Email</th>
                                                     <th>Bank Account</th>
                                                     <th>Amount Paid</th>

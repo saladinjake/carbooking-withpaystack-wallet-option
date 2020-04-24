@@ -1403,7 +1403,7 @@ window.addEventEarnings = (o) =>{
             AuditTrail.sendLogInfo(user,prePostData.username, 'USER ENTITY  MODULE(USER/DRIVER/ADMIN)', 'Success', '201', 'POST')
           
             setTimeout(()=>{
-              window.location.reload()
+              // window.location.reload()
             },3000)
 
 
@@ -5618,7 +5618,11 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
 
     let className = null;
+
+    console.log(datas)
   	datas.map((item, i) => {  
+
+
 
   	    if(item.paymentStatus=="Completed" || item.paymentStatus=="Success"){
            className = "label-success"
@@ -5630,8 +5634,8 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
   	    	className="label-pink"
   	    }         
         template2 +=`<tr class="notification">
-                    <td class="">${formatDate( new Date( item.paymentDate ) ) || '' }</td>
-                    <td class="">${item.partnerId || ''}</td>
+                    <td class="">${item.paymentDate   || '' }</td>
+                    
                     <td class="">${item.partnerEmail || ''}</td>
                     <td class="">${item.partnerBankAccount.bankAccount || ''}</td>
                     <td>${item.paymentAmount || ''}</td>
@@ -9068,7 +9072,7 @@ noReadWrite(previledges,'manage_cars')
                                         </a>
 
                                         <div class="product-action">
-                                            <a href="#" class="btn btn-success btn-sm" onclick="viewRetrievalUpdate(this);" href="#" data-contime="${item.confirmedInspectionTime}" data-condate="${item.confirmedInspectionDate}" data-id="${item._id}" data-inspection_date="${item.inspectionDate }" data-inspection_time="${item.inspectionTime}" data-car_status="${item.car_status}" data-health_status="${item.health_status}" data-model_make_id="${ item.model_make_id || item.car.model_id}" data-trim="${ item.car.model_trim}" data-old_car="${ item.imagePath || item.images}" href="#" data-model="${ item.carModel  || item.car_type }"  data-car_type="${ item.carModel || item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name }-${item.assigned_driver_email }" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${ item.creator || 'owned by company'}" data-model="${ item.carModel || item.model}"  data-car_year="${ item.carYear  || item.car_year}" data-color="${ item.vehicleColor || item.color}"  data-status="${item.status}" data-plate_number="${ item.plateNo || item.plate_number}" data-inspection_detail="${item.inspection_detail || 'No comment.' }" data-description="${ item.carDescription || item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${ item.plateNo || item.license}" data-url="/admin-car-mgt-detail" class="table-action-btn"><i class="md md-mode-edit"></i></a>
+                                            <a href="#" class="btn btn-success btn-sm" onclick="viewRetrievalUpdate(this);" href="#" data-revoked="${item.hasBeenRevoked}" data-contime="${item.confirmedInspectionTime}" data-condate="${item.confirmedInspectionDate}" data-id="${item._id}" data-inspection_date="${item.inspectionDate }" data-inspection_time="${item.inspectionTime}" data-car_status="${item.car_status}" data-health_status="${item.health_status}" data-model_make_id="${ item.model_make_id || item.car.model_id}" data-trim="${ item.car.model_trim}" data-old_car="${ item.imagePath || item.images}" href="#" data-model="${ item.carModel  || item.car_type }"  data-car_type="${ item.carModel || item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name }-${item.assigned_driver_email }" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${ item.creator || 'owned by company'}" data-model="${ item.carModel || item.model}"  data-car_year="${ item.carYear  || item.car_year}" data-color="${ item.vehicleColor || item.color}"  data-status="${item.status}" data-plate_number="${ item.plateNo || item.plate_number}" data-inspection_detail="${item.inspection_detail || 'No comment.' }" data-description="${ item.carDescription || item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${ item.plateNo || item.license}" data-url="/admin-car-mgt-detail" class="table-action-btn"><i class="md md-mode-edit"></i></a>
                                 <a href="#" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
                                         </div>
 
@@ -9080,10 +9084,33 @@ noReadWrite(previledges,'manage_cars')
                                                     <li><span class="label ${className2}">${ item.health_status}</span></li>
                                                     
                                                 </ul>
+  <section class="article">
+  <article class="article__panel article__panel_blue" id="article-blue">
+    <div class="article__body">
+      <div class="article__container">
+        <header class="article__header">
+          <h2>${item.car.car_name}</h2>
+          <a role="button" href="#0" class="back-link">close</a>
+        </header>
+        <p>
+          ${item.carDescription}
+        </p>
+        <p></p>
+      </div>
+    </div>
+  </article>
+  <a  role="button" class="article__pointer article__pointer_blue" style="height: 30px; width:30px; margin-top:-100px;border:1px solid blue;" href="#article-blue">
+    <span class="" role="presentation"><i class="ti-car" > </i></span>
+    
+  </a>
+</section>
+
                                             </div>
                                             <h5 class="m-0"> <span class="text-muted"> ${ item.car.model_make_id}</span></h5>
                                         </div>
                                     </div>
+
+
                                 </div>
 
                   `;
@@ -12417,6 +12444,12 @@ if (document.getElementById('admin-cars-mgt')) {
     });
 
 }
+
+
+
+
+
+
 
 
 export default ApiAdminBotService;
