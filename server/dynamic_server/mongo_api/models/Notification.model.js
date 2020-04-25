@@ -18,6 +18,10 @@ let NotificationSchema = new mongoose.Schema({
           type:Boolean,
           default:true
         },
+         isViewed: {
+    type: Boolean,
+    default: false,
+  },
         // message:{
         //   type: String,
           

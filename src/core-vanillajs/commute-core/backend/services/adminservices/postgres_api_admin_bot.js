@@ -5461,9 +5461,9 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                                            <div class="form-group ">
                                           <label for="position">Status</label>
                                           <select id="PaymentStatus${item._id}" class="form-control" data-style="btn-white">
-                                              <option>Completed</option>
-                                              <option>Ongoing</option>
-                                              <option>Pending</option>
+                                              <option>On Hold</option>
+                                              <option>Success</option>
+                                              <option>Failed</option>
                                                
                                           </select>
                                           </div>
@@ -5626,9 +5626,9 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
 
   	    if(item.paymentStatus=="Completed" || item.paymentStatus=="Success"){
            className = "label-success"
-  	    }else if(item.paymentStatus=="Pending"){
+  	    }else if(item.paymentStatus=="On Hold"){
            className = "label-warning"
-  	    } else if(item.paymentStatus=="Ongoing"){
+  	    } else if(item.paymentStatus=="Failed"){
   	    	className = "label-danger"
   	    } else{
   	    	className="label-pink"
@@ -5668,10 +5668,10 @@ WarLockAdmin(previledges,'view_partners','manage_partners')
                                                            <div class="form-group ">
 									                        <label for="position">Status</label>
 									                        <select id="PaymentStatus${item._id}" class="form-control" data-style="btn-white">
-									                            <option>Completed</option>
-									                            <option>Ongoing</option>
-									                            <option>Pending</option>
-									                             
+									                            <option>On Hold</option>
+                                              <option>Success</option>
+                                              <option>Failed</option>
+                                               
 									                        </select>
 									                        </div>
 									                   

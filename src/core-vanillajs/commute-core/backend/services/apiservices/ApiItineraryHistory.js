@@ -25,7 +25,7 @@ function ApiItineraryHistory() {
          const user = JSON.parse(localStorage.getItem('userToken'));
     //window.addEventListener('DOMContentLoaded', event => {
       // event.preventDefault();
-      const urls = [activeUrl + `/itinerary/${user.user.id}/user`,
+      const urls = [activeUrl + `/itinerary/${user.user.email}/user`,
         
       ];
 
@@ -58,13 +58,15 @@ function ApiItineraryHistory() {
 
               const tablebody1 = document.getElementById('tablebodyA');
 
-
-               if(datas[0].error){
+               let x =datas[0].data[0].itinerary
+               if(x.length<= 0){
               // alert('no itin'+ datas[0].error)
               document.getElementById('tableviewItins').style.display="none"
               document.getElementById('svgItins').style.display="block"
             
              }else{
+
+              document.getElementById('svgItins').style.display="none"
 
                //console.log(datas)
                     const itinerary = [... new Set(datas[0].data[0].itinerary)];
@@ -72,7 +74,7 @@ function ApiItineraryHistory() {
                   let eachRecord=``;
                   let className='';
                   itinerary.map((item, i) => {
-                      if(item.status=="Completed"){
+                      if(item.status=="Completed" || item.status=="Paid"){
                          className=`label-success`;
                        }else if(item.status=='Pending'){
                         className= `label-warning`;

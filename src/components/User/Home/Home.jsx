@@ -10,9 +10,27 @@ export class Home extends Component {
     const styleY ={padding:"43% 0px" }
     return (
        <React.Fragment>
-            <div id="main-content" className="col-lg-8 col-md-6 hidden-md-down hidden-xs hidden-sm "  id="loginpage" style={styleM}>
+
+            <div id="main-content" className="col-lg-8 col-md-6 hidden-md-down hidden-xs hidden-sm slideshowfix"  id="loginpage" style={styleM}>
+
+            <ul className="slideshowfix" >
+  <li><span>Your</span><div><h3>easy way to book a taxi</h3></div></li>
+  <li><span>In comfort...</span></li>
+  <li><span></span></li>
+  <li><span></span></li>
+  <li><span></span></li>
+  <li><span></span></li>
+</ul>
+  
+
+
+
               <div style={styleY} ></div>
             </div>
+
+            
+
+
             
           
             <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 pull-right" >

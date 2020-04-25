@@ -28,6 +28,9 @@ class WebsiteLogin {
       
       this.switchFormEvents();
       this.loginEvents();
+
+
+      
       
     }
 

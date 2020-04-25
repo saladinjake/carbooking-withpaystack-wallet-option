@@ -70,7 +70,7 @@ export default class PaymentWizard{
 
              const user = JSON.parse(localStorage.getItem('userToken'));
    
-             let linkOfApi = 'http://localhost:12000/api/v1/' + `debit-wallet-transactions/`+ user.user.id + '/user';
+             let linkOfApi = 'http://localhost:12000/api/v1/' + `debit-wallet-transactions/`+ user.user.email + '/user';
              let record = {
               oldBalance: parseFloat(getBalance()) ,
               debit_amount:  parseFloat(JSON.parse(localStorage.getItem("quoteToPay")).amount)
@@ -279,7 +279,7 @@ export default class PaymentWizard{
              let userPaymentDetails = JSON.parse(localStorage.getItem('quoteToPay')) 
              const user = JSON.parse(localStorage.getItem('userToken'));
    
-         let linkOfApi = 'http://localhost:12000/api/v1/' + `debit-wallet-transactions/`+ user.user.id + '/user';
+         let linkOfApi = 'http://localhost:12000/api/v1/' + `debit-wallet-transactions/`+ user.user.email + '/user';
          let record = {
           oldBalance ,
           debit_amount:  newBalance

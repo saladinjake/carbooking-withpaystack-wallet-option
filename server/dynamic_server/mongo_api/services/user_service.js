@@ -1629,7 +1629,7 @@ static updateUsersItinerary(request,response){
 
 
   static getUsersItinerary(request,response){
-    ItineraryModel.find({ user_id: Number(request.params.id) })
+    ItineraryModel.find({ email: request.params.id })
     
       .then(data => {
         const itinerary = data;
@@ -1784,7 +1784,7 @@ static updateUsersItinerary(request,response){
 
     
 
-    UserModel.findOne({ id: Number(request.params.id) }, function (err, user) {
+    UserModel.findOne({ email: request.params.id }, function (err, user) {
 
       
       
