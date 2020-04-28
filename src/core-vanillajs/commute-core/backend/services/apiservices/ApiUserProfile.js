@@ -3,7 +3,7 @@ import GateKeepersForUser from './helpers/whois';
 import FetchPromiseApi from './helpers/FetchPromiseApi';
 import getOnlineUrlConnection from './helpers/getOnlineUrlConnection';
 import MessageBoard from '../../../core/MessageBoard';
-let success_url= 'http://localhost:4000/dashboard';
+let success_url= './dashboard';
 import $ from 'jquery';
 alertify.set('notifier','position', 'top-left');
 let activeUrl = getOnlineUrlConnection();

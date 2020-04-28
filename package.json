@@ -31,7 +31,6 @@
       ]
     ]
   },
-  
   "nyc": {
     "exclude": [
       "UI/",
@@ -89,8 +88,9 @@
     "build-react": "webpack -p --config ./webpack.config.prod.js",
     "start-react-prod": "npm run build-react  && node server_react.js",
     "clean-react": "del-cli  dist-reactive ",
-    "launch-it": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT  &&  npm run dbrun-migrations-mongoose-deploy && node  ./buildfolder/dynamic_server/server.js",
+    "launch-it": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT   && node  ./buildfolder/dynamic_server/server.js",
     "clean": "del-cli  buildfolder/**/*.js ",
+    "clean-front": "del-cli  dist-reactive/*",
     "build-css": "node-sass scss/app.scss public/css/app.css",
     "build-server": "babel -d ./buildfolder ./server -s",
     "builda": "npm run clean && npm run build-server  && webpack -p --config ./webpackuploadtoserver.config.js",
@@ -100,7 +100,7 @@
     "migration-mongoose-seed-deploy": " node ./buildfolder/dynamic_server/mongo_api/migrations/migrations.js",
     "dbrun-migrations-mongoose-deploy": "npm run migration-mongoose-seed-deploy",
     "up": "webpack -p --config ./webpackuploadtoserver.config.js",
-    "build-front": "npm run clean && npm run webpack",
+    "build-front": "npm run clean-front && npm run webpack",
     "start-front": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT &&  node server_react.js",
     "start-back": "npm run launch-it-back",
     "launch-it-back": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT  && npm run dbrun-migrations-mongoose-deploy-back && node  ./buildfolder/dynamic_server/server.js",
@@ -108,8 +108,14 @@
     "dbrun-migrations-mongoose-deploy-back": "npm run migration-mongoose-seed-deploy-back",
     "build-server-back": "babel -d ./buildfolder ./server -s",
     "builda-back": "npm run clean && npm run build-server-back && npm run up",
-    "production-deploy-front": "npm run build-front && scp -r ./dist-reactive/* root@167.71.131.172:/var/www/commute-app/html"
-  },
+    "production-deploy-front": "scp -r ./dist-reactive/* root@167.71.131.172:/var/www/commute-app/html",
+    "production-build-front": "node server_react.js",
+    "production-deploy-back": "scp -r ./buildfolder/* root@167.71.131.172:~/digitalhost/buildfolder",
+    "move-env": "scp -r ./.env root@167.71.131.172:~/digitalhost",
+    "move-bundle-js": "scp -r ./dist-reactive/bundlex.js root@167.71.131.172:/var/www/commute-app/html",
+    "move-index": "scp -r ./dist-reactive/index.html root@167.71.131.172:/var/www/commute-app/html"
+
+},
   "repository": {
     "type": "git",
     "url": "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/commute-dev-Proj-repo"
@@ -273,6 +279,7 @@
     "core-js": "^3.2.1",
     "css-loader": "^0.28.11",
     "del": "^5.1.0",
+    "dotenv-webpack": "^1.7.0",
     "electron": "^6.0.10",
     "electron-builder": "^21.2.0",
     "email-templates": "^6.0.6",

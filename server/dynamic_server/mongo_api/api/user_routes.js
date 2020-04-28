@@ -996,10 +996,20 @@ this.router.get('/email/smtp/template', (req, res, next) => {
     );
 
 
-     // 
+     // Add a vehicle retrieval 
      this.router.post('/admin-new-car-revoke',
       TokenVerification.adminAuthentication,
       UserController.revokecar
+    );
+
+     this.router.put('/admin-new-car-revoke-status/:id',
+      TokenVerification.adminAuthentication,
+      UserController.revokecarstatus
+    );
+
+     this.router.get('/admin-get-revoke-details',
+      TokenVerification.adminAuthentication,
+      UserController.getrevokecars
     );
 
 

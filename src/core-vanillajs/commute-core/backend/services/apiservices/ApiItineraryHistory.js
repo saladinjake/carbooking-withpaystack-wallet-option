@@ -65,8 +65,11 @@ function ApiItineraryHistory() {
               document.getElementById('svgItins').style.display="block"
             
              }else{
-
-              document.getElementById('svgItins').style.display="none"
+              
+              if( document.getElementById('svgItins')){
+                document.getElementById('svgItins').style.display="none"
+              }
+              
 
                //console.log(datas)
                     const itinerary = [... new Set(datas[0].data[0].itinerary)];

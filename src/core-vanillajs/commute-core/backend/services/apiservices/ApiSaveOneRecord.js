@@ -156,7 +156,7 @@ class ApiSaveOneRecord {
 
        
           localStorage.setItem('urlType', postUrl);
-          window.location.replace("http://localhost:4000/submitted-ticket")
+          window.location.replace("./submitted-ticket")
         } else if (data.status === 401 || data.status === 403) {
           window.location.href = './';
         } else {

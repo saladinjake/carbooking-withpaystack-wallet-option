@@ -11,16 +11,8 @@ export class Home extends Component {
     return (
        <React.Fragment>
 
-            <div id="main-content" className="col-lg-8 col-md-6 hidden-md-down hidden-xs hidden-sm slideshowfix"  id="loginpage" style={styleM}>
+            <div id="main-content" className="col-lg-8 col-md-6 hidden-md-down hidden-xs hidden-sm "  id="loginpage" style={styleM}>
 
-            <ul className="slideshowfix" >
-  <li><span>Your</span><div><h3>easy way to book a taxi</h3></div></li>
-  <li><span>In comfort...</span></li>
-  <li><span></span></li>
-  <li><span></span></li>
-  <li><span></span></li>
-  <li><span></span></li>
-</ul>
   
 
 
@@ -63,7 +55,10 @@ export class Home extends Component {
                                   
                                 </div>
 
-                                <form className="form-horizontal m-t-20 animated animatedFadeInUp fadeInUp " method="POST" action="http://localhost:12000/api/v1/auth/login">
+                                <form className="form-horizontal m-t-20 animated animatedFadeInUp fadeInUp " method="POST" >
+                                
+
+
 
                                   
                                   <div className="form-group ">

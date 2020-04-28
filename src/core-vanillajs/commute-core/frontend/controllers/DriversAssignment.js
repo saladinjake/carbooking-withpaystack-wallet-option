@@ -164,8 +164,8 @@ export default class DriversAssignement{
 
 						const user = JSON.parse(localStorage.getItem('userToken'));
 
-			      const urls = [ 'http://localhost:12000/api/v1' + '/drivers-assigned-cars/'+ user.user.email, 
-			                     'http://localhost:12000/api/v1' + '/drivers-assigned-user-trips/'+ user.user.email
+			      const urls = [ process.env.DEPLOY_BACK_URL + '/drivers-assigned-cars/'+ user.user.email, 
+			                     process.env.DEPLOY_BACK_URL + '/drivers-assigned-user-trips/'+ user.user.email
 			      ];
 			     
 			    const tablebody2 = document.getElementById('tablebody1');

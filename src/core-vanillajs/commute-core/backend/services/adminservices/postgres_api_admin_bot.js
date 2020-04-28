@@ -42,6 +42,204 @@ $("#search").on('keyup', function(){
 }
 
 
+
+function showTravelRoute(map, directionsService, directionsDisplay, source , destination){
+  
+
+      directionsDisplay.setMap(map); 
+
+      calculateAndDisplayRoute(directionsService, directionsDisplay, source, destination)
+}
+
+ function calculateAndDisplayRoute(directionsService, directionsDisplay, source, destination) {  
+  directionsService.route({  
+    origin: source,  
+    destination: destination,  
+    travelMode: google.maps.TravelMode.DRIVING  
+  }, function(response, status) {  
+    if (status === google.maps.DirectionsStatus.OK) {  
+      directionsDisplay.setDirections(response);  
+    } else {  
+      window.alert('Directions request failed due to ' + status);  
+    }  
+  });  
+}
+
+
+function getAlldriversOntheMap(map){
+
+}
+
+function driversNearBy(MAP, startLocationCordinates){ //lat , long
+   const user = JSON.parse(localStorage.getItem('userToken'));
+
+   //let cords = startLocationCordinates.split(',')
+
+   // console.log(startLocationCordinates)
+   
+   // startLocationCordinatesLat =parseFloat(cords[0]);
+   // startLocationCordinatesLng = parseFloat(cords[1]);
+
+  //let nearDriver = activeUrl + `/driverLocation/`+ startLocationCordinatesLat + '/'+ startLocationCordinatesLng;
+  let drivers = activeUrl + `/drivers`
+
+
+  fetch(drivers, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'x-access-token': user.token,
+          },
+           mode: 'cors',
+        }).then(response => response.json())
+      .then(result =>{
+        results.map((item,i)=>{
+               console.log(item.location)
+        })
+
+      }).catch(e=>{
+        console.log(e)
+      })
+}
+
+function showUserDrift(startlocAdress, destinationAddress, geocoder, resultsMap){
+  
+
+  var address1 =  startlocAdress;                //document.getElementById('address').value;
+  var address2 =  destinationAddress;
+  geocoder.geocode({'address': address1}, function(results, status) {
+          if (status === 'OK') {
+            console.log(results[0].geometry.location + "is your location")
+            //resultsMap.setCenter(results[0].geometry.location);
+            //alert(results[0].geometry.location)
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location,
+              animation: google.maps.Animation.DROP, 
+            });
+
+
+            var contentString = '<div id="content"><h1>Pickup Location.' +
+                    `</h1><p>${address1}</p></div>`;
+ 
+
+
+
+ 
+          const infowindow = new google.maps.InfoWindow({
+                            content: contentString,
+                            maxWidth: 200
+          });
+         
+          marker.addListener('click', function () {
+                    
+                            infowindow.open(marker.get('map'), marker);
+                            InforObj[0] = infowindow;
+          });
+
+           marker.addListener('mouseover', function () {
+                    
+                            infowindow.open(marker.get('map'), marker);
+                            InforObj[0] = infowindow;
+          });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+  });
+
+
+  geocoder.geocode({'address': address2}, function(results, status) {
+          if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                  map: resultsMap,
+                  position: results[0].geometry.location,
+                  animation: google.maps.Animation.DROP, 
+                });
+
+
+                var contentString = '<div id="content"><h1>Destination.' +
+                        `</h1><p>${address2}</p></div>`;
+     
+
+
+
+     
+                const infowindow = new google.maps.InfoWindow({
+                                  content: contentString,
+                                  maxWidth: 200
+                });
+               
+                marker.addListener('click', function () {
+                          
+                                  infowindow.open(marker.get('map'), marker);
+                                  InforObj[0] = infowindow;
+                });
+
+                 marker.addListener('mouseover', function () {
+                          
+                                  infowindow.open(marker.get('map'), marker);
+                                  InforObj[0] = infowindow;
+                });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+  });
+
+}
+
+
+
+const mapRoutes = (start, dest) => {
+
+    //Add the event listener after Google Mpas and window is loaded
+    // $('#start').click(function (e) {
+
+       
+         $("#mapout").show();
+         document.getElementById('mapout').style.opacity=1
+
+
+
+     // e.preventDefault()
+         var mapOptions = {
+      center: { lat: 6.5244, lng: 3.3792},// 6.5244, 3.3792
+      zoom: 8
+  };
+  var map = new google.maps.Map(document.getElementById('gmaps-types'), mapOptions);
+
+
+  var geocoder = new google.maps.Geocoder();
+  var directionsService = new google.maps.DirectionsService;  
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+
+  showUserDrift(start, dest, geocoder, map);
+  showTravelRoute(map, directionsService, directionsDisplay,   start , dest)
+  
+  // driversNearBy(map,nearMyCordinates )
+
+
+    // });
+}
+
+
 window.viewCarDetail = (el) =>{
 
 
@@ -283,7 +481,7 @@ function noReadWrite(PREVILEDGES,perms){
 
 
 function setUserdetail(email,o,wallet=false){
-  let linkOfApi = 'http://localhost:12000/api/v1'+ '/fetchuserinfo/'+ email;
+  let linkOfApi = process.env.DEPLOY_BACK_URL+ ''+ '/fetchuserinfo/'+ email;
   
   if(document.getElementById('admin')){
   if(localStorage.getItem('userToken')){
@@ -340,7 +538,7 @@ function setUserdetail(email,o,wallet=false){
 function getUserdetail(email){
 
   if(document.getElementById('admin')){
-  let linkOfApi = 'http://localhost:12000/api/v1/'+ 'fetchuserinfo/'+ email;
+  let linkOfApi = process.env.DEPLOY_BACK_URL+ '/'+ 'fetchuserinfo/'+ email;
    if(localStorage.getItem('userToken')){
   const user = JSON.parse(localStorage.getItem('userToken'))
   return fetch(linkOfApi, {
@@ -511,7 +709,7 @@ function getUserRights(){
   if(localStorage.getItem('userToken')){
 
     const user = JSON.parse(localStorage.getItem('userToken'));
-     let linkOfApi = 'http://localhost:12000/api/v1/profile-admin-rights/update/'+ user.user._id+ '/permission/'+ user.user.roles;
+     let linkOfApi = process.env.DEPLOY_BACK_URL+ '/profile-admin-rights/update/'+ user.user._id+ '/permission/'+ user.user.roles;
      
  return fetch(linkOfApi, {
       method: 'GET',
@@ -1280,6 +1478,72 @@ window.update_value_checked = (chk_bx) =>{
 
 }
 
+
+ // 
+
+
+window.showRetiveDetail =(el) =>{
+
+    let view_id = el.dataset.id;
+
+ 
+  //console.log(view_id+ "dsjdjjs")
+  let modal_view_id = document.getElementById("con-close-modal-"+ view_id);
+  modal_view_id.style.display="block";
+
+  let showme ="#con-close-modal-"+ view_id
+
+   // $('.mebox').not($(showme).closest('.mebox')).addClass('noOpacity');
+
+   $('.mebox').not(showme).hide();
+
+                                
+
+    document.getElementById("date"+view_id).value=el.dataset.date;
+
+    document.getElementById("partner_id"+view_id).value=el.dataset.partnerid;
+  document.getElementById("email"+view_id).value=el.dataset.email;
+  document.getElementById("vin"+view_id).value=el.dataset.vin || 'Car has no VIN';
+  document.getElementById("carname"+view_id).value=el.dataset.car;
+  document.getElementById("plate_number"+view_id).value= el.dataset.plate;
+  document.getElementById("carid"+view_id).value= el.dataset.carid;
+  document.getElementById("description"+view_id).value= el.dataset.description;
+
+  
+
+
+
+
+    let id= "#status"+ view_id;
+    $( id + " option").each(function () {
+        if ($(this).html() == el.dataset.status) {
+            $(this).attr("selected", "selected");
+            return;
+        }
+    });
+
+
+
+
+
+
+  
+
+   // $('.mebox').not($(showme).closest('.mebox')).addClass('noOpacity');
+
+   // $('.mebox').not(showme).hide();
+
+  document.getElementById("create").style.visibility="hidden";
+  document.getElementById("update").style.visibility="visible";
+
+
+     document.getElementById("first-view").style.display="none";
+    document.getElementById("second-view").style.display="block";               
+
+
+
+}
+
 window.addEventEarnings = (o) =>{
   let linkOfApi = activeUrl + o.dataset.url ;
   const user =JSON.parse(localStorage.getItem("userToken"));
@@ -1631,6 +1895,8 @@ window.viewRecordItinsDetail = (el) =>{
             return;
         }
     });
+
+     mapRoutes(el.dataset.start_location,el.dataset.destination)
 
 }
 
@@ -2970,7 +3236,7 @@ window.addRecordEvent = (o) =>{
 
                 
                   
-                  let notification_url ="http://localhost:12000/api/v1/notification"; 
+                  let notification_url =process.env.DEPLOY_BACK_URL+ "/notification"; 
                   
                   let dataNotification = {
                     user_id: user_email,
@@ -2994,7 +3260,7 @@ window.addRecordEvent = (o) =>{
                 
 
 
-                  let notification_url ="http://localhost:12000/api/v1/notification"; 
+                  let notification_url =process.env.DEPLOY_BACK_URL+ "/notification"; 
                   
                   let dataNotification = {
                     user_id: user_email,
@@ -4141,10 +4407,10 @@ class ApiAdminBotService  {
     
         let className='';
 
-        if(item.status=="Ongoing" || item.status=="Paid"){
+        if(item.status=="Ongoing" ){
                              
                 className=`label-danger`;
-         }else if(item.status=="Completed"){
+         }else if(item.status=="Completed" || item.status=="Paid" || item.status=="Successful"){
                           
                 className= `label-success`;
         }else {
@@ -8142,7 +8408,7 @@ noReadWrite(previledges,'manage_cars')
        e.preventDefault()
 
 
-        let linkOfApi = 'http://localhost:12000/api/v1/'+ url ;
+        let linkOfApi = process.env.DEPLOY_BACK_URL+ '/'+ url ;
 
 
 
@@ -8290,7 +8556,7 @@ noReadWrite(previledges,'manage_cars')
 
 
          if(url!='add-inspection'){
-          let link="http://localhost:12000/api/v1/update-testcenter/"+me[0]._id
+          let link=process.env.DEPLOY_BACK_URL+ "/update-testcenter/"+me[0]._id
          updateUsersTestCenter(link, {test_center:me[0].test_center, test_center_address: me[0].test_center_address})
 
          }
@@ -8417,7 +8683,7 @@ noReadWrite(previledges,'manage_cars')
        e.preventDefault()
 
 
-        let linkOfApi = 'http://localhost:12000/api/v1/'+ url ;
+        let linkOfApi = process.env.DEPLOY_BACK_URL+ '/'+ url ;
 
 
 
@@ -8573,7 +8839,7 @@ noReadWrite(previledges,'manage_cars')
 
 
          if(url!='add-inspection'){
-          let link="http://localhost:12000/api/v1/update-testcenter/"+me[0]._id
+          let link=process.env.DEPLOY_BACK_URL+ "/update-testcenter/"+me[0]._id
          updateUsersTestCenter(link, {test_center:me[0].test_center, test_center_address: me[0].test_center_address})
 
          }
@@ -8967,7 +9233,10 @@ noReadWrite(previledges,'manage_cars')
   console.log(drivers)
    let selectOptionsPart ='';
   partners.map((item, i) => { 
-      selectOptionsPart+=`<option data-username="${item.name || item.firstname}" data-email="${item.email}" id="${item._id}" >${item.email}</option>`; 
+     if(!item.name){
+       item.name = item.firstName;
+     }
+      selectOptionsPart+=`<option data-username="${item.name || item.firstName}" data-email="${item.email}" id="${item._id}" >${item.email}</option>`; 
           
     });
 
@@ -9058,6 +9327,8 @@ noReadWrite(previledges,'manage_cars')
         // let itemv = JSON.stringify(data);
 
 
+        // if(item.car_status=="Active"){
+
 
     
         template2 =`
@@ -9073,7 +9344,6 @@ noReadWrite(previledges,'manage_cars')
 
                                         <div class="product-action">
                                             <a href="#" class="btn btn-success btn-sm" onclick="viewRetrievalUpdate(this);" href="#" data-revoked="${item.hasBeenRevoked}" data-contime="${item.confirmedInspectionTime}" data-condate="${item.confirmedInspectionDate}" data-id="${item._id}" data-inspection_date="${item.inspectionDate }" data-inspection_time="${item.inspectionTime}" data-car_status="${item.car_status}" data-health_status="${item.health_status}" data-model_make_id="${ item.model_make_id || item.car.model_id}" data-trim="${ item.car.model_trim}" data-old_car="${ item.imagePath || item.images}" href="#" data-model="${ item.carModel  || item.car_type }"  data-car_type="${ item.carModel || item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name }-${item.assigned_driver_email }" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${ item.creator || 'owned by company'}" data-model="${ item.carModel || item.model}"  data-car_year="${ item.carYear  || item.car_year}" data-color="${ item.vehicleColor || item.color}"  data-status="${item.status}" data-plate_number="${ item.plateNo || item.plate_number}" data-inspection_detail="${item.inspection_detail || 'No comment.' }" data-description="${ item.carDescription || item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${ item.plateNo || item.license}" data-url="/admin-car-mgt-detail" class="table-action-btn"><i class="md md-mode-edit"></i></a>
-                                <a href="#" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
                                         </div>
 
                                        
@@ -9099,7 +9369,7 @@ noReadWrite(previledges,'manage_cars')
       </div>
     </div>
   </article>
-  <a  role="button" class="article__pointer article__pointer_blue" style="height: 30px; width:30px; margin-top:-100px;border:1px solid blue;" href="#article-blue">
+  <a style="display:none"  role="button" class="article__pointer article__pointer_blue" style="height: 30px; width:30px; margin-top:-100px;border:1px solid blue;" href="#article-blue">
     <span class="" role="presentation"><i class="ti-car" > </i></span>
     
   </a>
@@ -9160,12 +9430,12 @@ noReadWrite(previledges,'manage_cars')
 
                                         <div class="form-group" style="display:none">
                                             <label for="inputColor">Confirmed Inspection Date</label>
-                                            <input  id="condate${item._id}" type="date" class="form-control"  value="Blue">
+                                            <input  id="condate${item._id}" type="text" class="form-control"  >
                                         </div>
 
                                         <div class="form-group"  style="display:none">
                                             <label for="inputColor">Confirmed Inspection Time</label>
-                                            <input  id="contime${item._id}" type="time" class="form-control"  value="Blue">
+                                            <input  id="contime${item._id}" type="text" class="form-control"  >
                                         </div>
 
 
@@ -9206,17 +9476,17 @@ noReadWrite(previledges,'manage_cars')
 
                                         <div class="form-group">
                                             <label for="inputColor">Model Id</label>
-                                            <input disabled id="car_model_id${item._id}" type="text" class="form-control"  value="Blue">
+                                            <input disabled id="car_model_id${item._id}" type="text" class="form-control"  >
                                         </div>
 
                                         <div class="form-group">
                                             <label for="inputColor">Model Name</label>
-                                            <input disabled id="car_model_name${item._id}" type="text" class="form-control"  value="Blue">
+                                            <input disabled id="car_model_name${item._id}" type="text" class="form-control" >
                                         </div>
 
                                         <div class="form-group">
                                             <label for="inputColor">Trim Model</label>
-                                            <input disabled id="car_model_trim${item._id}" type="text" class="form-control"  value="Blue">
+                                            <input disabled id="car_model_trim${item._id}" type="text" class="form-control">
                                         </div>
 
                                          <div class="form-group">
@@ -9237,7 +9507,7 @@ noReadWrite(previledges,'manage_cars')
                     
                                         <div class="form-group">
                                             <label for="inputColor">Color</label>
-                                            <input disabled id="color${item._id}" type="text" class="form-control"  value="Blue">
+                                            <input disabled id="color${item._id}" type="text" class="form-control"  >
                                         </div>
 
                                         <div class="form-group ">
@@ -9313,7 +9583,7 @@ noReadWrite(previledges,'manage_cars')
                                                 <button style="display:none" style="margin-right:5px;display:none" onclick="addCarRecordEvent(this)" data-id="${item._id}" data-url="/add-cars" id="create" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
                                                      <button style="display:none" style="margin-right:5px;" onclick="deleteData(this)" data-id="${item._id}" data-url="/faqs" id="delete" type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Delete</button> 
                                                     <button style="margin-right:5px;" id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
-                                                    <button style="margin-right:5px;" data-old_car="${item.images}" onclick="updateInspectionAction(this)" data-id="${item._id}" data-url="/admin-inspection-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Save Changes</button> 
+                                                    <button style="margin-right:5px;display:none" data-old_car="${item.images}" onclick="updateInspectionAction(this)" data-revoked="${item.hasBeenRevoked}" data-contime="${item.confirmedInspectionTime}" data-condate="${item.confirmedInspectionDate}" data-id="${item._id}" data-inspection_date="${item.inspectionDate }" data-inspection_time="${item.inspectionTime}" data-car_status="${item.car_status}" data-health_status="${item.health_status}" data-model_make_id="${ item.model_make_id || item.car.model_id}" data-trim="${ item.car.model_trim}" data-old_car="${ item.imagePath || item.images}" href="#" data-model="${ item.carModel  || item.car_type }"  data-car_type="${ item.carModel || item.car_type}" data-car_id="${item._id}" data-assigned_driver_name="${item.assigned_driver_name}" data-assigned_driver_email="${item.assigned_driver_email}" data-checkmate="${item.assigned_driver_name }-${item.assigned_driver_email }" data-date="${formatDate(new Date(item.created_at))}"  data-partner_id="${ item.creator || 'owned by company'}" data-model="${ item.carModel || item.model}"  data-car_year="${ item.carYear  || item.car_year}" data-color="${ item.vehicleColor || item.color}"  data-status="${item.status}" data-plate_number="${ item.plateNo || item.plate_number}" data-inspection_detail="${item.inspection_detail || 'No comment.' }" data-description="${ item.carDescription || item.description}"  id="plancat${item._id}" data-id="${item._id}" data-license="${ item.plateNo || item.license}" data-url="/admin-car-mgt-detail" data-url="/admin-inspection-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Revoke Car</button> 
                                                 </div> 
                                             </div> 
                                         </div>
@@ -9326,11 +9596,14 @@ noReadWrite(previledges,'manage_cars')
           `;
 
         tablebody1.insertAdjacentHTML('beforeend', template2);
+
+
+   // }
+
     });
 
    
     modalbody1.innerHTML=viewModals;
-
 
 
     
@@ -9338,6 +9611,281 @@ noReadWrite(previledges,'manage_cars')
       
   
   }
+
+
+
+
+
+
+  static runAdminCarRetrievalEdit(datas,carsInfo,drivers,partners,previledges){
+
+     WarLockAdmin(previledges,'view_car_inspection','manage_car_inspection')
+         noReadWrite(previledges,'manage_car_inspection')
+    GateKeepersForAdmin();
+     document.getElementById("search").addEventListener("keyup",(e)=>{
+      searchTable() 
+    })
+    addClick()
+
+     let selectOptionsDrivers = ``;
+  let driv = [...new Set(drivers)]
+  
+
+  console.log(drivers)
+   let selectOptionsPart ='';
+  partners.map((item, i) => { 
+      selectOptionsPart+=`<option data-username="${item.name || item.firstname}" data-email="${item.email}" id="${item._id}" >${item.email}</option>`; 
+          
+    });
+
+  driv.map((item, i) => { 
+      selectOptionsDrivers+=`<option data-username="${item.username}" data-email="${item.email}" id="${item._id}" value="${item.phone_number}">${item.username}-${item.email}</option>`; 
+          
+    });
+
+
+    console.log(carsInfo)
+
+    let carCategory = []; 
+    let modelNameOptionX = []; 
+    let car_year = [];
+
+   carsInfo.map((item)=>{
+     carCategory.push(item.car_name)
+   });
+   carCategory = [...new Set(carCategory)];
+
+  let modelOption=``;
+
+ 
+
+  carsInfo.map((item)=>{
+     modelOption+=`<option data-car_id="${item._id}" data-value="${item.car.model_name}" data-year="${item.carYear}" data-trim="${item.car.model_trim}" data-id="${item.car.model_make_id}">${item.car.car_name}</option>`
+
+  })
+
+
+
+ 
+
+
+
+
+    
+  let data = [...datas]
+  let template2 ='';
+    let viewModals = '';
+
+
+   // let driversC = [...drivers];
+  
+
+    
+    const tablebody1 = document.getElementById('tablebody1');
+    const modalbody1 = document.getElementById("modalbody1");
+    
+    
+    if(data.length<=0){
+      return tablebody1.innerHTML = `<h6 style="text-align:center;position:absolute;top:68%;left:40%; margin:0px auto">No records Yet<br/><a class="btn btn-default" id="add-new-id" onclick="addClickStartNew()" href="#">Get Started</a></h6>`;
+    }
+
+    data.map((item, i) => { 
+      let className = "label-success"
+        if(item.status=="Pending" || "OnHold"){
+           className = "label-warning"
+        }else if(item.status=="Completed" || item.status=="Successful"){
+           className = "label-success"
+        } else{
+           className = "label-danger"
+        } 
+        let shortStory =''
+        // if(item.retrievalComments){
+        //   shortStory = item.retrievalComments.substring(0,5)+ '...'
+        // }
+
+        
+
+        
+
+    
+        template2 =`<tr>
+                         <td class=""><a  href="#" id="plancat${item._id}" data-id="${item._id}" data-url="/" class=""><b>${formatDate(new Date(item.date_created))} </b></a> </td>
+                          <td class="">${item.partner}</td>
+                          <td class="">${ item.partnerEmail}</td>
+                          <td class="">${ item.partnerName || 'No partner'}</td>
+                          <td class="">${ item.retrievalComments + '...' || 'No comment'}</td>
+
+                           <td class="">${ item.vehicleIdentificationNumber || "No Vehicle ID"}</td>
+                           
+                           <td class="">${item.vehiclePlateNo}</td>
+
+                          <td class="">${ item.vehicle}</td>
+
+                          <td class=""><span class="label ${className}">${ item.status}</span></td>
+                           <td class="">
+                               <a onclick="showRetiveDetail(this)" id="${item._id}" data-id="${item._id}" data-name="${item.partnerName}" data-vin="${item.vehicleIdentificationNumber}" data-partnerid="${item.partner}" data-date="${item.date_created}" data-email="${item.partnerEmail}"  data-car="${item.vehicleName}" data-plate="${item.vehiclePlateNo}" data-carid="${item.vehicle}"  data-status="${item.status}" data-description="${item.retrievalComments}"  data-url="" class="table-action-btn"><i class="md md-edit"></i></a>
+                               
+                           </td>
+                   </tr>         
+                  `;
+        
+          tablebody1.insertAdjacentHTML('beforeend', template2);
+        
+         viewModals=`<div  id="con-close-modal-${item._id}" class="mebox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >                                <div class="slimScrollBar" style=""> 
+                                            <div class=""> 
+                                                <div class=""> 
+                                                    <button id="close-id" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                                    
+                                                </div> 
+                                                
+                                                <div class=" text-left">
+                                        
+                                        <div class="form-group">
+                                        <div class="m-t-20">
+                                                    <label for="position">Car Booking Status</label>
+                                                    <div>
+                                                    <select  id="status${item._id}" class="selectpicker form-control" data-style="btn-white" tabindex="-98">
+                                                       <option>--Select Status--</option>
+                                                       <option>Pending</option>
+                                                      
+                                                       <option>Completed</option>
+                                                       
+
+                                                       
+                                                    </select></div>
+                                            </div>
+                                        </div>
+
+                                      
+    
+  
+  
+
+
+
+
+                                        <div class="form-group" style="display:none">
+                                            <label for="inputColor">Date</label>
+                                            <input  id="date${item._id}" type="date" class="form-control"  >
+                                        </div>
+
+                                        <div class="form-group"  style="display:none">
+                                            <label for="inputColor">Partner Id</label>
+                                            <input  id="partner_id${item._id}"  class="form-control"  >
+                                        </div>
+
+
+                                        
+                                        
+                                  
+                                        
+                                        
+
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Partner Name</label>
+                                            <input disabled id="name${item._id}" type="text" class="form-control"  >
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Partner Email</label>
+                                            <input disabled id="email${item._id}" type="text" class="form-control"  >
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputColor">Vehicle Id</label>
+                                            <input disabled id="carid${item._id}" type="text" class="form-control"  value="Blue">
+                                        </div>
+
+                                         <div class="form-group">
+                                        <div class="m-t-20">
+                                                    <label for="position">Car Name</label>
+                                                    <div>
+
+                                                    <input disabled  id="carname${item._id}" type="text" class="form-control"  >
+                                        
+                                                    
+                                                    </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group ">
+                                            <label for="inputColor">Vin</label>
+                                            <input disabled id="vin${item._id}" type="text" class="form-control"  >
+                                        </div>
+
+                                        
+
+
+                    
+                                       
+
+
+                                        <div class="form-group ">
+                                            <label for="inputColor">Plate Number</label>
+                                            <input disabled id="plate_number${item._id}" type="text" class="form-control"  >
+                                        </div>
+                                        
+                                       
+
+                                                       
+
+
+                                      
+                                        <div class="">
+                                        <div class="form-group">
+                                            <label for="inputCarDescription">Car Description</label>
+                                            <textarea disabled id="description${item._id}" class="form-control autogrow" id="inputCarDescription" placeholder="The car is neat and the engine is working properly." style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                        </div>
+
+                                        <br/>
+                                      
+                                       </div>
+
+
+
+
+                            
+                            
+                              
+                              
+                                        
+                                                <div style="clear:both;display:table;margin-right:0px">
+                                                <button style="display:none" style="margin-right:5px;display:none" onclick="addCarRecordEvent(this)" data-id="${item._id}" data-url="/add-cars" id="create" style="display:none" type="button" class="btn btn-success waves-effect" data-dismiss="modal">Create</button> 
+                                                     <button style="display:none" style="margin-right:5px;" onclick="deleteData(this)" data-id="${item._id}" data-url="/faqs" id="delete" type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Delete</button> 
+                                                    <button style="margin-right:5px;" id="cancle" data-id="${item._id}" onclick="addCloseEffect(this)" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                                                    <button style="margin-right:5px;display:none" data-old_car="${item.images}" onclick="unrevokecar(this)" data-id="${item._id}" data-url="/admin-inspection-detail" id="update" type="button" class="btn btn-info waves-effect waves-light">Unrevoke Car</button> 
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                    </div>
+
+
+
+        
+
+          `;
+
+          modalbody1.innerHTML+=viewModals;
+
+
+      
+
+
+   // }
+
+    });
+
+   
+    
+
+    
+
+      
+  
+  }
+
 
 
   static runSettings(datas,previledges){
@@ -9503,18 +10051,14 @@ noReadWrite(previledges,'manage_cars')
         let eachRecord=``;
         let className="label-success"
         itinerary.map((item, i) => {
-            if(item.status=="Ongoing"){
-            	className="label-danger"
-                             
-               
-            }else if(item.status=="Completed"){
-            	className="label-success"
-                          
-                
+               if(item.status=="Paid" || item.status=="Successful"){
+               className="label-success"
+            }else if(item.status=='Unpaid'){
+              className="label-warning"
             }else{
-                className="label-warning"
-               
+              className='label-danger'
             }
+         
 
             // alert(item.assigned_driver_name)
             eachRecord = `
@@ -9523,8 +10067,8 @@ noReadWrite(previledges,'manage_cars')
                           <td>${item.email} </td>
                                 <td>${formatDate(new Date(item.created_at))} </td>
                           <td class="">${item.plan_category}</td>
-                          <td class="">${item.start_location} </td>
-                          <td class="">${item.destination}</td>
+                          <td class="">${item.start_location.substring(0,5)+'...'} </td>
+                          <td class="">${item.destination.substring(0,5)+'...'}</td>
                             
                             <td class=""><span class="label label-table ${className}">${item.status}</span></td>
 
@@ -10225,12 +10769,12 @@ function enforceFloat() {
 			        	//console.log("clicked me..." +user_name[0])
 
 			        	
-			            let userplan_url ="http://localhost:12000/api/v1/userplan-status-update/"+ planId ;
-			            let itins_url ="http://localhost:12000/api/v1/user-itinerary-status-update/"+ planId;
+			            let userplan_url =process.env.DEPLOY_BACK_URL+ "/userplan-status-update/"+ planId ;
+			            let itins_url =process.env.DEPLOY_BACK_URL+ "/user-itinerary-status-update/"+ planId;
 			            
 
 
-                  let notification_url ="http://localhost:12000/api/v1/notification"; 
+                  let notification_url =process.env.DEPLOY_BACK_URL+ "/notification"; 
 			            
 			            let dataNotification = {
 			              user_id: this_user,
@@ -10288,7 +10832,7 @@ function enforceFloat() {
                
     
 
-               let quot_url = 'http://localhost:12000/api/v1/make-quotation'
+               let quot_url = process.env.DEPLOY_BACK_URL+ '/make-quotation'
                createQuotations(quot_url, dataQuotations) 
 
 
@@ -10885,7 +11429,7 @@ WarLockAdmin(previledges,'view_transactions','manage_transactions')
                 $(_tr).hide().insertAfter("#startPoint").fadeIn('slow');
             
 
-              let postUrl = 'http://localhost:12000/api/v1/admin-itinerary-add';
+              let postUrl = process.env.DEPLOY_BACK_URL+ '/admin-itinerary-add';
               createBookingSet(postUrl ,userPlanItineries)    
  
         
@@ -10909,7 +11453,7 @@ WarLockAdmin(previledges,'view_transactions','manage_transactions')
 
 
 
-                        let drvUrl ='http://localhost:12000/api/v1/add-drive-test-for-user'
+                        let drvUrl =process.env.DEPLOY_BACK_URL+ '/add-drive-test-for-user'
 
                         createUserDriveTestDetail(drvUrl, userDriveTestData)
 
@@ -11009,9 +11553,9 @@ WarLockAdmin(previledges,'view_transactions','manage_transactions')
                       //console.log("clicked me..." +user_name[0])
 
                       
-                        //let userplan_url ="http://localhost:12000/api/v1/userplan-status-update/"+ planId ;
+                        //let userplan_url =process.env.DEPLOY_BACK_URL+ "/userplan-status-update/"+ planId ;
                   
-                        let notification_url ="http://localhost:12000/api/v1/notification"; 
+                        let notification_url =process.env.DEPLOY_BACK_URL+ "/notification"; 
                         
                         let dataNotification = {
                           user_id: em,
@@ -11057,7 +11601,7 @@ WarLockAdmin(previledges,'view_transactions','manage_transactions')
 
 
 
-                  let postUrl = 'http://localhost:12000/api/v1/admin-plan-add';
+                  let postUrl = process.env.DEPLOY_BACK_URL+ '/admin-plan-add';
                   createBookingSet(postUrl ,usersPlan)
 
 
@@ -11082,14 +11626,14 @@ WarLockAdmin(previledges,'view_transactions','manage_transactions')
                
     
 
-               let quot_url = 'http://localhost:12000/api/v1/make-quotation'
+               let quot_url = process.env.DEPLOY_BACK_URL+ '/make-quotation'
                createQuotations(quot_url, dataQuotations) 
 
 
 
 
-               let userplan_url ="http://localhost:12000/api/v1/userplan-status-update/"+ plan_id.value ;
-                  let itins_url ="http://localhost:12000/api/v1/user-itinerary-status-update/"+ plan_id.value;
+               let userplan_url =process.env.DEPLOY_BACK_URL+ "/userplan-status-update/"+ plan_id.value ;
+                  let itins_url =process.env.DEPLOY_BACK_URL+ "/user-itinerary-status-update/"+ plan_id.value;
                   
               
               let dataPlan = {
@@ -11175,7 +11719,7 @@ document.getElementById("search").addEventListener("keyup",(e)=>{
 
           datas.map((item,i)=>{
             console.log(item.createdDate)
-            if(item.status=="Paid"){
+            if(item.status=="Paid" || item.status=="Successful"){
                className="label-success"
             }else if(item.status=='Unpaid'){
               className="label-warning"
@@ -11362,7 +11906,7 @@ modalbody1.innerHTML= viewModals;
 
   	datas.map((item,i)=>{
             console.log(item.createdDate)
-            if(item.status=="Paid"){
+            if(item.status=="Paid" || item.status=="Successful"){
                className="label-success"
             }else if(item.status=='Unpaid'){
               className="label-warning"
@@ -12145,7 +12689,7 @@ modalbody1.innerHTML= viewModals;
     
 
     var loadMore = new LoadMore({
-        "dataUrl": "http://localhost:12000/api/v1",
+        "dataUrl": process.env.DEPLOY_BACK_URL+ "",
         "pageSize": 5
       });
 
@@ -12361,7 +12905,7 @@ modalB.innerHTML=viewModals;
 window.getSignedRequest = (file) =>{
       const xhr = new XMLHttpRequest();
     
-      xhr.open('GET', `http://localhost:12000/api/v1/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+      xhr.open('GET', process.env.DEPLOY_BACK_URL+`/sign-s3?file-name=${file.name}&file-type=${file.type}`);
         xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');

@@ -116,7 +116,7 @@ class IReporterWebsiteRepairs {
 
       if(localStorage.getItem('userToken')){
      let user = JSON.parse(localStorage.getItem('userToken'))
-    fetch('http://localhost:12000/api/v1/get-cars-info-user', {
+    fetch(process.env.DEPLOY_BACK_URL+ '/get-cars-info-user', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -287,7 +287,7 @@ class IReporterWebsiteRepairs {
     function getSignedRequest(file){
       const xhr = new XMLHttpRequest();
     
-      xhr.open('GET', `http://localhost:12000/api/v1/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+      xhr.open('GET', process.env.DEPLOY_BACK_URL+`/sign-s3?file-name=${file.name}&file-type=${file.type}`);
         xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');

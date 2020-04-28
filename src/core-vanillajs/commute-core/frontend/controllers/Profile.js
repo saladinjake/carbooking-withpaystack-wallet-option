@@ -139,7 +139,7 @@ class WebsiteProfile {
     function getSignedRequest(file){
       const xhr = new XMLHttpRequest();
     
-      xhr.open('GET', `http://localhost:12000/api/v1/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+      xhr.open('GET', process.env.DEPLOY_BACK_URL+`/sign-s3?file-name=${file.name}&file-type=${file.type}`);
         xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');

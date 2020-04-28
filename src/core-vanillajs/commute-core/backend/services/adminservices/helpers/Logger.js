@@ -56,7 +56,7 @@ export default class Logger{
        }
 
 
-       let linkOfApi ="http://localhost:12000/api/v1/log-audit";
+       let linkOfApi =process.env.DEPLOY_BACK_URL+"/log-audit";
           const user =JSON.parse(localStorage.getItem("userToken"));
         fetch(linkOfApi, {
               method: 'POST',

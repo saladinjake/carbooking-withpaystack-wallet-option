@@ -180,7 +180,7 @@ export class UserService {
                 var template = handlebars.compile(html);
                 var replacements = {
                      username: replacementObj.username ,//'juwavictor@gmail.com'
-                     link: 'http:\/\/' + request.headers.host + '\/api/v1/auth/resetMyPassword\/' + tokenSTR 
+                     link: process.env.DEPLOY_BACK_URL + '/auth/resetMyPassword\/' + tokenSTR 
                 };
                 var htmlToSend = template(replacements);
                 
@@ -226,7 +226,7 @@ export class UserService {
                 var template = handlebars.compile(html);
                 var replacements = {
                      username: result.username,
-                     link: 'http:\/\/' + request.headers.host + '\/api/v1/auth/confirmation\/' + tokenToSend, 
+                     link:  process.env.DEPLOY_BACK_URL +'/api/v1/auth/confirmation\/' + tokenToSend, 
                 
                 };
                 var htmlToSend = template(replacements);
@@ -261,8 +261,7 @@ export class UserService {
 
   }
   static signup(request, response) {
-    // console.log(request.body)
-    let { firstname, 
+      let { firstname, 
           lastname,  
           username, 
           email, 
@@ -298,7 +297,7 @@ export class UserService {
         };
         let emailT = crypto.randomBytes(16).toString('hex');
         // Create a verification token for this user
-        var emailtoken = new EmailTokenMakerForSignUp({ _userId: user.id, email_confirm_token: emailT });
+        var emailtoken = new EmailTokenMakerForSignUp({ _userId: user._id, email_confirm_token: emailT });
         
 
         
@@ -308,7 +307,6 @@ export class UserService {
               return console.log(err.message );
              }
             console.log(emailtoken.email_confirm_token, emailtoken._userId)
-            
             
 
             //console.log(__dirname + '/views/templates/signup-verification.html')
@@ -363,11 +361,12 @@ export class UserService {
 
 
         if(!user.isVerified){
+          let link = process.env.DEPLOY_BACK_URL + '/api/v1/auth/'
           return response.status(422).json({
             status: 422,
             error: `<h6>Email verification step is needed. please check your email for a verification link or click the link to resend you an email verification</h6> 
 
-            <a href="http://localhost:12000/api/v1/auth/resend/${email}">Resend </a>`,
+            <a href="${link}/resend/${email}">Resend </a>`,
           });
         }
         // console.log(email);
@@ -461,7 +460,7 @@ export class UserService {
         if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
 
         // If we found a token, find a matching user email: req.body.email
-        UserModel.findOne({ id: token._userId  }, function (err, user) {
+        UserModel.findOne({ _id: token._userId  }, function (err, user) {
             if (!user) {
               //return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
               return  res.sendFile(path.join(__dirname + '../../../../../UI/user/page-503.html'));
@@ -4650,7 +4649,7 @@ getUser = (req, res) => {
                      username: partnerEmail,
                      confirmedInspectionDate: date,
                     confirmedInspectionTime:time,
-                    link:'http://localhost:4000/' 
+                    link:process.env.DEPLOY_FRONT_URL 
             },partnerEmail,200)
 
 
@@ -7963,6 +7962,7 @@ static revokecar(request,response){
         partnerName,
         partnerEmail,
         retrievalDate,
+        hasBeenRevoked,
     } = request.body;
 
     
@@ -7983,6 +7983,7 @@ static revokecar(request,response){
         partnerName,
         partnerEmail,
         retrievalDate,
+        hasBeenRevoked,
        });
 
   
@@ -8011,6 +8012,88 @@ static revokecar(request,response){
       });
 
 
+}
+
+
+
+static revokecarstatus(request,response){
+
+  let { 
+
+        car_status,
+        hasBeenRevoked,
+    } = request.body;
+
+    
+
+  
+
+
+    CarsModel.findOne({ _id:  request.params.id }, function (err, car) {
+
+      if (!car) return response.status(400).send({ msg: 'We were unable to find a user with that email.' });
+      
+      
+      // Verify and save the user
+      car.car_status= car_status || car.car_status;
+      car.hasBeenRevoked= true || car.hasBeenRevoked;
+      
+      car.save(function (err,user) {
+        if (err) { 
+          console.log(err)
+          return response.status(500).send({ msg: err.message });
+        }
+
+        
+        
+        return response.status(200).send({ status: 200,success:'ok', msg: 'Successfully updated user profile.' });
+      }); 
+    });
+ 
+      
+    
+
+}
+
+
+static getrevokecars(request,response){
+  Retrieval.find({})
+      .then(data => {
+        
+       
+        const carsNotInUse = data; //related
+        if (carsNotInUse.length <= 0) {
+                return response.status(200).json({
+                  status: 200,
+                  data: [
+                  {
+                    carsNotInUse,
+                    message: 'Get a specific user was successful',
+                  },
+                ],
+                });
+
+        }
+      
+
+
+        return response.status(200).json({
+                status: 200,
+                data: [
+                  {
+                    carsNotInUse,
+                    message: 'Get a specific user was successful',
+                  },
+                ],
+          });
+      })
+      .catch(err =>{
+              
+              response.status(400).json({
+                status: 400,
+                error: ErrorHandler.errors().validationError,
+              });
+            });
 }
 
 

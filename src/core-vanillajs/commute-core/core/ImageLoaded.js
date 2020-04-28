@@ -4,23 +4,23 @@ class ImageLoaded {
   constructor() {}
   attachEvents(mainCallback) {
     window.addEventListener('load', function() {
-      let imgs = [
-        'http://localhost:4000/UI/images/a.jpg',
-        'http://localhost:4000/UI/images/b.jpg',
-        'http://localhost:4000/UI/images/c.jpg',
-        'http://localhost:4000/UI/images/d.jpg',
-        'http://localhost:4000/UI/images/e.jpg',
-        'http://localhost:4000/UI/images/f.jpg',
+      // let imgs = [
+      //   'http://localhost:4000/UI/images/a.jpg',
+      //   'http://localhost:4000/UI/images/b.jpg',
+      //   'http://localhost:4000/UI/images/c.jpg',
+      //   'http://localhost:4000/UI/images/d.jpg',
+      //   'http://localhost:4000/UI/images/e.jpg',
+      //   'http://localhost:4000/UI/images/f.jpg',
 
-        'http://localhost:4000/UI/images/g.jpg',
-        'http://localhost:4000/UI/images/h.jpg',
-        'http://localhost:4000/UI/images/i.jpg',
-        'http://localhost:4000/UI/images/j.jpg',
-      ];
-      ImageLoaded.loadImages(imgs, function() {
-        //alert( "Complete!" );
-        //do something like hide animations
-      });
+      //   'http://localhost:4000/UI/images/g.jpg',
+      //   'http://localhost:4000/UI/images/h.jpg',
+      //   'http://localhost:4000/UI/images/i.jpg',
+      //   'http://localhost:4000/UI/images/j.jpg',
+      // ];
+      // ImageLoaded.loadImages(imgs, function() {
+      //   //alert( "Complete!" );
+      //   //do something like hide animations
+      // });
     });
 
     mainCallback();

@@ -6,7 +6,7 @@ import $ from "jquery"
 function setOldBalance(balance,currentBalance){
 
    const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch("http://localhost:12000/api/v1/old_balance/"+ user.user.email, {
+    return fetch(process.env.DEPLOY_BACK_URL+"/old_balance/"+ user.user.email, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -50,7 +50,7 @@ export default class PaymentWizard{
           userPaymentDetails.reference= 'CMT-PAYSTACK-'+ userPaymentDetails.reference;
 
         var handler = PaystackPop.setup({
-          key: 'pk_test_0f491c7fdd3e8731d2a9a740c47c91bc6c133350',
+          key: 'pk_test_a9ba87c43061a788ec16baca91838b3df8e47295',
           email: user.user.email,
           amount: userPaymentDetails.amount *100,
           ref: 'CMT-PAYSTACK-'+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
@@ -70,7 +70,7 @@ export default class PaymentWizard{
 
              const user = JSON.parse(localStorage.getItem('userToken'));
    
-             let linkOfApi = 'http://localhost:12000/api/v1/' + `debit-wallet-transactions/`+ user.user.email + '/user';
+             let linkOfApi = process.env.DEPLOY_BACK_URL + `/debit-wallet-transactions/`+ user.user.email + '/user';
              let record = {
               oldBalance: parseFloat(getBalance()) ,
               debit_amount:  parseFloat(JSON.parse(localStorage.getItem("quoteToPay")).amount)
@@ -85,14 +85,14 @@ export default class PaymentWizard{
 
                  setTimeout(() =>{
                       updateAccountBalance(linkOfApi,record) //
-           updateStatus('http://localhost:12000/api/v1/'+  `plan-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', amount: userPaymentDetails.amount, has_updated: 'Yes' }) //itinerary status
-           updateStatus('http://localhost:12000/api/v1/'+  `itin-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Ongoing'}) //plan status
-           updateStatus('http://localhost:12000/api/v1/'+  `quote-status/`+ userPaymentDetails.plan_id + '/update',{status:'Paid', amount: userPaymentDetails.amount}) //quotation
+           updateStatus(process.env.DEPLOY_BACK_URL+  `/plan-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', amount: userPaymentDetails.amount, has_updated: 'Yes' }) //itinerary status
+           updateStatus(process.env.DEPLOY_BACK_URL+  `/itin-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Ongoing'}) //plan status
+           updateStatus(process.env.DEPLOY_BACK_URL+  `/quote-status/`+ userPaymentDetails.plan_id + '/update',{status:'Paid', amount: userPaymentDetails.amount}) //quotation
              getBalance()
 
              
 
-             createPlaymentDetail('http://localhost:12000/api/v1/'+ 'makepayments',{
+             createPlaymentDetail(process.env.DEPLOY_BACK_URL+ '/makepayments',{
                 status:'Paid',
                 reference: userPaymentDetails.reference,
                 plan_id: userPaymentDetails.plan_id,
@@ -107,7 +107,7 @@ export default class PaymentWizard{
                  },7000)
 
 
-              let itins_url ="http://localhost:12000/api/v1/user-itinerary-status-update/"+ planId;
+              let itins_url =process.env.DEPLOY_BACK_URL+"/user-itinerary-status-update/"+ planId;
               let prepostItins ={
                 status:'Paid',
               }
@@ -117,7 +117,7 @@ export default class PaymentWizard{
            
           
              setTimeout(()=>{
-              // window.location.href="./plan-history"
+               window.location.href="./plan-history"
              },10000)
           },
           onClose: function(){
@@ -279,7 +279,7 @@ export default class PaymentWizard{
              let userPaymentDetails = JSON.parse(localStorage.getItem('quoteToPay')) 
              const user = JSON.parse(localStorage.getItem('userToken'));
    
-         let linkOfApi = 'http://localhost:12000/api/v1/' + `debit-wallet-transactions/`+ user.user.email + '/user';
+         let linkOfApi = process.env.DEPLOY_BACK_URL + `/debit-wallet-transactions/`+ user.user.email + '/user';
          let record = {
           oldBalance ,
           debit_amount:  newBalance
@@ -310,13 +310,13 @@ export default class PaymentWizard{
 
  
        updateAccountBalance(linkOfApi,record) //
-       updateStatus('http://localhost:12000/api/v1/'+  `plan-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', amount: userPaymentDetails.amount, has_updated: 'Yes' }) //itinerary status
-       updateStatus('http://localhost:12000/api/v1/'+  `itin-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', has_received_payments:'Yes', has_received_quote:'Yes', user_plan_id:  userPaymentDetails.plan_id }) //plan status
-       updateStatus('http://localhost:12000/api/v1/'+  `quote-status/`+ userPaymentDetails.plan_id + '/update',{status:'Paid', amount: userPaymentDetails.amount, has_updated:'Yes'}) //quotation
+       updateStatus(process.env.DEPLOY_BACK_URL+  `/plan-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', amount: userPaymentDetails.amount, has_updated: 'Yes' }) //itinerary status
+       updateStatus(process.env.DEPLOY_BACK_URL+  `/itin-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', has_received_payments:'Yes', has_received_quote:'Yes', user_plan_id:  userPaymentDetails.plan_id }) //plan status
+       updateStatus(process.env.DEPLOY_BACK_URL+  `/quote-status/`+ userPaymentDetails.plan_id + '/update',{status:'Paid', amount: userPaymentDetails.amount, has_updated:'Yes'}) //quotation
        getBalance()
          
           
-       createPlaymentDetail('http://localhost:12000/api/v1/'+ 'makepayments',{
+       createPlaymentDetail(process.env.DEPLOY_BACK_URL+ '/makepayments',{
                 status:'Paid',
                 reference: userPaymentDetails.reference,
                 plan_id: userPaymentDetails.plan_id,
@@ -331,7 +331,7 @@ export default class PaymentWizard{
      },3000)
 
          setTimeout(()=>{
-          // window.location.href="./plan-history"
+           window.location.href="./plan-history"
          },10000)
         })
 
@@ -384,7 +384,7 @@ function createPlaymentDetail(url,prePostData){
 function getBalance(){
      
       const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch("http://localhost:12000/api/v1/balance/"+ user.user.email, {
+    return fetch(process.env.DEPLOY_BACK_URL+"/balance/"+ user.user.email, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

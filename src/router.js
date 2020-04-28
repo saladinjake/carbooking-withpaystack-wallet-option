@@ -49,6 +49,7 @@ import PlanPackage from "./components/Admin/PlanPackage/Plan/PlanPackage";
 import PlanPackageDetail from "./components/Admin/PlanPackage/PlanPackageDetail/PlanPackageDetail"
 import CarInspection from './components/Admin/CarInspection/users/Users';
 import AdminCarRequest from './components/Admin/CarInspection/users/Retrieval';
+import RetrievalEdit from './components/Admin/CarInspection/users/RetrievalEdit'
 import CarInspectionDetail from './components/Admin/CarInspection/userDetail/UserDetail';
 import DriveTest from './components/Admin/DriveTest/users/Users';
 import DriveTestDetail from './components/Admin/DriveTest/userDetail/UserDetail';
@@ -195,6 +196,9 @@ const Router = () => (
            <Route exact path="/admin-drivers" component={Drivers} />
            <Route exact path="/admin-drivers-detail" component={DriverDetail} />
            <Route exact path="/admin-partners" component={Partners} />
+          
+           <Route exact path="/admin-car-request-view" component={RetrievalEdit} />
+           
            <Route exact path="/admin-car-request" component={AdminCarRequest} />
            <Route exact path="/admin-partners-detail" component={PartnerDetail} />
            <Route exact path="/admin-partners-earnings" component={PartnersEarnings} />

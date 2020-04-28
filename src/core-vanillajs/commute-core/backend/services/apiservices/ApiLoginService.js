@@ -8,12 +8,17 @@ const emailRegularExpression = /\S+@\S+\.\S+/;
 alertify.set('notifier','position', 'bottom-left');
 
 let activeUrl = getOnlineUrlConnection();
-const admin_url = "http://localhost:4000"+ '/admin-dashboard';
-let user_dashpane = "http://localhost:4000"+ '/dashboard';
-let driver_dashpane="http://localhost:4000"+ '/dashboard-driver'
+const admin_url =  './admin-dashboard';
+let user_dashpane = './dashboard';
+let driver_dashpane='./dashboard-driver'
 
 let loginUrl = activeUrl + '/auth/login';
 let resetPwUrl = activeUrl + '/auth/forgot_password'
+
+
+let API = process.env.DEPLOY_FRONT_URL;
+let APP = process.env.DEPLOY_BACK_URL;
+
 class ApiLoginService {
   static validate() {
 
@@ -69,6 +74,15 @@ class ApiLoginService {
             dome2.disabled=false;
             dome2.innerHTML='LOG IN';
           },4000)
+
+          $('form').addClass('ahashakeheartache');
+
+          $('input').addClass('ahashakeheartache')
+
+          $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
+              $('form').delay(200).removeClass('ahashakeheartache');
+           });
+
           MessageBoard.displayMsg( data.error);
           var notification = alertify.notify(data.error, 'error', 5, function(){  console.log('dismissed'); });
         } else if (data.status === 200) {
@@ -92,12 +106,12 @@ class ApiLoginService {
 
 
           if( data.data[0].user.isAdmin ){
-              window.location.replace(admin_url)
+              window.location.href=admin_url
           }
           else if(data.data[0].user.roles=='Individual Driver'){
-              window.location.replace(driver_dashpane)
+              window.location.href=driver_dashpane
           }else if(data.data[0].user.roles=='user' ){
-              window.location.replace(user_dashpane)
+              window.location.href=user_dashpane
           } 
 
           // if(data.data[0].user.roles!='user'){
@@ -108,6 +122,7 @@ class ApiLoginService {
           //   ? (window.location.replace(admin_url) )
           //   : (window.location.replace(user_dashpane));
         }else if(data.status==409){
+          $('input').addClass('ahashakeheartache')
 
           // swal("Good job!", "You clicked the button!", "success");
 
@@ -117,10 +132,18 @@ class ApiLoginService {
             dome2.disabled=false;
             dome2.innerHTML='LOG IN';
           },4000)
+
+          $('form').addClass('ahashakeheartache');
+
+          $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
+              $('form').delay(200).removeClass('ahashakeheartache');
+           });
+
 
       
         }
         else if(data.status==404){
+          $('input').addClass('ahashakeheartache')
           MessageBoard.displayMsg(data.error);
           // swal("Good job!", "You clicked the button!", "success");
           var notification = alertify.notify(data.error, 'error', 5, function(){  console.log('dismissed'); });
@@ -129,9 +152,18 @@ class ApiLoginService {
             dome2.innerHTML='LOG IN';
           },4000)
 
+          $('form').addClass('ahashakeheartache');
+
+          $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
+              $('form').delay(200).removeClass('ahashakeheartache');
+           });
+
+
+
            
         }
          else if(data.status==400){
+          $('input').addClass('ahashakeheartache')
           console.log(data)
           // swal("Good job!", "You clicked the button!", "success");
           MessageBoard.displayMsg("credentials entered could not be found.");
@@ -143,6 +175,14 @@ class ApiLoginService {
           // MessageBoard.displayMsg(data.error );
           //Router.redirect('./');
 
+          $('form').addClass('ahashakeheartache');
+
+          $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
+              $('form').delay(200).removeClass('ahashakeheartache');
+           });
+
+
+
           
         }
       })
@@ -152,7 +192,15 @@ class ApiLoginService {
             dome2.innerHTML='LOG IN';
           },4000)
         //throw error;
+        $('input').addClass('ahashakeheartache')
         MessageBoard.displayMsg(error + 'here');
+        $('form').addClass('ahashakeheartache');
+
+          $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
+              $('form').delay(200).removeClass('ahashakeheartache');
+           });
+
+
         // swal("Good job!", "You clicked the button!", "success");
       });
   }

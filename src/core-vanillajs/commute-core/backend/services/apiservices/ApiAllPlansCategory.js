@@ -458,7 +458,7 @@ class ApiGetAllPlansRecord {
 
   static updateItem(record){
     const user = JSON.parse(localStorage.getItem('userToken'));
-    var linkOfApi =  'http://localhost:12000/api/v1/plans/'+ record.id;
+    var linkOfApi =  process.env.DEPLOY_BACK_URL+ '/plans/'+ record.id;
     return fetch(linkOfApi, {
       method: 'PATCH',
       headers: {
@@ -481,7 +481,7 @@ class ApiGetAllPlansRecord {
   }
   static deleteItem(record){ // de
     const user = JSON.parse(localStorage.getItem('userToken'));
-      var linkOfApi =  'http://localhost:12000/api/v1/plans/'+ record.id;
+      var linkOfApi =  process.env.DEPLOY_BACK_URL+ '/plans/'+ record.id;
       return fetch(linkOfApi, {
       method: 'DELETE',
       headers: {

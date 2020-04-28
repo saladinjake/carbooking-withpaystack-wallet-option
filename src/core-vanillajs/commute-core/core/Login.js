@@ -4,7 +4,7 @@ import ApiBot from '../backend/services/postgres_api_bot';
 import Router from './Router';
 import $ from 'jquery';
 
-const home_url="http://localhost:4000/";
+const home_url="/";
 class WebsiteLogin {
   constructor() {
     
@@ -29,8 +29,45 @@ class WebsiteLogin {
       this.switchFormEvents();
       this.loginEvents();
 
+    //   $("button, a").click(function() {
+
 
       
+                
+    
+    
+    //       $("#progress").width("101%").delay(100).fadeOut(1000, function() {
+      
+    //                          // $(this).hide();
+    //       });  
+    // });
+
+
+
+
+    $(function() {
+  var $progress = $('#progress');
+  $(document).ajaxStart(function() {
+    //only add progress bar if not added yet.
+    if ($progress.length === 0) {
+      $progress = $('<div><dt/><dd/></div>').attr('id', 'progress');
+      $("header").append($progress);
+    }
+    $progress.width((50 + Math.random() * 30) + "%");
+  });
+
+  $(document).ajaxComplete(function() {
+    //End loading animation
+    $progress.width("100%").delay(200).fadeOut(400, function() {
+      $progress.width("0%").delay(200).show();
+    });
+  });
+
+ 
+});
+
+
+
       
     }
 
@@ -134,36 +171,7 @@ class WebsiteLogin {
 
     //finally check if token has expired then log user out
     if(localStorage.getItem('userToken')){
-        // const user = JSON.parse(localStorage.getItem('userToken'));
         
-        // let recordUrl;
-        
-        //   recordUrl = 'http://localhost:12000/api/v1'+ `/admin-users`; //this url is default test url for checking autorization via jwt token to see if user is still available on local storage
-        //   //but inactive
-      
-        // console.log('specific url: ' + recordUrl);
-
-        // fetch(recordUrl, {
-        //   method: 'GET',
-        //   headers: {
-        //     'Accept': 'application/json',
-        //     'Content-Type': 'application/json',
-        //     'x-access-token': user.token,
-        //   },
-        //   mode: 'cors',
-        // })
-        //   .then(response => response.json())
-        //   .then(data => {
-        //     if (data.status === 403) { //if it falls back that user is unauthorized to view this page
-        //       localStorage.clear();
-        //        window.location.href="/";
-        //     }
-        //   })
-        //   .catch(error => {
-        //     console.log(error)
-        //     throw error;
-        //   });
-
     }
     
 

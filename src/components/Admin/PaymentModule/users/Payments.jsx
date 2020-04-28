@@ -57,7 +57,7 @@ export  default class Partners extends Component {
                                     <div className="col-sm-8">
                                         <form role="form">
                                             <div className="form-group contact-search m-b-30">
-                                                <input type="text" id="search" className="form-control"
+                                                <input type="text" id="search" className="form-control product-search"
                                                     placeholder="Enter Plan ID..." />
                                                 <button type="submit" className="btn btn-white"><i
                                                         className="fa fa-search"></i></button>

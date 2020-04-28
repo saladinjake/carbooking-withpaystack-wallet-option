@@ -69,7 +69,7 @@ export class Register extends Component {
 
                     
 
-          <form id="sign-form"  className="form m-t-10 animated animatedFadeInUp fadeInUp fade-in" method="POST" action="http://localhost:12000/api/v1/auth/signup">
+          <form id="sign-form"  className="form m-t-10 animated animatedFadeInUp fadeInUp fade-in" method="POST" >
 
               
 

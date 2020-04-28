@@ -52,8 +52,7 @@ export  default class AdminCarRequest extends Component {
                             <div className="card-box">
                                 <h4 className="m-t-0 header-title"><b>Retrieval Management</b></h4>
                                 <p className="text-muted m-b-30 font-13">
-                                    Admin can manage the plan registered on the System. Admin can add/modify/delete
-                                    any Car Retrieval detail.
+                                    Please select the car you need to revoke.
                                 </p>
                                 <div className="row">
                                     <div className="col-sm-8">
@@ -209,11 +208,11 @@ export  default class AdminCarRequest extends Component {
                                     
                                 </div>
 
-
+                                <br/><br/><br/>
                                 <button id="reclaim" className="btn btn-danger  pull-left">Revoke Car</button>
 
 
-                                        <button id="unreclaim" className="btn btn-success pull-right">Unrevoke Car</button>
+                                        <button  id="unreclaim" className="btn btn-success pull-right">Reclaim</button>
 
 
                                 {/*<h4>Car Retrieval Form</h4>

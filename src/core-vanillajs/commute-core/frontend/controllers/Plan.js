@@ -3,6 +3,7 @@
 import PlanCategoryModel from '../models/PlanCategoryModel';
 import $ from 'jquery';
 
+
 alertify.set('notifier','position', 'top-left');
 
 let price,plan,cart,carPrice,carImage, car_type, car_year, assigned_driver_name,
@@ -11,9 +12,12 @@ carName,car,planCounter =1,allplans = document.getElementsByClassName('plan'),
 element,overlaySelected,maxCars=2, selectedCars =0, overlaySelectedCars, 
 elementCars,planList =[],planName,rootParentSection,next2,planCategoryName,
 currentView = 1,maxViewSteps = 3,steps = ["choose-plan", "choose-cars","add-itineries"],
-activeUrl = 'http://localhost:12000/api/v1',mainUrl = activeUrl,slideIndex = 1,
+activeUrl = process.env.DEPLOY_BACK_URL,mainUrl = activeUrl,slideIndex = 1,
 prev, next,requestQuote, carList = [], carIdsSet =[], total =0, allNewItineraries=[];
 
+
+// console.log(process.env)
+// alert(process.env.DEPLOY_BACK_URL)
 var startLoc, endLoc;
 let userPlanItineries;
 let ItineraryList =[];
@@ -1001,7 +1005,7 @@ class WebsitePlanCategory {
 
 
 
-          let drvUrl ='http://localhost:12000/api/v1/add-drive-test-for-user'
+          let drvUrl =process.env.DEPLOY_BACK_URL+'/add-drive-test-for-user'
 
           createUserDriveTestDetail(drvUrl, userDriveTestData)
 
@@ -1042,8 +1046,8 @@ class WebsitePlanCategory {
 
 
 
-          console.log(ItineraryList)
-                  let it_url = mainUrl + `/itinerary/${userOnline.user.id}/user`;
+          console.log(ItineraryList,mainUrl)
+                  let it_url = mainUrl + `/itinerary/${userOnline.user.email}/user`;
                return fetch(  it_url , {
               method: 'POST',
               headers: {
@@ -1167,7 +1171,7 @@ class WebsitePlanCategory {
 
               
                 
-                  let notification_url ="http://localhost:12000/api/v1/notification"; 
+                  let notification_url =process.env.DEPLOY_BACK_URL+"/notification"; 
                   
                   let dataNotification = {
                     user_id: userOnline.user.email,
@@ -1184,7 +1188,7 @@ class WebsitePlanCategory {
                  postNotification(notification_url,dataNotification);
 
             setTimeout(()=>{
-             window.location.href="http://localhost:4000/dashboard";
+             window.location.href="./dashboard";
             },8000)
 
               

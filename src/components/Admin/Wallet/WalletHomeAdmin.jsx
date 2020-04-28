@@ -70,7 +70,7 @@ export class WalletAdmin extends Component {
                         
                         <div className="col-sm-6 text-lg-center text-right pull-right">
                           <div className="form-group">
-                              <input id="search" type="text" placeholder="User Email..." className="form-control input-sm" autocomplete="on" />
+                              <input id="search" type="text" placeholder="User Email..." className="form-control input-sm product-search" autocomplete="on" />
                           </div>
                         </div>
                       </div>

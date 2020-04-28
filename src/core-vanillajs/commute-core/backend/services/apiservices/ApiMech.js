@@ -216,7 +216,7 @@ class ApiMech {
           //MessageBoard.displayMsg('Form submitted succesfully');
           var notification = alertify.notify('Form submitted succesfully', 'success', 5, function(){  console.log('dismissed'); });
       
-          window.location.replace("http://localhost:4000/request-repairs-history")
+          window.location.href ="./request-repairs-history"
 
 
           localStorage.setItem('urlType', postUrl);

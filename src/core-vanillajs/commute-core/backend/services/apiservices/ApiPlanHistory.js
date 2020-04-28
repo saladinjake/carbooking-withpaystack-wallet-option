@@ -13,7 +13,7 @@ let activeUrl = getOnlineUrlConnection();
 window.getPlanId = (item) =>{
   localStorage.setItem("setPlan",item.dataset.plan_id);
 
-  window.location.replace("http://localhost:4000/plan-detail")
+  window.location.href = "./plan-detail"
 }
 
 function searchTable() {
@@ -53,7 +53,7 @@ function formatDate(date) {
 window.getPlanId = (item) =>{
   localStorage.setItem("setPlan",item.dataset.plan_id);
   
-  window.location.replace("http://localhost:4000/plan-detail")
+  window.location.href ="./plan-detail"
 }
 
 

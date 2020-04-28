@@ -111,7 +111,8 @@ class BackendApp {
         
         let recordUrl;
         
-          recordUrl = 'http://localhost:12000/api/v1'+ `/admin-users`; //this url is default test url for checking autorization via jwt token to see if user is still available on local storage
+// DEPLOY_BACK_URL=http://167.71.131.172:12000/api/v1
+          recordUrl = process.env.DEPLOY_BACK_URL+ `/admin-users`; //this url is default test url for checking autorization via jwt token to see if user is still available on local storage
           //but inactive
       
         console.log('specific url: ' + recordUrl);

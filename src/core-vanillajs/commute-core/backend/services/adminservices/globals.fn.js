@@ -1662,6 +1662,8 @@ window.addInspection = () =>{
 
 window.viewRetrievalUpdate = (el) =>{
 
+
+
  // console.log(cars)
 
   let view_id = el.dataset.id;
@@ -1677,11 +1679,9 @@ window.viewRetrievalUpdate = (el) =>{
    // $('.mebox').not($(showme).closest('.mebox')).addClass('noOpacity');
 
    $('.mebox').not(showme).hide();
+   let partnerName = '';
 
-  document.getElementById("create").style.visibility="hidden";
-  document.getElementById("update").style.visibility="hidden";
-  document.getElementById("delete").style.visibility="hidden";
-  document.getElementById("cancle").style.visibility="hidden";
+  
 
 
   
@@ -1696,7 +1696,7 @@ window.viewRetrievalUpdate = (el) =>{
 
   document.getElementById("description"+view_id).value= el.dataset.description || '';
   document.getElementById("inspection_detail"+view_id).value= el.dataset.inspection_detail || '';
-    document.getElementById("partner_id"+view_id).value= el.dataset.partner_id || '';
+    // document.getElementById("partner_id"+view_id).value= el.dataset.partner_id || '';
  
  document.getElementById("car_model_trim"+view_id).value= el.dataset.trim || '';
 document.getElementById("car_model_name"+view_id).value= el.dataset.model || '';
@@ -1707,8 +1707,8 @@ document.getElementById("car_model_name"+view_id).value= el.dataset.model || '';
 document.getElementById("inspection_date"+ view_id).value=el.dataset.inspection_date || '';
 document.getElementById("inspection_time"+ view_id).value= el.dataset.inspection_time || '';
 
-document.getElementById("condate"+ view_id).value=el.dataset.condate || '';
-document.getElementById("contime"+ view_id).value= el.dataset.contime || '';
+document.getElementById("condate"+ view_id).value=el.dataset.condate ;
+document.getElementById("contime"+ view_id).value= el.dataset.contime ;
 
     
 document.getElementById('car').src=el.dataset.old_car
@@ -1743,6 +1743,8 @@ document.getElementById('car').src=el.dataset.old_car
      let id2= "#partner_id"+ view_id;
     $( id2 + " option").each(function () {
         // alert($(this).attr('id'))
+        partnerName = $(this).data('username')
+        // alert(partnerName)
         if ($(this).attr('id') == el.dataset.partner_id) {
             $(this).attr("selected", "selected");
             return;
@@ -1750,22 +1752,6 @@ document.getElementById('car').src=el.dataset.old_car
            // $(this).html('owned by company') 
         }
     });
-
-    //  let id4= "#car_model_make"+ view_id;
-    // $( id4 + " option").each(function () {
-    //     if ($(this).html() == el.dataset.model_make_id) {
-    //         $(this).attr("selected", "selected");
-    //         return;
-    //     }
-    // });
-
-    //  let id3= "#car_type"+ view_id;
-    // $( id3 + " option").each(function () {
-    //     if ($(this).html() == el.dataset.car_type) {
-    //         $(this).attr("selected", "selected");
-    //         return;
-    //     }
-    // });
 
     let idz='#drivers'+ view_id;
     $( idz + " option").each(function () {
@@ -1782,12 +1768,15 @@ document.getElementById('car').src=el.dataset.old_car
         }
     });
 
+   
+
+
 
      let hasBeenRevoked = false;
      if(el.dataset.revoked =="true"){
        hasBeenRevoked = true;
        document.getElementById("reclaim").disabled=true
-       document.getElementById("inuse").style.display="none"
+       document.getElementById("inuse").style.display="none";
      }else{
       hasBeenRevoked = false;
       document.getElementById("reclaim").disabled=false
@@ -1800,8 +1789,7 @@ document.getElementById('car').src=el.dataset.old_car
 
 
     document.getElementById("reclaim").addEventListener('click', (e)=>{
-      // alert('mee')
-
+      
 
 
 
@@ -1813,7 +1801,7 @@ document.getElementById('car').src=el.dataset.old_car
      //        allowed =true;      
      //   return false;
      // }
-     let name = partna.getAttribute('data-username');
+     let name = partnerName || 'Commute Car';
      let emaila = partna.text;
      let pid = partna.getAttribute('id');
 
@@ -1844,16 +1832,17 @@ document.getElementById('car').src=el.dataset.old_car
         status:'Pending',
   
         date_created: new Date(),
-        retrievalComments: 'Admin revoked car',
+        retrievalComments: 'Car revoked by admin due to internal resolutions.',
         vehiclePlateNo:el.dataset.plate_number,
         vehicleName: car_names,
-        vehicleID: carId,
-        vehicle: carId,
+        vehicleID: view_id,
+        vehicle: view_id,
         partner: pid,
         partnerID: pid,
         partnerName: name,
-        partnerEmail: emaila,
+        partnerEmail: emaila || 'Commute Car',
         retrievalDate: new Date(),
+        hasBeenRevoked: true,
   
       }
 
@@ -1862,15 +1851,15 @@ document.getElementById('car').src=el.dataset.old_car
 
 
       //create a post for retrieval
-      let linkOfApi = "http://localhost:12000/api/v1/admin-new-car-revoke";
-      let linkOfApi2 = "http://localhost:12000/api/v1/admin-car-revoke-check/"+ prePostData.vehicleID;
+      let linkOfApi = process.env.DEPLOY_BACK_URL+ "/admin-new-car-revoke";
+      let linkOfApi2 = process.env.DEPLOY_BACK_URL+ "/admin-new-car-revoke-status/"+ view_id;
       
       console.log(linkOfApi2)
 
       const user =JSON.parse(localStorage.getItem("userToken"));
       
 
-      if(allowed == true){
+      // if(allowed == true){
 
 
         fetch(linkOfApi, {
@@ -1890,18 +1879,19 @@ document.getElementById('car').src=el.dataset.old_car
                   
                   var notification = alertify.notify('Successfully revoked .', 'success', 5, function(){  console.log('dismissed'); });
                       
-                   AuditTrail.sendLogInfo(user, prePostData.partnerName, 'Car Revoke/Create Mode', 'Success', '201', 'PUT')
+                   // AuditTrail.sendLogInfo(user, prePostData.partnerName, 'Car Revoke/Create Mode', 'Success', '201', 'PUT')
                       
                   setTimeout(()=>{
-                    window.location.reload()
+                   // window.location.reload()
                   },4000)
                       
 
                          
           }else{
-                      AuditTrail.sendLogInfo(user, '', 'UserGroup > Roles And Previledges/Create Mode', 'Failed', '200', 'PUT')
+                      // AuditTrail.sendLogInfo(user, '', 'UserGroup > Roles And Previledges/Create Mode', 'Failed', '200', 'PUT')
          
                   
+
                   var notification = alertify.notify('Could not perform update operation. Ensure the fields are filled in correctly.', 'error', 5, function(){  console.log('dismissed'); });
 
                 }
@@ -1912,6 +1902,7 @@ document.getElementById('car').src=el.dataset.old_car
 
              let prePostData2 = {
                hasBeenRevoked: true,
+               car_status:'Disabled'
              };
               fetch(linkOfApi2, {
               method: 'PUT',
@@ -1926,35 +1917,83 @@ document.getElementById('car').src=el.dataset.old_car
               .then(response => response.json())
               .then(data => {
                 console.log(data)
-                if (data.status === 201) {
+                if (data.status === 200) {
                   
-                  var notification = alertify.notify('Successfully revoked .', 'success', 5, function(){  console.log('dismissed'); });
+                  var notification = alertify.notify('Car status has been updated to disabled .', 'success', 5, function(){  console.log('dismissed'); });
                       
-                   AuditTrail.sendLogInfo(user, prePostData.partnerName, 'Car Revoke/Create Mode', 'Success', '201', 'PUT')
+                   // AuditTrail.sendLogInfo(user, prePostData.partnerName, 'Car Revoke/Create Mode', 'Success', '201', 'PUT')
                       
                   setTimeout(()=>{
-                    window.location.reload()
-                  },4000)
+                     window.location.reload()
+                  },5000)
                       
 
                          
           }else{
-                      AuditTrail.sendLogInfo(user, '', 'UserGroup > Roles And Previledges/Create Mode', 'Failed', '200', 'PUT')
+                      // AuditTrail.sendLogInfo(user, '', 'UserGroup > Roles And Previledges/Create Mode', 'Failed', '200', 'PUT')
          
                   
-                  var notification = alertify.notify('Could not perform update operation. Ensure the fields are filled in correctly.', 'error', 5, function(){  console.log('dismissed'); });
+                  var notification = alertify.notify('Car update status operation failed.', 'error', 5, function(){  console.log('dismissed'); });
 
                 }
               }).catch(e=> console.log(e));
 
 
-      }
+      // }
       
 
     })       
 
 
     //update revoke status 
+
+    document.getElementById("unreclaim").addEventListener("click", (e)=>{
+
+      let linkOfApi3 = process.env.DEPLOY_BACK_URL+ "/admin-new-car-revoke-status/"+ view_id;
+      
+const user =JSON.parse(localStorage.getItem("userToken"));
+      
+      let prePostData2 = {
+               hasBeenRevoked: false,
+               car_status:'Active'
+             };
+              fetch(linkOfApi3, {
+              method: 'PUT',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': user.token,
+              },
+              body: JSON.stringify(prePostData2),
+              mode:"cors",
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data)
+                if (data.status === 200) {
+                  
+                  var notification = alertify.notify('Car status has been updated to disabled .', 'success', 5, function(){  console.log('dismissed'); });
+                      
+                   // AuditTrail.sendLogInfo(user, prePostData.partnerName, 'Car Revoke/Create Mode', 'Success', '201', 'PUT')
+                      
+                  setTimeout(()=>{
+                     window.location.reload()
+                  },4000)
+                      
+
+                         
+          }else{
+                      // AuditTrail.sendLogInfo(user, '', 'UserGroup > Roles And Previledges/Create Mode', 'Failed', '200', 'PUT')
+         
+                  
+                  var notification = alertify.notify('Car update status operation failed.', 'error', 5, function(){  console.log('dismissed'); });
+
+                }
+              }).catch(e=> console.log(e));
+
+
+
+    })
 
 
 

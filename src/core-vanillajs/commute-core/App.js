@@ -6,10 +6,6 @@ import $ from 'jquery';
 import MobileAppFeelAlike from './MobileAnimation'
 
 
-// require('./js/jquery.min.js');
-// require("./js/bootstrap.min.js")
-// require("./js/detect.js")
-// require("./js/fastclick.js")
 
 
 function formatAmount(x) {
@@ -83,7 +79,7 @@ class FrontEndApp {
            localStorage.removeItem("itins");
       
          }
-         window.location.replace("http://localhost:4000/create-plan")
+         window.location.replace("/create-plan")
        })
       }
 
@@ -98,8 +94,8 @@ class FrontEndApp {
         
 
 
-        const urls = ["http://localhost:12000/api/v1/balance/"+ user.user.email, 
-                      "http://localhost:12000/api/v1/notification/"+ user.user.email
+        const urls = [process.env.DEPLOY_BACK_URL+"/balance/"+ user.user.email, 
+                      process.env.DEPLOY_BACK_URL+"/notification/"+ user.user.email
                       ];
     //console.log('Token:  ' + ApiGetBothRecord.getLoggedInUser().token);
         const promises = urls.map(url =>
@@ -168,6 +164,10 @@ class FrontEndApp {
       
 
     }
+
+
+
+    
     
   }
 
@@ -177,6 +177,11 @@ class FrontEndApp {
       //   $("form").effect("bounce", { times:4, distance:200 }, 400);
     this.bootstrap();
     //this.r403()
+
+
+
+
+
   }
 }
 

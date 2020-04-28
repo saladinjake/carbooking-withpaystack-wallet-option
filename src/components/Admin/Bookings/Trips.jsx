@@ -26,8 +26,8 @@ export  default class Trips extends Component {
   
 
   }
-	render(){
-	  return (
+    render(){
+      return (
 
       <React.Fragment>
 
@@ -166,6 +166,47 @@ export  default class Trips extends Component {
                                     <div id="modalbody1"></div>
                                 </div>
                             </div>
+
+
+                            
+                             <div className="col-lg-6 m-t-10" >
+                                
+
+              <div className="" id="mapout"  style={{opacity: "0"}}>
+              
+                <div >
+                    <div>
+
+                       
+                        
+
+
+                        <div className="">
+
+              <div >
+
+                            <div className="row">
+                                <div className="">
+                                    <div className="">
+                                        <h4 className="m-t-0 m-b-20 header-title"><b>Commute Taxi Map</b></h4>
+                                        
+                                        <div id="gmaps-types" className="gmaps" style={{height:"100vh"}}></div>
+
+                                   
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+        </div>
+
+
+
+     </div>
+       </div>
+       </div>
+       </div>
+                            </div>
     
                           
     
@@ -193,7 +234,7 @@ export  default class Trips extends Component {
            
 
 
-	  );
+      );
 
-	}
+    }
 }                                                                                       

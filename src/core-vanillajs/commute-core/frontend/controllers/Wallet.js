@@ -1,5 +1,5 @@
 let accountBalance; 
-const postUrl="http://localhost:12000/api/v1/paystack/pay"
+const postUrl=process.env.DEPLOY_BACK_URL+"/paystack/pay"
     alertify.set('notifier','position', 'top-left');
 'use strict';
 import WebsiteLogin from '../../core/Login'
@@ -10,7 +10,7 @@ function setOldBalance(balance){
   if(localStorage.getItem('userToken')){
 
     const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch("http://localhost:12000/api/v1/old_balance/"+ user.user.email, {
+    return fetch(process.env.DEPLOY_BACK_URL+"/old_balance/"+ user.user.email, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -120,7 +120,7 @@ class Ewallet {
 
       if(localStorage.getItem('userToken')){
           const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch("http://localhost:12000/api/v1/balance/"+ user.user.email, {
+    return fetch(process.env.DEPLOY_BACK_URL+"/balance/"+ user.user.email, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -163,7 +163,7 @@ class Ewallet {
    if(localStorage.getItem('userToken')){
      const user = JSON.parse(localStorage.getItem('userToken'))
 
-     return fetch("http://localhost:12000/api/v1/transactions", {
+     return fetch(process.env.DEPLOY_BACK_URL+"/transactions", {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

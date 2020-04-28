@@ -186,6 +186,7 @@ export default class AdminBash{
          activeUrl+ '/profile-admin-rights/update/'+ user.user.email+ '/permission/'+ user.user.roles,
          activeUrl+ '/get-all-cars-repair-request',
          activeUrl+ '/admin-earnings',
+         activeUrl+ '/admin-get-revoke-details',
 
 
 
@@ -445,7 +446,15 @@ export default class AdminBash{
             previledgesRight
            )
              app.style.display="block"
-           break;   
+           break;
+        case "view-retrievals":
+          ApiAdminBotService.runAdminCarRetrievalEdit(datas[35].data[0].carsNotInUse,
+            datas[16].data[0].carsAvailable,
+            datas[2].data[0].drivers,
+             datas[3].data[0].partners,
+            previledgesRight
+            )
+          break;    
           default:
             app.style.display="block"
              window.location.href='./admin'

@@ -3,9 +3,9 @@
 
 import SOSModel from '../models/SOSModel';
 import $ from 'jquery';
-const SUCCESS_URL= 'http://localhost:4001/sos-history';
-const POST_URL = "http://localhost:12000/api/v1/sos";
-const notification_url = "http://localhost:12000/api/v1/notifications";
+const SUCCESS_URL= '/sos-history';
+const POST_URL = process.env.DEPLOY_BACK_URL+"/sos";
+const notification_url = process.env.DEPLOY_BACK_URL+"/notifications";
 import Recording from './SOSRecorder';
 function formatDate(date) {
   var hours = date.getHours();

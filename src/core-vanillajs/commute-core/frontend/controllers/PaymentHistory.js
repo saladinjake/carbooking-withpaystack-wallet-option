@@ -1,5 +1,5 @@
 let accountBalance; 
-const postUrl="http://localhost:12000/api/v1/paystack/pay"
+const postUrl=process.env.DEPLOY_BACK_URL+"/paystack/pay"
     alertify.set('notifier','position', 'top-left');
 'use strict';
 import PaymentModel from '../models/PaymentModel';

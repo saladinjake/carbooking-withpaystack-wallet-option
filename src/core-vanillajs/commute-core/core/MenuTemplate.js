@@ -210,7 +210,7 @@ export default class MenuTemplate{
                         </li>
 
                         <li class="has_sub ">
-                                <a href="./admin-car-request" class="waves-effect"><i class="fa fa-switch"></i> <span> Car Request
+                                <a href="./admin-car-request-view" class="waves-effect"><i class="md md-swap-vert"></i> <span> Car Request
                                      </span> </a>
                         </li>
 

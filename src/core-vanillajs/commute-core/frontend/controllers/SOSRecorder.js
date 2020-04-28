@@ -1,9 +1,9 @@
 'use strict';
 import SOSModel from '../models/SOSModel';
 import $ from 'jquery';
-const SUCCESS_URL= 'http://localhost:4001/sos-history';
-const POST_URL = "http://localhost:12000/api/v1/sos";
-const notification_url = "http://localhost:12000/api/v1/notifications";
+const SUCCESS_URL= '/sos-history';
+const POST_URL = process.env.DEPLOY_BACK_URL+"/sos";
+const notification_url = process.env.DEPLOY_BACK_URL+"/notifications";
 var video_sos;
 let media_url ="";
 import Recording from './SOSRecorder';
@@ -325,7 +325,7 @@ static launch_toast(address) {
  //  '</div></div>';
 
         // if(document.getElementById('drivers-sos')){
-        //   POST_URL = "http://localhost:12000/api/v1/drivers-sos";
+        //   POST_URL = process.env.DEPLOY_BACK_URL+"/drivers-sos";
         // }
                
         // fetch(POST_URL, {
@@ -492,7 +492,7 @@ static launch_toast(address) {
     function getSignedRequest(file){
       const xhr = new XMLHttpRequest();
     
-      xhr.open('GET', `http://localhost:12000/api/v1/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+      xhr.open('GET', process.env.DEPLOY_BACK_URL+`/sign-s3?file-name=${file.name}&file-type=${file.type}`);
         xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');

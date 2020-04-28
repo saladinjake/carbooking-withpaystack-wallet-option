@@ -182,7 +182,7 @@ window.getPlanId = (item) =>{
   localStorage.setItem("setPlan",item.dataset.plan_id);
   //alert(item.dataset.plan_id)
   
-  window.location.replace("http://localhost:4000/plan-detail")
+  window.location.href ="./plan-detail"
 }
 
 
@@ -610,7 +610,7 @@ function dashboard() {
                       });
 
                        //quotation will show here... load quotation with the given plan id
-                    let url = 'http://localhost:12000/api/v1/quotations'  
+                    let url = process.env.DEPLOY_BACK_URL+ '/quotations'  
                     loadQuotation(url);
 
                         
