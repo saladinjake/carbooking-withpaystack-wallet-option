@@ -1,16 +1,19 @@
 'use strict';
+require('./tested.js')
 import SOSModel from '../models/SOSModel';
 import $ from 'jquery';
-const SUCCESS_URL= '/sos-history';
-const POST_URL = process.env.DEPLOY_BACK_URL+"/sos";
-const notification_url = process.env.DEPLOY_BACK_URL+"/notifications";
+const SUCCESS_URL= 'https://demo-commute-taxi-user.herokuapp.com/sos-history';
+const POST_URL = "https://demo-commute-taxi-surf-api.herokuapp.com/api/v1/sos";
+const notification_url = "https://demo-commute-taxi-surf-api.herokuapp.com/api/v1/notifications";
 var video_sos;
 let media_url ="";
+
 import Recording from './SOSRecorder';
 alertify.set('notifier','position', 'top-left');
 let data = {};
 export default class Recorder {
   constructor() {
+    // Defining all globals.
     // Defining all globals.
     if (document.getElementById('sos-page')) {
     this.mediaSource = new MediaSource();
@@ -20,7 +23,7 @@ export default class Recorder {
     this.videoOutputVideo = document.querySelector('video#videoOutput');
     this.recordedVideo = document.querySelector('video#recorded');
     
-    this.recordButton = document.querySelector('button#record');
+    this.recordButton = document.querySelector('button#recorda');
      this.recordButton.disabled=true;
     this.playButton = document.querySelector('button#play');
     this.downloadButton = document.querySelector('button#download');
@@ -121,9 +124,7 @@ export default class Recorder {
     let options = { mimeType: 'video/webm;codecs=vp9' };
     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
       console.log(`${options.mimeType} is not Supported`);
-    
-
-      options = { mimeType: 'video/webm;codecs=vp9' };
+      options = { mimeType: 'video/webm;codecs=vp8' };
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
         console.log(`${options.mimeType} is not Supported`);
         options = { mimeType: 'video/webm' };
@@ -191,7 +192,6 @@ export default class Recorder {
 
      
   }
-
   
   stopRecording() {
     this.mediaRecorder.stop();
@@ -243,31 +243,6 @@ export default class Recorder {
       var latitude    = position.coords.latitude;       // set latitude variable
       var longitude   = position.coords.longitude;      // set longitude variable
       
-      // var mapcanvas   = document.createElement('div');    // create div to hold map
-      // mapcanvas.id = 'map';                   // give this div an id of 'map'
-      // mapcanvas.style.height = '400px';             // set map height
-      // mapcanvas.style.width = '100%';               // set map width
-      
-      // document.querySelector('#map-container').appendChild(mapcanvas);  // place new div within the 'map-container' div
-      
-      //var coords = new google.maps.LatLng(latitude,longitude);  // set lat/long object for new map
-  
-      // var options = {                       // set options for map
-      //   zoom: 15,
-      //   center: coords,
-      //   mapTypeControl: false,
-      //   navigationControlOptions: {
-      //     style: google.maps.NavigationControlStyle.SMALL
-      //   },
-      //   mapTypeId: google.maps.MapTypeId.ROADMAP
-      // };
-      
-      // var map = new google.maps.Map(document.getElementById("map"), options); // create new map using settings above
-
-      // var marker = new google.maps.Marker({           // place a marker at our lat/long
-      //   position: coords,
-      //   map:    map
-      // });
       
       var latLongResponse = 'Latitude: ' + latitude + ' / Longitude: ' + longitude; // build string containing lat/long
       Recorder.getAddress(latitude,longitude);             // geocode the lat/long into an address
@@ -314,8 +289,6 @@ static launch_toast(address) {
               phone_number
             };
 
-            console.log(sosRequest)
-
             Recorder.launch_toast(address);
 
 
@@ -325,7 +298,7 @@ static launch_toast(address) {
  //  '</div></div>';
 
         // if(document.getElementById('drivers-sos')){
-        //   POST_URL = process.env.DEPLOY_BACK_URL+"/drivers-sos";
+        //   POST_URL = "https://demo-commute-taxi-surf-api.herokuapp.com/api/v1/drivers-sos";
         // }
                
         // fetch(POST_URL, {
@@ -353,11 +326,11 @@ static launch_toast(address) {
         //       //MessageBoard.displayMsg("Notification has been sent to you");
         //       if(document.getElementById('drivers-sos')){
         //            setTimeout(()=>{
-        //                window.location.replace("http://localhost:4000/drivers-sos-history")
+        //                window.location.replace("https://demo-commute-taxi-user.herokuapp.com/drivers-sos-history")
         //          },2000)
         //        }
         //       setTimeout(()=>{
-        //         window.location.replace("http://localhost:4000/sos-history")
+        //         window.location.replace("https://demo-commute-taxi-user.herokuapp.com/sos-history")
         //       },2000)
               
               
@@ -492,7 +465,7 @@ static launch_toast(address) {
     function getSignedRequest(file){
       const xhr = new XMLHttpRequest();
     
-      xhr.open('GET', process.env.DEPLOY_BACK_URL+`/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+      xhr.open('GET', `https://demo-commute-taxi-surf-api.herokuapp.com/api/v1/sign-s3?file-name=${file.name}&file-type=${file.type}`);
         xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');

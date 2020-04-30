@@ -24,9 +24,8 @@ import UserModel from './models/User.model';
 const error = require('./middlewares/error');
 
 
-
-// var socket = require("socket.io");
-var http = require('http');
+const http = require('http')
+const https = require('https');
 
 
 var socket_io = require("socket.io");
@@ -181,21 +180,42 @@ class MongoAppDemo {
     }
 
 
-     let app = that.express;  
+     let app = that.express; 
 
 
-    io.listen(
-       that.express.listen(that.port, err => {
-          if (err) {
-            return console.log(err);
-          }
-          console.log(`server is listening on ${that.port}`);
-       })
-    );
+     // Listen both http & https ports
 
-    that.express.io = io.on("connection", function(socket){
-      console.log("Socket connected: " + socket.id);
-    });
+      const httpServer = http.createServer(app);
+      const httpsServer = https.createServer({
+         key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
+          cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
+        }, app);
+
+//  httpServer.listen(12000, () => {
+//     console.log('HTTP Server running on port 80');
+// }); 
+
+httpsServer.listen(12000, () => {
+    console.log('HTTPS Server running on port 443');
+});
+   
+
+
+
+
+
+    // io.listen(
+    //    // that.express.listen(that.port, err => {
+    //    //    if (err) {
+    //    //      return console.log(err);
+    //    //    }
+    //    //    console.log(`server is listening on ${that.port}`);
+    //    // })
+    // );
+
+    // that.express.io = io.on("connection", function(socket){
+    //   console.log("Socket connected: " + socket.id);
+    // });
 
 
 // }); 

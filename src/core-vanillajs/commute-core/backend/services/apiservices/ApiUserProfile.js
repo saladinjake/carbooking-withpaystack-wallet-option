@@ -24,7 +24,7 @@ class ApiUpdateProfile {
      console.log(linkOfApi)
 
     if(document.getElementById('drivers-profile')){
-       linkOfApi = activeUrl + '/drivers-profile/update/'+ user.user.email;
+       linkOfApi = activeUrl + '/profile/update/'+ user.user.email;
     }
 
 

@@ -186,7 +186,7 @@ export  default class Partners extends Component {
 
                                         <div id="carset"  className="card-box box"  style={{marginTop:"350px"}}>
 
-                                        <button id="close-id"  type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <button id="close-id"  type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
 
                                         
     <img style={{  display: "block",marginLeft: "auto",marginRight: "auto",

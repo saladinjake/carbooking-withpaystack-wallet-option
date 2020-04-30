@@ -20,50 +20,50 @@ export default class MenuTemplate{
                             <li class="text-muted menu-title">Navigation</li>
                             
                             <li class="">
-                                <a href="./dashboard" class="waves-effect dashboard_links"><i class="md md-dashboard"></i> <span class="span-hide"> Dashboard </span> </a>
+                                <a data-type="page-transition" href="./dashboard" class="waves-effect dashboard_links"><i class="md md-dashboard"></i> <span class="span-hide"> Dashboard </span> </a>
                             </li>
                             
                             <li class="has_sub sub-toggle">
-                                <a href="#" class="waves-effect"><i class="ti-location-pin"></i> <span class="span-hide"> Plans </span> <span class="span-hide menu-arrow"></span></a>
+                                <a  href="#" class="waves-effect"><i class="ti-location-pin"></i> <span class="span-hide"> Plans </span> <span class="span-hide menu-arrow"></span></a>
                                 <ul class="list-unstyled list">
                                     <li><a id="create-plan-id" href="./create-plan">Create Plan</a></li>
-                                    <li><a href="./plan-history">Plan History</a></li>
+                                    <li><a data-type="page-transition" href="./plan-history">Plan History</a></li>
                                 </ul>
                             </li>
 
                                                         
                             <li class="has_sub sub-toggle">
-                                <a href="#" class="waves-effect"><i class="md-account-balance-wallet"></i> <span class="span-hide"> Wallet </span> <span class="span-hide menu-arrow"></span></a>
+                                <a  href="#" class="waves-effect"><i class="md-account-balance-wallet"></i> <span class="span-hide"> Wallet </span> <span class="span-hide menu-arrow"></span></a>
                                 <ul class="list-unstyled list">
-                                    <li><a href="./wallet">Topup Balance</a></li>
-                                    <li><a href="./paid-history">Payment History</a></li>
-                                    <li><a href="./quote-subscription-history">Quotation History</a></li>
+                                    <li><a data-type="page-transition" href="./wallet">Topup Balance</a></li>
+                                    <li><a data-type="page-transition" href="./paid-history">Payment History</a></li>
+                                    <li><a data-type="page-transition" href="./quote-subscription-history">Quotation History</a></li>
                                 </ul>
                             </li>
 
                                                     
                             <li class="has_sub sub-toggle">
-                                <a href="#" class="waves-effect"><i class="md-headset"></i> <span class="span-hide"> Support </span> <span class="span-hide menu-arrow"></span></a>
+                                <a  href="#" class="waves-effect"><i class="md-headset"></i> <span class="span-hide"> Support </span> <span class="span-hide menu-arrow"></span></a>
                                 <ul class="list-unstyled list">
-                                     <li><a href="./create-ticket">Create Ticket</a></li>
-                                     <li><a href="./submitted-ticket">View Ticket</a></li>
-                                    <li><a href="./faqs">FAQ</a></li>
+                                     <li><a data-type="page-transition" href="./create-ticket">Create Ticket</a></li>
+                                     <li><a data-type="page-transition" href="./submitted-ticket">View Ticket</a></li>
+                                    <li><a data-type="page-transition" href="./faqs">FAQ</a></li>
                                 </ul>
                             </li>
 
                             <li class="has_sub sub-toggle">
-                                <a href="#" class="waves-effect"><i class="ti-light-bulb"></i> <span class="span-hide"> SOS </span> <span class="span-hide menu-arrow"></span></a>
+                                <a  href="#" class="waves-effect"><i class="ti-light-bulb"></i> <span class="span-hide"> SOS </span> <span class="span-hide menu-arrow"></span></a>
                                 <ul class="list-unstyled list">
-                                    <li><a href="./sos-request">Report SOS</a></li>
-                                    <li><a href="./sos-history">View SOS</a></li>
+                                    <li><a data-type="page-transition" href="./sos-request">Report SOS</a></li>
+                                    <li><a data-type="page-transition" href="./sos-history">View SOS</a></li>
                                 </ul>
                             </li>
                             
                             <li class="has_sub sub-toggle">
-                                <a href="#" class="waves-effect"><i class="md-directions-car"></i> <span class="span-hide"> Request Car Repair </span><span class="span-hide menu-arrow"></span></a>
+                                <a  href="#" class="waves-effect"><i class="md-directions-car"></i> <span class="span-hide"> Request Car Repair </span><span class="span-hide menu-arrow"></span></a>
                                   <ul class="list-unstyled list">
-                                     <li><a href="./request-car-repair">Request Repair</a></li>
-                                    <li><a href="./request-repairs-history">Car Request History</a></li>
+                                     <li><a data-type="page-transition" href="./request-car-repair">Request Repair</a></li>
+                                    <li><a data-type="page-transition" href="./request-repairs-history">Car Request History</a></li>
                                     
                                 </ul>
                                 
@@ -85,24 +85,24 @@ export default class MenuTemplate{
                         <li class="has_sub sub-toggle">
                             
 
-                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-dashboard"></i><span>
+                                <a data-type="page-transition" href="javascript:void(0);" class="waves-effect"><i class="ti-dashboard"></i><span>
                                     Home</span> <span class="menu-arrow"></span>  </a>
                                     <ul class="list-unstyled list">
                                      
-                                        <li><a href="./admin-dashboard">Admin Dashboard</a></li>
-                                        <li><a href="./activity-logger">Activity Logs</a></li>
+                                        <li><a data-type="page-transition" href="./admin-dashboard">Admin Dashboard</a></li>
+                                        <li><a data-type="page-transition" href="./activity-logger">Activity Logs</a></li>
                                          
                                     </ul>
                         </li>
 
                         <li class="has_sub ">
-                            <a href="admin-users" class="waves-effect"><i class="ti-location-pin"></i> <span> User
+                            <a data-type="page-transition" href="admin-users" class="waves-effect"><i class="ti-location-pin"></i> <span> User
                                 </span> </a>
 
                         </li>
 
                         <li class="has_sub ">
-                            <a href="./admin-drivers" class="waves-effect"><i class="ti-location-pin"></i> <span> Drivers
+                            <a data-type="page-transition" href="./admin-drivers" class="waves-effect"><i class="ti-location-pin"></i> <span> Drivers
                                 </span> </a>
 
                         </li>
@@ -111,16 +111,16 @@ export default class MenuTemplate{
 
 
                          <li class="has_sub sub-toggle">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-tag"></i> <span>
+                            <a data-type="page-transition" href="javascript:void(0);" class="waves-effect"><i class="ti-tag"></i> <span>
                                     Partners </span> <span class="menu-arrow"></span>  </a>
                             <ul class="list-unstyled list">
                             <li>
-                               <a href="./admin-partners" class="waves-effect"><i class="ti-tag"></i> <span>Partners Details</span>
+                               <a data-type="page-transition" href="./admin-partners" class="waves-effect"><i class="ti-tag"></i> <span>Partners Details</span>
                             </a>
                            </li>
 
                            <li>
-                               <a href="./admin-partners-earnings" class="waves-effect"><i class="fa fa-money"></i> <span>  Earnings</span>
+                               <a data-type="page-transition" href="./admin-partners-earnings" class="waves-effect"><i class="fa fa-money"></i> <span>  Earnings</span>
                             </a>
                            </li>
                            </ul>
@@ -128,94 +128,94 @@ export default class MenuTemplate{
                         </li>
 
                         <li class="has_sub ">
-                                <a href="admin-plan-package" class="waves-effect"><i class="ti-tag"></i> <span> Plan
+                                <a data-type="page-transition" href="admin-plan-package" class="waves-effect"><i class="ti-tag"></i> <span> Plan
                                         Packages </span> </a>
                             </li>
 
                          <li class="has_sub">
-                            <a href="./admin-sos" class="waves-effect"><i class="ti-alert"></i> <span> SOS
+                            <a data-type="page-transition" href="./admin-sos" class="waves-effect"><i class="ti-alert"></i> <span> SOS
                                 </span></a>    
                         </li>
 
                         <li class="has_sub sub-toggle">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-headphone"></i> <span>
+                            <a  href="javascript:void(0);" class="waves-effect"><i class="ti-headphone"></i> <span>
                                     Support Management</span> <span class="menu-arrow"></span>  </a>
                                     <ul class="list-unstyled list">
-                                        <!-- <li><a href="./admin-user-complaints">User Complaint</a></li>
-                                        <li><a href="./admin-driver-complaints">Driver Complaint</a></li> -->
-                                        <li><a href="./admin-tickets">Tickets</a></li>
-                                        <li><a href="./admin-enquiries">Enquiries</a></li>
-                                        <li><a href="./admin-feedback">Feedback</a></li>
-                                        <li><a href="./admin-tech-support">Technical Support</a></li>
-                                        <li><a href="./admin-faqs">FAQ</a></li>   
+                                        <!-- <li><a data-type="page-transition" href="./admin-user-complaints">User Complaint</a></li>
+                                        <li><a data-type="page-transition" href="./admin-driver-complaints">Driver Complaint</a></li> -->
+                                        <li><a data-type="page-transition" href="./admin-tickets">Tickets</a></li>
+                                        <li><a data-type="page-transition" href="./admin-enquiries">Enquiries</a></li>
+                                        <li><a data-type="page-transition" href="./admin-feedback">Feedback</a></li>
+                                        <li><a data-type="page-transition" href="./admin-tech-support">Technical Support</a></li>
+                                        <li><a data-type="page-transition" href="./admin-faqs">FAQ</a></li>   
                                     </ul>
                             
                         </li>
 
                         <li class="has_sub sub-toggle">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-settings"></i> <span>
+                            <a  href="javascript:void(0);" class="waves-effect"><i class="ti-settings"></i> <span>
                                     Settings </span> <span class="menu-arrow"></span> </a>
                             <ul class="list-unstyled list">
-                                <li><a href="./admin-settings-paystack">Paystack API</a></li>
-                                <li><a href="./admin-settings-google">Google API</a></li>
-                                <li><a href="./admin-settings-facebook">Facebook API</a></li>
-                                <li><a href="./admin-settings-instagram">Instagram API</a></li>
-                                <li><a href="./admin-settings-email">Mail API</a></li>
-                                <li><a href="./admin-settings-bucket">AWS S3 API</a></li>
+                                <li><a data-type="page-transition" href="./admin-settings-paystack">Paystack API</a></li>
+                                <li><a data-type="page-transition" href="./admin-settings-google">Google API</a></li>
+                                <li><a data-type="page-transition" href="./admin-settings-facebook">Facebook API</a></li>
+                                <li><a data-type="page-transition" href="./admin-settings-instagram">Instagram API</a></li>
+                                <li><a data-type="page-transition" href="./admin-settings-email">Mail API</a></li>
+                                <li><a data-type="page-transition" href="./admin-settings-bucket">AWS S3 API</a></li>
                             </ul>
                         </li>
 
 
                         <li class="has_sub">
-                                <a href="./admin-profile" class="waves-effect"><i class="fa fa-user"></i> <span> My Profile
+                                <a data-type="page-transition" href="./admin-profile" class="waves-effect"><i class="fa fa-user"></i> <span> My Profile
                                     </span></a>    
                         </li>
 
 
                          <li class="has_sub sub-toggle">
-                            <a href="#" class="waves-effect"><i class="md md-payment"></i> <span> Payment Module</span> <span class="menu-arrow"></span> </a>
+                            <a  href="#" class="waves-effect"><i class="md md-payment"></i> <span> Payment Module</span> <span class="menu-arrow"></span> </a>
                             <ul class="list-unstyled list">
-                                <li><a href="./admin-quote-subscription-history">Quotations</a></li>
-                                <li><a href="./admin-paid-history">Payments</a></li>
-                                <li><a href="./admin-wallet">Topup Transactions</a></li>
+                                <li><a data-type="page-transition" href="./admin-quote-subscription-history">Quotations</a></li>
+                                <li><a data-type="page-transition" href="./admin-paid-history">Payments</a></li>
+                                <li><a data-type="page-transition" href="./admin-wallet">Topup Transactions</a></li>
                             </ul>
                         </li>
 
 
                         <li class="has_sub sub-toggle">
-                                <a href="#" class="waves-effect"><i class="ti-receipt"></i> <span> Bookings</span> <span class="menu-arrow"></span> </a>
+                                <a  href="#" class="waves-effect"><i class="ti-receipt"></i> <span> Bookings</span> <span class="menu-arrow"></span> </a>
                                 <ul class="list-unstyled list">
-                                    <li><a href="./admin-bookings">Bookings</a></li>
-                                    <li><a href="./admin-itineraries">Itineraries / Trips </a></li>
-                                    <li><a href="./admin-manual-booking">Manual Booking</a></li>
+                                    <li><a data-type="page-transition" href="./admin-bookings">Bookings</a></li>
+                                    <li><a data-type="page-transition" href="./admin-itineraries">Itineraries / Trips </a></li>
+                                    <li><a data-type="page-transition" href="./admin-manual-booking">Manual Booking</a></li>
                                 </ul>
                         </li>
 
 
                         <li class="has_sub ">
-                                <a href="./admin-cars-mgt" class="waves-effect"><i class="ti-car"></i> <span> Car
+                                <a data-type="page-transition" href="./admin-cars-mgt" class="waves-effect"><i class="ti-car"></i> <span> Car
                                         Management </span> </a>
                         </li>
 
                         <li class="has_sub ">
-                                <a href="./admin-mech" class="waves-effect"><i class="fa fa-wrench"></i> <span> Mechanic Request
+                                <a data-type="page-transition" href="./admin-mech" class="waves-effect"><i class="fa fa-wrench"></i> <span> Mechanic Request
                                      </span> </a>
                         </li>
 
                          
 
                         <li class="has_sub">
-                            <a href="./admin-inspection" class="waves-effect"><i class="md md-thumb-up"></i> <span> Car Inspections
+                            <a data-type="page-transition" href="./admin-inspection" class="waves-effect"><i class="md md-thumb-up"></i> <span> Car Inspections
                                 </span></a>    
                         </li>
 
                         <li class="has_sub ">
-                                <a href="./admin-car-request-view" class="waves-effect"><i class="md md-swap-vert"></i> <span> Car Request
+                                <a data-type="page-transition" href="./admin-car-request-view" class="waves-effect"><i class="md md-swap-vert"></i> <span> Car Request
                                      </span> </a>
                         </li>
 
                         <li class="has_sub">
-                            <a href="./admin-drive-test" class="waves-effect"><i class="ti-car"></i> <span> Drive Tests
+                            <a data-type="page-transition" href="./admin-drive-test" class="waves-effect"><i class="ti-car"></i> <span> Drive Tests
                                 </span></a>    
                         </li>
 
@@ -225,11 +225,11 @@ export default class MenuTemplate{
 
 
                         <li class="has_sub sub-toggle">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-user"></i> <span> Admin
+                                <a  href="javascript:void(0);" class="waves-effect"><i class="ti-user"></i> <span> Admin
                                         Management </span> <span class="menu-arrow"></span> </a>
                                 <ul class="list-unstyled list">
-                                    <li><a href="./admin-admins">Admins</a></li>
-                                    <li><a href="./admin-previledges">Roles & Privileges</a></li>
+                                    <li><a data-type="page-transition" href="./admin-admins">Admins</a></li>
+                                    <li><a data-type="page-transition" href="./admin-previledges">Roles & Privileges</a></li>
                                 </ul>
                             </li>
 
@@ -281,7 +281,7 @@ export default class MenuTemplate{
                 <div class="topbar-left">
                     <div class="text-center">
                        
-                        <a href="./" class="logo">
+                        <a data-type="page-transition" href="./" class="logo">
                             <i class="icon-c-logo"> <img src="public/assets/images/CommuteLogos-13.png" /> </i>
                             <span><img src="public/assets/images/CommuteLogos-02.png" /></span>
                         </a>
@@ -300,17 +300,17 @@ export default class MenuTemplate{
 
                             <form role="search" class="navbar-left app-search pull-left hidden-xs">
                             <input type="text" placeholder="Search..." class="form-control">
-                            <a href=""><i class="fa fa-search"></i></a>
+                            <a data-type="page-transition" href=""><i class="fa fa-search"></i></a>
                             </form>
 
                         
 
                             <ul class="nav navbar-nav navbar-right pull-right">
                                 <li class="dropdown top-menu-item-xs">
-                                <a href="./topup-wallet" class="text-custom header-title wallet-balance-top hidden-xs" id="balance"></a>
+                                <a data-type="page-transition" href="./topup-wallet" class="text-custom header-title wallet-balance-top hidden-xs" id="balance"></a>
                                 </li>
                                 <li class="dropdown top-menu-item-xs">
-                                    <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
+                                    <a data-type="page-transition" href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
                                         <i class="icon-bell"></i> <span id="notifyCount" class="badge badge-xs badge-danger">0</span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-lg">
@@ -318,27 +318,27 @@ export default class MenuTemplate{
                                         <li class="notifi-title"><span class="label label-default pull-right">New 0</span>Notification</li>
                                         <li class="list-group slimscroll-noti notification-list">
                                         
-                                           <a href="#" class="list-group-item">
+                                           <a data-type="page-transition" href="#" class="list-group-item">
                                               
                                            </a>
 
                                          
                                         
                                         <li>
-                                            <a href="#" class="list-group-item text-right">
-                                                <small class="font-600"><a href="./notification">See all notifications</a></small>
+                                            <a data-type="page-transition" href="#" class="list-group-item text-right">
+                                                <small class="font-600"><a data-type="page-transition" href="./notification">See all notifications</a></small>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="hidden-xs">
-                                    <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
+                                    <a data-type="page-transition" href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
                                 </li>
                                 
                                 <li class="dropdown top-menu-item-xs">
-                                    <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="./public/assets/images/avatar.png" alt="user-img" class="img-circle" id="user-profile" /> </a>
+                                    <a data-type="page-transition" href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="./public/assets/images/avatar.png" alt="user-img" class="img-circle" id="user-profile" /> </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="./profile"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
+                                        <li><a data-type="page-transition" href="./profile"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
                                         
                                         <li class="divider"></li>
                                         <li><a id="logOut" href="#" ><i class="logOut ti-power-off m-r-10 text-danger"></i> Logout</a></li>
@@ -360,9 +360,9 @@ export default class MenuTemplate{
             <!-- LOGO -->
             <div class="topbar-left">
                 <div class="text-center">
-                    <!-- <a href="index.html" class="logo"><i class="icon-magnet icon-c-logo"></i><span>Ub<i class="md md-album"></i>ld</span></a>-->
+                    <!-- <a data-type="page-transition" href="index.html" class="logo"><i class="icon-magnet icon-c-logo"></i><span>Ub<i class="md md-album"></i>ld</span></a>-->
                     <!-- Image Logo here -->
-                    <a href="index.html" class="logo">
+                    <a data-type="page-transition" href="index.html" class="logo">
                         <i class="icon-c-logo"> <img src="assets/images/commute-logo.png" height="42" /> </i>
                         <span><img src="assets/images/commutelogo.png" height="50" /></span>
                     </a>
@@ -384,13 +384,13 @@ export default class MenuTemplate{
 
                         <form role="search" class="navbar-left app-search pull-left hidden-xs">
                             <input type="text" placeholder="Search..." class="form-control">
-                            <a href=""><i class="fa fa-search"></i></a>
+                            <a data-type="page-transition" href=""><i class="fa fa-search"></i></a>
                         </form>
 
 
                         <ul class="nav navbar-nav navbar-right pull-right">
                             <li class="dropdown top-menu-item-xs">
-                                <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light"
+                                <a data-type="page-transition" href="#" data-target="#" class="dropdown-toggle waves-effect waves-light"
                                     data-toggle="dropdown" aria-expanded="true">
                                     <i class="icon-bell"></i> <span class="badge badge-xs badge-danger">3</span>
                                 </a>
@@ -399,7 +399,7 @@ export default class MenuTemplate{
                                             3</span>Notification</li>
                                     <li class="list-group slimscroll-noti notification-list">
                                         <!-- list item-->
-                                        <a href="javascript:void(0);" class="list-group-item">
+                                        <a data-type="page-transition" href="javascript:void(0);" class="list-group-item">
                                             <div class="media">
                                                 <div class="pull-left p-r-10">
                                                     <em class="fa fa-diamond noti-primary"></em>
@@ -415,7 +415,7 @@ export default class MenuTemplate{
                                         </a>
 
                                         <!-- list item-->
-                                        <a href="javascript:void(0);" class="list-group-item">
+                                        <a data-type="page-transition" href="javascript:void(0);" class="list-group-item">
                                             <div class="media">
                                                 <div class="pull-left p-r-10">
                                                     <em class="fa fa-cog noti-warning"></em>
@@ -430,7 +430,7 @@ export default class MenuTemplate{
                                         </a>
 
                                         <!-- list item-->
-                                        <a href="javascript:void(0);" class="list-group-item">
+                                        <a data-type="page-transition" href="javascript:void(0);" class="list-group-item">
                                             <div class="media">
                                                 <div class="pull-left p-r-10">
                                                     <em class="fa fa-bell-o noti-custom"></em>
@@ -446,7 +446,7 @@ export default class MenuTemplate{
                                         </a>
 
                                         <!-- list item-->
-                                        <a href="javascript:void(0);" class="list-group-item">
+                                        <a data-type="page-transition" href="javascript:void(0);" class="list-group-item">
                                             <div class="media">
                                                 <div class="pull-left p-r-10">
                                                     <em class="fa fa-user-plus noti-pink"></em>
@@ -461,7 +461,7 @@ export default class MenuTemplate{
                                         </a>
 
                                         <!-- list item-->
-                                        <a href="javascript:void(0);" class="list-group-item">
+                                        <a data-type="page-transition" href="javascript:void(0);" class="list-group-item">
                                             <div class="media">
                                                 <div class="pull-left p-r-10">
                                                     <em class="fa fa-diamond noti-primary"></em>
@@ -477,7 +477,7 @@ export default class MenuTemplate{
                                         </a>
 
                                         <!-- list item-->
-                                        <a href="javascript:void(0);" class="list-group-item">
+                                        <a data-type="page-transition" href="javascript:void(0);" class="list-group-item">
                                             <div class="media">
                                                 <div class="pull-left p-r-10">
                                                     <em class="fa fa-cog noti-warning"></em>
@@ -492,33 +492,33 @@ export default class MenuTemplate{
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" class="list-group-item text-right">
-                                           <small class="font-600"><a href="./notification">See all notifications</a></small>
+                                        <a data-type="page-transition" href="javascript:void(0);" class="list-group-item text-right">
+                                           <small class="font-600"><a data-type="page-transition" href="./notification">See all notifications</a></small>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="hidden-xs">
-                                <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i
+                                <a data-type="page-transition" href="#" id="btn-fullscreen" class="waves-effect waves-light"><i
                                         class="icon-size-fullscreen"></i></a>
                             </li>
                             <!-- <li class="hidden-xs">
-                                <a href="#" class="right-bar-toggle waves-effect waves-light"><i
+                                <a data-type="page-transition" href="#" class="right-bar-toggle waves-effect waves-light"><i
                                         class="icon-settings"></i></a>
                             </li> -->
                             <li class="dropdown top-menu-item-xs">
-                                <a href="" class="dropdown-toggle profile waves-effect waves-light"
+                                <a data-type="page-transition" href="" class="dropdown-toggle profile waves-effect waves-light"
                                     data-toggle="dropdown" aria-expanded="true"><img
                                         src="assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i>
+                                    <li><a data-type="page-transition" href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i>
                                             Profile</a></li>
-                                    <!-- <li><a href="javascript:void(0)"><i class="ti-settings m-r-10 text-custom"></i>
+                                    <!-- <li><a data-type="page-transition" href="javascript:void(0)"><i class="ti-settings m-r-10 text-custom"></i>
                                             Settings</a></li>
-                                    <li><a href="javascript:void(0)"><i class="ti-lock m-r-10 text-custom"></i> Lock
+                                    <li><a data-type="page-transition" href="javascript:void(0)"><i class="ti-lock m-r-10 text-custom"></i> Lock
                                             screen</a></li>
                                     <li class="divider"></li> -->
-                                    <li><a href="javascript:void(0)"><i class="ti-power-off m-r-10 text-danger"></i>
+                                    <li><a data-type="page-transition" href="javascript:void(0)"><i class="ti-power-off m-r-10 text-danger"></i>
                                             Logout</a></li>
                                 </ul>
                             </li>
@@ -537,32 +537,32 @@ export default class MenuTemplate{
         <li class="text-muted menu-title">Navigation</li>
                             
                             <li class="has-sub">
-                                <a href="./dashboard-driver" class="waves-effect"><i class="md md-dashboard"></i> <span class="span-hide"> Dashboard </span> </a>
+                                <a data-type="page-transition" href="./dashboard-driver" class="waves-effect"><i class="md md-dashboard"></i> <span class="span-hide"> Dashboard </span> </a>
                             </li>
                             
                             <li class="has_sub sub-toggle">
-                                <a href="#" class="waves-effect"><i class="ti-location-pin"></i> <span class="span-hide"> Trips </span> <span class="span-hide menu-arrow"></span></a>
+                                <a  href="#" class="waves-effect"><i class="ti-location-pin"></i> <span class="span-hide"> Trips </span> <span class="span-hide menu-arrow"></span></a>
                                 <ul class="list-unstyled list">
                                     
                                      <li>
-            <a href="/drivers-completedtrips">Completed Trips</a>
+            <a data-type="page-transition" href="/drivers-completedtrips">Completed Trips</a>
           </li>
           <li>
-            <a href="/drivers-upcomingtrips">Upcoming Trips</a>
+            <a data-type="page-transition" href="/drivers-upcomingtrips">Upcoming Trips</a>
           </li>
                                 </ul>
                             </li>
 
 
                <li class="has_sub sub-toggle">
-                                <a href="#" class="waves-effect"><i class="ti-location-pin"></i> <span class="span-hide"> Profile </span> <span class="span-hide menu-arrow"></span></a>
+                                <a  href="#" class="waves-effect"><i class="ti-location-pin"></i> <span class="span-hide"> Profile </span> <span class="span-hide menu-arrow"></span></a>
                                 <ul class="list-unstyled list">
 
                             <li>
-            <a href="/drivers-profile">Edit Profile</a>
+            <a data-type="page-transition" href="/drivers-profile">Edit Profile</a>
           </li>
           <li>
-            <a href="/drivers-assignedvehiclehistory">Assigned Vehicle History</a>
+            <a data-type="page-transition" href="/drivers-assignedvehiclehistory">Assigned Vehicle History</a>
           </li>
            </ul>
                             </li>
@@ -572,27 +572,27 @@ export default class MenuTemplate{
 
                                                     
                             <li class="has_sub sub-toggle">
-                                <a href="#" class="waves-effect"><i class="md-headset"></i> <span class="span-hide"> Support </span> <span class="span-hide menu-arrow"></span></a>
+                                <a  href="#" class="waves-effect"><i class="md-headset"></i> <span class="span-hide"> Support </span> <span class="span-hide menu-arrow"></span></a>
                                 <ul class="list-unstyled list">
-                                     <li><a href="./drivers-createticket">Create Ticket</a></li>
-                                     <li><a href="./drivers-submittedticket">View Ticket</a></li>
-                                    <li><a href="./drivers-faqs">FAQ</a></li>
+                                     <li><a data-type="page-transition" href="./drivers-createticket">Create Ticket</a></li>
+                                     <li><a data-type="page-transition" href="./drivers-submittedticket">View Ticket</a></li>
+                                    <li><a data-type="page-transition" href="./drivers-faqs">FAQ</a></li>
                                 </ul>
                             </li>
 
                             <li class="has_sub sub-toggle">
-                                <a href="#" class="waves-effect"><i class="ti-light-bulb"></i> <span class="span-hide"> SOS </span> <span class="span-hide menu-arrow"></span></a>
+                                <a  href="#" class="waves-effect"><i class="ti-light-bulb"></i> <span class="span-hide"> SOS </span> <span class="span-hide menu-arrow"></span></a>
                                 <ul class="list-unstyled list">
-                                    <li><a href="./drivers-sos-request">Report SOS</a></li>
-                                    <li><a href="./drivers-sos-history">View SOS</a></li>
+                                    <li><a data-type="page-transition" href="./drivers-sos-request">Report SOS</a></li>
+                                    <li><a data-type="page-transition" href="./drivers-sos-history">View SOS</a></li>
                                 </ul>
                             </li>
                             
                             <li class="has_sub sub-toggle">
-                                <a href="#" class="waves-effect"><i class="md-directions-car"></i> <span class="span-hide"> Request Car Repair </span><span class="span-hide menu-arrow"></span></a>
+                                <a  href="#" class="waves-effect"><i class="md-directions-car"></i> <span class="span-hide"> Request Car Repair </span><span class="span-hide menu-arrow"></span></a>
                                   <ul class="list-unstyled list">
-                                     <li><a href="./drivers-request-car-repair">Request Repair</a></li>
-                                    <li><a href="./drivers-request-repairs-history">Car Request History</a></li>
+                                     <li><a data-type="page-transition" href="./drivers-request-car-repair">Request Repair</a></li>
+                                    <li><a data-type="page-transition" href="./drivers-request-repairs-history">Car Request History</a></li>
                                     
                                 </ul>
                                 

@@ -6,7 +6,7 @@ import $ from "jquery"
 function setOldBalance(balance,currentBalance){
 
    const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch(process.env.DEPLOY_BACK_URL+"/old_balance/"+ user.user.email, {
+    return fetch(process.env.DEPLOY_BACK_URL+ "/old_balance/"+ user.user.email, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -50,7 +50,7 @@ export default class PaymentWizard{
           userPaymentDetails.reference= 'CMT-PAYSTACK-'+ userPaymentDetails.reference;
 
         var handler = PaystackPop.setup({
-          key: 'pk_test_a9ba87c43061a788ec16baca91838b3df8e47295',
+          key: 'pk_test_3eaf2b6c567a58ecdac18b0e0cb9e68dc83d9226',
           email: user.user.email,
           amount: userPaymentDetails.amount *100,
           ref: 'CMT-PAYSTACK-'+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
@@ -85,14 +85,14 @@ export default class PaymentWizard{
 
                  setTimeout(() =>{
                       updateAccountBalance(linkOfApi,record) //
-           updateStatus(process.env.DEPLOY_BACK_URL+  `/plan-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', amount: userPaymentDetails.amount, has_updated: 'Yes' }) //itinerary status
-           updateStatus(process.env.DEPLOY_BACK_URL+  `/itin-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Ongoing'}) //plan status
-           updateStatus(process.env.DEPLOY_BACK_URL+  `/quote-status/`+ userPaymentDetails.plan_id + '/update',{status:'Paid', amount: userPaymentDetails.amount}) //quotation
+           updateStatus(process.env.DEPLOY_BACK_URL+ "/"+  `plan-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', amount: userPaymentDetails.amount, has_updated: 'Yes' }) //itinerary status
+           updateStatus(process.env.DEPLOY_BACK_URL+ "/"+  `itin-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Ongoing'}) //plan status
+           updateStatus(process.env.DEPLOY_BACK_URL+ "/"+  `quote-status/`+ userPaymentDetails.plan_id + '/update',{status:'Paid', amount: userPaymentDetails.amount}) //quotation
              getBalance()
 
              
 
-             createPlaymentDetail(process.env.DEPLOY_BACK_URL+ '/makepayments',{
+             createPlaymentDetail(process.env.DEPLOY_BACK_URL+ "/"+ 'makepayments',{
                 status:'Paid',
                 reference: userPaymentDetails.reference,
                 plan_id: userPaymentDetails.plan_id,
@@ -107,7 +107,7 @@ export default class PaymentWizard{
                  },7000)
 
 
-              let itins_url =process.env.DEPLOY_BACK_URL+"/user-itinerary-status-update/"+ planId;
+              let itins_url =process.env.DEPLOY_BACK_URL+ "/user-itinerary-status-update/"+ planId;
               let prepostItins ={
                 status:'Paid',
               }
@@ -310,13 +310,13 @@ export default class PaymentWizard{
 
  
        updateAccountBalance(linkOfApi,record) //
-       updateStatus(process.env.DEPLOY_BACK_URL+  `/plan-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', amount: userPaymentDetails.amount, has_updated: 'Yes' }) //itinerary status
-       updateStatus(process.env.DEPLOY_BACK_URL+  `/itin-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', has_received_payments:'Yes', has_received_quote:'Yes', user_plan_id:  userPaymentDetails.plan_id }) //plan status
-       updateStatus(process.env.DEPLOY_BACK_URL+  `/quote-status/`+ userPaymentDetails.plan_id + '/update',{status:'Paid', amount: userPaymentDetails.amount, has_updated:'Yes'}) //quotation
+       updateStatus(process.env.DEPLOY_BACK_URL+ "/"+  `plan-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', amount: userPaymentDetails.amount, has_updated: 'Yes' }) //itinerary status
+       updateStatus(process.env.DEPLOY_BACK_URL+ "/"+  `itin-status/`+ userPaymentDetails.plan_id + '/update' , {status:'Paid', has_received_payments:'Yes', has_received_quote:'Yes', user_plan_id:  userPaymentDetails.plan_id }) //plan status
+       updateStatus(process.env.DEPLOY_BACK_URL+ "/"+  `quote-status/`+ userPaymentDetails.plan_id + '/update',{status:'Paid', amount: userPaymentDetails.amount, has_updated:'Yes'}) //quotation
        getBalance()
          
           
-       createPlaymentDetail(process.env.DEPLOY_BACK_URL+ '/makepayments',{
+       createPlaymentDetail(process.env.DEPLOY_BACK_URL+ "/"+ 'makepayments',{
                 status:'Paid',
                 reference: userPaymentDetails.reference,
                 plan_id: userPaymentDetails.plan_id,
@@ -384,7 +384,7 @@ function createPlaymentDetail(url,prePostData){
 function getBalance(){
      
       const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch(process.env.DEPLOY_BACK_URL+"/balance/"+ user.user.email, {
+    return fetch(process.env.DEPLOY_BACK_URL+ "/balance/"+ user.user.email, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

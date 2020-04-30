@@ -68,9 +68,9 @@ export  default class CarMgt extends Component {
                                     </div>
                                     <div className="col-sm-4">
                                         <a href="#custom-modal" id="add-new"
-                                            class="btn btn-default btn-md waves-effect waves-light m-b-30"
+                                            className="btn btn-default btn-md waves-effect waves-light m-b-30"
                                             data-animation="fadein" data-plugin="custommodal" data-overlaySpeed="200"
-                                            data-overlayColor="#36404a"><i class="md md-add"></i> Add Car</a>
+                                            data-overlayColor="#36404a"><i className="md md-add"></i> Add Car</a>
                                     </div>
                                 </div>
 
@@ -187,8 +187,8 @@ export  default class CarMgt extends Component {
                             <div className="col-lg-6 m-t-10" >
                                 <div className="card-box">
                                    
-                                        <div class="card-box">
-                                            <img src="" id="car" class="responsive"/>
+                                        <div className="card-box">
+                                            <img src="" id="car" className="responsive"/>
                                         </div>
                                     
                                 </div>

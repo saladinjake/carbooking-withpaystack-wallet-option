@@ -103,7 +103,7 @@
     "build-front": "npm run clean-front && npm run webpack",
     "start-front": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT &&  node server_react.js",
     "start-back": "npm run launch-it-back",
-    "launch-it-back": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT  && npm run dbrun-migrations-mongoose-deploy-back && node  ./buildfolder/dynamic_server/server.js",
+    "launch-it-back": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT  && node  ./buildfolder/dynamic_server/server.js",
     "migration-mongoose-seed-deploy-back": " node ./buildfolder/dynamic_server/mongo_api/migrations/migrations.js",
     "dbrun-migrations-mongoose-deploy-back": "npm run migration-mongoose-seed-deploy-back",
     "build-server-back": "babel -d ./buildfolder ./server -s",
@@ -113,7 +113,8 @@
     "production-deploy-back": "scp -r ./buildfolder/* root@167.71.131.172:~/digitalhost/buildfolder",
     "move-env": "scp -r ./.env root@167.71.131.172:~/digitalhost",
     "move-bundle-js": "scp -r ./dist-reactive/bundlex.js root@167.71.131.172:/var/www/commute-app/html",
-    "move-index": "scp -r ./dist-reactive/index.html root@167.71.131.172:/var/www/commute-app/html"
+    "move-index": "scp -r ./dist-reactive/index.html root@167.71.131.172:/var/www/commute-app/html",
+    "move-views": "scp -r ./buildfolder/dynamic_server/mongo_api/services/views root@167.71.131.172:/digitalhost/buildfolder/dynamic_server/mongo_api/services/views"
 
 },
   "repository": {

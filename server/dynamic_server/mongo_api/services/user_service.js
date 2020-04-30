@@ -226,7 +226,7 @@ export class UserService {
                 var template = handlebars.compile(html);
                 var replacements = {
                      username: result.username,
-                     link:  process.env.DEPLOY_BACK_URL +'/api/v1/auth/confirmation\/' + tokenToSend, 
+                     link:  process.env.DEPLOY_BACK_URL +'/auth/confirmation\/' + tokenToSend, 
                 
                 };
                 var htmlToSend = template(replacements);
@@ -272,6 +272,11 @@ export class UserService {
 
     console.log(password)
     password = TokenGenerator.hashPassword(password.trim());
+    let roles = '';
+    if(request.body.roles){
+      roles = request.body.roles
+    }
+    roles = 'user';
 
     const Newuser = new UserModel({ 
       id: new AutoincrementId(UserModel).counter(), 
@@ -283,6 +288,7 @@ export class UserService {
       phone_number: phoneNumber, 
       password,
       is_admin: false,
+      roles: roles,
       //accountNumber: uuidv4()
        });
 
@@ -361,7 +367,7 @@ export class UserService {
 
 
         if(!user.isVerified){
-          let link = process.env.DEPLOY_BACK_URL + '/api/v1/auth/'
+          let link = process.env.DEPLOY_BACK_URL + '/auth/'
           return response.status(422).json({
             status: 422,
             error: `<h6>Email verification step is needed. please check your email for a verification link or click the link to resend you an email verification</h6> 
@@ -477,9 +483,14 @@ export class UserService {
             user.save(function (err) {
                 if (err) { return res.status(500).send({ msg: err.message }); }
                 //res.status(200).send("The account has been verified. Please wait...");
+                   
+                if(user.roles!='Individual Driver'){
+                  return  res.sendFile(path.join(__dirname + '/views/templates/proceed-to-login.html'));
                
-                 return  res.sendFile(path.join(__dirname + '/views/templates/proceed-to-login.html'));
-               
+                } 
+                return  res.sendFile(path.join(__dirname + '/views/templates/proceed-to-login-driver.html'));
+                     
+                 
 
             });
 
@@ -934,20 +945,18 @@ static updateAsyncUserPreviledges = async function(request,response){
       if (!user) return response.status(400).send({ msg: 'We were unable to find a user with that email.' });
       
      
-      user.old_balance = new String(old_balance) || user.old_balance;
-      user.balance = new String(currentBalance) || user.balance;
-      console.log(new String(old_balance), new String(currentBalance))
+      user.old_balance = old_balance|| user.old_balance;
+      user.balance = currentBalance || user.balance;
       user.save(function (err,user) {
-
-        if (err) { 
-          console.log(err)
-          return response.status(500).send({ msg: err.message }); }
+        if (err) { return response.status(500).send({ msg: err.message }); }
         console.log(user + 'hello')
           //return  response.sendFile(path.join(__dirname + '/proceed_tologin.html'));
           return response.status(200).send({success:'ok', msg: 'Successfully updated user profile.' });
       }); 
     });
   }
+
+
 
 
   static updateProfile(request,response){
@@ -2257,7 +2266,7 @@ static updateUsersItinerary(request,response){
           if(!donor){
               //handle error when the donor is not found
               console.log(error)
-              res.redirect('/api/v1/error')
+              res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
           }
          const tranx = donor;
          console.log(tranx +"for the user")
@@ -2273,7 +2282,7 @@ static updateUsersItinerary(request,response){
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect('/api/v1/error')
+          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
       })
   }
 
@@ -2450,7 +2459,7 @@ static updateUsersItinerary(request,response){
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect('/api/v1/error')
+          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
       })
 
   }
@@ -2546,7 +2555,7 @@ var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect('/api/v1/error')
+          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
       })
 
   }
@@ -7347,7 +7356,7 @@ date_created: new Date(),
           if(!donor){
               //handle error when the donor is not found
               console.log(error)
-              res.redirect('/api/v1/error')
+              res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
           }
          const tranx = donor;
          console.log(tranx)
@@ -7363,7 +7372,7 @@ date_created: new Date(),
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect('/api/v1/error')
+          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
       })
 
   }
@@ -7568,7 +7577,7 @@ date_created: new Date(),
           if(!donor){
               //handle error when the donor is not found
               console.log(error)
-              res.redirect('/api/v1/error')
+              res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
           }
          const tranx = donor;
          console.log(tranx +"for the user")
@@ -7584,7 +7593,7 @@ date_created: new Date(),
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect('/api/v1/error')
+          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
       })
   }
 
@@ -7595,7 +7604,7 @@ date_created: new Date(),
           if(!donor){
               //handle error when the donor is not found
               console.log(error)
-              res.redirect('/api/v1/error')
+              res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
           }
          const tranx = donor;
          console.log(tranx +"for the user")
@@ -7611,7 +7620,7 @@ date_created: new Date(),
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect('/api/v1/error')
+          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
       })
   }
 
@@ -7622,7 +7631,7 @@ date_created: new Date(),
           if(!donor){
               //handle error when the donor is not found
               console.log(error)
-              res.redirect('/api/v1/error')
+              res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
           }
          const tranx = donor;
          console.log(tranx +"for the user quotations")
@@ -7638,7 +7647,7 @@ date_created: new Date(),
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect('/api/v1/error')
+          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
       })
   }
 
