@@ -45,33 +45,19 @@ export class CarRepairRequest extends Component {
                                         <div className="m-t-30 p-t-30">
                                               <div className="col-lg-3">
                                               </div>
-
-
-
-                                                           <div className="controls">
-        
-
-
-
-
-        <button className="recorda"  type="button" id="record" hidden>Record</button>
-      </div>
-      <ul id="recordings"></ul>
-      
                                                   
                                                   <div className="col-lg-3 text-center">
-                                                       
+                                                       <button id="record" className="btn btn-danger btn-block btn-lg w-sm waves-effect waves-light" style={{marginBottom:"15px"}}>yes</button>
+                                                      
                                                   
                                                     </div>
-                                                       <div className="col-lg-3 controls ">
-                                                           <button type="button" id="mic" className="recorda">Use media service</button>
+                                                       <div className="col-lg-3">
+                                                           <button id="cancle-sos" type="submit" className="btn btn-custom btn-lg btn-purple btn-block w-sm waves-effect waves-light">
+                                                            No
+                                                          </button> 
                                                         </div>
 
-                                                        <div className="col-lg-3 controls">
-
-                                                        <button id="cancle-sos" type="submit" className="recorda">
-                                                            No
-                                                          </button>
+                                                        <div className="col-lg-3 text-center">
 
                                                        <div id="container">
 
@@ -84,8 +70,6 @@ export class CarRepairRequest extends Component {
                                                             <button id="play" disabled style={{visibility:"hidden"}}>Play</button>
                                                             <button id="download" disabled style={{visibility:"hidden"}}>Download</button>
                                                           </div>
-
-
 
                                                            
 
@@ -129,7 +113,7 @@ export class CarRepairRequest extends Component {
                 
 
           
-            
+
 
             <div id="toast"><div id="desc">A notification message..</div></div>
 

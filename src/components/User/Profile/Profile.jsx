@@ -162,10 +162,11 @@ export class Profile extends Component {
 
                                    
                                     <div className="form-group">
-                                        <label htmlFor="hori-pass1" className="col-sm-4 control-label">Password*</label>
+                                        <label htmlFor="hori-pass1" className="col-sm-4 control-label">Change Password*</label>
                                         <div className="col-sm-7">
                                             <input id="password" type="password" placeholder="Password" required
                                                 className="form-control" />
+                                                <span toggle="#password" className="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         </div>
                                     </div>
                                     <div className="form-group">
@@ -174,8 +175,12 @@ export class Profile extends Component {
                                         <div className="col-sm-7">
                                             <input data-parsley-equalto="#password-confirm" type="password" required
                                                 placeholder="Password" className="form-control" id="password-confirm" />
+                                                <span toggle="#password-confirm" className="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         </div>
                                     </div>
+
+
+                                    
 
 
 

@@ -248,6 +248,8 @@ export default class SingleRecord extends Component {
                                 <input id="travel_option" className="form-control" type="text" disabled="true" placeholder=""  />
                                 </div>
                             </div>
+
+                           
                         </div>
                         
                         <div className="row col-md-12 col-lg-12 m-t-30 ">
@@ -351,7 +353,7 @@ export default class SingleRecord extends Component {
 
 
 
-          <div id="slideout">
+          <div id="slideout" style={{display:"none"}}>
     <div id="containclickme">
         <div className="metro three-d" id="click-me"></div>
     </div>

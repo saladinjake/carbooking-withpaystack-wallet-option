@@ -7,6 +7,20 @@ import getOnlineUrlConnection from './helpers/getOnlineUrlConnection';
 import MessageBoard from '../../../core/MessageBoard';
 import $ from "jquery"
 
+let socket;
+let detinationMarker;
+let startMarker;
+
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://localhost:12000";
+
+var element ;
+var myStorage = localStorage;
+
+
+
+
+
 
 const loadQuotation = (url) =>{
 
@@ -127,6 +141,15 @@ window.setClickedItinerary = (o) =>{
   //document.getElementById("itin_status").innerHTML= o.dataset.status;
   //pickupti
 
+  if(o.dataset.drive_option=="I would like to drive myself"){
+    document.getElementById('start').disable= false
+  }else{
+     document.getElementById('start').disable= true
+    document.getElementById('start').innerHTML='Track Driver'
+    // document.getElementById('start').style.opacity=0;
+    // document.getElementById('start').style.visibility='hidden'
+  }
+
   
   document.getElementById("start_date").value= o.dataset.start_time;
   document.getElementById("start_time").value = o.dataset.end_time || '00:00:00'
@@ -153,26 +176,42 @@ function formatDate(date) {
 }
 
 
-function searchTable() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("foo-table-input");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("demo-foo-pagination");
-  tr = table.getElementsByTagName("tr");
+function searchTable(tbId="#foo-table-input") {
 
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[2];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
+
+  // $(document).ready(function(){
+
+  // Search all columns
+  $(tbId).keyup(function(){
+    // Search Text
+    var search = $(this).val();
+
+    // Hide all table tbody rows
+    $('table tbody tr').hide();
+
+    // Count total search result
+    var len = $('table tbody tr:not(.notfound) td:contains("'+search+'")').length;
+
+    if(len > 0){
+      // Searching text in columns and show match row
+      $('table tbody tr:not(.notfound) td:contains("'+search+'")').each(function(){
+        $(this).closest('tr').show();
+      });
+    }else{
+      //$('.notfound').show();
     }
-  }
+
+  });
+
+  
+// // });
+
+// // Case-insensitive searching (Note - remove the below script for Case sensitive search )
+$.expr[":"].contains = $.expr.createPseudo(function(arg) {
+   return function( elem ) {
+     return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+   };
+});
 }
 
 
@@ -293,6 +332,11 @@ function dashboard() {
                document.getElementById("foo-table-input").addEventListener("keyup",(e)=>{
                  searchTable();
                })
+
+               document.getElementById("foo-table-input2").addEventListener("keyup",(e)=>{
+                 searchTable("#foo-table-input2");
+               })
+
 
 
               let tablebody = document.getElementById('tablebody');
@@ -468,7 +512,10 @@ function dashboard() {
                             </td>`;
                           }else if(item.status=="Unpaid"){
                             className="label-warning";
-                            document.getElementById('start').disabled=true;
+                            if(document.getElementById('start')){
+                              document.getElementById('start').disabled=true;
+                            }
+                            
                             let msgBox =`<span class="label label-danger"> 
                                     Please make payments to start this plan .</span>`;
                             
@@ -615,9 +662,19 @@ function dashboard() {
 
                         
 
+                    if(document.getElementById('start')){
+                      document.getElementById('start').addEventListener('click',(e)=>{
+                         e.preventDefault()
 
-                        //start trip detail right side view
+                         document.getElementById("plan-detail").style.display="none"
+                         document.getElementById('mapout').style.opacity=1
+                         document.getElementById('mapout').style.display="block"
+
+                         //start trip detail right side view
                         initializeMap()
+                      })
+                    }
+                       
 
 
 
@@ -650,39 +707,424 @@ function dashboard() {
 }
 
 
-window.initializeMap = () => {
 
-    //Add the event listener after Google Mpas and window is loaded
-    $('#start').click(function (e) {
+var watchID;
 
-       $("#plan-detail").hide();
-         $("#mapout").show();
-         document.getElementById('mapout').style.opacity=1
+ var pathArray = [];
+var myPath;
+var myDistance = 0;
+var infoWindow;
+var googleMap;
+
+const positionOptions = {
+    enableHighAccuracy: true,
+      timeout: Infinity,
+      maximumAge: 0
+  }
+
+function stopWatch() {
+  window.navigator.geolocation.clearWatch(watchID);
+}
+
+
+function watchPosition() {
+  watchID = window.navigator.geolocation.watchPosition(handleData, handleError, positionOptions);
+}
+
+ 
+
+// Get proper error message based on the code.
+const getPositionErrorMessage = code => {
+  switch (code) {
+    case 1:
+      return 'Permission denied.';
+    case 2:
+      return 'Position unavailable.';
+    case 3:
+      return 'Timeout reached.';
+  }
+}
+
+
+function handleData(geoData) {
+ let  latlng={lat:geoData.coords.latitude, lng:geoData.coords.longitude};
+
+     var { latitude: lat, longitude: lng } = geoData.coords
+      // console.log(socket.id,pos.coords)
+
+
+      
+      socket.emit('updateLocation', { lat, lng })
+
+
+ 
+  // googleMap.setOptions({center:latLng});
+}
+
+function handleError(error) {
+  document.querySelector("#error").innerHTML = "<b>" + error.message + "</b>";
+  switch (error.code){
+    case 1:
+      document.querySelector("#error").innerHTML += ":<br>You blocked the request <br> or <br> You need to add 'https://' to this pen's URL";
+      break;
+    case 2:
+      document.querySelector("#error").innerHTML += ":<br> The device has failed in getting your position";
+      break;
+    case 3:
+      document.querySelector("#error").innerHTML += ":<br> You need to increase the timeout value in positionOptions";
+      break;
+  }
+}
+
+
+function buildPath(latlng,map) {
+   console.log('working path')
+    pathArray.push(latlng); // Add the click event's latLng object to array
+    myPath.setPath(pathArray); // Create path based on the array of latLng objects
+    myDistance = google.maps.geometry.spherical.computeLength(myPath.getPath()); // calculate length of the path
+    infoWindow.setPosition(pathArray[0]); // Sets position of infoWindow to start of journey
+    infoWindow.setContent("<b>Drivers Distance:</b><br>" + parseInt(myDistance)/1000 + " km"); // add HTML to infoWindow
+    infoWindow.open(map); // show infoWindow on this map  
+}
 
 
 
-      e.preventDefault()
-         var mapOptions = {
+window.initializeMap = (el) => {
+
+
+
+
+  let markers = new Map()
+  let InforObj = [];
+  // Save the positions' history
+  var path = [];
+
+
+  let takenDriver = JSON.parse(localStorage.getItem('userToken'))
+  
+
+  
+
+  var mapOptions = {
       center: { lat: 6.5244, lng: 3.3792},// 6.5244, 3.3792
       zoom: 8
   };
-  var map = new google.maps.Map(document.getElementById('gmaps-types'), mapOptions);
+    
+  var map = new google.maps.Map(document.getElementById('gmaps-types'), 
+    mapOptions);
 
+
+  // Create an InfoWindow object to show the distance:
+  infoWindow = new google.maps.InfoWindow(); 
+  
+  // This array be used to collect latLng objects for the path:
+  pathArray = []; 
+  
+  // Create the Polyline path object:
+  myPath = new google.maps.Polyline( {map: map, strokeColor: "red"} ); 
+  
+
+
+
+   
+
+   ////// Get drivers location
+  
+
+  //custom info driver marker
+  let profiler = '';
+  if(takenDriver.user.profile == ""){
+    profiler = "https://commute-bucket.s3.amazonaws.com/saladinjake.jpg" 
+  }else{
+    profiler = "https://commute-bucket.s3.amazonaws.com/"+takenDriver.user.profile
+  }
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+  //initial action before realtime activity: nONE REAL TIME
+
+
+
+  let startPointer =document.getElementById('startloc').value //user says he is here
+  let endPointer = document.getElementById('destination').value; //users destination
+  let detinationMarker = document.getElementById('destination').value; 
 
   var geocoder = new google.maps.Geocoder();
   var directionsService = new google.maps.DirectionsService;  
   var directionsDisplay = new google.maps.DirectionsRenderer;
 
-  showUserDrift(localStorage.getItem("startlocation"), localStorage.getItem('endlocation'), geocoder, map);
-  showTravelRoute(map, directionsService, directionsDisplay,   localStorage.getItem("startlocation") , localStorage.getItem('endlocation'))
-  let nearMyCordinates = getuserLoc(localStorage.getItem("startlocation"))
+  showUserDrift(startPointer, endPointer, geocoder, map); //route to users location
+  showTravelRoute(map, directionsService, directionsDisplay,   startPointer, endPointer)
+
+
+  // calculateDistance(startPointer, endPointer)
+
   
-  driversNearBy(map,nearMyCordinates )
+
+  calTravelDist(startPointer, endPointer,google.maps)
 
 
+   var markerUser = new google.maps.Marker({
+                  map: map,
+                  position: { lat: 6.5244, lng: 3.3792},
+                  animation: google.maps.Animation.DROP, 
+                });
+
+
+
+
+
+   //real time activity: REAL TIME ACTIVITY TRACKER
+   //show driver on map
+   //track drivers movement to destination
+   socket = socketIOClient("https://demouserapp.commute.ng:12000",{secure:true});
+
+    socket.on("FromAPI", data => {
+      // console.log(data);
     });
+
+  
+  
+
+  //emit the drivers location to the broad cast
+
+  
+  setInterval(() => {
+    // console.log('tick tock')
+    watchPosition();
+
+    //watch user position
+
+    if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        console.log(`Lat: ${position.coords.latitude} Lng: ${position.coords.longitude}`);
+
+        // Set marker's position.
+        markerUser.setPosition({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        });
+
+        // Center map to user's position.
+        map.panTo({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        });
+      },
+      err => alert(`Error (${err.code}): `)
+    );
+  } else {
+    alert('Geolocation is not supported by your browser.');
+  }
+    
+  }, 2000)
+
+
+  socket.on('locationsUpdate', locations => {
+    const markerToDelete = new Set()
+    markers.forEach((marker,id) =>{
+      marker.setMap(null)
+      markers.delete(id)
+    })
+    locations.forEach(([id, position]) => {
+    
+     
+       if((position.lat) && (position.lng)){
+          const marker = new google.maps.Marker({
+          position,
+          map,
+          title:id
+        })
+
+          let longlat = {lat:position.lat, lng:position.lng};
+
+          // Create the array that will be used to fit the view to the points range and
+          // place the markers to the polyline's points
+          
+
+         
+         // var driverPath = new google.maps.Polyline({
+         //  path: path,
+         //  });
+
+         // driverPath.setMap(map);
+
+         buildPath(longlat,map);//for driver
+         // destinationReached({lat:position.lat,lng:position.lng},detinationMarker)
+  
+
+
+          //custom info driver marker
+        let profiler = '';
+        if(takenDriver.user.profile == ""){
+          profiler = "https://commute-bucket.s3.amazonaws.com/saladinjake.jpg" 
+        }else{
+          profiler = "https://commute-bucket.s3.amazonaws.com/"+takenDriver.user.profile
+        }
+
+         // google.maps.event.addListener(marker, 'click', function(e) {
+      let str;
+      // let addr =''
+      
+      // var geocoder2 = new google.maps.Geocoder();
+      //     geocoder2.geocode({
+      //       'latLng': longlat,
+        
+      // }, function(results, status) {
+      //   if (status == google.maps.GeocoderStatus.OK) {
+      //     if (results[0].formatted_address) {
+      //       // here assign the data to asp lables
+      //       addr = results[0].formatted_address
+            
+            
+      //     } else {
+      //       alert('No results found');
+      //     }
+      //   } else {
+      //     alert('Geocoder failed due to: ' + status);
+      //   }
+      // });
+
+          str = `<div>
+                  <img style="width:50px;height:50px" src="${profiler}" />
+                  </div>
+                  <div >
+                  <p>Name:${takenDriver.user.username}</p>
+              
+                  </div>
+                 `
+            
+            
+
+              const infowindow = new google.maps.InfoWindow({
+                                  content: str,
+                                  maxWidth: 200
+                });
+               
+                 // marker.addListener('click', function () {
+                          
+                    infowindow.open(marker.get('map'),  marker);
+                    InforObj[0] = infowindow;
+                // });
+         // });
+
+        
+
+            markers.set(id,marker)
+       } //END IF
+      
+    })
+  })
+
+  
+
+  setInterval(() => {
+    socket.emit('requestLocations')
+  }, 2000)
+   
+
+
+   
+
+
+ //to do real time
+  window.setInterval(function(){
+       /// call your function here
+      
+}, 20000);  
+
+   
 }
 
+
+
+
+
+
+
+function calculateDistance(startpos, destpos) {
+           var origin = startpos;
+            var destination = destpos;
+
+            // alert(startpos,destpos)
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix(
+                {
+                    origins: [origin],
+                    destinations: [destination],
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    unitSystem: google.maps.UnitSystem.IMPERIAL, // miles and feet.
+                    // unitSystem: google.maps.UnitSystem.metric, // kilometers and meters.
+                    avoidHighways: false,
+                    avoidTolls: false
+                }, callback);
+        }
+        // get distance results
+        function callback(response, status) {
+            let driver = JSON.parse(localStorage.getItem('userToken'));
+            if (status != google.maps.DistanceMatrixStatus.OK) {
+                $('#result').html("some error occured using google maps.");
+            } else {
+                var origin = response.originAddresses[0];
+                var destination = response.destinationAddresses[0];
+                if (response.rows[0].elements[0].status === "ZERO_RESULTS") {
+                    $('#result').html("There are no roads between "  + origin + " and " + destination);
+                } else {
+                    var distance = response.rows[0].elements[0].distance;
+                    var duration = response.rows[0].elements[0].duration;
+                    console.log(response.rows[0].elements[0].distance);
+                    var distance_in_kilo = distance.value / 1000; // the kilom
+                    var distance_in_mile = distance.value / 1609.34; // the mile
+                    var duration_text = duration.text;
+                    var duration_value = duration.value;
+                    $('#in_mile').text(distance_in_mile.toFixed(2));
+                    $('#in_kilo').text(distance_in_kilo.toFixed(2));
+                    $('#duration_text').text(duration_text);
+                    $('#duration_value').text(duration_value);
+                    $('#from').text(origin);
+                    $('#to').text(destination);
+                    let takenDriver = JSON.parse(localStorage.getItem('userToken'))
+   
+
+                    let profiler = '';
+  if(takenDriver.user.profile == ""){
+    profiler = "https://commute-bucket.s3.amazonaws.com/saladinjake.jpg" 
+  }else{
+    profiler = "https://commute-bucket.s3.amazonaws.com/" + takenDriver.user.profile;
+  }
+
+                    let notification =` <div id="result">
+                    <img style="width:100px;height:100px" src="${profiler}" />
+                      <p>${driver.user.email}</p> 
+                       <p>${driver.user.phoneNumber || driver.user.phone_number}</p> 
+<ul class="list-group">
+    <li class="ialign-items-center">Distance In Mile :${distance_in_mile.toFixed(2)}</li>
+    <li class=" align-items-center">Distance is Kilo: ${distance_in_kilo.toFixed(2)}</li>
+    <li class=" align-items-center">IN TEXT: ${duration_text}</li>
+    <li class=" align-items-center">IN MINUTES: ${duration_value}</li>
+    <li class=" align-items-center">FROM: ${origin}</li>
+    <li class=" align-items-center">TO:${destination}</li>
+</ul>
+</div>`;
+
+ var notificationx = alertify.notify(notification, 'successw', 5, function(){  console.log('dismissed'); });
+
+                }
+            }
+        }
+        
 
 
 
@@ -704,7 +1146,9 @@ function getuserLoc(address){
             //return userpos
 
           }else{
-            alert("wrong")
+            
+            var notification = alertify.notify('Geocode was not successful for the following reason: ' , 'error', 5, function(){  console.log('dismissed'); });
+      
           }
      })     
 }
@@ -727,16 +1171,24 @@ function showTravelRoute(map, directionsService, directionsDisplay, source , des
     if (status === google.maps.DirectionsStatus.OK) {  
       directionsDisplay.setDirections(response);  
     } else {  
-      window.alert('Directions request failed due to ' + status);  
+      window.alert('Directions request failed due to ' + status); 
+
     }  
   });  
 }
 
 
+
+
+
+
+//for admin manager
 function getAlldriversOntheMap(map){
 
 }
 
+
+//for admin
 function driversNearBy(MAP, startLocationCordinates){ //lat , long
    const user = JSON.parse(localStorage.getItem('userToken'));
 
@@ -770,7 +1222,155 @@ function driversNearBy(MAP, startLocationCordinates){ //lat , long
       })
 }
 
+// let InforObj= [];
 function showUserDrift(startlocAdress, destinationAddress, geocoder, resultsMap){
+   CustomMarker.prototype = new google.maps.OverlayView();
+
+function CustomMarker(opts) {
+    this.setValues(opts);
+}
+
+CustomMarker.prototype.draw = function() {
+    var self = this;
+    var div = this.div;
+    if (!div) {
+        div = this.div = $('' +
+            '<div>' +
+            '<div class="shadow"></div>' +
+            '<div class="pulse"></div>' +
+            '<div class="pin-wrap">' +
+            '<div class="pin"></div>' +
+            '</div>' +
+            '</div>' +
+            '')[0];
+        this.pinWrap = this.div.getElementsByClassName('pin-wrap');
+        this.pin = this.div.getElementsByClassName('pin');
+        this.pinShadow = this.div.getElementsByClassName('shadow');
+        div.style.position = 'absolute';
+        div.style.cursor = 'pointer';
+        var panes = this.getPanes();
+        panes.overlayImage.appendChild(div);
+        google.maps.event.addDomListener(div, "click", function(event) {
+            google.maps.event.trigger(self, "click", event);
+        });
+    }
+    var point = this.getProjection().fromLatLngToDivPixel(this.position);
+    if (point) {
+        div.style.left = point.x + 'px';
+        div.style.top = point.y + 'px';
+    }
+};
+
+CustomMarker.prototype.animateDrop = function() {
+    dynamics.stop(this.pinWrap);
+    dynamics.css(this.pinWrap, {
+        'transform': 'scaleY(2) translateY(-'+$('#map').outerHeight()+'px)',
+        'opacity': '1',
+    });
+    dynamics.animate(this.pinWrap, {
+        translateY: 0,
+        scaleY: 1.0,
+    }, {
+        type: dynamics.gravity,
+        duration: 1800,
+    });
+
+    dynamics.stop(this.pin);
+    dynamics.css(this.pin, {
+        'transform': 'none',
+    });
+    dynamics.animate(this.pin, {
+        scaleY: 0.8
+    }, {
+        type: dynamics.bounce,
+        duration: 1800,
+        bounciness: 600,
+    })
+
+    dynamics.stop(this.pinShadow);
+    dynamics.css(this.pinShadow, {
+        'transform': 'scale(0,0)',
+    });
+    dynamics.animate(this.pinShadow, {
+        scale: 1,
+    }, {
+        type: dynamics.gravity,
+        duration: 1800,
+    });
+}
+
+CustomMarker.prototype.animateBounce = function() {
+    dynamics.stop(this.pinWrap);
+    dynamics.css(this.pinWrap, {
+        'transform': 'none',
+    });
+    dynamics.animate(this.pinWrap, {
+        translateY: -30
+    }, {
+        type: dynamics.forceWithGravity,
+        bounciness: 0,
+        duration: 500,
+        delay: 150,
+    });
+
+    dynamics.stop(this.pin);
+    dynamics.css(this.pin, {
+        'transform': 'none',
+    });
+    dynamics.animate(this.pin, {
+        scaleY: 0.8
+    }, {
+        type: dynamics.bounce,
+        duration: 800,
+        bounciness: 0,
+    });
+    dynamics.animate(this.pin, {
+        scaleY: 0.8
+    }, {
+        type: dynamics.bounce,
+        duration: 800,
+        bounciness: 600,
+        delay: 650,
+    });
+
+    dynamics.stop(this.pinShadow);
+    dynamics.css(this.pinShadow, {
+        'transform': 'none',
+    });
+    dynamics.animate(this.pinShadow, {
+        scale: 0.6,
+    }, {
+        type: dynamics.forceWithGravity,
+        bounciness: 0,
+        duration: 500,
+        delay: 150,
+    });
+}
+
+CustomMarker.prototype.animateWobble = function() {
+    dynamics.stop(this.pinWrap);
+    dynamics.css(this.pinWrap, {
+        'transform': 'none',
+    });
+    dynamics.animate(this.pinWrap, {
+        rotateZ: -45,
+    }, {
+        type: dynamics.bounce,
+        duration: 1800,
+    });
+
+    dynamics.stop(this.pin);
+    dynamics.css(this.pin, {
+        'transform': 'none',
+    });
+    dynamics.animate(this.pin, {
+        scaleX: 0.8
+    }, {
+        type: dynamics.bounce,
+        duration: 800,
+        bounciness: 1800,
+    });
+}
   
 
   var address1 =  startlocAdress;                //document.getElementById('address').value;
@@ -780,11 +1380,20 @@ function showUserDrift(startlocAdress, destinationAddress, geocoder, resultsMap)
             console.log(results[0].geometry.location + "is your location")
             //resultsMap.setCenter(results[0].geometry.location);
             //alert(results[0].geometry.location)
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location,
-              animation: google.maps.Animation.DROP, 
-            });
+            // var marker = new google.maps.Marker({
+            //   map: resultsMap,
+            //   position: results[0].geometry.location,
+            //   animation: google.maps.Animation.DROP, 
+            // });
+
+            var marker  = new CustomMarker({
+        position: results[0].geometry.location,
+        map: resultsMap,
+        animation: google.maps.Animation.DROP,
+      
+    });
+
+            startMarker = marker;
 
 
             var contentString = '<div id="content"><h1>Pickup Location.' +
@@ -827,7 +1436,9 @@ function showUserDrift(startlocAdress, destinationAddress, geocoder, resultsMap)
 
 
           } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            var notification = alertify.notify('Geocode was not successful for the following reason: ' + status, 'error', 5, function(){  console.log('dismissed'); });
+      
+            //alert('Geocode was not successful for the following reason: ' + status);
           }
   });
 
@@ -835,11 +1446,18 @@ function showUserDrift(startlocAdress, destinationAddress, geocoder, resultsMap)
   geocoder.geocode({'address': address2}, function(results, status) {
           if (status === 'OK') {
                 resultsMap.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
-                  map: resultsMap,
-                  position: results[0].geometry.location,
-                  animation: google.maps.Animation.DROP, 
-                });
+                // var marker = new google.maps.Marker({
+                //   map: resultsMap,
+                //   position: results[0].geometry.location,
+                //   animation: google.maps.Animation.DROP, 
+                // });
+
+                          var marker = new CustomMarker({
+        map: resultsMap,
+        position: results[0].geometry.location,
+        animation: google.maps.Animation.DROP,
+    });
+
 
 
                 var contentString = '<div id="content"><h1>Destination.' +
@@ -866,11 +1484,164 @@ function showUserDrift(startlocAdress, destinationAddress, geocoder, resultsMap)
                                   InforObj[0] = infowindow;
                 });
           } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            var notification = alertify.notify('Geocode was not successful for the following reason: ' + status, 'error', 5, function(){  console.log('dismissed'); });
+      
+            // alert('Geocode was not successful for the following reason: ' + status);
+            
           }
   });
 
 }
+
+
+
+
+
+function destinationReached(myPosition,destinationAddress){
+  //tolerance 50 meters
+//requires the geometry-library 
+ var geocoder = new google.maps.Geocoder();
+
+geocoder.geocode({'address': destinationAddress}, function(results, status) {
+          if (status === 'OK') {
+               
+
+                if(google.maps.geometry.spherical.computeDistanceBetween(myPosition,results[0].geometry.location)<50){
+                     resultsMap.setCenter(results[0].geometry.location);
+                    alert('You have arrived!');
+                }else{
+                  console.log('traffic jam')
+                } 
+                
+          } else {
+            var notification = alertify.notify('Geocode was not successful for the following reason: ' + status, 'error', 5, function(){  console.log('dismissed'); });
+      
+            // alert('Geocode was not successful for the following reason: ' + status);
+            
+          }
+  });
+
+
+}
+
+
+
+
+
+
+
+
+
+function calTravelDist(startlocAdd,endlocAdd,maps){
+  
+
+  var helper = {};
+
+  helper.getMetersToMiles = function(meters, precision) {
+    precision = precision || 2;
+
+    var ret =  +((meters * 0.00062137).toFixed(precision));
+    return ret;
+  };
+
+  helper.getDistanceMatrixService = function() {
+    return new maps.DistanceMatrixService();
+  };
+
+  helper.getDistance = function(opts, fnCallBack) {
+    var serv = helper.getDistanceMatrixService();
+
+    serv.getDistanceMatrix(opts, function(response, status) {
+      if (status === maps.DistanceMatrixStatus.OK) {
+        var origins = response.originAddresses;
+        var destinations = response.destinationAddresses;
+
+        var returnList = [];
+
+        for (var i = 0; i < origins.length; i++) {
+          var results = response.rows[i].elements;
+          for (var j = 0; j < results.length; j++) {
+            var element = results[j];
+            var distance = element.distance;
+            var duration = element.duration;
+            var from = origins[i];
+            var to = destinations[j];
+
+            returnList.push({
+              distance: {
+                text: distance.text,
+                miles: helper.getMetersToMiles(distance.value),
+                meters: distance.value
+              },
+              duration: {
+                text: duration.text,
+                seconds: duration.value
+              },
+              origin: from,
+              destination: to
+            });
+          }
+        }
+
+        fnCallBack(returnList);
+
+      } else {
+        throw "Could not call distance matrix service...";
+      }
+    });
+  }
+
+  helper.getDistanceDriving = function(opts, fnCallBack) {
+    opts.travelMode = maps.TravelMode.DRIVING;
+    opts.drivingOptions = {
+      departureTime: new Date(),
+      trafficModel: "optimistic"
+    };
+
+    opts.unitSystem = opts.unitSystem || maps.UnitSystem.IMPERIAL;
+
+    helper.getDistance(opts, fnCallBack);
+  }
+
+  helper.getDistanceDrivingMiles = function(origin, destination, fnCallBack) {
+    helper.getDistanceDriving({
+      origins: [origin],
+      destinations: [destination]
+    }, fnCallBack);
+  }
+
+  var originCoords = {lat: 55.93, lng: -3.118};
+  var destCoords = {lat: 50.087, lng: 14.421};
+  
+  var originText = startlocAdd;
+  var destText = endlocAdd;
+  
+  helper.getDistanceDrivingMiles(originText, destText, function(obj) {
+    var el = obj[0];
+
+    var builder = [];
+    builder.push('From ');
+    builder.push(el.origin);
+    builder.push(' to ');
+    builder.push(el.destination);
+    builder.push(' will take you ')
+    builder.push(moment.duration(el.duration.seconds, 'seconds').humanize());
+    builder.push(' seconds and you will travel ');
+    builder.push(el.distance.miles);
+    builder.push(' miles ')
+
+    $("#label").text(builder.join(''))
+
+    var notificationx = alertify.notify(builder.join(''), 'successw', 35, function(){  console.log('dismissed'); });
+
+  });
+
+
+}
+
+
+
+
 
 
 

@@ -16,28 +16,43 @@ window.getPlanId = (item) =>{
   window.location.href = "./plan-detail"
 }
 
-function searchTable() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("foo-table-input");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("demo-foo-pagination");
-  tr = table.getElementsByTagName("tr");
+function searchTable(tbId="#foo-table-input") {
 
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
+
+  // $(document).ready(function(){
+
+  // Search all columns
+  $(tbId).keyup(function(){
+    // Search Text
+    var search = $(this).val();
+
+    // Hide all table tbody rows
+    $('table tbody tr').hide();
+
+    // Count total search result
+    var len = $('table tbody tr:not(.notfound) td:contains("'+search+'")').length;
+
+    if(len > 0){
+      // Searching text in columns and show match row
+      $('table tbody tr:not(.notfound) td:contains("'+search+'")').each(function(){
+        $(this).closest('tr').show();
+      });
+    }else{
+      //$('.notfound').show();
     }
-  }
-}
 
+  });
+
+  
+// // });
+
+// // Case-insensitive searching (Note - remove the below script for Case sensitive search )
+$.expr[":"].contains = $.expr.createPseudo(function(arg) {
+   return function( elem ) {
+     return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+   };
+});
+}
 function formatDate(date) {
   var hours = date.getHours();
   var minutes = date.getMinutes();
@@ -139,8 +154,8 @@ function ApiPlanHistory() {
                           tablebody2.insertAdjacentHTML('beforeend', template2);
                   });
 
-              document.getElementById("foo-table-input").addEventListener("keyup",(e)=>{
-                 searchTable();
+              document.getElementById("foo-table-input2").addEventListener("keyup",(e)=>{
+                 searchTable("#foo-table-input2");
                })
                    
 

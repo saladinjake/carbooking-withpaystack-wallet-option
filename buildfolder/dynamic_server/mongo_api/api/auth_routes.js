@@ -2,7 +2,7 @@
 
 var cov_1k24vhpzxv = function () {
   var path = "C:\\Users\\Obiajulu\\Desktop\\commute\\commute-dev-Proj-repo\\server\\dynamic_server\\mongo_api\\api\\auth_routes.js";
-  var hash = "263431042df6effbd6716fcd3d58c4d385812bd8";
+  var hash = "f41baf207b102465165e1865d001af2764ef448a";
   var global = new Function("return this")();
   var gcv = "__coverage__";
   var coverageData = {
@@ -174,38 +174,38 @@ var cov_1k24vhpzxv = function () {
           column: 20
         },
         end: {
-          line: 67,
+          line: 80,
           column: 1
         }
       },
       "17": {
         start: {
           line: 57,
-          column: 24
+          column: 3
         },
         end: {
-          line: 61,
-          column: 51
+          line: 57,
+          column: 24
         }
       },
       "18": {
         start: {
-          line: 63,
-          column: 4
+          line: 58,
+          column: 32
         },
         end: {
-          line: 63,
-          column: 29
+          line: 62,
+          column: 4
         }
       },
       "19": {
         start: {
-          line: 64,
-          column: 4
+          line: 63,
+          column: 24
         },
         end: {
-          line: 64,
-          column: 45
+          line: 63,
+          column: 102
         }
       },
       "20": {
@@ -215,7 +215,7 @@ var cov_1k24vhpzxv = function () {
         },
         end: {
           line: 65,
-          column: 36
+          column: 29
         }
       },
       "21": {
@@ -225,46 +225,56 @@ var cov_1k24vhpzxv = function () {
         },
         end: {
           line: 66,
-          column: 34
+          column: 45
         }
       },
       "22": {
         start: {
-          line: 70,
-          column: 6
+          line: 67,
+          column: 4
         },
         end: {
-          line: 71,
-          column: 101
+          line: 76,
+          column: 27
         }
       },
       "23": {
         start: {
-          line: 72,
+          line: 83,
           column: 6
         },
         end: {
-          line: 74,
-          column: 22
+          line: 84,
+          column: 101
         }
       },
       "24": {
         start: {
-          line: 76,
+          line: 85,
           column: 6
         },
         end: {
-          line: 77,
-          column: 90
+          line: 87,
+          column: 22
         }
       },
       "25": {
         start: {
-          line: 78,
+          line: 89,
           column: 6
         },
         end: {
-          line: 80,
+          line: 90,
+          column: 90
+        }
+      },
+      "26": {
+        start: {
+          line: 91,
+          column: 6
+        },
+        end: {
+          line: 93,
           column: 22
         }
       }
@@ -312,7 +322,7 @@ var cov_1k24vhpzxv = function () {
             column: 17
           },
           end: {
-            line: 144,
+            line: 157,
             column: 3
           }
         },
@@ -384,7 +394,7 @@ var cov_1k24vhpzxv = function () {
             column: 34
           },
           end: {
-            line: 67,
+            line: 80,
             column: 1
           }
         },
@@ -418,7 +428,8 @@ var cov_1k24vhpzxv = function () {
       "22": 0,
       "23": 0,
       "24": 0,
-      "25": 0
+      "25": 0,
+      "26": 0
     },
     f: {
       "0": 0,
@@ -429,7 +440,7 @@ var cov_1k24vhpzxv = function () {
     },
     b: {},
     _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
-    hash: "263431042df6effbd6716fcd3d58c4d385812bd8"
+    hash: "f41baf207b102465165e1865d001af2764ef448a"
   };
   var coverage = global[gcv] || (global[gcv] = {});
 
@@ -530,39 +541,47 @@ function () {
 
       var createToken = function createToken(req, res) {
         cov_1k24vhpzxv.f[4]++;
-        var accessToken = (cov_1k24vhpzxv.s[17]++, _jsonwebtoken["default"].sign({
-          id: req.user.id //email
-          //username
-
-        }, process.env.SECRET, {
+        cov_1k24vhpzxv.s[17]++;
+        console.log(req.user);
+        var resultingTokenShibilish = (cov_1k24vhpzxv.s[18]++, {
+          id: req.user.id,
+          email: req.user.email,
+          username: req.user.username
+        });
+        var accessToken = (cov_1k24vhpzxv.s[19]++, _jsonwebtoken["default"].sign(resultingTokenShibilish, process.env.SECRET, {
           expiresIn: 60 * 120
         }));
-        cov_1k24vhpzxv.s[18]++;
-        req.token = accessToken;
-        cov_1k24vhpzxv.s[19]++;
-        res.setHeader('x-auth-token', req.token);
         cov_1k24vhpzxv.s[20]++;
-        res.status(200).json(req.token);
+        req.token = accessToken;
         cov_1k24vhpzxv.s[21]++;
-        res.redirect("/".concat(req.roken));
+        res.setHeader('x-auth-token', req.token);
+        cov_1k24vhpzxv.s[22]++;
+        res.status(200).json({
+          status: 200,
+          data: [{
+            token: req.token,
+            user: req.user
+          }],
+          message: 'User created successfully'
+        }); //res.redirect(`/${req.roken}`);
       };
 
-      cov_1k24vhpzxv.s[22]++;
+      cov_1k24vhpzxv.s[23]++;
       this.router.get('/google/start', _App.passport.authenticate('google', {
         session: false,
         scope: ['openid', 'profile', 'email']
       }));
-      cov_1k24vhpzxv.s[23]++;
+      cov_1k24vhpzxv.s[24]++;
       this.router.get('/google/redirect', _App.passport.authenticate('google', {
         session: false
       }), createToken);
-      cov_1k24vhpzxv.s[24]++;
+      cov_1k24vhpzxv.s[25]++;
       this.router.get('/auth/facebook', _App.passport.authenticate('facebook', {
         session: false,
         scope: ['public_profile']
       }));
-      cov_1k24vhpzxv.s[25]++;
-      this.router.get('/auth/facebook/callback', _App.passport.authenticate('facebook', {
+      cov_1k24vhpzxv.s[26]++;
+      this.router.get('/auth/facebook/callback/', _App.passport.authenticate('facebook', {
         session: false
       }), createToken); //working code...
       // send to google to do the authentication

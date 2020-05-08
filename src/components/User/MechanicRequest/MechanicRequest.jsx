@@ -70,34 +70,8 @@ export class CarRepairRequest extends Component {
                                             <div className="form-group">
                                                 <label htmlFor="carBrand">Car Brand</label>
                                                 <select className="form-control select2" id="carbrand">
-                                                    <option>Select</option>
-                                                    <optgroup label="Mercedez Benz">
-                                                        <option value="AK">C 300</option>
-                                                        <option value="HI">E 350</option>
-                                                        <option value="HI">GL 450</option>
-                                                        <option value="HI">GL 550</option>
-                                                    </optgroup>
-
-                                                    <optgroup label="Lexus">
-                                                        <option value="AZ">RX 250</option>
-                                                        <option value="CO">Rx 300</option>
-                                                        <option value="ID">RX 370</option>
-                                                        <option value="MT">GX 460</option>
-
-                                                    </optgroup>
-                                                    <optgroup label="BMW">
-                                                        <option value="AL">X6</option>
-                                                        <option value="AR">X5</option>
-                                                        <option value="IL">X4</option>
-                                                        <option value="IA">X3</option>
-
-                                                    </optgroup>
-                                                    <optgroup label="Toyota">
-                                                        <option value="CT">Camry 2015</option>
-                                                        <option value="DE">Corolla 2018</option>
-                                                        <option value="FL">Corolla 2016</option>
-                                                        <option value="GA">Avalon 2019</option>
-                                                    </optgroup>
+                                    <option>--Select Car--</option>
+                                                    
                                                 </select>
                                             </div>
 

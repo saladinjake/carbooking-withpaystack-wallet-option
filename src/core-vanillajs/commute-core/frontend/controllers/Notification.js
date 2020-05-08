@@ -16,7 +16,7 @@ export default class Notification{
 
 	 	let  user = JSON.parse(localStorage.getItem('userToken'))
 	  if(document.getElementById('notice')){
-			const urls = [process.env.DEPLOY_BACK_URL+"/balance/"+ user.user.id, 
+			const urls = [process.env.DEPLOY_BACK_URL+"/balance/"+ user.user.email, 
 	                      process.env.DEPLOY_BACK_URL+"/notification/"+ user.user.email
 	                      ];
 	    //console.log('Token:  ' + ApiGetBothRecord.getLoggedInUser().token);

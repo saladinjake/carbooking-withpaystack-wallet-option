@@ -71,7 +71,7 @@ export  default class WalletHistory extends Component {
                           <th data-hide="phone"> Status </th>
                       </tr>
                     </thead>
-                    <tbody id="tablebody1">
+                    <tbody id="tablebody1a">
                       
                       
                       

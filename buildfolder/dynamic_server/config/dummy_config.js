@@ -2,7 +2,7 @@
 
 var cov_2dcmrd7rfs = function () {
   var path = "C:\\Users\\Obiajulu\\Desktop\\commute\\commute-dev-Proj-repo\\server\\dynamic_server\\config\\dummy_config.js";
-  var hash = "6914778c7f51b1e1060ce8f2c8ba00331de53300";
+  var hash = "0011aad0bc3c816254ccbe9514f98be1642a5099";
   var global = new Function("return this")();
   var gcv = "__coverage__";
   var coverageData = {
@@ -24,7 +24,7 @@ var cov_2dcmrd7rfs = function () {
           column: 15
         },
         end: {
-          line: 55,
+          line: 56,
           column: 1
         }
       }
@@ -38,7 +38,7 @@ var cov_2dcmrd7rfs = function () {
     f: {},
     b: {},
     _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
-    hash: "6914778c7f51b1e1060ce8f2c8ba00331de53300"
+    hash: "0011aad0bc3c816254ccbe9514f98be1642a5099"
   };
   var coverage = global[gcv] || (global[gcv] = {});
 

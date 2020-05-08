@@ -98,7 +98,7 @@ export class MechService {
   
   static users(request, response) {
     // UserModel.find({user_id: request.params.id})
-    MechModel.find({ user_id: Number(request.params.id) })
+    MechModel.find({ user_id: request.params.id })
     
       .then(data => {
         const mechRequest = data;

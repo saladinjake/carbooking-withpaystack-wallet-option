@@ -54,16 +54,29 @@ class AuthRoutes {
 
   
 const createToken = (req, res) => {
-    const accessToken = JWT.sign({
-        id: req.user.id
-        //email
-        //username
-    }, process.env.SECRET, { expiresIn: 60 * 120 });
+   console.log(req.user)
+   let resultingTokenShibilish ={
+     id: req.user.id,
+     email: req.user.email,
+     username: req.user.username
+   };
+    const accessToken = JWT.sign(resultingTokenShibilish, process.env.SECRET, { expiresIn: 60 * 120 });
    
     req.token =  accessToken;
     res.setHeader('x-auth-token', req.token);
-    res.status(200).json(req.token);
-    res.redirect(`/${req.roken}`);
+    res.status(200).json({
+                          status: 200,
+                           data: [
+                                  {
+                                      token:req.token,
+                                      user: req.user,
+                                  },
+                          ],
+                           message: 'User created successfully',
+                        });
+
+
+    //res.redirect(`/${req.roken}`);
 }
 
 
@@ -75,7 +88,7 @@ const createToken = (req, res) => {
 
       this.router.get('/auth/facebook',
         passport.authenticate('facebook', { session: false, scope: ['public_profile'] }));
-      this.router.get('/auth/facebook/callback',
+      this.router.get('/auth/facebook/callback/',
          passport.authenticate('facebook', { session: false }),
          createToken);
 

@@ -54,6 +54,10 @@ export  default class Dashboard extends Component {
                                 <div className="card-box animated animatedFadeInUp fadeInUp ">
                                     
                                     <h4 className="text-dark header-title m-t-0">Plan History</h4>
+
+                                     <div className="form-group ">
+                                                        <input id="foo-table-input2" type="text" placeholder="Search by location" className="product-search form-control input-sm" autoComplete="on" />
+                                                    </div>
                                     <p className="text-muted m-b-30 font-13">
                                         
                                     </p>
@@ -62,7 +66,7 @@ export  default class Dashboard extends Component {
                                          <br/>
                                               <div className="col-sm-6 text-lg-center text-right pull-right">
                                                     <div className="form-group">
-                                                        <input id="foo-table-input" type="text" placeholder="Search by plan id" className="form-control input-sm" autoComplete="on" />
+                                                        <input id="foo-table-input2" type="hidden" placeholder="Search by plan id" className="form-control input-sm" autoComplete="on" />
                                                     </div>
                                                 </div>
                                      <div className="clearfix"></div>

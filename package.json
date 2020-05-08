@@ -114,9 +114,9 @@
     "move-env": "scp -r ./.env root@167.71.131.172:~/digitalhost",
     "move-bundle-js": "scp -r ./dist-reactive/bundlex.js root@167.71.131.172:/var/www/commute-app/html",
     "move-index": "scp -r ./dist-reactive/index.html root@167.71.131.172:/var/www/commute-app/html",
-    "move-views": "scp -r ./buildfolder/dynamic_server/mongo_api/services/views root@167.71.131.172:/digitalhost/buildfolder/dynamic_server/mongo_api/services/views"
-
-},
+    "move-views": "scp -r ./buildfolder/dynamic_server/mongo_api/services/views root@167.71.131.172:/digitalhost/buildfolder/dynamic_server/mongo_api/services/views",
+    "move-google-verificator": "scp -r googled0752a598f2b518f.html root@167.71.131.172:/var/www/commute-app/html"
+  },
   "repository": {
     "type": "git",
     "url": "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/commute-dev-Proj-repo"
@@ -234,6 +234,7 @@
     "sequelize": "^5.18.4",
     "serve-favicon": "^2.5.0",
     "socket.io": "^2.1.1",
+    "socket.io-client": "^2.3.0",
     "stripe": "^7.13.0",
     "styled-components": "^3.3.3",
     "superagent": "^5.2.2",

@@ -145,7 +145,7 @@ export  default class Dashboard extends Component {
                                              <br/>
                                               <div className="col-sm-6 text-lg-center text-right pull-right">
                                                     <div className="form-group">
-                                                        <input id="foo-table-input" type="text" placeholder="Search by location" className="form-control input-sm" autoComplete="on" />
+                                                        <input id="foo-table-input" type="text" placeholder="Search by location" className="product-search form-control input-sm" autoComplete="on" />
                                                     </div>
                                                 </div>
                                                 <div className="clearfix"></div>
@@ -254,9 +254,17 @@ export  default class Dashboard extends Component {
                                 <div className="card-box">
                                     <a href="./plan-history" style={{width:"80px", fontSize:"12px", marginRight: "12px", fontSize: "14px"}}  className="pull-right btn btn-default btn-sm waves-effect waves-light footable-page">View all</a>
                                     <h4 className="text-dark header-title m-t-0">Plan History</h4>
+                                    <br/>
+                                     <div className="form-group">
+                                                        <input id="foo-table-input2" type="text" placeholder="Search by location" className="product-search form-control input-sm" autoComplete="on" />
+                                                    </div>
+
                                     <p className="text-muted m-b-30 font-13">
                                         
                                     </p>
+                                    
+                                                   
+                                               
 
                                     <div className="table-responsive card-box">
                                        <div className="clearfix"></div>

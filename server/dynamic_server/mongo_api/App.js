@@ -29,12 +29,30 @@ const https = require('https');
 
 
 var socket_io = require("socket.io");
-var io = socket_io();
+
+var socketIo = require("socket.io");
+var io = socketIo();
+
+//database connection
+const Chat = require("./models/Chat");
+const connect = require("./dbconnect");
+
+const chatRouter = require("./route/chatroute");
 
 //import favicon from 'serve-favicon';
 //const exphbs = require('express-handlebars');
 
 require('./config/passport'); // pass passport for configuration
+
+
+
+const getApiAndEmit = socket => {
+  const response = new Date();
+  // console.log("emit me frm server to user")
+  // Emitting a new message. Will be consumed by the client
+  socket.emit("FromAPI", response);
+};
+
 
 
 class MongoAppDemo {
@@ -62,17 +80,7 @@ class MongoAppDemo {
 
     let corsOption = {
        'Access-Control-Allow-Origin': '*',
-        // origin: function(origin, callback){
-        //   // allow requests with no origin 
-        //   // (like mobile apps or curl requests)
-        //   if(!origin) return callback(null, true);
-        //   if(allowedOrigins.indexOf(origin) === -1){
-        //     var msg = 'The CORS policy for this site does not ' +
-        //               'allow access from the specified Origin.';
-        //     return callback(new Error(msg), false);
-        //   }
-        //   return callback(null, true);
-        // },
+        
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true,
         exposedHeaders: ['x-auth-token'],
@@ -113,6 +121,7 @@ class MongoAppDemo {
     //this.express.use(cors(corsOption));
         
     this.express.use(bodyParser.json());//
+    
     // this.express.use(methodOverride());
     this.express.disable('x-powered-by');
     this.express.use(
@@ -151,6 +160,9 @@ class MongoAppDemo {
     this.port = process.env.PORT || 12000;
     //define the route real path
     this.express.use('/api/v1', router);
+    //routes
+    this.express.use("/api/v1/chats", chatRouter);
+
     this.express.use((request, response, next) => {
       response.status(404).json({
         status: 404,
@@ -185,19 +197,130 @@ class MongoAppDemo {
 
      // Listen both http & https ports
 
-      const httpServer = http.createServer(app);
+       const httpServer = http.createServer(app);
       const httpsServer = https.createServer({
          key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
           cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
+        
+         requestCert: false, 
+         rejectUnauthorized: false 
         }, app);
 
 //  httpServer.listen(12000, () => {
 //     console.log('HTTP Server running on port 80');
 // }); 
 
-httpsServer.listen(12000, () => {
-    console.log('HTTPS Server running on port 443');
+
+// const io = socketIo(httpServer);
+
+ const io = require("socket.io")(httpsServer, {
+    handlePreflightRequest: (req, res) => {
+        const headers = {
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+            "Access-Control-Allow-Credentials": true
+        };
+        res.writeHead(200, headers);
+        res.end();
+    }
 });
+  
+
+let interval;
+
+
+
+
+const locationMap = new Map()
+
+
+io.on('connection', socket => {
+  console.log("New client connected" + socket.id);
+  if (interval) {
+    clearInterval(interval);
+  }
+  interval = setInterval(() => getApiAndEmit(socket), 1000);
+  
+
+
+  socket.on('updateLocation', pos => {
+    locationMap.set(socket.id, pos)
+  })
+
+  socket.on('requestLocations', () => {
+    socket.emit('locationsUpdate', Array.from(locationMap))
+  })
+
+
+
+
+
+
+
+
+  //server communication for chat message
+
+
+
+  //Someone is typing
+  socket.on("typing", data => {
+    socket.broadcast.emit("notifyTyping", {
+      user: data.user,
+      message: data.message
+    });
+  });
+
+  //when soemone stops typing
+  socket.on("stopTyping", () => {
+    socket.broadcast.emit("notifyStopTyping");
+  });
+
+  socket.on("chat message", function(msg) {
+    console.log("message: " + msg);
+
+    //broadcast message to everyone in port:5000 except yourself.
+    socket.broadcast.emit("received", { message: msg });
+
+    //save chat to the database
+    connect.then(db => {
+      console.log("connected correctly to the server");
+      let chatMessage = new Chat({ message: msg, sender: "Anonymous" });
+
+      chatMessage.save();
+    });
+  });
+
+
+
+
+
+
+
+  socket.on('disconnect', () => {
+    console.log("Client disconnected");
+    clearInterval(interval);
+    
+    locationMap.delete(socket.id)
+  })
+
+
+
+})
+
+
+
+    httpsServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
+
+  // httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
+
+
+
+
+
+
+// httpsServer.listen(12000, () => {
+//     console.log('HTTPS Server running on port 443');
+// });
    
 
 
@@ -223,6 +346,7 @@ httpsServer.listen(12000, () => {
  
 
    }
+
 }
 
 

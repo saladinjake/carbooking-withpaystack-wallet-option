@@ -123,7 +123,9 @@ class ApiMech {
       // return MessageBoard.displayMsg('Please enter a comment');
     }
 
-    if (carbrand=="Select"){
+
+
+    if (carbrand=="--Select Car--"){
       var notification = alertify.notify('Please select a brand', 'error', 5, function(){  console.log('dismissed'); });
        return false;
     }
@@ -186,7 +188,8 @@ class ApiMech {
       lastname,
       location:pos,
       status: 'Pending',
-      user_id: user.user.id,
+      user_id: user.user._id,
+
 
     
     };
@@ -241,7 +244,7 @@ class ApiMech {
         GateKeepersForUser();
     const user = JSON.parse(localStorage.getItem('userToken'));
     let recordUrl;
-    recordUrl = activeUrl + `/mechanic-request/${user.user.id}/users`;
+    recordUrl = activeUrl + `/mechanic-request/${user.user._id}/users`;
     
     return fetch(recordUrl, {
       method: 'GET',

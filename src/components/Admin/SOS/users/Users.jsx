@@ -74,7 +74,7 @@ export  default class SOSADMIN extends Component {
 
                                 <div className="table-responsive table-bordered">
                                     <table className="table table-actions-bar" id="demo-foo-pagination" data-page-size="5" 
-                                           className="table toggle-circle table-hover">
+                                           >
                                         <thead>
                                             <tr>
                                                
@@ -92,6 +92,7 @@ export  default class SOSADMIN extends Component {
                                          
                                         </tbody>
 
+                                        
                                         <tfoot>
                                             <tr>
                                                 <td colSpan="5">

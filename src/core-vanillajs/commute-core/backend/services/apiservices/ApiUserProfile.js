@@ -239,7 +239,7 @@ class ApiUpdateProfile {
 
     if(password!= passwordConfirm){
       
-       var notification = alertify.notify('password do not match.', 'error', 5, function(){  console.log('dismissed'); });
+       var notification = alertify.notify('Please ensure that your password matches the confirm password field.', 'error', 5, function(){  console.log('dismissed'); });
        setTimeout(()=>{
         domel.innerHTML="Update";
             domel.disabled=false;

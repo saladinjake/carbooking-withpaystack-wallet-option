@@ -943,6 +943,16 @@ class WebsitePlanCategory {
               certDate="";
             }
 
+            if(!startDate.length){
+              var notification = alertify.notify('Please Enter a date for this itinerary.', 'error', 5, function(){  console.log('dismissed'); });
+              return false;
+            }
+
+            if(!endDate.length){
+              var notification = alertify.notify('Please enter a time for the pick up.', 'error', 5, function(){  console.log('dismissed'); });
+               return false;
+            }
+
             noHrs = noHrs || 2;
             planList.push(noHrs);
 
@@ -977,6 +987,7 @@ class WebsitePlanCategory {
                end_time :endDate, 
                pickup_time: endDate,
                drive_option: optDriver,
+
                user_id: user.user.id,
                travel_option:optTraveler,
             
@@ -1037,9 +1048,9 @@ class WebsitePlanCategory {
                 <td>${start_location}</td>
                 <td>${destination}</td>
                 <td>${optDriver}</td>
-                <td>
+                <!--<td>
                   <a href="#" id="" data-id=""  data-driver_option="${optDriver}"  data-start_time="" data-start_location="${start_location}" data-destination="${destination}" class="table-action-btn md-trigger" data-toggle="modal" data-target="#con-close-modal"><i class="md md-edit"></i></a>    
-                  </td>
+                  </td>-->
                 </tr>`;
                 $(_tr).hide().insertAfter("#startPoint").fadeIn('slow');
 

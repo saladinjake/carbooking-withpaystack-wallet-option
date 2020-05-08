@@ -13,6 +13,11 @@ let NotificationSchema = new mongoose.Schema({
     
         },
 
+        status:{
+          type:String,
+          default: "new"
+        },
+
         for_users:{
 
           type:Boolean,

@@ -51,7 +51,7 @@ export  default class QuoteSubscriptionHistory extends Component {
                         
                         <div className="col-sm-6 text-lg-center text-right pull-right">
                           <div className="form-group">
-                              <input id="demo-foo-search" type="text" placeholder="Search" className="form-control input-sm" autocomplete="on" />
+                              <input id="demo-foo-search" type="text" placeholder="Search" className="form-control product-search" autocomplete="on" />
                           </div>
                         </div>
                       </div>
@@ -83,7 +83,7 @@ export  default class QuoteSubscriptionHistory extends Component {
                         </div>
                       </div>
                     </div>
-                    <tbody id="tablebody1">
+                    <tbody id="tablebody1ab">
                       
                       
                       

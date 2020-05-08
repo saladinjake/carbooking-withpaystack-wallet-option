@@ -148,17 +148,11 @@ export class UserService {
                       console.log("email is send");
                       console.log(info);
                       //res.json(info)
-                      //return response.status(STATUS).send({status: STATUS ,success:'ok', msg: 'Successfully updated  .', data: info });
+                      return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .', data: info });
                      // return res.status(STATUS).send({ msg: "successfully sent you a password reset link", status:'ok',data: info }); 
                 
                 });
-
-               
-
-
-                   
-
-             })   
+    })   
 
  }
 
@@ -275,8 +269,10 @@ export class UserService {
     let roles = '';
     if(request.body.roles){
       roles = request.body.roles
+    }else{
+      roles = 'user';
     }
-    roles = 'user';
+    
 
     const Newuser = new UserModel({ 
       id: new AutoincrementId(UserModel).counter(), 
@@ -1140,6 +1136,7 @@ static updateAsyncUserPreviledges = async function(request,response){
       start_location,
       destination,
       travel_option:drive_option,
+      drive_option,
       no_hours,
       travel_option,
       plan_name,
@@ -1277,10 +1274,66 @@ static updateAsyncUserPreviledges = async function(request,response){
         }),
       );
   }
+   
 
+   static updateNotificationStatus(request,response){
+
+      NotificationModel.find({_id: request.params.id})
+  .then(redId => {
+        if (redId.length <= 0) {
+          return response.status(200).json({
+                  status: 200,
+                  data: [
+                    {
+                      id: '0',
+                      message: 'Data not found',
+                    },
+                  ],
+                });
+              
+        }
+         const { status } = request.body;
+    
+
+
+            NotificationModel.updateOne({_id: request.params.id }, {
+                    
+                      status: 'old'
+                  
+                }).then(data => {
+                  
+                const redflagStatus = data;
+                
+                return response.status(200).json({
+                  status: 200,
+                  data: [
+                    {
+                      id: redflagStatus._id,
+                      message: 'Updated red-flag record’s status',
+                    },
+                  ],
+                });
+              })
+              .catch(err =>
+                response.status(400).json({
+                  status: 400,
+                  error: ErrorHandler.errors().validationError,
+                }),
+              );
+
+  
+      })
+      .catch(error =>
+        response.status(400).send({
+          status: 400,
+          error:ErrorHandler.errors().validationError,
+        }),
+      );
+
+   }
 
   static updateItineraryStatus(request, response) {
-    ItineraryModel.find({id: Number(request.params.id)})
+    ItineraryModel.find({_id: request.params.id})
   .then(redId => {
         if (redId.length <= 0) {
           return response.status(404).json({
@@ -1291,7 +1344,7 @@ static updateAsyncUserPreviledges = async function(request,response){
          const { status } = request.body;
      
 
-            ItineraryModel.updateOne({id: Number(request.params.id) }, {
+            ItineraryModel.updateOne({_id: request.params.id }, {
                     
                       status: status
                   
@@ -1325,6 +1378,57 @@ static updateAsyncUserPreviledges = async function(request,response){
         }),
       );
   }
+
+
+  static updateDriverRatings(request, response) {
+    UserModel.find({email: request.params.id})
+  .then(redId => {
+        if (redId.length <= 0) {
+          return response.status(404).json({
+                      status: 404,
+                      error: 'The status with the given red-flag id does not exists',
+                    });
+        }
+         const { ratings } = request.body;
+
+         let totalAvg = parseInt(redId.ratings_average,10) + parseInt(ratings,10)
+        totalAvg = (totalAvg/2)
+
+            UserModel.updateOne({email: request.params.id }, {
+                    
+                      ratings_average: totalAvg
+                  
+                }).then(data => {
+                  
+                const redflagStatus = data;
+                
+                return response.status(200).json({
+                  status: 200,
+                  data: [
+                    {
+                      id: redflagStatus._id,
+                      message: 'Updated red-flag record’s status',
+                    },
+                  ],
+                });
+              })
+              .catch(err =>
+                response.status(400).json({
+                  status: 400,
+                  error: ErrorHandler.errors().validationError,
+                }),
+              );
+
+  
+      })
+      .catch(error =>
+        response.status(400).send({
+          status: 400,
+          error:ErrorHandler.errors().validationError,
+        }),
+      );
+  }
+
 
 
 
@@ -7686,32 +7790,7 @@ date_created: new Date(),
 
            
 
-          if(user.status=="Unpaid"){
-
-
-             // UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
-             //         username: user.username,
-             //         plan_id:user.plan_id,
-             //         price: user.price,
-             //         date: createdDateOfQuotation.substring(0,10)
-             //        //link: 'https:\/\/' + 'localhost:4000/'   
-             //        //description: description
-             //    },user.email,200)
-
-
-          }else{
-
-            // UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
-            //          username: user.username,
-            //          plan_id:user.plan_id,
-            //          price: user.price,
-            //          date: createdDateOfQuotation.substring(0,10)
-            //     },user.email,200)
-
-            
-          }
-
-
+          
           UserPlanModel.updateMany({ plan_id: request.params.id },{
                                             $set:{  //status:status, 
                                                     "itineries.$[].status":status,
@@ -7721,7 +7800,42 @@ date_created: new Date(),
                                           response.send(err);
                                         } else {
                                           console.log(result)
-                                          return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated itineraries of this plan .' });
+
+
+                                          if(user.status=="Unpaid"){
+
+                                                 
+                                               UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
+                                                       username: user.username,
+                                                       plan_id:user.plan_id,
+                                                       price: user.price,
+                                                       date: createdDateOfQuotation.substring(0,10),
+                                                       link: process.env.DEPLOY_FRONT_URL,   
+                                                      description: "Payment is required"
+                                                  },user.email,200)
+
+
+                                            }else{
+
+                                              UserService.NotificationEmail(request,response,'/views/templates/notification.html', {
+                                                       username: user.username,
+                                                       plan_id:user.plan_id,
+                                                       price: user.price,
+                                                       date: createdDateOfQuotation.substring(0,10),
+                                                       link: process.env.DEPLOY_FRONT_URL,   
+                                                      description: "Payment is required"  
+                                                      
+                                                  },user.email,200)
+
+                                              
+                                            }
+
+
+                                          
+
+
+
+                                          //return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated itineraries of this plan .' });
                                 
                                         }
 
@@ -7793,14 +7907,7 @@ date_created: new Date(),
 
                })     
 
-          //return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .' });
-      // }); 
-    // });
-
-
-
-
-   
+          
   }
 
 

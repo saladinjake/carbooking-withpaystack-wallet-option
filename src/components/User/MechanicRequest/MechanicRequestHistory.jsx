@@ -57,7 +57,7 @@ export  default class SubmittedTicket extends Component {
                                         <br/>
                                               <div className="col-sm-6 text-lg-center text-right pull-right">
                                                     <div className="form-group">
-                                                        <input id="foo-table-input" type="text" placeholder="Search by location" className="form-control input-sm" autocomplete="on" />
+                                                        <input id="foo-table-input" type="text" placeholder="Search by location" className="form-control product-search input-sm" autocomplete="on" />
                                                     </div>
                                                 </div>
                                                 <div className="clearfix"></div>
@@ -82,6 +82,15 @@ export  default class SubmittedTicket extends Component {
                                               
 
                                             </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colSpan="5">
+                                                    <div className="text-right">
+                                                        <ul className="pagination pagination-split m-t-30"></ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
                                         </table>
                                     </div>
 

@@ -108,9 +108,11 @@ class ApiLoginService {
           if( data.data[0].user.isAdmin ){
               window.location.href=admin_url
           }
-          else if(data.data[0].user.roles=='Individual Driver'){
-              window.location.href=driver_dashpane
-          }else if(data.data[0].user.roles=='user' ){
+          // else if(data.data[0].user.roles=='Individual Driver'){
+          //     window.location.href=driver_dashpane
+          // }
+
+          else if(data.data[0].user.roles=='user' ){
               window.location.href=user_dashpane
           } 
 

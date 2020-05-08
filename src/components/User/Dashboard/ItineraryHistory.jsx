@@ -50,6 +50,10 @@ export  default class Dashboard extends Component {
                                 
                                   
                                     <h4 className="text-dark header-title m-t-0">Upcoming Itineraries</h4>
+
+                                    <div className="form-group ">
+                                                        <input id="foo-table-input2" type="text" placeholder="Search by location" className="product-search form-control input-sm" autoComplete="on" />
+                                                    </div>
                                     <p className="text-muted m-b-30 font-13">
                                         
                                     </p>
@@ -59,6 +63,8 @@ export  default class Dashboard extends Component {
                             <div className="m-t-10" style={{border:"1px solid #4c3392"}}></div>
                                        <table id="demo-foo-pagination" data-page-size="5" 
                                            data-search="true" className="table toggle-circle table-hover">
+
+
                                             <thead>
                                                 <tr>
                                                     <th data-toggle="true" className="col-lg-4">Created Date</th>

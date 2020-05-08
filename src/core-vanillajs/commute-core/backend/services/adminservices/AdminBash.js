@@ -29,6 +29,10 @@ let activeUrl = getOnlineUrlConnection();
 
 alertify.set('notifier','position', 'bottom-right');
 
+
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://localhost:12000";
+
 export default class AdminBash{
   static runEndpoints(){
 
@@ -454,10 +458,84 @@ export default class AdminBash{
              datas[3].data[0].partners,
             previledgesRight
             )
-          break;    
-          default:
+          break;
+      case "admin-map":
+          app.style.display="block"
+          
+          let map
+let markers = new Map()
+
+  document.getElementById('gmaps-types').style.opacity=1;
+  document.getElementById('gmaps-types').style.visibility="visible";
+  document.getElementById('gmaps-types').style.display="block"
+  setTimeout(()=>{
+
+    navigator.geolocation.getCurrentPosition(pos => {
+    const { latitude: lat, longitude: lng } = pos.coords
+    map = new google.maps.Map(document.getElementById('gmaps-types'), {
+      center: { lat, lng },
+      zoom: 12
+    })
+  }, err => {
+    console.error(err)
+  })
+
+   let  socket = socketIOClient(
+      // ENDPOINT,
+     "https://demouserapp.commute.ng:12000",
+     
+      // {secure: true}
+        {
+            secure: true // for SSL
+        }
+     );
+  
+  
+  
+  socket.on('locationsUpdate', locations => {
+    const markerToDelete = new Set()
+    markers.forEach((marker,id) =>{
+      marker.setMap(null)
+      markers.delete(id)
+    })
+    locations.forEach(([id, position]) => {
+    
+     if(markers.has(id)){
+      
+     }
+       if((position.lat) && (position.lng)){
+          const marker = new google.maps.Marker({
+          position,
+          map,
+          title:id
+        })
+
+        markers.set(id,marker)
+       }
+        
+       
+     
+
+    })
+  })
+
+  
+
+  setInterval(() => {
+    socket.emit('requestLocations')
+  }, 2000)
+
+  },5000)
+   
+
+
+  
+
+
+          break;     
+      default:
             app.style.display="block"
-             window.location.href='./admin'
+             window.location.href='./admin-dashboard'
              // ApiAdminBotService.runDashboard(datas[0].data[0].users,
               // datas[3].data[0].partners,
               // datas[2].data[0].drivers,

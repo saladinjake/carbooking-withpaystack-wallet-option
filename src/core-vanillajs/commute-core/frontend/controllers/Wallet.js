@@ -38,26 +38,43 @@ function setOldBalance(balance){
 
 }
 
-function searchTable() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("search");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("tablebody1");
-  tr = table.getElementsByTagName("tr");
-  console.log("working")
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
+
+function searchTable(trId=0) {
+
+
+  // $(document).ready(function(){
+
+  // Search all columns
+  $('#foo-table-input').keyup(function(){
+    // Search Text
+    var search = $(this).val();
+
+    // Hide all table tbody rows
+    $('table tbody tr').hide();
+
+    // Count total search result
+    var len = $('table tbody tr:not(.notfound) td:contains("'+search+'")').length;
+
+    if(len > 0){
+      // Searching text in columns and show match row
+      $('table tbody tr:not(.notfound) td:contains("'+search+'")').each(function(){
+        $(this).closest('tr').show();
+      });
+    }else{
+      //$('.notfound').show();
     }
-  }
+
+  });
+
+  
+// // });
+
+// // Case-insensitive searching (Note - remove the below script for Case sensitive search )
+$.expr[":"].contains = $.expr.createPseudo(function(arg) {
+   return function( elem ) {
+     return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+   };
+});
 }
 
 function formatDate(date) {
@@ -68,7 +85,7 @@ function formatDate(date) {
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? '0'+minutes : minutes;
   var strTime = hours + ':' + minutes + ' ' + ampm;
-  return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
+  return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear()  //+ " " + strTime;
 }
 
 function numberWithCommas(x) {

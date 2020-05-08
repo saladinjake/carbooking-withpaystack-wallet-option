@@ -45,6 +45,7 @@ import PartnersEarnings from  "./components/Admin/partnerMgt/users/Earnings"
 import Drivers from "./components/Admin/driverMgt/users/Users";
 import DriverDetail from "./components/Admin/driverMgt/userDetail/UserDetail"
 import CarMgt from './components/Admin/CarMgt/CarMgt';
+import AdminMapTracker from './components/Admin/Map/Map';
 import PlanPackage from "./components/Admin/PlanPackage/Plan/PlanPackage";
 import PlanPackageDetail from "./components/Admin/PlanPackage/PlanPackageDetail/PlanPackageDetail"
 import CarInspection from './components/Admin/CarInspection/users/Users';
@@ -116,13 +117,13 @@ import Forbidden from './containers/403/Forbidden';
 //driver
 
 //mine
-import HomeLoginDriver from './components/Drivers/Driver/Home/Home';
+
+/*import HomeLoginDriver from './components/Drivers/Driver/Home/Home';
 import RegisterDriver from './components/Drivers/Driver/Register/Register';
 import ForgotPasswordDriver from './components/Drivers/Driver/ForgotPassword/ForgotPassword';
 import DashboardDriver from './components/Drivers/Driver/Dashboard/Dashboard';
 import ItineraryHistoryDriver from './components/Drivers/Driver/Dashboard/ItineraryHistory';
 
-//import SingleRecord from './components/User/SingleRecord/SingleRecord';
 
 import MechanicRequestDriver from './components/Drivers/Driver/MechanicRequest/MechanicRequest';
 import ProfileDriver from './components/Drivers/Driver/Profile/Profile';
@@ -138,7 +139,7 @@ import NotificationsDriver from './components/Drivers/Driver/Notifications/notif
  import CompletedTripsContent from './components/Drivers/Driver/Trips/completedTrips';
 import UpcomingTripsContent from './components/Drivers/Driver/Trips/upcomingTrips';
 import TripDetailContent from './components/Drivers/Driver/Trips/tripDetail';
-
+*/
 
 
 
@@ -198,6 +199,9 @@ const Router = () => (
            <Route exact path="/admin-partners" component={Partners} />
           
            <Route exact path="/admin-car-request-view" component={RetrievalEdit} />
+           <Route exact path="/admin-map" component={AdminMapTracker} />
+           
+           <Route exact path="/admin-car-request" component={AdminCarRequest} />
            
            <Route exact path="/admin-car-request" component={AdminCarRequest} />
            <Route exact path="/admin-partners-detail" component={PartnerDetail} />
@@ -248,9 +252,8 @@ const Router = () => (
 
 
 
-
-
-             <Route path="/drivers-home" exact component={HomeLoginDriver} />
+             {/*
+                 <Route path="/drivers-home" exact component={HomeLoginDriver} />
                 <Route path="/drivers-login" component={HomeLoginDriver} />
                 <Route path="/dashboard-driver" component={DashboardDriver} />
                 <Route path="/drivers-signup" component={RegisterDriver} />
@@ -276,6 +279,9 @@ const Router = () => (
                 <Route path="/drivers-upcomingtrips" component={UpcomingTripsContent} />    
                 <Route path="/drivers-tripdetail" component={TripDetailContent} />  
 
+             */}
+
+             
                 
 
 

@@ -151,8 +151,8 @@ export  default class AdminDashboard extends Component {
                                 </p>
 
                                 <div className="table-responsive table-bordered">
-                                    <table className="table table-actions-bar" id="demo-foo-pagination" data-page-size="5" 
-                                           className="table toggle-circle table-hover">
+                                    <table className="table table-actions-bar toggle-circle table-hover" id="demo-foo-pagination" data-page-size="5" 
+                                           >
                                         <thead>
                                             <tr>
                                                 <th>Created</th>

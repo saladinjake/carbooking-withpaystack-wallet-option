@@ -77,6 +77,17 @@ export  default class SubmittedSOS extends Component {
                                             <tbody id="fetched-data-sos">
                                                 
                                             </tbody>
+
+                                             
+                                        <tfoot>
+                                            <tr>
+                                                <td colSpan="5">
+                                                    <div className="text-right">
+                                                        <ul className="pagination pagination-split m-t-30"></ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
                                         </table>
                                     </div>
 

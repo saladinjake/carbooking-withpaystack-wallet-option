@@ -31,7 +31,7 @@ export class Home extends Component {
           <h1 className="text-custom m-t-40 m-b-20 text-left" style={{fontWeight:'700', letterSpacing:"3px", color: "rgb(126, 87, 194)"}}>Sign in</h1>
                 <a href="./signup" className="btn-link" style={{textDecoration:"none"}}>or create an account</a>
 
-                <a href="./drivers-login" className="btn-link pull-right" style={{textDecoration:"none"}}>Drivers Login</a>
+               
         </div>
 
                       <div className="panel-body">
@@ -109,7 +109,7 @@ export class Home extends Component {
                                                     <img style={{width:"30px",height:"30px"}} src="public/assets/images/instagram.png"  />
                                                   </a>
 
-                                                  <a style={{width:"60px",marginRight:"5px", height:"40px"}}   href="http://localhost:12000/api/v1/auth/facebook" className="">
+                                                  <a style={{width:"60px",marginRight:"5px", height:"40px"}}   href="https://demouserapp.commute.ng:12000/api/v1/auth/facebook/" className="">
                                                     <img style={{width:"25px",height:"25px"}} src="public/assets/images/facebook2.png"  />
                                                   </a>
                                     </div>

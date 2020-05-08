@@ -237,6 +237,13 @@ this.router.get('/email/smtp/template', (req, res, next) => {
       TokenVerification.userAuthentication,
       UserController.updateItineraryStatus,
     );
+
+
+     this.router.put(
+      '/user/:id/ratings',
+      TokenVerification.userAuthentication,
+      UserController.updateDriverRatings,
+    );
     
 
 
@@ -1011,6 +1018,11 @@ this.router.get('/email/smtp/template', (req, res, next) => {
       TokenVerification.adminAuthentication,
       UserController.getrevokecars
     );
+
+     this.router.put('/notification/:id',
+      TokenVerification.userAuthentication,
+      UserController.updateNotificationStatus
+      )
 
 
 

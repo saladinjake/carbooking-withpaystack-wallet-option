@@ -1,5 +1,9 @@
 import DriversAssignementModel from '../models/DriversAssignmentModel';
 import $ from 'jquery';
+
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://localhost:12000";
+
 window.viewRecordDriverUserItinsDetail =(el) =>{
     
     document.getElementById('first-view').style.display="none"

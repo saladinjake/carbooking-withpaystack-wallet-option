@@ -3,7 +3,7 @@
 
 import SOSModel from '../models/SOSModel';
 import $ from 'jquery';
-const SUCCESS_URL= '/sos-history';
+const SUCCESS_URL= './sos-history';
 const POST_URL = process.env.DEPLOY_BACK_URL+"/sos";
 const notification_url = process.env.DEPLOY_BACK_URL+"/notifications";
 import Recording from './SOSRecorder';
@@ -37,44 +37,60 @@ function GateKeepersForUser() {
 }
 
 export default class SOS{
-  constructor(){}
+	constructor(){}
 
 
-  seeAllSOSNotifications(){
+	seeAllSOSNotifications(){
 
-  }
+	}
 
-  static index(){
-    
-  }
+	static index(){
+		
+	}
 
-  
-  attachEvents(){
+	
+	attachEvents(){
      if(localStorage.getItem('userToken')){
-    if (document.getElementById('sos-page')) {
+	  if (document.getElementById('sos-page')) {
 
+     
 
-       // new Recording();
-      document.getElementById("cancle-sos").addEventListener("click", function(e){
+     
+			// $("#show-map").hide();
+			//  $(document).ready(function() {
+			// 	// get location button functionality
+			// 	$("#get-location-btn").click(function(event){
+			// 		event.preventDefault();
+   //       
+   //        document.getElementById("record").disabled=false;
+   //        document.getElementById("record").click()
+			// 		$("#hide-on-click").hide();
+			// 		$("#show-map").show();
+			// 	});
+			// });
+
+       new Recording();
+
+			document.getElementById("cancle-sos").addEventListener("click", function(e){
                 window.location.href="./dashboard"
             })
             
 
 
-    }
+	  }
 
-    if(document.getElementById("view-sos")){
+	  if(document.getElementById("view-sos")){
          this.indexController()
-    }
+	  }
 
      }else{
        
      }
 
-  }
+	}
 
 
-  static render(items) {
+	static render(items) {
     const user = JSON.parse(localStorage.getItem('userToken'))
     const recordItems = document.getElementById('fetched-data-sos');
     let className;
@@ -115,27 +131,27 @@ export default class SOS{
 
 
 
-  indexController(){
+	indexController(){
        let that = this;
     let dataPromise = SOSModel.getAllUserSOS();
     dataPromise
       .then(data => {
-        // let newData = data[0].data[0].redFlags
+      	// let newData = data[0].data[0].redFlags
         SOS.render(data);
       })
       .catch(err => console.log(err));
-  }
+	}
 
 
-    
+		
 
 
 
-  
+	
 
-    
+		
 
-  
+	
 }
 
 

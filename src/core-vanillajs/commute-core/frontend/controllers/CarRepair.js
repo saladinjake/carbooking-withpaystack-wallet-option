@@ -4,6 +4,47 @@ import RepairModel from '../models/RepairsModel';
 import setConfigData from '../helpers/localStorageData';
 import $ from 'jquery';
 
+
+function searchTable(trId=0) {
+
+
+  // $(document).ready(function(){
+
+  // Search all columns
+  $('#foo-table-input').keyup(function(){
+    // Search Text
+    var search = $(this).val();
+
+    // Hide all table tbody rows
+    $('table tbody tr').hide();
+
+    // Count total search result
+    var len = $('table tbody tr:not(.notfound) td:contains("'+search+'")').length;
+
+    if(len > 0){
+      // Searching text in columns and show match row
+      $('table tbody tr:not(.notfound) td:contains("'+search+'")').each(function(){
+        $(this).closest('tr').show();
+      });
+    }else{
+      //$('.notfound').show();
+    }
+
+  });
+
+  
+// // });
+
+// // Case-insensitive searching (Note - remove the below script for Case sensitive search )
+$.expr[":"].contains = $.expr.createPseudo(function(arg) {
+   return function( elem ) {
+     return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+   };
+});
+}
+
+
+
 //get-cars-info-use
 
 function formatDate(date) {
@@ -148,8 +189,8 @@ class IReporterWebsiteRepairs {
 
   });
 
-   document.getElementById('carbrand').innerHTML=modelNameOption
-
+   // document.getElementById('carbrand').innerHTML=modelNameOption
+ $("#carbrand").append(modelNameOption)
           
        // }
       })
@@ -167,6 +208,11 @@ class IReporterWebsiteRepairs {
 
 
   static render(items) {
+
+    document.getElementById("foo-table-input").addEventListener("keyup",(e)=>{
+     searchTable() 
+   })
+
     const recordItems = document.getElementById('fetched-data-repair');
     const user = JSON.parse(localStorage.getItem('userToken'));
     let eachRecord;

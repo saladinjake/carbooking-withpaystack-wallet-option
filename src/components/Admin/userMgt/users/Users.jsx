@@ -75,7 +75,7 @@ export  default class Users extends Component {
                                         </form>
                                     </div>
                                     <div className="col-sm-4">
-                                        <a href="#" id="add-new"
+                                        <a href="#" id="add-new" data-type="page-transition"
                                             className="btn btn-default btn-md waves-effect waves-light m-b-30"
                                             data-animation="fadein" data-plugin="custommodal" data-overlaySpeed="200"
                                             data-overlayColor="#36404a"><i className="md md-add"></i> Add User</a>

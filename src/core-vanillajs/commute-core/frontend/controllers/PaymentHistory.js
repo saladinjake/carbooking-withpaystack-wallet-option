@@ -31,27 +31,45 @@ function formatAmount(x) {
 }
 
 
-function searchTable() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("search");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("tablebody1");
-  tr = table.getElementsByTagName("tr");
-  console.log("working")
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
+function searchTable(trId=0) {
+
+
+  // $(document).ready(function(){
+
+  // Search all columns
+  $('#demo-foo-search').keyup(function(){
+    // Search Text
+    var search = $(this).val();
+
+    // Hide all table tbody rows
+    $('table tbody tr').hide();
+
+    // Count total search result
+    var len = $('table tbody tr:not(.notfound) td:contains("'+search+'")').length;
+
+    if(len > 0){
+      // Searching text in columns and show match row
+      $('table tbody tr:not(.notfound) td:contains("'+search+'")').each(function(){
+        $(this).closest('tr').show();
+      });
+    }else{
+      //$('.notfound').show();
     }
-  }
+
+  });
+
+  
+// // });
+
+// // Case-insensitive searching (Note - remove the below script for Case sensitive search )
+$.expr[":"].contains = $.expr.createPseudo(function(arg) {
+   return function( elem ) {
+     return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+   };
+});
 }
+
+
 
 
 function numberWithCommas(x) {
@@ -79,9 +97,6 @@ class PaymentHistory {
   
   attachEvents() {
 
-   //  document.getElementById("demo-foo-search").addEventListener("keyup",(e)=>{
-   //   searchTable() 
-   // })
    if(localStorage.getItem('userToken')){
     
     
@@ -97,7 +112,7 @@ class PaymentHistory {
        // document.getElementById("balance-seen").innerHTML ="₦ "+ formatAmount( user.user.balance)
        document.getElementById("balance").innerHTML ="₦ "+  user.user.balance //numberWithCommas(user.user.balance) ;
        
-    const tablebody = document.getElementById("tablebody1");
+    const tablebody = document.getElementById("tablebody1a");
     let eachRecord ='';
 
     let that = this;
@@ -135,6 +150,13 @@ class PaymentHistory {
           
       })
       .catch(err => console.log(err.msg));
+
+
+    document.getElementById("demo-foo-search").addEventListener("keyup",(e)=>{
+     searchTable() 
+   })
+
+    
     }
 
   }

@@ -569,7 +569,9 @@ inspectionTime: '12:02:AM',
 
 
 
-carDescription:'describe me',
+carDescription:`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget lectus a sem dapibus dignissim. Etiam eget mauris sollicitudin, elementum lectus id, sagittis lorem. Integer ac consequat ipsum, id tincidunt velit. Nam nunc velit, molestie a euismod quis, consectetur ut massa. Nunc libero elit, posuere eu nisl tempor, vehicula rutrum arcu. Integer imperdiet nisl in turpis convallis gravida. Sed dictum venenatis vehicula. Aliquam erat volutpat. Curabitur ac ante ac leo mattis porta.
+
+Duis sit amet neque eu nunc tempus eleifend. In cursus euismod dui vitae fermentum. Etiam tempus consectetur imperdiet. Nullam purus nulla, fringilla quis eleifend quis, vestibulum sit amet risus. Mauris at blandit nulla, ac dapibus dui. Aliquam auctor consectetur tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi imperdiet viverra turpis, ac ultricies nunc eleifend vitae. Nunc nec massa nec ligula consectetur sagittis vitae eget nulla.`,
 
 imagePath: 'https://commute-bucket.s3.amazonaws.com/car2.jpg',
 
@@ -656,7 +658,9 @@ inspectionDate: '12/12/12',
 inspectionTime: '12:02:AM',
 
 
-carDescription:'describe me',
+carDescription:`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget lectus a sem dapibus dignissim. Etiam eget mauris sollicitudin, elementum lectus id, sagittis lorem. Integer ac consequat ipsum, id tincidunt velit. Nam nunc velit, molestie a euismod quis, consectetur ut massa. Nunc libero elit, posuere eu nisl tempor, vehicula rutrum arcu. Integer imperdiet nisl in turpis convallis gravida. Sed dictum venenatis vehicula. Aliquam erat volutpat. Curabitur ac ante ac leo mattis porta.
+
+Duis sit amet neque eu nunc tempus eleifend. In cursus euismod dui vitae fermentum. Etiam tempus consectetur imperdiet. Nullam purus nulla, fringilla quis eleifend quis, vestibulum sit amet risus. Mauris at blandit nulla, ac dapibus dui. Aliquam auctor consectetur tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi imperdiet viverra turpis, ac ultricies nunc eleifend vitae. Nunc nec massa nec ligula consectetur sagittis vitae eget nulla.`,
 
 imagePath: 'https://commute-bucket.s3.amazonaws.com/car3.jpg',
 
@@ -671,7 +675,9 @@ partnerEmail:  'juwavictor@gmail.com',
         color:'white',
         model: 'abarth',
         model_make_id:'abarth',
-        description: 'dummy description for this car',
+        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget lectus a sem dapibus dignissim. Etiam eget mauris sollicitudin, elementum lectus id, sagittis lorem. Integer ac consequat ipsum, id tincidunt velit. Nam nunc velit, molestie a euismod quis, consectetur ut massa. Nunc libero elit, posuere eu nisl tempor, vehicula rutrum arcu. Integer imperdiet nisl in turpis convallis gravida. Sed dictum venenatis vehicula. Aliquam erat volutpat. Curabitur ac ante ac leo mattis porta.
+
+Duis sit amet neque eu nunc tempus eleifend. In cursus euismod dui vitae fermentum. Etiam tempus consectetur imperdiet. Nullam purus nulla, fringilla quis eleifend quis, vestibulum sit amet risus. Mauris at blandit nulla, ac dapibus dui. Aliquam auctor consectetur tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi imperdiet viverra turpis, ac ultricies nunc eleifend vitae. Nunc nec massa nec ligula consectetur sagittis vitae eget nulla.`,
         inspection_detail:'CMT-INSP-9943043',
         
         partner_id:'CMT-PARTNER-12345',
@@ -744,7 +750,10 @@ inspectionDate: '12/12/12',
 inspectionTime: '12:02:AM',
 
 
-carDescription:'describe me',
+carDescription:`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget lectus a sem dapibus dignissim. Etiam eget mauris sollicitudin, elementum lectus id, sagittis lorem. Integer ac consequat ipsum, id tincidunt velit. Nam nunc velit, molestie a euismod quis, consectetur ut massa. Nunc libero elit, posuere eu nisl tempor, vehicula rutrum arcu. Integer imperdiet nisl in turpis convallis gravida. Sed dictum venenatis vehicula. Aliquam erat volutpat. Curabitur ac ante ac leo mattis porta.
+
+Duis sit amet neque eu nunc tempus eleifend. In cursus euismod dui vitae fermentum. Etiam tempus consectetur imperdiet. Nullam purus nulla, fringilla quis eleifend quis, vestibulum sit amet risus. Mauris at blandit nulla, ac dapibus dui. Aliquam auctor consectetur tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi imperdiet viverra turpis, ac ultricies nunc eleifend vitae. Nunc nec massa nec ligula consectetur sagittis vitae eget nulla.`,
+
 
 imagePath: 'https://commute-bucket.s3.amazonaws.com/car2.jpg',
 
@@ -830,7 +839,9 @@ inspectionDate: '12/12/12',
 
 inspectionTime: '12:02:AM',
 
-carDescription:'describe me',
+carDescription:`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget lectus a sem dapibus dignissim. Etiam eget mauris sollicitudin, elementum lectus id, sagittis lorem. Integer ac consequat ipsum, id tincidunt velit. Nam nunc velit, molestie a euismod quis, consectetur ut massa. Nunc libero elit, posuere eu nisl tempor, vehicula rutrum arcu. Integer imperdiet nisl in turpis convallis gravida. Sed dictum venenatis vehicula. Aliquam erat volutpat. Curabitur ac ante ac leo mattis porta.
+
+Duis sit amet neque eu nunc tempus eleifend. In cursus euismod dui vitae fermentum. Etiam tempus consectetur imperdiet. Nullam purus nulla, fringilla quis eleifend quis, vestibulum sit amet risus. Mauris at blandit nulla, ac dapibus dui. Aliquam auctor consectetur tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi imperdiet viverra turpis, ac ultricies nunc eleifend vitae. Nunc nec massa nec ligula consectetur sagittis vitae eget nulla.`,
 
 imagePath: 'https://commute-bucket.s3.amazonaws.com/car5.jpg',
 
@@ -1159,6 +1170,8 @@ partnerEmail:  'juwavictor@gmail.com',
       //   view_bookings:'yes',
 
       // }],
+
+      
 
       
       balance:'480000',

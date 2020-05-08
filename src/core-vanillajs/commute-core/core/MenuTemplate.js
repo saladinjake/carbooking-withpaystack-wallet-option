@@ -197,6 +197,12 @@ export default class MenuTemplate{
                                         Management </span> </a>
                         </li>
 
+                        
+                        <li class="has_sub">
+                            <a href="./admin-map" class="waves-effect"><i class="ti-car"></i> <span>Vehicle Live Tracker
+                                </span></a>    
+                        </li>
+
                         <li class="has_sub ">
                                 <a data-type="page-transition" href="./admin-mech" class="waves-effect"><i class="fa fa-wrench"></i> <span> Mechanic Request
                                      </span> </a>

@@ -9,7 +9,7 @@ let MechSchema = new mongoose.Schema({
           default: 0
         },
         user_id:{
-          type:Number
+          type:String,
         }, location:{
           type: String
         }, address:{

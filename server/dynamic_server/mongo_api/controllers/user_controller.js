@@ -650,6 +650,15 @@ export default class UserController {
       return  UserService.createPaymentDetail(request,response)
   }
 
+  static updateNotificationStatus(request,response){
+    return  UserService.updateNotificationStatus(request,response)
+
+  }
+
+  static updateDriverRatings(request,response){
+    return  UserService.updateDriverRatings(request,response)
+  }
+
  
 
 
