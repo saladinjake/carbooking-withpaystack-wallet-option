@@ -4,7 +4,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 var cov_23y327c66p = function () {
   var path = "C:\\Users\\Obiajulu\\Desktop\\commute\\commute-dev-Proj-repo\\server\\dynamic_server\\mongo_api\\App.js";
-  var hash = "386c196ec6523419b6583215fa64319093190889";
+  var hash = "5db09fca1983094308cf2611c64dc8056d3f9a1b";
   var global = new Function("return this")();
   var gcv = "__coverage__";
   var coverageData = {
@@ -502,16 +502,6 @@ var cov_23y327c66p = function () {
       },
       "49": {
         start: {
-          line: 200,
-          column: 26
-        },
-        end: {
-          line: 200,
-          column: 48
-        }
-      },
-      "50": {
-        start: {
           line: 201,
           column: 26
         },
@@ -520,7 +510,7 @@ var cov_23y327c66p = function () {
           column: 15
         }
       },
-      "51": {
+      "50": {
         start: {
           line: 216,
           column: 12
@@ -530,7 +520,7 @@ var cov_23y327c66p = function () {
           column: 2
         }
       },
-      "52": {
+      "51": {
         start: {
           line: 218,
           column: 24
@@ -540,7 +530,7 @@ var cov_23y327c66p = function () {
           column: 9
         }
       },
-      "53": {
+      "52": {
         start: {
           line: 223,
           column: 8
@@ -550,7 +540,7 @@ var cov_23y327c66p = function () {
           column: 36
         }
       },
-      "54": {
+      "53": {
         start: {
           line: 224,
           column: 8
@@ -560,7 +550,7 @@ var cov_23y327c66p = function () {
           column: 18
         }
       },
-      "55": {
+      "54": {
         start: {
           line: 234,
           column: 20
@@ -570,7 +560,7 @@ var cov_23y327c66p = function () {
           column: 29
         }
       },
-      "56": {
+      "55": {
         start: {
           line: 237,
           column: 0
@@ -580,7 +570,7 @@ var cov_23y327c66p = function () {
           column: 2
         }
       },
-      "57": {
+      "56": {
         start: {
           line: 238,
           column: 2
@@ -590,7 +580,7 @@ var cov_23y327c66p = function () {
           column: 50
         }
       },
-      "58": {
+      "57": {
         start: {
           line: 239,
           column: 2
@@ -600,7 +590,7 @@ var cov_23y327c66p = function () {
           column: 3
         }
       },
-      "59": {
+      "58": {
         start: {
           line: 240,
           column: 4
@@ -610,7 +600,7 @@ var cov_23y327c66p = function () {
           column: 28
         }
       },
-      "60": {
+      "59": {
         start: {
           line: 242,
           column: 2
@@ -620,7 +610,7 @@ var cov_23y327c66p = function () {
           column: 60
         }
       },
-      "61": {
+      "60": {
         start: {
           line: 242,
           column: 31
@@ -630,7 +620,7 @@ var cov_23y327c66p = function () {
           column: 52
         }
       },
-      "62": {
+      "61": {
         start: {
           line: 246,
           column: 2
@@ -640,7 +630,7 @@ var cov_23y327c66p = function () {
           column: 4
         }
       },
-      "63": {
+      "62": {
         start: {
           line: 247,
           column: 4
@@ -650,7 +640,7 @@ var cov_23y327c66p = function () {
           column: 35
         }
       },
-      "64": {
+      "63": {
         start: {
           line: 250,
           column: 2
@@ -660,7 +650,7 @@ var cov_23y327c66p = function () {
           column: 4
         }
       },
-      "65": {
+      "64": {
         start: {
           line: 251,
           column: 4
@@ -670,7 +660,7 @@ var cov_23y327c66p = function () {
           column: 59
         }
       },
-      "66": {
+      "65": {
         start: {
           line: 266,
           column: 2
@@ -680,7 +670,7 @@ var cov_23y327c66p = function () {
           column: 5
         }
       },
-      "67": {
+      "66": {
         start: {
           line: 267,
           column: 4
@@ -690,7 +680,7 @@ var cov_23y327c66p = function () {
           column: 7
         }
       },
-      "68": {
+      "67": {
         start: {
           line: 274,
           column: 2
@@ -700,7 +690,7 @@ var cov_23y327c66p = function () {
           column: 5
         }
       },
-      "69": {
+      "68": {
         start: {
           line: 275,
           column: 4
@@ -710,7 +700,7 @@ var cov_23y327c66p = function () {
           column: 46
         }
       },
-      "70": {
+      "69": {
         start: {
           line: 278,
           column: 2
@@ -720,7 +710,7 @@ var cov_23y327c66p = function () {
           column: 5
         }
       },
-      "71": {
+      "70": {
         start: {
           line: 279,
           column: 4
@@ -730,7 +720,7 @@ var cov_23y327c66p = function () {
           column: 35
         }
       },
-      "72": {
+      "71": {
         start: {
           line: 282,
           column: 4
@@ -740,7 +730,7 @@ var cov_23y327c66p = function () {
           column: 56
         }
       },
-      "73": {
+      "72": {
         start: {
           line: 285,
           column: 4
@@ -750,7 +740,7 @@ var cov_23y327c66p = function () {
           column: 7
         }
       },
-      "74": {
+      "73": {
         start: {
           line: 286,
           column: 6
@@ -760,7 +750,7 @@ var cov_23y327c66p = function () {
           column: 55
         }
       },
-      "75": {
+      "74": {
         start: {
           line: 287,
           column: 24
@@ -770,7 +760,7 @@ var cov_23y327c66p = function () {
           column: 71
         }
       },
-      "76": {
+      "75": {
         start: {
           line: 289,
           column: 6
@@ -780,7 +770,7 @@ var cov_23y327c66p = function () {
           column: 25
         }
       },
-      "77": {
+      "76": {
         start: {
           line: 299,
           column: 2
@@ -790,7 +780,7 @@ var cov_23y327c66p = function () {
           column: 4
         }
       },
-      "78": {
+      "77": {
         start: {
           line: 300,
           column: 4
@@ -800,7 +790,7 @@ var cov_23y327c66p = function () {
           column: 39
         }
       },
-      "79": {
+      "78": {
         start: {
           line: 301,
           column: 4
@@ -810,7 +800,7 @@ var cov_23y327c66p = function () {
           column: 28
         }
       },
-      "80": {
+      "79": {
         start: {
           line: 303,
           column: 4
@@ -820,24 +810,24 @@ var cov_23y327c66p = function () {
           column: 33
         }
       },
+      "80": {
+        start: {
+          line: 321,
+          column: 0
+        },
+        end: {
+          line: 323,
+          column: 3
+        }
+      },
       "81": {
         start: {
-          line: 312,
+          line: 322,
           column: 4
         },
         end: {
-          line: 312,
-          column: 83
-        }
-      },
-      "82": {
-        start: {
-          line: 312,
-          column: 36
-        },
-        end: {
-          line: 312,
-          column: 81
+          line: 322,
+          column: 52
         }
       }
     },
@@ -1254,25 +1244,25 @@ var cov_23y327c66p = function () {
         name: "(anonymous_17)",
         decl: {
           start: {
-            line: 312,
-            column: 30
+            line: 321,
+            column: 26
           },
           end: {
-            line: 312,
-            column: 31
+            line: 321,
+            column: 27
           }
         },
         loc: {
           start: {
-            line: 312,
-            column: 36
+            line: 321,
+            column: 32
           },
           end: {
-            line: 312,
-            column: 81
+            line: 323,
+            column: 1
           }
         },
-        line: 312
+        line: 321
       }
     },
     branchMap: {
@@ -1482,8 +1472,7 @@ var cov_23y327c66p = function () {
       "78": 0,
       "79": 0,
       "80": 0,
-      "81": 0,
-      "82": 0
+      "81": 0
     },
     f: {
       "0": 0,
@@ -1512,7 +1501,7 @@ var cov_23y327c66p = function () {
       "3": [0, 0]
     },
     _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
-    hash: "386c196ec6523419b6583215fa64319093190889"
+    hash: "5db09fca1983094308cf2611c64dc8056d3f9a1b"
   };
   var coverage = global[gcv] || (global[gcv] = {});
 
@@ -1767,9 +1756,9 @@ function () {
       }
 
       var app = (cov_23y327c66p.s[48]++, that.express); // Listen both http & https ports
+      // const httpServer = http.createServer(app);
 
-      var httpServer = (cov_23y327c66p.s[49]++, http.createServer(app));
-      var httpsServer = (cov_23y327c66p.s[50]++, https.createServer({
+      var httpsServer = (cov_23y327c66p.s[49]++, https.createServer({
         key: _fs["default"].readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
         cert: _fs["default"].readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
         requestCert: false,
@@ -1779,119 +1768,117 @@ function () {
       // }); 
       // const io = socketIo(httpServer);
 
-      var io = (cov_23y327c66p.s[51]++, require("socket.io")(httpsServer, {
+      var io = (cov_23y327c66p.s[50]++, require("socket.io")(httpsServer, {
         handlePreflightRequest: function handlePreflightRequest(req, res) {
           cov_23y327c66p.f[7]++;
-          var headers = (cov_23y327c66p.s[52]++, {
+          var headers = (cov_23y327c66p.s[51]++, {
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
             "Access-Control-Allow-Origin": req.headers.origin,
             //or the specific origin you want to give access to,
             "Access-Control-Allow-Credentials": true
           });
-          cov_23y327c66p.s[53]++;
+          cov_23y327c66p.s[52]++;
           res.writeHead(200, headers);
-          cov_23y327c66p.s[54]++;
+          cov_23y327c66p.s[53]++;
           res.end();
         }
       }));
       var interval;
-      var locationMap = (cov_23y327c66p.s[55]++, new Map());
-      cov_23y327c66p.s[56]++;
+      var locationMap = (cov_23y327c66p.s[54]++, new Map());
+      cov_23y327c66p.s[55]++;
       io.on('connection', function (socket) {
         cov_23y327c66p.f[8]++;
-        cov_23y327c66p.s[57]++;
+        cov_23y327c66p.s[56]++;
         console.log("New client connected" + socket.id);
-        cov_23y327c66p.s[58]++;
+        cov_23y327c66p.s[57]++;
 
         if (interval) {
           cov_23y327c66p.b[3][0]++;
-          cov_23y327c66p.s[59]++;
+          cov_23y327c66p.s[58]++;
           clearInterval(interval);
         } else {
           cov_23y327c66p.b[3][1]++;
         }
 
-        cov_23y327c66p.s[60]++;
+        cov_23y327c66p.s[59]++;
         interval = setInterval(function () {
           cov_23y327c66p.f[9]++;
-          cov_23y327c66p.s[61]++;
+          cov_23y327c66p.s[60]++;
           return getApiAndEmit(socket);
         }, 1000);
-        cov_23y327c66p.s[62]++;
+        cov_23y327c66p.s[61]++;
         socket.on('updateLocation', function (pos) {
           cov_23y327c66p.f[10]++;
-          cov_23y327c66p.s[63]++;
+          cov_23y327c66p.s[62]++;
           locationMap.set(socket.id, pos);
         });
-        cov_23y327c66p.s[64]++;
+        cov_23y327c66p.s[63]++;
         socket.on('requestLocations', function () {
           cov_23y327c66p.f[11]++;
-          cov_23y327c66p.s[65]++;
+          cov_23y327c66p.s[64]++;
           socket.emit('locationsUpdate', Array.from(locationMap));
         }); //server communication for chat message
         //Someone is typing
 
-        cov_23y327c66p.s[66]++;
+        cov_23y327c66p.s[65]++;
         socket.on("typing", function (data) {
           cov_23y327c66p.f[12]++;
-          cov_23y327c66p.s[67]++;
+          cov_23y327c66p.s[66]++;
           socket.broadcast.emit("notifyTyping", {
             user: data.user,
             message: data.message
           });
         }); //when soemone stops typing
 
-        cov_23y327c66p.s[68]++;
+        cov_23y327c66p.s[67]++;
         socket.on("stopTyping", function () {
           cov_23y327c66p.f[13]++;
-          cov_23y327c66p.s[69]++;
+          cov_23y327c66p.s[68]++;
           socket.broadcast.emit("notifyStopTyping");
         });
-        cov_23y327c66p.s[70]++;
+        cov_23y327c66p.s[69]++;
         socket.on("chat message", function (msg) {
           cov_23y327c66p.f[14]++;
-          cov_23y327c66p.s[71]++;
+          cov_23y327c66p.s[70]++;
           console.log("message: " + msg); //broadcast message to everyone in port:5000 except yourself.
 
-          cov_23y327c66p.s[72]++;
+          cov_23y327c66p.s[71]++;
           socket.broadcast.emit("received", {
             message: msg
           }); //save chat to the database
 
-          cov_23y327c66p.s[73]++;
+          cov_23y327c66p.s[72]++;
           connect.then(function (db) {
             cov_23y327c66p.f[15]++;
-            cov_23y327c66p.s[74]++;
+            cov_23y327c66p.s[73]++;
             console.log("connected correctly to the server");
-            var chatMessage = (cov_23y327c66p.s[75]++, new Chat({
+            var chatMessage = (cov_23y327c66p.s[74]++, new Chat({
               message: msg,
               sender: "Anonymous"
             }));
-            cov_23y327c66p.s[76]++;
+            cov_23y327c66p.s[75]++;
             chatMessage.save();
           });
         });
-        cov_23y327c66p.s[77]++;
+        cov_23y327c66p.s[76]++;
         socket.on('disconnect', function () {
           cov_23y327c66p.f[16]++;
-          cov_23y327c66p.s[78]++;
+          cov_23y327c66p.s[77]++;
           console.log("Client disconnected");
-          cov_23y327c66p.s[79]++;
+          cov_23y327c66p.s[78]++;
           clearInterval(interval);
-          cov_23y327c66p.s[80]++;
+          cov_23y327c66p.s[79]++;
           locationMap["delete"](socket.id);
         });
-      });
-      cov_23y327c66p.s[81]++;
+      }); // httpsServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
+      // httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
+
+      cov_23y327c66p.s[80]++;
       httpsServer.listen(12000, function () {
         cov_23y327c66p.f[17]++;
-        cov_23y327c66p.s[82]++;
-        return console.log("Listening on port ".concat(that.port));
-      }); // httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
-      // httpsServer.listen(12000, () => {
-      //     console.log('HTTPS Server running on port 443');
-      // });
-      // io.listen(
+        cov_23y327c66p.s[81]++;
+        console.log('HTTPS Server running on port 443');
+      }); // io.listen(
       //    // that.express.listen(that.port, err => {
       //    //    if (err) {
       //    //      return console.log(err);

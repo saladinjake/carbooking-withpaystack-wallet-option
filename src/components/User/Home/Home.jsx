@@ -105,7 +105,7 @@ export class Home extends Component {
                                                 
                                                   </a>
 
-                                                   <a style={{width:"60px",marginRight:"5px", height:"40px"}} href="http://localhost:12000/api/v1/auth/instagram" className="">
+                                                   <a style={{width:"60px",marginRight:"5px", height:"40px"}} href="https://demouserapp.commute.ng:12000/api/v1/auth/instagram" className="">
                                                     <img style={{width:"30px",height:"30px"}} src="public/assets/images/instagram.png"  />
                                                   </a>
 

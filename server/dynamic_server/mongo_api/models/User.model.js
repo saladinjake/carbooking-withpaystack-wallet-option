@@ -38,6 +38,7 @@ let UserSchema = new mongoose.Schema({
       },
       ratings_average:{
         type:String,
+        default:0
       },
 
       status:{
@@ -391,6 +392,8 @@ let UserSchema = new mongoose.Schema({
         socket_id: {
           type: String
         },
+
+
   
 
       },{

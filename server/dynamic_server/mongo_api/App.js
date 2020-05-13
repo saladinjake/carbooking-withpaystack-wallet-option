@@ -198,13 +198,13 @@ class MongoAppDemo {
      // Listen both http & https ports
 
        const httpServer = http.createServer(app);
-      const httpsServer = https.createServer({
-         key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
-          cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
+      // const httpsServer = https.createServer({
+      //    key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
+      //     cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
         
-         requestCert: false, 
-         rejectUnauthorized: false 
-        }, app);
+      //    requestCert: false, 
+      //    rejectUnauthorized: false 
+      //   }, app);
 
 //  httpServer.listen(12000, () => {
 //     console.log('HTTP Server running on port 80');
@@ -213,7 +213,8 @@ class MongoAppDemo {
 
 // const io = socketIo(httpServer);
 
- const io = require("socket.io")(httpsServer, {
+
+ const io = require("socket.io")(httpServer, {
     handlePreflightRequest: (req, res) => {
         const headers = {
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
@@ -309,7 +310,7 @@ io.on('connection', socket => {
 
 
 
-    httpsServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
+    httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
 
   // httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
 
@@ -322,6 +323,8 @@ io.on('connection', socket => {
 //     console.log('HTTPS Server running on port 443');
 // });
    
+
+
 
 
 

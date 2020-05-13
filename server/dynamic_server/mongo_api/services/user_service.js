@@ -1389,10 +1389,17 @@ static updateAsyncUserPreviledges = async function(request,response){
                       error: 'The status with the given red-flag id does not exists',
                     });
         }
+        let totalAvg= 0
          const { ratings } = request.body;
+         if(!parseInt(redId.ratings_average,10)){
+              totalAvg = parseInt(redId.ratings_average,10) + parseInt(ratings,10)
+       
+         }else{
+           totalAvg = parseInt(redId.ratings_average,10) + parseInt(ratings,10)
+       
+         }
 
-         let totalAvg = parseInt(redId.ratings_average,10) + parseInt(ratings,10)
-        totalAvg = (totalAvg/2)
+          totalAvg = (totalAvg/2)
 
             UserModel.updateOne({email: request.params.id }, {
                     

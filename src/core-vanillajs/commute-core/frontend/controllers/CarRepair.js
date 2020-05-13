@@ -172,6 +172,7 @@ class IReporterWebsiteRepairs {
         //if (data.status === 200) {
            let modelNameOptionX =[]
               let cars = data.data[0].carInfo;
+              console.log(cars)
 
               cars.map((item)=>{
                    modelNameOptionX.push(item.car_name)
