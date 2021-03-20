@@ -120,9 +120,9 @@ var cov_15l6vld4mw = function () {
   return coverage[path] = coverageData;
 }();
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var Promise = (cov_15l6vld4mw.s[0]++, require('bluebird'));
 var FacebookSettingSchema = (cov_15l6vld4mw.s[1]++, new _mongoose["default"].Schema({

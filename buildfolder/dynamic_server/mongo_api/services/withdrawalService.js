@@ -468,6 +468,10 @@ var cov_5b5scrv22 = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
 var uuidv4 = (cov_5b5scrv22.s[0]++, require('uuid/v4'));
 var crypto = (cov_5b5scrv22.s[1]++, require('crypto'));
 var moment = (cov_5b5scrv22.s[2]++, require('moment-timezone'));
@@ -479,7 +483,7 @@ var Transaction = (cov_5b5scrv22.s[7]++, require('../models/transaction.model'))
 
 function simulateGatewayCall(card, amount) {
   var status, hex, auth_code;
-  return regeneratorRuntime.async(function simulateGatewayCall$(_context) {
+  return _regenerator["default"].async(function simulateGatewayCall$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
@@ -518,21 +522,21 @@ cov_5b5scrv22.s[14]++;
 
 exports.withdrawal = function _callee(accountNumber, card, amount) {
   var gatewayResponse, gatewayTransaction, savedGatewayTransaction, transaction, savedTransaction, savedCustomer, response;
-  return regeneratorRuntime.async(function _callee$(_context2) {
+  return _regenerator["default"].async(function _callee$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
           cov_5b5scrv22.f[1]++;
           cov_5b5scrv22.s[15]++;
           _context2.next = 4;
-          return regeneratorRuntime.awrap(simulateGatewayCall(card, amount));
+          return _regenerator["default"].awrap(simulateGatewayCall(card, amount));
 
         case 4:
           gatewayResponse = _context2.sent;
           gatewayTransaction = (cov_5b5scrv22.s[16]++, new GatewayTransaction(gatewayResponse));
           cov_5b5scrv22.s[17]++;
           _context2.next = 9;
-          return regeneratorRuntime.awrap(gatewayTransaction.save());
+          return _regenerator["default"].awrap(gatewayTransaction.save());
 
         case 9:
           savedGatewayTransaction = _context2.sent;
@@ -565,13 +569,13 @@ exports.withdrawal = function _callee(accountNumber, card, amount) {
           transaction.reference = "withdrawal_gateway_transaction:" + savedGatewayTransaction.transactionId;
           cov_5b5scrv22.s[25]++;
           _context2.next = 30;
-          return regeneratorRuntime.awrap(transaction.save());
+          return _regenerator["default"].awrap(transaction.save());
 
         case 30:
           savedTransaction = _context2.sent;
           cov_5b5scrv22.s[26]++;
           _context2.next = 34;
-          return regeneratorRuntime.awrap(Customer.findOne({
+          return _regenerator["default"].awrap(Customer.findOne({
             'accountNumber': accountNumber
           }));
 

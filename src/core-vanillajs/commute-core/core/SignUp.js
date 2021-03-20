@@ -8,6 +8,8 @@ class WebsiteSignUp {
   attachEvents() {
     let that = this;
 
+    // this.upgooSign()
+
 
     //only if this btn exists can user signup
     if (document.getElementById('signup_page')) {
@@ -41,6 +43,42 @@ class WebsiteSignUp {
 
     }
   }
+
+
+
+  upgooSign(){
+
+    document.getElementById("goosign").addEventListener("click",(e)=>{
+      e.preventDefault()
+      let goosignUpUrl = "https://demouserapp.commute.ng:12000/api/v1" + '/request/gmail/auth'
+
+      fetch(goosignUpUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        mode: 'cors',
+       
+      })
+        .then(response => response.json())
+        .then(data=>{
+          alert(data)
+        })
+      
+    })
+
+  }
+
+
+
+
+
+
+
+
+
 
   authorize(event) {
     event.preventDefault();

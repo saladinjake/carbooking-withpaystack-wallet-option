@@ -2294,10 +2294,16 @@ var cov_179clse91q = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.InterventonService = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _db = _interopRequireDefault(require("../models/db"));
 
@@ -2313,24 +2319,16 @@ var _ActiveRecordSingleIntervention = _interopRequireDefault(require("../models/
 
 var _autoincrement_mongo = _interopRequireDefault(require("../helpers/autoincrement_mongo.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 var MongooseDatabase = (cov_179clse91q.s[0]++, (cov_179clse91q.b[0][0]++, _db["default"].getInstance()) || (cov_179clse91q.b[0][1]++, new _db["default"]()));
 
 var InterventonService =
 /*#__PURE__*/
 function () {
   function InterventonService() {
-    _classCallCheck(this, InterventonService);
+    (0, _classCallCheck2["default"])(this, InterventonService);
   }
 
-  _createClass(InterventonService, null, [{
+  (0, _createClass2["default"])(InterventonService, null, [{
     key: "createIntervention",
     value: function createIntervention(request, res) {
       cov_179clse91q.f[0]++;
@@ -2920,7 +2918,6 @@ function () {
       });
     }
   }]);
-
   return InterventonService;
 }();
 

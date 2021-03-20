@@ -470,10 +470,16 @@ var cov_nycssfzwu = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
@@ -483,22 +489,13 @@ var _dummy_data = _interopRequireDefault(require("./dummy_data"));
 
 var _db = _interopRequireDefault(require("../models/db"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 var MongooseDatabase = (cov_nycssfzwu.s[0]++, (cov_nycssfzwu.b[0][0]++, _db["default"].getInstance()) || (cov_nycssfzwu.b[0][1]++, new _db["default"]()));
 
 var SeedFactory =
 /*#__PURE__*/
 function () {
   function SeedFactory() {
-    _classCallCheck(this, SeedFactory);
-
+    (0, _classCallCheck2["default"])(this, SeedFactory);
     cov_nycssfzwu.f[0]++;
     cov_nycssfzwu.s[1]++;
     this.seeders = new _seeders["default"]();
@@ -513,7 +510,7 @@ function () {
     this.seeders.buildUp();
   }
 
-  _createClass(SeedFactory, [{
+  (0, _createClass2["default"])(SeedFactory, [{
     key: "runSeeder",
     value: function runSeeder() {
       cov_nycssfzwu.f[1]++;
@@ -627,7 +624,6 @@ function () {
       }, 39000);
     }
   }]);
-
   return SeedFactory;
 }();
 

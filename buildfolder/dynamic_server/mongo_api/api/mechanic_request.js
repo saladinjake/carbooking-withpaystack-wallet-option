@@ -145,10 +145,16 @@ var cov_eehklxtnr = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _mech_controller = _interopRequireDefault(require("../controllers/mech_controller"));
 
@@ -158,27 +164,18 @@ var _token_validator = _interopRequireDefault(require("../middlewares/token_vali
 
 var _post_sanitizer = _interopRequireDefault(require("../middlewares/post_sanitizer"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 var MechanicRoutes =
 /*#__PURE__*/
 function () {
   function MechanicRoutes(router) {
-    _classCallCheck(this, MechanicRoutes);
-
+    (0, _classCallCheck2["default"])(this, MechanicRoutes);
     cov_eehklxtnr.f[0]++;
     cov_eehklxtnr.s[0]++;
     // super(router);
     this.router = router;
   }
 
-  _createClass(MechanicRoutes, [{
+  (0, _createClass2["default"])(MechanicRoutes, [{
     key: "attachRoutes",
     value: function attachRoutes() {
       cov_eehklxtnr.f[1]++;
@@ -194,7 +191,6 @@ function () {
       return this.router;
     }
   }]);
-
   return MechanicRoutes;
 }();
 

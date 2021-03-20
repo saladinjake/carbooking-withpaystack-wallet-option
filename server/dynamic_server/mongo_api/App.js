@@ -59,7 +59,7 @@ class MongoAppDemo {
   constructor() {
     this.express = express();
     this.express.use(logger('dev'));
-  
+
     //this.express.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
     // let corsOption = {
     //     origin: true,
@@ -69,7 +69,7 @@ class MongoAppDemo {
     // };
 
     var allowedOrigins = [
-      'http://localhost:4000',
+      'http://localhost:4001',
       'https://checkout.paystack.com',
       "https://google.com",
       "https:mail.google.com",
@@ -80,12 +80,13 @@ class MongoAppDemo {
 
     let corsOption = {
        'Access-Control-Allow-Origin': '*',
-        
+
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true,
         exposedHeaders: ['x-auth-token'],
          "Access-Control-Allow-Credentials" :"true"
-        
+         'Access-Control-Allow-Origin': "http://localhost:4001/"
+
     };
     this.express.use(cors(corsOption));
 
@@ -110,18 +111,18 @@ class MongoAppDemo {
 //   res.sendStatus(200);
 // });
    // this.express.use(cors());
-    
+
     // required for passport
-    this.express.use(session({ secret: process.env.SECRET, 
+    this.express.use(session({ secret: process.env.SECRET,
           resave: true,
-          saveUninitialized: true 
+          saveUninitialized: true
     })); // session secret
     this.express.use(passport.initialize());
-    
+
     //this.express.use(cors(corsOption));
-        
+
     this.express.use(bodyParser.json());//
-    
+
     // this.express.use(methodOverride());
     this.express.disable('x-powered-by');
     this.express.use(
@@ -152,7 +153,7 @@ class MongoAppDemo {
       done(null, obj);
     });
 
-    
+
 
     const router = Router();
     new BridgeRouter(router).attachRoutes();
@@ -178,8 +179,8 @@ class MongoAppDemo {
       this.express.set('view engine', pug);
 
 
-  
-    
+
+
   }
 
   initialize() {}
@@ -192,40 +193,41 @@ class MongoAppDemo {
     }
 
 
-     let app = that.express; 
+     let app = that.express;
 
 
      // Listen both http & https ports
 
-       const httpServer = http.createServer(app);
-      // const httpsServer = https.createServer({
-      //    key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
-      //     cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
-        
-      //    requestCert: false, 
-      //    rejectUnauthorized: false 
-      //   }, app);
+         const httpServer = http.createServer(app);
+      const httpsServer = https.createServer({
+         key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
+          cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
+
+         requestCert: false,
+         rejectUnauthorized: false
+        }, app);
 
 //  httpServer.listen(12000, () => {
-//     console.log('HTTP Server running on port 80');
-// }); 
+//     console.log('HTTP Server running on port 12000');
+// });
+
 
 
 // const io = socketIo(httpServer);
 
 
- const io = require("socket.io")(httpServer, {
-    handlePreflightRequest: (req, res) => {
-        const headers = {
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-            "Access-Control-Allow-Credentials": true
-        };
-        res.writeHead(200, headers);
-        res.end();
-    }
-});
-  
+//  const io = require("socket.io")(httpServer, {
+//     handlePreflightRequest: (req, res) => {
+//         const headers = {
+//             "Access-Control-Allow-Headers": "Content-Type, Authorization",
+//             "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+//             "Access-Control-Allow-Credentials": true
+//         };
+//         res.writeHead(200, headers);
+//         res.end();
+//     }
+// });
+
 
 let interval;
 
@@ -241,7 +243,7 @@ io.on('connection', socket => {
     clearInterval(interval);
   }
   interval = setInterval(() => getApiAndEmit(socket), 1000);
-  
+
 
 
   socket.on('updateLocation', pos => {
@@ -300,7 +302,7 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     console.log("Client disconnected");
     clearInterval(interval);
-    
+
     locationMap.delete(socket.id)
   })
 
@@ -310,7 +312,7 @@ io.on('connection', socket => {
 
 
 
-    httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
+    // httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
 
   // httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
 
@@ -319,10 +321,10 @@ io.on('connection', socket => {
 
 
 
-// httpsServer.listen(12000, () => {
-//     console.log('HTTPS Server running on port 443');
-// });
-   
+httpsServer.listen(12000, () => {
+    console.log('HTTPS Server running on port 443');
+});
+
 
 
 
@@ -344,9 +346,9 @@ io.on('connection', socket => {
     // });
 
 
-// }); 
+// });
 
- 
+
 
    }
 

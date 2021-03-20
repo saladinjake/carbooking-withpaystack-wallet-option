@@ -705,6 +705,10 @@ var cov_1tz83fku6h = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
 var httpStatus = (cov_1tz83fku6h.s[0]++, require('http-status'));
 
 var _ref = (cov_1tz83fku6h.s[1]++, require('lodash')),
@@ -775,7 +779,7 @@ cov_1tz83fku6h.s[16]++;
 
 exports.getTransactions = function _callee(req, res, next) {
   var transactions, transformedTransactions;
-  return regeneratorRuntime.async(function _callee$(_context) {
+  return _regenerator["default"].async(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
@@ -786,7 +790,7 @@ exports.getTransactions = function _callee(req, res, next) {
           req.query.accountNumber = req.user.accountNumber;
           cov_1tz83fku6h.s[19]++;
           _context.next = 8;
-          return regeneratorRuntime.awrap(Transaction.list(req.query));
+          return _regenerator["default"].awrap(Transaction.list(req.query));
 
         case 8:
           transactions = _context.sent;
@@ -825,7 +829,7 @@ cov_1tz83fku6h.s[25]++;
 
 exports.deposit = function _callee2(req, res, next) {
   var paymentResponse;
-  return regeneratorRuntime.async(function _callee2$(_context2) {
+  return _regenerator["default"].async(function _callee2$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
@@ -834,7 +838,7 @@ exports.deposit = function _callee2(req, res, next) {
           _context2.prev = 2;
           cov_1tz83fku6h.s[27]++;
           _context2.next = 6;
-          return regeneratorRuntime.awrap(paymentService.debitCard(req.customer.accountNumber, req.body.card, req.body.amount));
+          return _regenerator["default"].awrap(paymentService.debitCard(req.customer.accountNumber, req.body.card, req.body.amount));
 
         case 6:
           paymentResponse = _context2.sent;
@@ -866,7 +870,7 @@ cov_1tz83fku6h.s[30]++;
 
 exports.transfer = function _callee3(req, res, next) {
   var transferResponse;
-  return regeneratorRuntime.async(function _callee3$(_context3) {
+  return _regenerator["default"].async(function _callee3$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
@@ -875,7 +879,7 @@ exports.transfer = function _callee3(req, res, next) {
           _context3.prev = 2;
           cov_1tz83fku6h.s[32]++;
           _context3.next = 6;
-          return regeneratorRuntime.awrap(transferService.transfer(req.customer.accountNumber, req.body.amount, req.body.destinationAccountNumber));
+          return _regenerator["default"].awrap(transferService.transfer(req.customer.accountNumber, req.body.amount, req.body.destinationAccountNumber));
 
         case 6:
           transferResponse = _context3.sent;
@@ -907,7 +911,7 @@ cov_1tz83fku6h.s[35]++;
 
 exports.withdrawal = function _callee4(req, res, next) {
   var withdrawalResponse;
-  return regeneratorRuntime.async(function _callee4$(_context4) {
+  return _regenerator["default"].async(function _callee4$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
@@ -916,7 +920,7 @@ exports.withdrawal = function _callee4(req, res, next) {
           _context4.prev = 2;
           cov_1tz83fku6h.s[37]++;
           _context4.next = 6;
-          return regeneratorRuntime.awrap(withdrawalService.withdrawal(req.customer.accountNumber, req.body.card, req.body.amount));
+          return _regenerator["default"].awrap(withdrawalService.withdrawal(req.customer.accountNumber, req.body.card, req.body.amount));
 
         case 6:
           withdrawalResponse = _context4.sent;

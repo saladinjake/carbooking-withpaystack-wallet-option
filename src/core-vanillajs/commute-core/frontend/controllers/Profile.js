@@ -2,6 +2,10 @@
 import View from '../views/View';
 import UserProfileModel from '../models/UserProfileModel';
 import setConfigData from '../helpers/localStorageData';
+
+import getApiUrl from '../../backend/services/apiservices/helpers/getOnlineUrlConnection'
+let baseUrl =  getApiUrl();
+
 //import  TextEditor from '../../core/TextEditor';
 import $ from 'jquery';
 class WebsiteProfile {
@@ -152,7 +156,7 @@ class WebsiteProfile {
     function getSignedRequest(file){
       const xhr = new XMLHttpRequest();
     
-      xhr.open('GET', process.env.DEPLOY_BACK_URL+`/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+      xhr.open('GET', baseUrl+`/sign-s3?file-name=${file.name}&file-type=${file.type}`);
         xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');

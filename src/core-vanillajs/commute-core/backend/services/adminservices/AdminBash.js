@@ -7,6 +7,9 @@ import $ from 'jquery';
 import Validator from "./helpers/validator";
 import AuditTrail from './helpers/Logger';
 
+import getApiUrl from '../apiservices/helpers/getOnlineUrlConnection'
+let baseUrl =  getApiUrl();
+
 
 import {
   addInspection,
@@ -67,7 +70,7 @@ export default class AdminBash{
   });
 
   /**
-   * Activate the menu 
+   * Activate the menu
    */
   function activateMenu() {
     menu.classList.add(activeClass);
@@ -76,7 +79,7 @@ export default class AdminBash{
   }
 
   /**
-   * Deactivate the menu 
+   * Deactivate the menu
    */
   function deactivateMenu() {
     menu.classList.remove(activeClass);
@@ -95,7 +98,7 @@ export default class AdminBash{
         if(document.getElementById('user-id')){
           document.getElementById('user-id').innerHTML="";
         }
-        
+
 
         document.getElementById("first-view").style.display="none";
 
@@ -109,7 +112,7 @@ export default class AdminBash{
           loader.style.display = 'none';
           document.getElementById("second-view").style.display="block";
         },2000)
-         
+
 
       })
    }
@@ -122,7 +125,7 @@ export default class AdminBash{
      // loader.style.zIndex="9999999";
 
      // document.getElementsByClassName('loader')[0].style.display="block"
-    
+
     window.addEventListener('load', (event) => {
       //event.preventDefault();
       const user = JSON.parse(localStorage.getItem('userToken'));
@@ -131,7 +134,7 @@ export default class AdminBash{
       }
 
       if(user.user.roles!='user'){
-            
+
 
                 if(document.getElementById("balance")){
                       document.getElementById("balance").style.display="none"
@@ -140,7 +143,7 @@ export default class AdminBash{
                 if(document.getElementById("new-balance")){
                 document.getElementById("new-balance").style.display="none"
               }
-          
+
 
           }else{
                     if(document.getElementById("balance")){
@@ -169,10 +172,10 @@ export default class AdminBash{
          activeUrl+`/admin-settings-email`,
          activeUrl+`/admin-settings-bucket`,
          activeUrl+`/admin-settings-instagram`,
-         activeUrl+`/admin-cars-mgt`,        
+         activeUrl+`/admin-cars-mgt`,
          activeUrl+ `/admin-itineraries`,
          activeUrl+ `/admin-users-plan`,
-             
+
 
          activeUrl+ `/admin-sales-today`,
          activeUrl+ `/payment-history`,
@@ -195,19 +198,19 @@ export default class AdminBash{
 
 
 
-         
-        
-        
-        
-        
-         
-         
+
+
+
+
+
+
+
       ];
 
        const page_id_attribute = document.getElementById("admin").getAttribute("data-pageid")
            const pageId=page_id_attribute;
            console.log("my id:"+ pageId)
-       
+
 
       const promises = urls.map(url => fetch(url, {
         method: 'GET',
@@ -220,19 +223,19 @@ export default class AdminBash{
       }).then(response => response.json()));
 
       Promise.all(promises).then((datas) => {
-         
 
-         document.getElementById('gtd').style.display="none" 
-         document.querySelector("#gtd").style.visibility = "visible"; 
-        document.querySelector("#gtd").style.opacity = 1;  
+
+         document.getElementById('gtd').style.display="none"
+         document.querySelector("#gtd").style.visibility = "visible";
+        document.querySelector("#gtd").style.opacity = 1;
 
          //first set the right previledges
          let previledgesRight = datas[32].data[0].userInfo;
 
-        
+
 
          localStorage.setItem('previledges', JSON.stringify(previledgesRight))
-        
+
          console.log(datas)
 
          // setTimeout(()=>{
@@ -265,11 +268,11 @@ export default class AdminBash{
                //[]
               );
              app.style.display="block"
-   
+
              break;
           case "admin-users":
 
-            
+
 
             ApiAdminBotService.runAdminUsers(datas[0].data[0].users,previledgesRight);
               app.style.display="block"
@@ -289,7 +292,7 @@ export default class AdminBash{
           case "admin-profile":
             ApiAdminBotService.runAdminProfile(datas[4].data[0].profile)
               app.style.display="block"
-            break;  
+            break;
           case "admin-plan-package":
             ApiAdminBotService.runPlanPackage(datas[5].data[0].individualPlans, datas[6].data[0].corporatePlans ,previledgesRight);
               app.style.display="block"
@@ -303,7 +306,7 @@ export default class AdminBash{
            ApiAdminBotService.runAdminTickets(datas[8].data[0].intervention, datas[1].data[0].admins,datas[0].data[0].users,previledgesRight);
              app.style.display="block"
             break;
-           
+
           case "admin-enquiries":
            let ticket = datas[8].data[0].intervention;
            const enquiries = ticket.filter((item)=>item.category==="General Enquiries")
@@ -311,14 +314,14 @@ export default class AdminBash{
            ApiAdminBotService.runAdminTickets(enquiries, datas[1].data[0].admins,datas[0].data[0].users,previledgesRight);
              app.style.display="block"
             break;
-           
+
 
           case "admin-feedback":
            let ticketFeed = datas[8].data[0].intervention;
            const feedback = ticketFeed.filter((item)=>item.category==="Feedback")
            ApiAdminBotService.runAdminTickets(feedback, datas[1].data[0].admins,datas[0].data[0].users,previledgesRight);
              app.style.display="block"
-            
+
            break;
 
            case "admin-technical-support":
@@ -361,7 +364,7 @@ export default class AdminBash{
             break;
 
           case "admin-cars-mgt" :
-           ApiAdminBotService.runAdminCarsMgt(datas[16].data[0].carsAvailable, 
+           ApiAdminBotService.runAdminCarsMgt(datas[16].data[0].carsAvailable,
             datas[23].data[0].carInfo,
             datas[2].data[0].drivers,
              datas[3].data[0].partners,
@@ -417,7 +420,7 @@ export default class AdminBash{
            case "admin-drive-test-add":
            ApiAdminBotService.runAdminDriveTestAdd('add-drive-test', datas[0].data[0].users, datas[3].data[0].partners,previledgesRight) //24
              app.style.display="block"
-           break; 
+           break;
           case "admin-drive-test":
            ApiAdminBotService.runAdminDriveTest(datas[25].data[0].testDrive, datas[0].data[0].users,previledgesRight)//25
              app.style.display="block"
@@ -425,7 +428,7 @@ export default class AdminBash{
          case "admin-previledges":
            ApiAdminBotService.runAdminPreviledges(datas[26].data[0].previledges,previledgesRight)
              app.style.display="block"
-           break; 
+           break;
         case "admin-logs":
            ApiAdminBotService.runAdminActivityTrail(datas[30].data[0].audit)
              app.style.display="block"
@@ -433,11 +436,11 @@ export default class AdminBash{
         case "admin-notification":
            ApiAdminBotService.runAdminNotification(datas[31].data[0].allNotification)
              app.style.display="block"
-           break; 
+           break;
         case "admin-repairs":
            ApiAdminBotService.runAdminRepairs(datas[33].data[0].mech)
              app.style.display="block"
-           break; 
+           break;
         case "admin-earnings":
            ApiAdminBotService.runAdminPartnersEarnings(datas[34].data[0].earnings,datas[3].data[0].partners,datas[16].data[0].carsAvailable,previledgesRight)
              app.style.display="block"
@@ -461,7 +464,7 @@ export default class AdminBash{
           break;
       case "admin-map":
           app.style.display="block"
-          
+
           let map
 let markers = new Map()
 
@@ -482,16 +485,16 @@ let markers = new Map()
 
    let  socket = socketIOClient(
       // ENDPOINT,
-     "https://demouserapp.commute.ng:12000",
-     
+     "http://localhost:12000",
+
       // {secure: true}
         {
             secure: true // for SSL
         }
      );
-  
-  
-  
+
+
+
   socket.on('locationsUpdate', locations => {
     const markerToDelete = new Set()
     markers.forEach((marker,id) =>{
@@ -499,9 +502,9 @@ let markers = new Map()
       markers.delete(id)
     })
     locations.forEach(([id, position]) => {
-    
+
      if(markers.has(id)){
-      
+
      }
        if((position.lat) && (position.lng)){
           const marker = new google.maps.Marker({
@@ -512,27 +515,27 @@ let markers = new Map()
 
         markers.set(id,marker)
        }
-        
-       
-     
+
+
+
 
     })
   })
 
-  
+
 
   setInterval(() => {
     socket.emit('requestLocations')
   }, 2000)
 
   },5000)
-   
 
 
-  
 
 
-          break;     
+
+
+          break;
       default:
             app.style.display="block"
              window.location.href='./admin-dashboard'
@@ -557,7 +560,7 @@ let markers = new Map()
 
 
          // },7000)
-        
+
       }).catch((error) => {
         throw error;
       });

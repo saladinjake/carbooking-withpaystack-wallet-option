@@ -372,9 +372,9 @@ var cov_qhodqoo5p = function () {
   return coverage[path] = coverageData;
 }();
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var Promise = (cov_qhodqoo5p.s[0]++, require('bluebird'));
 var UserPlanSchema = (cov_qhodqoo5p.s[1]++, new _mongoose["default"].Schema({

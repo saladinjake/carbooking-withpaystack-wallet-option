@@ -7,6 +7,7 @@ import MessageBoard from '../../../core/MessageBoard';
 import ApiMediaUploadService from './ApiMediaUploadService';
 
 let activeUrl = getOnlineUrlConnection();
+let baseUrl = getOnlineUrlConnection();
 
 class ApiSaveOneRecord {
   static hasClass(el, classname) {

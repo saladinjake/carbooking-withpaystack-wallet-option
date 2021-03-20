@@ -4431,10 +4431,18 @@ var cov_1ydv0olwwi = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.DriverService = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
@@ -4502,16 +4510,6 @@ var _request = _interopRequireDefault(require("request"));
 
 var _lodash = _interopRequireDefault(require("lodash"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 cov_1ydv0olwwi.s[0]++;
 
 _dotenv["default"].config();
@@ -4551,10 +4549,10 @@ var DriverService =
 /*#__PURE__*/
 function () {
   function DriverService() {
-    _classCallCheck(this, DriverService);
+    (0, _classCallCheck2["default"])(this, DriverService);
   }
 
-  _createClass(DriverService, null, [{
+  (0, _createClass2["default"])(DriverService, null, [{
     key: "signup",
     value: function signup(request, response) {
       cov_1ydv0olwwi.f[2]++;
@@ -4770,7 +4768,7 @@ function () {
           //balance: user.balance,
           notification_count: user.notification_count,
           user_type: user.user_type
-        }, _defineProperty(_ref3, "username", user.username), _defineProperty(_ref3, "phoneNumber", user.phone_number), _defineProperty(_ref3, "roles", user.roles), _ref3));
+        }, (0, _defineProperty2["default"])(_ref3, "username", user.username), (0, _defineProperty2["default"])(_ref3, "phoneNumber", user.phone_number), (0, _defineProperty2["default"])(_ref3, "roles", user.roles), _ref3));
         var token = (cov_1ydv0olwwi.s[49]++, _token_generator.TokenGenerator.generateToken(result));
         cov_1ydv0olwwi.s[50]++;
         return response.status(200).json({
@@ -4791,7 +4789,7 @@ function () {
               notification_count: user.notification_count,
               user_type: user.user_type,
               account_num: user.accountNumber
-            }, _defineProperty(_user, "username", user.username), _defineProperty(_user, "phoneNumber", user.phone_number), _defineProperty(_user, "roles", user.roles), _user)
+            }, (0, _defineProperty2["default"])(_user, "username", user.username), (0, _defineProperty2["default"])(_user, "phoneNumber", user.phone_number), (0, _defineProperty2["default"])(_user, "roles", user.roles), _user)
           }],
           message: 'Successfully signed in'
         });
@@ -5502,7 +5500,6 @@ function () {
       });
     }
   }]);
-
   return DriverService;
 }();
 

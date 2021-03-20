@@ -3,25 +3,30 @@ require('dotenv').config();
 let environment = process.env;
 
 module.exports.GmailTransport = nodemailer.createTransport({
-    service: environment.GMAIL_SERVICE_NAME,
-    host: environment.GMAIL_SERVICE_HOST,
+    service: "gmail",
+    host: "smtp.google.com",
     //secure:environment.GMAIL_SERVICE_SECURE,
-    port: environment.GMAIL_SERVICE_PORT,
+    port: 587,
     auth: {
-        user: environment.GMAIL_USER_NAME,
-        pass: environment.GMAIL_USER_PASSWORD
+        user: "juwavictor@gmail.com",
+        pass: "saladin123!@#9999320392dsdjseuw823829"
     }
 });
 
 module.exports.SMTPTransport = nodemailer.createTransport({
-    host: environment.SMTP_SERVICE_HOST,
-    port: environment.SMTP_SERVICE_PORT,
-    secure: environment.SMTP_SERVICE_SECURE, // upgrade later with STARTTLS
-    debug: true,
-    auth: {
-        user: environment.SMTP_USER_NAME,
-        pass: environment.SMTP_USER_PASSWORD
-    }
+  host: "mail.softclo.com",
+  port: 587,
+  secure: false,                                                                                                          
+  // upgrade later with STARTTLS
+  debug: true,                                                                                                            
+  auth: {                                                                                                                  
+     user: "tester@softclo.com",                                                                                             
+     pass: "Tester@123",                                                                                               
+  },                                                                                                                      
+   tls: {                                                                                                                 
+      
+    rejectUnauthorized: false,
+  }                                                                                                                     
 });
 
 module.exports.ViewOption = (transport, hbs) => {

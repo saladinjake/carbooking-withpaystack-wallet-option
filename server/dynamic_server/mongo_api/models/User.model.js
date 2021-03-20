@@ -53,12 +53,12 @@ let UserSchema = new mongoose.Schema({
       },
       user_type: {
         type: String,
-        enum:[
-        'Individual', 
-        'Corporate',
+        // enum:[
+        // 'Individual', 
+        // 'Corporate',
         
 
-        ],
+        // ],
         default: 'Individual'
       },
       plan_name:{

@@ -140,6 +140,7 @@ let CarsSchema = new mongoose.Schema({
           enum:[
            'Booked',
            'Available',
+           'Pending' //added
            
           ],
           default:'Pending'

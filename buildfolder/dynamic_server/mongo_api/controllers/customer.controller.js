@@ -974,6 +974,10 @@ var cov_1t2qrrsnqi = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
 var httpStatus = (cov_1t2qrrsnqi.s[0]++, require('http-status'));
 
 var _ref = (cov_1t2qrrsnqi.s[1]++, require('lodash')),
@@ -993,7 +997,7 @@ cov_1t2qrrsnqi.s[4]++;
 
 exports.load = function _callee(req, res, next, id) {
   var customer;
-  return regeneratorRuntime.async(function _callee$(_context) {
+  return _regenerator["default"].async(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
@@ -1002,7 +1006,7 @@ exports.load = function _callee(req, res, next, id) {
           _context.prev = 2;
           cov_1t2qrrsnqi.s[6]++;
           _context.next = 6;
-          return regeneratorRuntime.awrap(Customer.get(id));
+          return _regenerator["default"].awrap(Customer.get(id));
 
         case 6:
           customer = _context.sent;
@@ -1062,7 +1066,7 @@ cov_1t2qrrsnqi.s[14]++;
 
 exports.create = function _callee2(req, res, next) {
   var customer, savedCustomer;
-  return regeneratorRuntime.async(function _callee2$(_context2) {
+  return _regenerator["default"].async(function _callee2$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
@@ -1072,7 +1076,7 @@ exports.create = function _callee2(req, res, next) {
           customer = (cov_1t2qrrsnqi.s[16]++, new Customer(req.body));
           cov_1t2qrrsnqi.s[17]++;
           _context2.next = 7;
-          return regeneratorRuntime.awrap(customer.save());
+          return _regenerator["default"].awrap(customer.save());
 
         case 7:
           savedCustomer = _context2.sent;
@@ -1107,7 +1111,7 @@ cov_1t2qrrsnqi.s[21]++;
 exports.replace = function _callee3(req, res, next) {
   var _ref3, customer, newCustomer, ommitRole, newCustomerObject, savedCustomer;
 
-  return regeneratorRuntime.async(function _callee3$(_context3) {
+  return _regenerator["default"].async(function _callee3$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
@@ -1120,7 +1124,7 @@ exports.replace = function _callee3(req, res, next) {
           newCustomerObject = (cov_1t2qrrsnqi.s[26]++, omit(newCustomer.toObject(), '_id', ommitRole));
           cov_1t2qrrsnqi.s[27]++;
           _context3.next = 10;
-          return regeneratorRuntime.awrap(customer.update(newCustomerObject, {
+          return _regenerator["default"].awrap(customer.update(newCustomerObject, {
             override: true,
             upsert: true
           }));
@@ -1128,7 +1132,7 @@ exports.replace = function _callee3(req, res, next) {
         case 10:
           cov_1t2qrrsnqi.s[28]++;
           _context3.next = 13;
-          return regeneratorRuntime.awrap(Customer.findById(customer._id));
+          return _regenerator["default"].awrap(Customer.findById(customer._id));
 
         case 13:
           savedCustomer = _context3.sent;
@@ -1184,7 +1188,7 @@ cov_1t2qrrsnqi.s[38]++;
 
 exports.list = function _callee4(req, res, next) {
   var customers, transformedCustomers;
-  return regeneratorRuntime.async(function _callee4$(_context4) {
+  return _regenerator["default"].async(function _callee4$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
@@ -1193,7 +1197,7 @@ exports.list = function _callee4(req, res, next) {
           _context4.prev = 2;
           cov_1t2qrrsnqi.s[40]++;
           _context4.next = 6;
-          return regeneratorRuntime.awrap(Customer.list(req.query));
+          return _regenerator["default"].awrap(Customer.list(req.query));
 
         case 6:
           customers = _context4.sent;

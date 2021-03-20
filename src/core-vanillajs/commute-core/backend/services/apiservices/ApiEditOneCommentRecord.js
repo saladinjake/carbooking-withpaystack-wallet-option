@@ -3,6 +3,8 @@ import GateKeepersForUser from './helpers/whois';
 import getOnlineUrlConnection from './helpers/getOnlineUrlConnection';
 import FetchPromiseApi from './helpers/FetchPromiseApi';
 
+let baseUrl = getOnlineUrlConnection();
+
 class ApiEditOneComment {
   static editOneCommentById() {
     GateKeepersForUser();

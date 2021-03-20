@@ -23,7 +23,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
-		
+
 		<style>
 			html {
 					position: relative;
@@ -34,27 +34,27 @@
 				/*#gtd{
 					opacity:0;
 				}*/
-		
+
 		</style>
 
         <script src="assets/js/modernizr.min.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Varela&display=swap" rel="stylesheet" type="text/css" />
-		<link href="https://fonts.googleapis.com/css?family=Noto+Sans|Source+Sans+Pro&display=swap" rel="stylesheet" type="text/css" /> 
+		<link href="https://fonts.googleapis.com/css?family=Noto+Sans|Source+Sans+Pro&display=swap" rel="stylesheet" type="text/css" />
 
 	</head>
 	<!-- <div id="loader" class="center"></div>  -->
 	<body style="background:#fff;" class="row"  id="signup_page">
-		
+
 
 <div id="gtd">
-		
+
 		  <!-- Top Bar Start -->
             <div class="topbar">
 
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="text-center">
-                       <!--  <a href="index.html" class="logo"><!-- <i class="icon-magnet icon-c-logo"></i> --><!--  <img class="logo-small" src="assets/images/CommuteLogos-13.png"/>  <img class="logo-wide" src="assets/images/CommuteLogos-02.png"/>   <!-- <span>Ub<i class="md md-album"></i>ld</span> </a>--> 
+                       <!--  <a href="index.html" class="logo"><!-- <i class="icon-magnet icon-c-logo"></i> --><!--  <img class="logo-small" src="assets/images/CommuteLogos-13.png"/>  <img class="logo-wide" src="assets/images/CommuteLogos-02.png"/>   <!-- <span>Ub<i class="md md-album"></i>ld</span> </a>-->
                         <!-- Image Logo here -->
                         <a href="index.html" class="logo">
                             <i class="icon-c-logo"> <img src="assets/images/CommuteLogos-13.png"/> </i>
@@ -66,22 +66,22 @@
                 <!-- Button mobile view to collapse sidebar menu -->
                 <div class="navbar navbar-default" role="navigation">
                     <div class="container">
-                        
+
                         <!--/.nav-collapse -->
                     </div>
                 </div>
             </div>
             <!-- Top Bar End -->
 
-		<!-- <div class="account-pages"></div> 
+		<!-- <div class="account-pages"></div>
 		<div class="clearfix"></div> -->
 		<div class="col-lg-8 col-md-6 hidden-md-down hidden-xs hidden-sm " style='background:#fff url("assets/images/home2.jpg") no-repeat fixed left; background-size:60%;'>
 			<div style="padding:37.2% 0px"></div>
 		</div>
-		
-		
+
+
 		<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 pull-right p-l-0 p-r-0" style='background:#fff'>
-            
+
 
 			<div class="card-box p-l-0 p-r-0">
 				<div class="panel-heading p-b-0">
@@ -90,7 +90,7 @@
 				</div>
 
 
-               
+
 
 
 				<div class="panel-body p-t-0" >
@@ -103,45 +103,45 @@
 						    <div class="icon-circle"></div>
 						    <div class="icon-fix"></div>
 						  </div>
-						  
+
 						</div>
 						<center>
 						  <h5 id="restart">An Email verification has been sent.</h5>
 						</center>
 					</div>
 
-                    
+
 
 					<form id="sign-form"  class="form m-t-0" method="POST" action="http://localhost:12000/api/v1/auth/signup">
 
-					     
+
 
 
 
 
                                     <div class="info-msg">
 									  <i class="fa fa-info-circle"></i>
-									  
+
 									</div>
 
 									<div class="success-msg" id="msg-suc">
 									  <i class="fa fa-check"></i>
-									  
+
 									</div>
 
 									<div class="warning-msg">
 									  <i class="fa fa-warning"></i>
-									  
+
 									</div>
 
 									<div class="error-msg" id="msg" >
 									  <i class="fa fa-times-circle"></i>
-									  
-									</div>
-			
-						
 
-                          
+									</div>
+
+
+
+
 						<div class="row col-md-12 col-lg-12 ">
 							<div class="col-xs-12 col-md-6 col-sm-6">
 								<div class="form-group" id="email-container">
@@ -149,52 +149,52 @@
 								</div>
 							</div>
 
-						
+
 							<div class="col-xs-12 col-md-6 col-sm-6">
 								<div class="form-group" id="phoneNumber-container">
 								<input class="form-control" name="phoneNumber" id="phoneNumber" type="text" required="" placeholder="Phone Number">
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="row col-md-12 col-lg-12 ">
 							<div class="col-xs-12 col-md-6 col-sm-6">
 								<div class="form-group" id="firstname-container">
 								<input class="form-control" name="firstname" id="firstname" type="text" required="" placeholder="First Name">
 								</div>
 							</div>
-						
-						
+
+
 							<div class="col-xs-12 col-md-6 col-sm-6">
 								<div class="form-group" id="lastname-container">
 								<input class="form-control" name="lastname" id="lastname" type="text" required="" placeholder="Last Name">
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="row col-md-12 col-lg-12 ">
 							<div class="col-xs-12 col-md-6 col-sm-6">
 								<div class="form-group" id="password-container">
 								<input class="form-control" nmae="me-password" id="me-password" type="password" required="" placeholder="Password">
 								</div>
 							</div>
-						
-						
+
+
 							<div class="col-xs-12 col-md-6 col-sm-6">
 								<div class="form-group" id="confirm-password-container">
 								<input class="form-control" name="confirmPassword" id="confirmPassword" type="password" required="" placeholder="Confirm Password">
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="row col-md-12 col-lg-12 ">
 							<div class="col-xs-12 col-md-6 col-sm-6">
 								<div class="form-group" id="username-container">
 								<input class="form-control" name="username" id="username" type="text" required="" placeholder="Username">
 								</div>
 							</div>
-						
-						
+
+
 							<div class="col-xs-12 col-md-6 col-sm-6">
 								<div class="form-group">
 								<select class="form-control" name="user_type" id="user_type" >
@@ -208,8 +208,8 @@
 
 
 
-						
-						
+
+
 
 						<div class="form-group">
 							<div class="col-xs-12">
@@ -229,46 +229,27 @@
 							</div>
 						</div>
 						</div>
-						
-						<div class="form-group m-t-20 m-b-0">
-							<div class="col-sm-12 text-center">
-								<h4><b>Sign Up with</b></h4>
-							</div>
-						</div>
-						
-						<div class="form-group m-b-0 text-center">
-							<div class="col-sm-12">
-								<a href="http://localhost:12000/api/v1/auth/facebook" class="btn btn-facebook waves-effect waves-light m-t-20">
-		                           <i class="fa fa-facebook m-r-5"></i> Facebook
-		                        </a>
 
-		                        <a href="http://localhost:12000/api/v1/auth/twitter" class="btn btn-twitter waves-effect waves-light m-t-20">
-		                           <i class="fa fa-twitter m-r-5"></i> Twitter
-		                        </a>
+					
 
-		                        <a href="http://localhost:12000/api/v1/auth/google" class="btn btn-googleplus waves-effect waves-light m-t-20">
-		                           <i class="fa fa-google m-r-5"></i> Google
-		                        </a>
-							</div>
-						</div>
-						
+
 
 					</form>
 
 
 				</div>
-				
-					
-				
-			
-				
+
+
+
+
+
 			</div>
 
-			
+
 
 		</div>
-		
-		
+
+
 </div>
 		<script>
 			var resizefunc = [];
@@ -290,7 +271,7 @@
         <script src="assets/js/jquery.core.js"></script>
         <script src="assets/js/jquery.app.js"></script>
 
-        
+
 
 	</body>
 </html>

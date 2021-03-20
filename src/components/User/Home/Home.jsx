@@ -4,6 +4,38 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
+
+
+
+
+
+//facebook
+let client_id = "1438251769712975";
+let client_sec = "93b9f3a55a6dd95b15643e3745cc65fb"
+let redirect_uri = 'https://demouserapp.commute.ng/api/v1/auth/facebook/callback/';
+
+import * as queryString from 'query-string';
+
+const stringifiedParams = queryString.stringify({
+  client_id: client_id,
+  redirect_uri: redirect_uri,
+  scope: ['email'].join(','), // comma seperated string
+  response_type: 'code',
+  auth_type: 'rerequest',
+  display: 'popup',
+});
+
+const facebookLoginUrl = `https://www.facebook.com/v4.0/dialog/oauth?${stringifiedParams}`;
+
+
+
+
+
+
+
+
+
+
 export class Home extends Component {
   render() {
     const styleM= { background:'#fff url("public/assets/images/banner-home.jpg") no-repeat fixed left', backgroundSize:'contain', height:"100%",position:"fixed"};  
@@ -14,7 +46,7 @@ export class Home extends Component {
             <div id="main-content" className="col-lg-8 col-md-6 hidden-md-down hidden-xs hidden-sm "  id="loginpage" style={styleM}>
 
   
-
+    
 
 
               <div style={styleY} ></div>
@@ -30,7 +62,11 @@ export class Home extends Component {
                       <div className="panel-heading">
           <h1 className="text-custom m-t-40 m-b-20 text-left" style={{fontWeight:'700', letterSpacing:"3px", color: "rgb(126, 87, 194)"}}>Sign in</h1>
                 <a href="./signup" className="btn-link" style={{textDecoration:"none"}}>or create an account</a>
+                {/* <a href={facebookLoginUrl}>
+    Login with Facebook
+  </a> */}
 
+  {/* <a href={googleLoginUrl}>Login with Google</a> */}
                
         </div>
 
@@ -101,17 +137,17 @@ export class Home extends Component {
                                   <div className="form-group m-b-0 text-center">
                                     <div className="col-sm-12">
 
-                                      <a style={{width:"60px",marginRight:"5px", height:"40px"}}  href="http://localhost:12000/api/v1/auth/google" className=""><img style={{width:"40px",height:"40px"}} src="public/assets/images/google.png"  />
+                                      {/* <a style={{width:"60px",marginRight:"5px", height:"40px"}}  href="http://localhost:12000/api/v1/auth/google/" className=""><img style={{width:"40px",height:"40px"}} src="public/assets/images/google.png"  />
                                                 
                                                   </a>
 
-                                                   <a style={{width:"60px",marginRight:"5px", height:"40px"}} href="https://demouserapp.commute.ng:12000/api/v1/auth/instagram" className="">
+                                                   <a style={{width:"60px",marginRight:"5px", height:"40px"}} href="https://demouserapp.commute.ng:12000/api/v1/auth/instagram/" className="">
                                                     <img style={{width:"30px",height:"30px"}} src="public/assets/images/instagram.png"  />
                                                   </a>
 
                                                   <a style={{width:"60px",marginRight:"5px", height:"40px"}}   href="https://demouserapp.commute.ng:12000/api/v1/auth/facebook/" className="">
                                                     <img style={{width:"25px",height:"25px"}} src="public/assets/images/facebook2.png"  />
-                                                  </a>
+                                                  </a> */}
                                     </div>
                                   </div>
                                 </form>
@@ -137,6 +173,8 @@ export class Home extends Component {
             
 
             </div>
+
+                             
             </div>
          </React.Fragment>
     );

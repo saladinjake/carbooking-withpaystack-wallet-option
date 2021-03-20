@@ -61,7 +61,7 @@ export class CarsService {
   }
 
   static getAllCars(request, response) {
-    CarsModel.find({car_status:'Active',health_status:'Completed'})
+    CarsModel.find({car_status:'Active',health_status:'Completed'}) //AND car_category= request.car_category
       .then(data => {
         let carsAvailable = data;
         console.log(carsAvailable+ "all cars here")

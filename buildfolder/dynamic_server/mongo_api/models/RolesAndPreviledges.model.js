@@ -120,13 +120,13 @@ var cov_2dlnydypso = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _ref;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var Promise = (cov_2dlnydypso.s[0]++, require('bluebird'));
 var RolesAndPreviledgesSchema = (cov_2dlnydypso.s[1]++, new _mongoose["default"].Schema((_ref = {
@@ -157,106 +157,106 @@ var RolesAndPreviledgesSchema = (cov_2dlnydypso.s[1]++, new _mongoose["default"]
     type: String,
     "default": 'yes'
   }
-}, _defineProperty(_ref, "view_payments", {
+}, (0, _defineProperty2["default"])(_ref, "view_payments", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_quotations", {
+}), (0, _defineProperty2["default"])(_ref, "view_quotations", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_cars", {
+}), (0, _defineProperty2["default"])(_ref, "view_cars", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_drivers", {
+}), (0, _defineProperty2["default"])(_ref, "view_drivers", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_partners", {
+}), (0, _defineProperty2["default"])(_ref, "view_partners", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_sos", {
+}), (0, _defineProperty2["default"])(_ref, "view_sos", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_package", {
+}), (0, _defineProperty2["default"])(_ref, "view_package", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_bookings", {
+}), (0, _defineProperty2["default"])(_ref, "view_bookings", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_tickets", {
+}), (0, _defineProperty2["default"])(_ref, "view_tickets", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_faqs", {
+}), (0, _defineProperty2["default"])(_ref, "view_faqs", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_settings", {
+}), (0, _defineProperty2["default"])(_ref, "view_settings", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_users", {
+}), (0, _defineProperty2["default"])(_ref, "view_users", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_admins", {
+}), (0, _defineProperty2["default"])(_ref, "view_admins", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_car_inspection", {
+}), (0, _defineProperty2["default"])(_ref, "view_car_inspection", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "view_drive_test", {
+}), (0, _defineProperty2["default"])(_ref, "view_drive_test", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_payments", {
+}), (0, _defineProperty2["default"])(_ref, "manage_payments", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_transactions", {
+}), (0, _defineProperty2["default"])(_ref, "manage_transactions", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_quotations", {
+}), (0, _defineProperty2["default"])(_ref, "manage_quotations", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_cars", {
+}), (0, _defineProperty2["default"])(_ref, "manage_cars", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_drivers", {
+}), (0, _defineProperty2["default"])(_ref, "manage_drivers", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_partners", {
+}), (0, _defineProperty2["default"])(_ref, "manage_partners", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_sos", {
+}), (0, _defineProperty2["default"])(_ref, "manage_sos", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_package", {
+}), (0, _defineProperty2["default"])(_ref, "manage_package", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_bookings", {
+}), (0, _defineProperty2["default"])(_ref, "manage_bookings", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_tickets", {
+}), (0, _defineProperty2["default"])(_ref, "manage_tickets", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_faqs", {
+}), (0, _defineProperty2["default"])(_ref, "manage_faqs", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_settings", {
+}), (0, _defineProperty2["default"])(_ref, "manage_settings", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_users", {
+}), (0, _defineProperty2["default"])(_ref, "manage_users", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_admins", {
+}), (0, _defineProperty2["default"])(_ref, "manage_admins", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_car_inspection", {
+}), (0, _defineProperty2["default"])(_ref, "manage_car_inspection", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "manage_drive_test", {
+}), (0, _defineProperty2["default"])(_ref, "manage_drive_test", {
   type: String,
   "default": 'yes'
-}), _defineProperty(_ref, "created_at", {
+}), (0, _defineProperty2["default"])(_ref, "created_at", {
   type: Date,
   "default": Date.now
-}), _defineProperty(_ref, "updated_at", {
+}), (0, _defineProperty2["default"])(_ref, "updated_at", {
   type: Date,
   "default": Date.now
-}), _defineProperty(_ref, "usergroup_set", {
+}), (0, _defineProperty2["default"])(_ref, "usergroup_set", {
   type: Array,
   "default": ['user', 'simple_admin', 'super_admin', 'Simple Admin', 'Moderator Admin', 'Super Admin', 'Inspection Manager', 'Partners Manager', 'Hr', 'Accountant']
 }), _ref), {

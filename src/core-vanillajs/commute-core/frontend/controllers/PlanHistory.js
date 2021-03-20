@@ -1,6 +1,7 @@
 'use strict';
 import PlanHistoryModel from '../models/PlanHistoryModel';
-
+import getApiUrl from '../../backend/services/apiservices/helpers/getOnlineUrlConnection'
+let baseUrl =  getApiUrl();
 
 class WebsitePlanHistory {
   constructor() {   

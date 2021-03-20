@@ -340,6 +340,10 @@ var cov_1t146t9im3 = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
 var uuidv4 = (cov_1t146t9im3.s[0]++, require('uuid/v4'));
 var crypto = (cov_1t146t9im3.s[1]++, require('crypto'));
 var moment = (cov_1t146t9im3.s[2]++, require('moment-timezone'));
@@ -352,7 +356,7 @@ cov_1t146t9im3.s[8]++;
 
 exports.transfer = function _callee(accountNumber, amount, destinationAccountNumber) {
   var reference, transaction, savedTransaction, savedCustomer, transactionBeneficiary, savedTransactionBeneficiary, response;
-  return regeneratorRuntime.async(function _callee$(_context) {
+  return _regenerator["default"].async(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
@@ -371,13 +375,13 @@ exports.transfer = function _callee(accountNumber, amount, destinationAccountNum
           transaction.reference = 'transfer_to_account:' + destinationAccountNumber;
           cov_1t146t9im3.s[16]++;
           _context.next = 16;
-          return regeneratorRuntime.awrap(transaction.save());
+          return _regenerator["default"].awrap(transaction.save());
 
         case 16:
           savedTransaction = _context.sent;
           cov_1t146t9im3.s[17]++;
           _context.next = 20;
-          return regeneratorRuntime.awrap(Customer.findOne({
+          return _regenerator["default"].awrap(Customer.findOne({
             'accountNumber': accountNumber
           }));
 
@@ -394,7 +398,7 @@ exports.transfer = function _callee(accountNumber, amount, destinationAccountNum
           transactionBeneficiary.reference = 'transfer_from_account:' + accountNumber;
           cov_1t146t9im3.s[23]++;
           _context.next = 33;
-          return regeneratorRuntime.awrap(transactionBeneficiary.save());
+          return _regenerator["default"].awrap(transactionBeneficiary.save());
 
         case 33:
           savedTransactionBeneficiary = _context.sent;

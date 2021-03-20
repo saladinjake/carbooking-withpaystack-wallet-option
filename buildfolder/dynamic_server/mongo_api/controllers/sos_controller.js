@@ -400,22 +400,20 @@ var cov_1yxkkxa9ky = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
 var _sos_service = require("../services/sos_service");
 
 var _jquery = _interopRequireDefault(require("jquery"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var SUCCESS_URL = (cov_1yxkkxa9ky.s[0]++, 'http://localhost:4001/sos-history.html');
 
@@ -423,10 +421,10 @@ var SOSController =
 /*#__PURE__*/
 function () {
   function SOSController() {
-    _classCallCheck(this, SOSController);
+    (0, _classCallCheck2["default"])(this, SOSController);
   }
 
-  _createClass(SOSController, null, [{
+  (0, _createClass2["default"])(SOSController, null, [{
     key: "createRedFlag",
     value: function createRedFlag(request, response) {
       cov_1yxkkxa9ky.f[0]++;
@@ -507,7 +505,6 @@ function () {
       _sos_service.RedFlagService.usersRedflags(request, response);
     }
   }]);
-
   return SOSController;
 }();
 

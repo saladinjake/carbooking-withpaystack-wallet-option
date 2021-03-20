@@ -12,6 +12,7 @@ alertify.set('notifier','position', 'top-left');
    
 
 let activeUrl = getOnlineUrlConnection();
+let baseUrl = getOnlineUrlConnection();
 
 class ApiSaveOneRecord {
   static hasClass(el, classname) {

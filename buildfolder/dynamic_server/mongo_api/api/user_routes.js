@@ -2,7 +2,7 @@
 
 var cov_qjkwzyo8y = function () {
   var path = "C:\\Users\\Obiajulu\\Desktop\\commute\\commute-dev-Proj-repo\\server\\dynamic_server\\mongo_api\\api\\user_routes.js";
-  var hash = "f70b51526b41a0328cf932fcf73ff2bb0c50a7bd";
+  var hash = "6cd83e273ceb8d92a917c175750fcfc94ced1602";
   var global = new Function("return this")();
   var gcv = "__coverage__";
   var coverageData = {
@@ -271,66 +271,56 @@ var cov_qjkwzyo8y = function () {
       "26": {
         start: {
           line: 107,
-          column: 4
+          column: 2
         },
         end: {
           line: 110,
-          column: 6
+          column: 4
         }
       },
       "27": {
         start: {
-          line: 111,
-          column: 4
+          line: 112,
+          column: 3
         },
         end: {
           line: 115,
-          column: 6
+          column: 4
         }
       },
       "28": {
         start: {
-          line: 117,
-          column: 4
+          line: 118,
+          column: 3
         },
         end: {
-          line: 120,
+          line: 121,
           column: 4
         }
       },
       "29": {
         start: {
-          line: 122,
-          column: 4
+          line: 124,
+          column: 3
         },
         end: {
-          line: 126,
-          column: 8
+          line: 127,
+          column: 4
         }
       },
       "30": {
         start: {
-          line: 127,
-          column: 4
+          line: 129,
+          column: 3
         },
         end: {
-          line: 131,
-          column: 8
+          line: 132,
+          column: 4
         }
       },
       "31": {
         start: {
-          line: 132,
-          column: 4
-        },
-        end: {
-          line: 136,
-          column: 6
-        }
-      },
-      "32": {
-        start: {
-          line: 137,
+          line: 138,
           column: 4
         },
         end: {
@@ -338,49 +328,59 @@ var cov_qjkwzyo8y = function () {
           column: 6
         }
       },
-      "33": {
+      "32": {
         start: {
-          line: 143,
-          column: 5
+          line: 142,
+          column: 4
         },
         end: {
-          line: 147,
+          line: 146,
           column: 6
+        }
+      },
+      "33": {
+        start: {
+          line: 148,
+          column: 4
+        },
+        end: {
+          line: 151,
+          column: 4
         }
       },
       "34": {
         start: {
-          line: 149,
+          line: 153,
           column: 4
         },
         end: {
-          line: 153,
-          column: 6
+          line: 157,
+          column: 8
         }
       },
       "35": {
         start: {
-          line: 155,
+          line: 158,
           column: 4
         },
         end: {
-          line: 159,
-          column: 6
+          line: 162,
+          column: 8
         }
       },
       "36": {
         start: {
-          line: 161,
+          line: 163,
           column: 4
         },
         end: {
-          line: 165,
+          line: 167,
           column: 6
         }
       },
       "37": {
         start: {
-          line: 167,
+          line: 168,
           column: 4
         },
         end: {
@@ -390,105 +390,115 @@ var cov_qjkwzyo8y = function () {
       },
       "38": {
         start: {
-          line: 177,
+          line: 174,
           column: 5
         },
         end: {
-          line: 181,
+          line: 178,
           column: 6
         }
       },
       "39": {
         start: {
-          line: 183,
-          column: 5
+          line: 180,
+          column: 4
         },
         end: {
-          line: 187,
+          line: 184,
           column: 6
         }
       },
       "40": {
         start: {
-          line: 189,
-          column: 5
+          line: 186,
+          column: 4
         },
         end: {
-          line: 193,
+          line: 190,
           column: 6
         }
       },
       "41": {
         start: {
-          line: 195,
-          column: 5
+          line: 192,
+          column: 4
         },
         end: {
-          line: 199,
-          column: 7
+          line: 196,
+          column: 6
         }
       },
       "42": {
         start: {
-          line: 214,
+          line: 198,
           column: 4
+        },
+        end: {
+          line: 203,
+          column: 6
+        }
+      },
+      "43": {
+        start: {
+          line: 208,
+          column: 5
+        },
+        end: {
+          line: 212,
+          column: 6
+        }
+      },
+      "44": {
+        start: {
+          line: 214,
+          column: 5
         },
         end: {
           line: 218,
           column: 6
         }
       },
-      "43": {
-        start: {
-          line: 221,
-          column: 4
-        },
-        end: {
-          line: 225,
-          column: 6
-        }
-      },
-      "44": {
-        start: {
-          line: 228,
-          column: 4
-        },
-        end: {
-          line: 232,
-          column: 6
-        }
-      },
       "45": {
         start: {
-          line: 235,
-          column: 4
+          line: 220,
+          column: 5
         },
         end: {
-          line: 239,
+          line: 224,
           column: 6
         }
       },
       "46": {
         start: {
-          line: 242,
+          line: 226,
           column: 5
         },
         end: {
-          line: 246,
-          column: 6
+          line: 230,
+          column: 7
         }
       },
       "47": {
         start: {
-          line: 253,
+          line: 245,
           column: 4
         },
         end: {
-          line: 257,
+          line: 249,
           column: 6
         }
       },
       "48": {
+        start: {
+          line: 252,
+          column: 4
+        },
+        end: {
+          line: 256,
+          column: 6
+        }
+      },
+      "49": {
         start: {
           line: 259,
           column: 4
@@ -498,29 +508,29 @@ var cov_qjkwzyo8y = function () {
           column: 6
         }
       },
-      "49": {
-        start: {
-          line: 265,
-          column: 4
-        },
-        end: {
-          line: 267,
-          column: 80
-        }
-      },
       "50": {
         start: {
-          line: 280,
+          line: 266,
           column: 4
         },
         end: {
-          line: 283,
+          line: 270,
           column: 6
         }
       },
       "51": {
         start: {
-          line: 285,
+          line: 273,
+          column: 5
+        },
+        end: {
+          line: 277,
+          column: 6
+        }
+      },
+      "52": {
+        start: {
+          line: 284,
           column: 4
         },
         end: {
@@ -528,243 +538,233 @@ var cov_qjkwzyo8y = function () {
           column: 6
         }
       },
-      "52": {
+      "53": {
         start: {
           line: 290,
           column: 4
         },
         end: {
-          line: 293,
-          column: 6
-        }
-      },
-      "53": {
-        start: {
-          line: 295,
-          column: 5
-        },
-        end: {
-          line: 298,
+          line: 294,
           column: 6
         }
       },
       "54": {
         start: {
-          line: 301,
-          column: 5
+          line: 296,
+          column: 4
         },
         end: {
-          line: 304,
-          column: 6
+          line: 298,
+          column: 80
         }
       },
       "55": {
         start: {
-          line: 306,
-          column: 5
-        },
-        end: {
-          line: 309,
-          column: 7
-        }
-      },
-      "56": {
-        start: {
           line: 311,
-          column: 5
+          column: 4
         },
         end: {
           line: 314,
           column: 6
         }
       },
-      "57": {
+      "56": {
         start: {
           line: 316,
-          column: 5
+          column: 4
         },
         end: {
-          line: 320,
-          column: 8
+          line: 319,
+          column: 6
+        }
+      },
+      "57": {
+        start: {
+          line: 321,
+          column: 4
+        },
+        end: {
+          line: 324,
+          column: 6
         }
       },
       "58": {
         start: {
-          line: 321,
+          line: 326,
           column: 5
         },
         end: {
-          line: 324,
-          column: 8
+          line: 329,
+          column: 6
         }
       },
       "59": {
         start: {
-          line: 343,
-          column: 3
+          line: 332,
+          column: 5
         },
         end: {
-          line: 345,
-          column: 5
+          line: 335,
+          column: 6
         }
       },
       "60": {
         start: {
-          line: 344,
-          column: 7
+          line: 337,
+          column: 5
         },
         end: {
-          line: 344,
-          column: 31
+          line: 340,
+          column: 7
         }
       },
       "61": {
         start: {
-          line: 348,
-          column: 2
+          line: 342,
+          column: 5
         },
         end: {
-          line: 350,
-          column: 4
+          line: 345,
+          column: 6
         }
       },
       "62": {
         start: {
-          line: 349,
-          column: 6
+          line: 347,
+          column: 5
         },
         end: {
-          line: 349,
-          column: 30
+          line: 351,
+          column: 8
         }
       },
       "63": {
         start: {
-          line: 353,
-          column: 2
+          line: 352,
+          column: 5
         },
         end: {
           line: 355,
-          column: 5
+          column: 8
         }
       },
       "64": {
         start: {
-          line: 354,
-          column: 6
+          line: 374,
+          column: 3
         },
         end: {
-          line: 354,
-          column: 30
+          line: 376,
+          column: 5
         }
       },
       "65": {
         start: {
-          line: 363,
-          column: 2
+          line: 375,
+          column: 7
         },
         end: {
-          line: 367,
-          column: 4
+          line: 375,
+          column: 31
         }
       },
       "66": {
-        start: {
-          line: 369,
-          column: 2
-        },
-        end: {
-          line: 372,
-          column: 4
-        }
-      },
-      "67": {
-        start: {
-          line: 374,
-          column: 2
-        },
-        end: {
-          line: 377,
-          column: 4
-        }
-      },
-      "68": {
         start: {
           line: 379,
           column: 2
         },
         end: {
-          line: 382,
+          line: 381,
           column: 4
         }
       },
-      "69": {
+      "67": {
+        start: {
+          line: 380,
+          column: 6
+        },
+        end: {
+          line: 380,
+          column: 30
+        }
+      },
+      "68": {
         start: {
           line: 384,
           column: 2
         },
         end: {
-          line: 387,
-          column: 3
+          line: 386,
+          column: 5
+        }
+      },
+      "69": {
+        start: {
+          line: 385,
+          column: 6
+        },
+        end: {
+          line: 385,
+          column: 30
         }
       },
       "70": {
         start: {
-          line: 395,
+          line: 394,
           column: 2
         },
         end: {
-          line: 399,
+          line: 398,
           column: 4
         }
       },
       "71": {
         start: {
-          line: 402,
+          line: 400,
           column: 2
         },
         end: {
-          line: 405,
+          line: 403,
           column: 4
         }
       },
       "72": {
         start: {
-          line: 409,
+          line: 405,
           column: 2
         },
         end: {
-          line: 412,
+          line: 408,
           column: 4
         }
       },
       "73": {
         start: {
-          line: 414,
+          line: 410,
           column: 2
         },
         end: {
-          line: 417,
+          line: 413,
           column: 4
         }
       },
       "74": {
         start: {
-          line: 419,
+          line: 415,
           column: 2
         },
         end: {
-          line: 422,
+          line: 418,
           column: 3
         }
       },
       "75": {
         start: {
-          line: 427,
-          column: 3
+          line: 426,
+          column: 2
         },
         end: {
-          line: 431,
+          line: 430,
           column: 4
         }
       },
@@ -805,13 +805,13 @@ var cov_qjkwzyo8y = function () {
         },
         end: {
           line: 453,
-          column: 4
+          column: 3
         }
       },
       "80": {
         start: {
-          line: 459,
-          column: 2
+          line: 458,
+          column: 3
         },
         end: {
           line: 462,
@@ -825,72 +825,72 @@ var cov_qjkwzyo8y = function () {
         },
         end: {
           line: 467,
-          column: 3
+          column: 4
         }
       },
       "82": {
         start: {
-          line: 469,
+          line: 471,
           column: 2
         },
         end: {
-          line: 472,
+          line: 474,
           column: 4
         }
       },
       "83": {
         start: {
-          line: 474,
+          line: 476,
           column: 2
         },
         end: {
-          line: 477,
+          line: 479,
           column: 4
         }
       },
       "84": {
         start: {
-          line: 479,
+          line: 481,
           column: 2
         },
         end: {
-          line: 483,
+          line: 484,
           column: 4
         }
       },
       "85": {
         start: {
-          line: 487,
-          column: 4
+          line: 490,
+          column: 2
         },
         end: {
-          line: 490,
+          line: 493,
           column: 4
         }
       },
       "86": {
         start: {
-          line: 492,
+          line: 495,
           column: 2
         },
         end: {
-          line: 495,
+          line: 498,
           column: 3
         }
       },
       "87": {
         start: {
-          line: 497,
+          line: 500,
           column: 2
         },
         end: {
-          line: 500,
+          line: 503,
           column: 4
         }
       },
       "88": {
         start: {
-          line: 504,
+          line: 505,
           column: 2
         },
         end: {
@@ -900,15 +900,25 @@ var cov_qjkwzyo8y = function () {
       },
       "89": {
         start: {
-          line: 518,
+          line: 510,
           column: 2
+        },
+        end: {
+          line: 514,
+          column: 4
+        }
+      },
+      "90": {
+        start: {
+          line: 518,
+          column: 4
         },
         end: {
           line: 521,
           column: 4
         }
       },
-      "90": {
+      "91": {
         start: {
           line: 523,
           column: 2
@@ -918,7 +928,7 @@ var cov_qjkwzyo8y = function () {
           column: 3
         }
       },
-      "91": {
+      "92": {
         start: {
           line: 528,
           column: 2
@@ -928,277 +938,287 @@ var cov_qjkwzyo8y = function () {
           column: 4
         }
       },
-      "92": {
+      "93": {
         start: {
           line: 535,
           column: 2
         },
         end: {
-          line: 538,
-          column: 4
-        }
-      },
-      "93": {
-        start: {
-          line: 540,
-          column: 2
-        },
-        end: {
-          line: 543,
+          line: 539,
           column: 4
         }
       },
       "94": {
         start: {
-          line: 545,
+          line: 549,
           column: 2
         },
         end: {
-          line: 548,
+          line: 552,
           column: 4
         }
       },
       "95": {
         start: {
-          line: 551,
+          line: 554,
           column: 2
         },
         end: {
-          line: 554,
-          column: 4
+          line: 557,
+          column: 3
         }
       },
       "96": {
         start: {
-          line: 556,
+          line: 559,
           column: 2
         },
         end: {
-          line: 559,
+          line: 562,
           column: 4
         }
       },
       "97": {
         start: {
-          line: 562,
+          line: 566,
           column: 2
         },
         end: {
-          line: 565,
-          column: 3
+          line: 569,
+          column: 4
         }
       },
       "98": {
         start: {
-          line: 567,
+          line: 571,
           column: 2
         },
         end: {
-          line: 570,
+          line: 574,
           column: 4
         }
       },
       "99": {
         start: {
-          line: 572,
+          line: 576,
           column: 2
         },
         end: {
-          line: 575,
+          line: 579,
           column: 4
         }
       },
       "100": {
         start: {
-          line: 583,
+          line: 582,
           column: 2
         },
         end: {
-          line: 586,
-          column: 3
+          line: 585,
+          column: 4
         }
       },
       "101": {
         start: {
-          line: 589,
+          line: 587,
           column: 2
         },
         end: {
-          line: 592,
+          line: 590,
           column: 4
         }
       },
       "102": {
         start: {
-          line: 594,
+          line: 593,
           column: 2
         },
         end: {
-          line: 597,
-          column: 4
+          line: 596,
+          column: 3
         }
       },
       "103": {
         start: {
-          line: 599,
+          line: 598,
           column: 2
         },
         end: {
-          line: 602,
-          column: 3
+          line: 601,
+          column: 4
         }
       },
       "104": {
         start: {
-          line: 606,
+          line: 603,
           column: 2
         },
         end: {
-          line: 609,
-          column: 3
+          line: 606,
+          column: 4
         }
       },
       "105": {
         start: {
-          line: 611,
+          line: 614,
           column: 2
         },
         end: {
-          line: 614,
-          column: 4
+          line: 617,
+          column: 3
         }
       },
       "106": {
         start: {
-          line: 616,
+          line: 620,
           column: 2
         },
         end: {
-          line: 619,
+          line: 623,
           column: 4
         }
       },
       "107": {
         start: {
-          line: 622,
+          line: 625,
           column: 2
         },
         end: {
-          line: 625,
-          column: 3
+          line: 628,
+          column: 4
         }
       },
       "108": {
         start: {
-          line: 627,
+          line: 630,
           column: 2
         },
         end: {
-          line: 630,
+          line: 633,
           column: 3
         }
       },
       "109": {
         start: {
-          line: 632,
+          line: 637,
           column: 2
         },
         end: {
-          line: 635,
+          line: 640,
           column: 3
         }
       },
       "110": {
         start: {
-          line: 638,
+          line: 642,
           column: 2
         },
         end: {
-          line: 641,
-          column: 3
+          line: 645,
+          column: 4
         }
       },
       "111": {
         start: {
-          line: 644,
+          line: 647,
           column: 2
         },
         end: {
-          line: 647,
-          column: 3
+          line: 650,
+          column: 4
         }
       },
       "112": {
         start: {
-          line: 649,
+          line: 653,
           column: 2
         },
         end: {
-          line: 652,
-          column: 4
+          line: 656,
+          column: 3
         }
       },
       "113": {
         start: {
-          line: 655,
+          line: 658,
           column: 2
         },
         end: {
-          line: 658,
-          column: 4
+          line: 661,
+          column: 3
         }
       },
       "114": {
         start: {
-          line: 660,
+          line: 663,
           column: 2
         },
         end: {
-          line: 663,
-          column: 4
+          line: 666,
+          column: 3
         }
       },
       "115": {
         start: {
-          line: 674,
+          line: 669,
           column: 2
         },
         end: {
-          line: 677,
+          line: 672,
           column: 3
         }
       },
       "116": {
         start: {
-          line: 679,
+          line: 675,
           column: 2
         },
         end: {
-          line: 682,
-          column: 4
+          line: 678,
+          column: 3
         }
       },
       "117": {
         start: {
-          line: 687,
+          line: 680,
           column: 2
         },
         end: {
-          line: 690,
+          line: 683,
           column: 4
         }
       },
       "118": {
         start: {
-          line: 692,
+          line: 686,
           column: 2
         },
         end: {
-          line: 695,
-          column: 3
+          line: 689,
+          column: 4
         }
       },
       "119": {
+        start: {
+          line: 691,
+          column: 2
+        },
+        end: {
+          line: 694,
+          column: 4
+        }
+      },
+      "120": {
+        start: {
+          line: 705,
+          column: 2
+        },
+        end: {
+          line: 708,
+          column: 3
+        }
+      },
+      "121": {
         start: {
           line: 710,
           column: 2
@@ -1208,233 +1228,213 @@ var cov_qjkwzyo8y = function () {
           column: 4
         }
       },
-      "120": {
-        start: {
-          line: 715,
-          column: 2
-        },
-        end: {
-          line: 718,
-          column: 4
-        }
-      },
-      "121": {
-        start: {
-          line: 720,
-          column: 2
-        },
-        end: {
-          line: 723,
-          column: 5
-        }
-      },
       "122": {
         start: {
-          line: 729,
+          line: 718,
           column: 2
         },
         end: {
-          line: 733,
+          line: 721,
           column: 4
         }
       },
       "123": {
         start: {
-          line: 739,
+          line: 723,
           column: 2
         },
         end: {
-          line: 742,
-          column: 4
+          line: 726,
+          column: 3
         }
       },
       "124": {
         start: {
-          line: 744,
+          line: 741,
           column: 2
         },
         end: {
-          line: 747,
-          column: 3
+          line: 744,
+          column: 4
         }
       },
       "125": {
+        start: {
+          line: 746,
+          column: 2
+        },
+        end: {
+          line: 749,
+          column: 4
+        }
+      },
+      "126": {
         start: {
           line: 751,
           column: 2
         },
         end: {
           line: 754,
-          column: 3
-        }
-      },
-      "126": {
-        start: {
-          line: 757,
-          column: 2
-        },
-        end: {
-          line: 760,
-          column: 4
+          column: 5
         }
       },
       "127": {
         start: {
-          line: 763,
+          line: 760,
           column: 2
         },
         end: {
-          line: 766,
+          line: 764,
           column: 4
         }
       },
       "128": {
         start: {
-          line: 769,
+          line: 770,
           column: 2
         },
         end: {
-          line: 772,
-          column: 6
+          line: 773,
+          column: 4
         }
       },
       "129": {
         start: {
           line: 775,
-          column: 5
+          column: 2
         },
         end: {
           line: 778,
-          column: 6
+          column: 3
         }
       },
       "130": {
         start: {
-          line: 780,
-          column: 5
+          line: 782,
+          column: 2
         },
         end: {
-          line: 783,
-          column: 6
+          line: 785,
+          column: 3
         }
       },
       "131": {
         start: {
-          line: 787,
-          column: 5
+          line: 788,
+          column: 2
         },
         end: {
-          line: 790,
-          column: 6
+          line: 791,
+          column: 4
         }
       },
       "132": {
         start: {
-          line: 793,
-          column: 5
+          line: 794,
+          column: 2
         },
         end: {
-          line: 796,
-          column: 6
+          line: 797,
+          column: 4
         }
       },
       "133": {
         start: {
-          line: 798,
-          column: 5
+          line: 800,
+          column: 2
         },
         end: {
-          line: 801,
+          line: 803,
           column: 6
         }
       },
       "134": {
         start: {
-          line: 805,
-          column: 2
+          line: 806,
+          column: 5
         },
         end: {
-          line: 808,
-          column: 4
+          line: 809,
+          column: 6
         }
       },
       "135": {
         start: {
           line: 811,
-          column: 2
+          column: 5
         },
         end: {
           line: 814,
-          column: 4
+          column: 6
         }
       },
       "136": {
         start: {
-          line: 817,
-          column: 2
+          line: 818,
+          column: 5
         },
         end: {
-          line: 822,
-          column: 4
+          line: 821,
+          column: 6
         }
       },
       "137": {
         start: {
           line: 824,
-          column: 2
+          column: 5
         },
         end: {
-          line: 828,
-          column: 4
+          line: 827,
+          column: 6
         }
       },
       "138": {
         start: {
-          line: 834,
-          column: 2
+          line: 829,
+          column: 5
         },
         end: {
-          line: 837,
-          column: 4
+          line: 832,
+          column: 6
         }
       },
       "139": {
         start: {
-          line: 840,
+          line: 836,
           column: 2
         },
         end: {
-          line: 843,
+          line: 839,
           column: 4
         }
       },
       "140": {
         start: {
-          line: 845,
+          line: 842,
           column: 2
         },
         end: {
-          line: 848,
+          line: 845,
           column: 4
         }
       },
       "141": {
         start: {
-          line: 851,
+          line: 848,
           column: 2
         },
         end: {
-          line: 854,
+          line: 853,
           column: 4
         }
       },
       "142": {
         start: {
-          line: 860,
+          line: 855,
           column: 2
         },
         end: {
-          line: 863,
+          line: 859,
           column: 4
         }
       },
@@ -1470,52 +1470,52 @@ var cov_qjkwzyo8y = function () {
       },
       "146": {
         start: {
-          line: 885,
+          line: 882,
           column: 2
         },
         end: {
-          line: 887,
-          column: 3
+          line: 885,
+          column: 4
         }
       },
       "147": {
         start: {
-          line: 890,
+          line: 891,
           column: 2
         },
         end: {
-          line: 893,
-          column: 3
+          line: 894,
+          column: 4
         }
       },
       "148": {
         start: {
-          line: 895,
-          column: 3
+          line: 896,
+          column: 2
         },
         end: {
-          line: 898,
+          line: 899,
           column: 4
         }
       },
       "149": {
         start: {
-          line: 901,
-          column: 3
+          line: 902,
+          column: 2
         },
         end: {
-          line: 904,
+          line: 905,
           column: 4
         }
       },
       "150": {
         start: {
-          line: 908,
-          column: 4
+          line: 907,
+          column: 2
         },
         end: {
-          line: 911,
-          column: 3
+          line: 910,
+          column: 4
         }
       },
       "151": {
@@ -1524,8 +1524,8 @@ var cov_qjkwzyo8y = function () {
           column: 2
         },
         end: {
-          line: 919,
-          column: 4
+          line: 918,
+          column: 3
         }
       },
       "152": {
@@ -1535,73 +1535,73 @@ var cov_qjkwzyo8y = function () {
         },
         end: {
           line: 924,
-          column: 4
+          column: 3
         }
       },
       "153": {
         start: {
-          line: 927,
+          line: 926,
           column: 3
         },
         end: {
-          line: 930,
+          line: 929,
           column: 4
         }
       },
       "154": {
         start: {
-          line: 933,
+          line: 932,
           column: 3
         },
         end: {
-          line: 936,
-          column: 6
+          line: 935,
+          column: 4
         }
       },
       "155": {
         start: {
           line: 939,
-          column: 3
+          column: 4
         },
         end: {
           line: 942,
-          column: 6
+          column: 3
         }
       },
       "156": {
         start: {
-          line: 945,
-          column: 3
+          line: 947,
+          column: 2
         },
         end: {
-          line: 948,
+          line: 950,
           column: 4
         }
       },
       "157": {
         start: {
-          line: 954,
+          line: 952,
           column: 2
         },
         end: {
-          line: 957,
+          line: 955,
           column: 4
         }
       },
       "158": {
         start: {
-          line: 959,
-          column: 2
+          line: 958,
+          column: 3
         },
         end: {
-          line: 962,
+          line: 961,
           column: 4
         }
       },
       "159": {
         start: {
           line: 964,
-          column: 2
+          column: 3
         },
         end: {
           line: 967,
@@ -1610,18 +1610,18 @@ var cov_qjkwzyo8y = function () {
       },
       "160": {
         start: {
-          line: 971,
-          column: 2
+          line: 970,
+          column: 3
         },
         end: {
-          line: 974,
-          column: 4
+          line: 973,
+          column: 6
         }
       },
       "161": {
         start: {
           line: 976,
-          column: 2
+          column: 3
         },
         end: {
           line: 979,
@@ -1630,438 +1630,438 @@ var cov_qjkwzyo8y = function () {
       },
       "162": {
         start: {
-          line: 983,
-          column: 1
+          line: 985,
+          column: 2
         },
         end: {
-          line: 986,
+          line: 988,
           column: 4
         }
       },
       "163": {
         start: {
-          line: 989,
-          column: 1
+          line: 990,
+          column: 2
         },
         end: {
-          line: 992,
+          line: 993,
           column: 4
         }
       },
       "164": {
         start: {
           line: 995,
-          column: 1
+          column: 2
         },
         end: {
           line: 998,
-          column: 4
+          column: 6
         }
       },
       "165": {
         start: {
-          line: 1000,
-          column: 5
+          line: 1002,
+          column: 2
         },
         end: {
-          line: 1003,
-          column: 6
+          line: 1005,
+          column: 4
         }
       },
       "166": {
         start: {
           line: 1007,
-          column: 5
+          column: 2
         },
         end: {
           line: 1010,
-          column: 6
+          column: 4
         }
       },
       "167": {
         start: {
-          line: 1012,
-          column: 5
+          line: 1014,
+          column: 1
         },
         end: {
-          line: 1015,
-          column: 6
+          line: 1017,
+          column: 4
         }
       },
       "168": {
         start: {
-          line: 1017,
-          column: 5
+          line: 1020,
+          column: 1
         },
         end: {
-          line: 1020,
-          column: 6
+          line: 1023,
+          column: 4
         }
       },
       "169": {
         start: {
-          line: 1022,
-          column: 5
+          line: 1026,
+          column: 1
         },
         end: {
-          line: 1025,
-          column: 7
+          line: 1029,
+          column: 4
         }
       },
       "170": {
         start: {
-          line: 1030,
-          column: 4
+          line: 1031,
+          column: 5
         },
         end: {
-          line: 1049,
-          column: 7
+          line: 1034,
+          column: 6
         }
       },
       "171": {
         start: {
-          line: 1031,
-          column: 15
+          line: 1038,
+          column: 5
         },
         end: {
-          line: 1031,
-          column: 25
+          line: 1041,
+          column: 6
         }
       },
       "172": {
         start: {
-          line: 1032,
-          column: 6
+          line: 1043,
+          column: 5
         },
         end: {
-          line: 1048,
-          column: 7
+          line: 1046,
+          column: 6
         }
       },
       "173": {
         start: {
-          line: 1033,
-          column: 8
+          line: 1048,
+          column: 5
         },
         end: {
-          line: 1033,
-          column: 24
+          line: 1051,
+          column: 6
         }
       },
       "174": {
         start: {
-          line: 1034,
-          column: 8
+          line: 1053,
+          column: 5
         },
         end: {
-          line: 1036,
-          column: 11
+          line: 1056,
+          column: 7
         }
       },
       "175": {
         start: {
-          line: 1038,
-          column: 8
+          line: 1061,
+          column: 4
         },
         end: {
-          line: 1038,
-          column: 34
+          line: 1080,
+          column: 7
         }
       },
       "176": {
         start: {
-          line: 1039,
-          column: 8
+          line: 1062,
+          column: 15
         },
         end: {
-          line: 1047,
-          column: 11
+          line: 1062,
+          column: 25
         }
       },
       "177": {
         start: {
-          line: 1041,
-          column: 12
+          line: 1063,
+          column: 6
         },
         end: {
-          line: 1046,
-          column: 13
+          line: 1079,
+          column: 7
         }
       },
       "178": {
         start: {
-          line: 1042,
-          column: 14
+          line: 1064,
+          column: 8
         },
         end: {
-          line: 1042,
-          column: 28
+          line: 1064,
+          column: 24
         }
       },
       "179": {
         start: {
-          line: 1044,
-          column: 14
+          line: 1065,
+          column: 8
         },
         end: {
-          line: 1044,
-          column: 41
+          line: 1067,
+          column: 11
         }
       },
       "180": {
         start: {
-          line: 1045,
-          column: 14
+          line: 1069,
+          column: 8
         },
         end: {
-          line: 1045,
-          column: 38
+          line: 1069,
+          column: 34
         }
       },
       "181": {
         start: {
-          line: 1052,
-          column: 4
+          line: 1070,
+          column: 8
         },
         end: {
-          line: 1071,
-          column: 7
+          line: 1078,
+          column: 11
         }
       },
       "182": {
         start: {
-          line: 1054,
-          column: 6
+          line: 1072,
+          column: 12
         },
         end: {
-          line: 1070,
-          column: 15
+          line: 1077,
+          column: 13
         }
       },
       "183": {
         start: {
-          line: 1065,
+          line: 1073,
           column: 14
         },
         end: {
-          line: 1069,
-          column: 15
+          line: 1073,
+          column: 28
         }
       },
       "184": {
         start: {
-          line: 1066,
-          column: 16
+          line: 1075,
+          column: 14
         },
         end: {
-          line: 1066,
-          column: 30
+          line: 1075,
+          column: 41
         }
       },
       "185": {
         start: {
-          line: 1068,
-          column: 16
+          line: 1076,
+          column: 14
         },
         end: {
-          line: 1068,
-          column: 35
+          line: 1076,
+          column: 38
         }
       },
       "186": {
         start: {
-          line: 1074,
+          line: 1083,
           column: 4
         },
         end: {
-          line: 1083,
+          line: 1102,
           column: 7
         }
       },
       "187": {
         start: {
-          line: 1075,
-          column: 15
+          line: 1085,
+          column: 6
         },
         end: {
-          line: 1075,
-          column: 25
+          line: 1101,
+          column: 15
         }
       },
       "188": {
         start: {
-          line: 1076,
-          column: 6
+          line: 1096,
+          column: 14
         },
         end: {
-          line: 1082,
-          column: 9
+          line: 1100,
+          column: 15
         }
       },
       "189": {
         start: {
-          line: 1077,
-          column: 8
+          line: 1097,
+          column: 16
         },
         end: {
-          line: 1079,
-          column: 9
+          line: 1097,
+          column: 30
         }
       },
       "190": {
         start: {
-          line: 1078,
-          column: 10
+          line: 1099,
+          column: 16
         },
         end: {
-          line: 1078,
-          column: 24
+          line: 1099,
+          column: 35
         }
       },
       "191": {
         start: {
-          line: 1080,
-          column: 8
+          line: 1105,
+          column: 4
         },
         end: {
-          line: 1080,
-          column: 27
+          line: 1114,
+          column: 7
         }
       },
       "192": {
         start: {
-          line: 1081,
-          column: 8
+          line: 1106,
+          column: 15
         },
         end: {
-          line: 1081,
-          column: 41
+          line: 1106,
+          column: 25
         }
       },
       "193": {
         start: {
-          line: 1086,
-          column: 4
+          line: 1107,
+          column: 6
         },
         end: {
-          line: 1129,
-          column: 7
+          line: 1113,
+          column: 9
         }
       },
       "194": {
         start: {
-          line: 1087,
-          column: 15
+          line: 1108,
+          column: 8
         },
         end: {
-          line: 1087,
-          column: 25
+          line: 1110,
+          column: 9
         }
       },
       "195": {
-        start: {
-          line: 1088,
-          column: 21
-        },
-        end: {
-          line: 1088,
-          column: 29
-        }
-      },
-      "196": {
-        start: {
-          line: 1089,
-          column: 21
-        },
-        end: {
-          line: 1089,
-          column: 50
-        }
-      },
-      "197": {
-        start: {
-          line: 1090,
-          column: 22
-        },
-        end: {
-          line: 1090,
-          column: 52
-        }
-      },
-      "198": {
-        start: {
-          line: 1091,
-          column: 6
-        },
-        end: {
-          line: 1128,
-          column: 7
-        }
-      },
-      "199": {
-        start: {
-          line: 1092,
-          column: 8
-        },
-        end: {
-          line: 1092,
-          column: 24
-        }
-      },
-      "200": {
-        start: {
-          line: 1093,
-          column: 8
-        },
-        end: {
-          line: 1095,
-          column: 11
-        }
-      },
-      "201": {
-        start: {
-          line: 1097,
-          column: 8
-        },
-        end: {
-          line: 1127,
-          column: 11
-        }
-      },
-      "202": {
         start: {
           line: 1109,
           column: 10
         },
         end: {
+          line: 1109,
+          column: 24
+        }
+      },
+      "196": {
+        start: {
+          line: 1111,
+          column: 8
+        },
+        end: {
+          line: 1111,
+          column: 27
+        }
+      },
+      "197": {
+        start: {
           line: 1112,
-          column: 11
+          column: 8
+        },
+        end: {
+          line: 1112,
+          column: 41
+        }
+      },
+      "198": {
+        start: {
+          line: 1117,
+          column: 4
+        },
+        end: {
+          line: 1160,
+          column: 7
+        }
+      },
+      "199": {
+        start: {
+          line: 1118,
+          column: 15
+        },
+        end: {
+          line: 1118,
+          column: 25
+        }
+      },
+      "200": {
+        start: {
+          line: 1119,
+          column: 21
+        },
+        end: {
+          line: 1119,
+          column: 29
+        }
+      },
+      "201": {
+        start: {
+          line: 1120,
+          column: 21
+        },
+        end: {
+          line: 1120,
+          column: 50
+        }
+      },
+      "202": {
+        start: {
+          line: 1121,
+          column: 22
+        },
+        end: {
+          line: 1121,
+          column: 52
         }
       },
       "203": {
         start: {
-          line: 1110,
-          column: 12
+          line: 1122,
+          column: 6
         },
         end: {
-          line: 1110,
-          column: 39
+          line: 1159,
+          column: 7
         }
       },
       "204": {
         start: {
-          line: 1111,
-          column: 12
+          line: 1123,
+          column: 8
         },
         end: {
-          line: 1111,
-          column: 26
+          line: 1123,
+          column: 24
         }
       },
       "205": {
         start: {
-          line: 1113,
-          column: 10
+          line: 1124,
+          column: 8
         },
         end: {
           line: 1126,
@@ -2070,61 +2070,111 @@ var cov_qjkwzyo8y = function () {
       },
       "206": {
         start: {
-          line: 1116,
-          column: 12
+          line: 1128,
+          column: 8
         },
         end: {
-          line: 1125,
-          column: 15
+          line: 1158,
+          column: 11
         }
       },
       "207": {
         start: {
-          line: 1117,
-          column: 14
+          line: 1140,
+          column: 10
         },
         end: {
-          line: 1119,
-          column: 15
+          line: 1143,
+          column: 11
         }
       },
       "208": {
         start: {
-          line: 1118,
-          column: 16
+          line: 1141,
+          column: 12
         },
         end: {
-          line: 1118,
-          column: 32
+          line: 1141,
+          column: 39
         }
       },
       "209": {
         start: {
-          line: 1120,
-          column: 14
+          line: 1142,
+          column: 12
         },
         end: {
-          line: 1120,
-          column: 40
+          line: 1142,
+          column: 26
         }
       },
       "210": {
         start: {
-          line: 1121,
-          column: 14
+          line: 1144,
+          column: 10
         },
         end: {
-          line: 1124,
-          column: 17
+          line: 1157,
+          column: 11
         }
       },
       "211": {
         start: {
-          line: 1133,
+          line: 1147,
+          column: 12
+        },
+        end: {
+          line: 1156,
+          column: 15
+        }
+      },
+      "212": {
+        start: {
+          line: 1148,
+          column: 14
+        },
+        end: {
+          line: 1150,
+          column: 15
+        }
+      },
+      "213": {
+        start: {
+          line: 1149,
+          column: 16
+        },
+        end: {
+          line: 1149,
+          column: 32
+        }
+      },
+      "214": {
+        start: {
+          line: 1151,
+          column: 14
+        },
+        end: {
+          line: 1151,
+          column: 40
+        }
+      },
+      "215": {
+        start: {
+          line: 1152,
+          column: 14
+        },
+        end: {
+          line: 1155,
+          column: 17
+        }
+      },
+      "216": {
+        start: {
+          line: 1164,
           column: 4
         },
         end: {
-          line: 1133,
+          line: 1164,
           column: 23
         }
       }
@@ -2172,7 +2222,7 @@ var cov_qjkwzyo8y = function () {
             column: 17
           },
           end: {
-            line: 1134,
+            line: 1165,
             column: 3
           }
         },
@@ -2302,289 +2352,289 @@ var cov_qjkwzyo8y = function () {
         name: "(anonymous_7)",
         decl: {
           start: {
-            line: 343,
+            line: 374,
             column: 23
           },
           end: {
-            line: 343,
+            line: 374,
             column: 24
           }
         },
         loc: {
           start: {
-            line: 343,
+            line: 374,
             column: 37
           },
           end: {
-            line: 345,
+            line: 376,
             column: 3
           }
         },
-        line: 343
+        line: 374
       },
       "8": {
         name: "(anonymous_8)",
         decl: {
           start: {
-            line: 348,
+            line: 379,
             column: 28
           },
           end: {
-            line: 348,
+            line: 379,
             column: 29
           }
         },
         loc: {
           start: {
-            line: 348,
+            line: 379,
             column: 40
           },
           end: {
-            line: 350,
+            line: 381,
             column: 3
           }
         },
-        line: 348
+        line: 379
       },
       "9": {
         name: "(anonymous_9)",
         decl: {
           start: {
-            line: 353,
+            line: 384,
             column: 34
           },
           end: {
-            line: 353,
+            line: 384,
             column: 35
           }
         },
         loc: {
           start: {
-            line: 353,
+            line: 384,
             column: 48
           },
           end: {
-            line: 355,
+            line: 386,
             column: 3
           }
         },
-        line: 353
+        line: 384
       },
       "10": {
         name: "(anonymous_10)",
         decl: {
           start: {
-            line: 1030,
+            line: 1061,
             column: 49
           },
           end: {
-            line: 1030,
+            line: 1061,
             column: 50
           }
         },
         loc: {
           start: {
-            line: 1030,
+            line: 1061,
             column: 73
           },
           end: {
-            line: 1049,
+            line: 1080,
             column: 5
           }
         },
-        line: 1030
+        line: 1061
       },
       "11": {
         name: "(anonymous_11)",
         decl: {
           start: {
-            line: 1040,
+            line: 1071,
             column: 48
           },
           end: {
-            line: 1040,
+            line: 1071,
             column: 49
           }
         },
         loc: {
           start: {
-            line: 1040,
+            line: 1071,
             column: 77
           },
           end: {
-            line: 1047,
+            line: 1078,
             column: 9
           }
         },
-        line: 1040
+        line: 1071
       },
       "12": {
         name: "(anonymous_12)",
         decl: {
           start: {
-            line: 1052,
+            line: 1083,
             column: 60
           },
           end: {
-            line: 1052,
+            line: 1083,
             column: 61
           }
         },
         loc: {
           start: {
-            line: 1052,
+            line: 1083,
             column: 86
           },
           end: {
-            line: 1071,
+            line: 1102,
             column: 5
           }
         },
-        line: 1052
+        line: 1083
       },
       "13": {
         name: "(anonymous_13)",
         decl: {
           start: {
-            line: 1064,
+            line: 1095,
             column: 10
           },
           end: {
-            line: 1064,
+            line: 1095,
             column: 11
           }
         },
         loc: {
           start: {
-            line: 1064,
+            line: 1095,
             column: 35
           },
           end: {
-            line: 1070,
+            line: 1101,
             column: 13
           }
         },
-        line: 1064
+        line: 1095
       },
       "14": {
         name: "(anonymous_14)",
         decl: {
           start: {
-            line: 1074,
+            line: 1105,
             column: 43
           },
           end: {
-            line: 1074,
+            line: 1105,
             column: 44
           }
         },
         loc: {
           start: {
-            line: 1074,
+            line: 1105,
             column: 69
           },
           end: {
-            line: 1083,
+            line: 1114,
             column: 5
           }
         },
-        line: 1074
+        line: 1105
       },
       "15": {
         name: "(anonymous_15)",
         decl: {
           start: {
-            line: 1076,
+            line: 1107,
             column: 55
           },
           end: {
-            line: 1076,
+            line: 1107,
             column: 56
           }
         },
         loc: {
           start: {
-            line: 1076,
+            line: 1107,
             column: 80
           },
           end: {
-            line: 1082,
+            line: 1113,
             column: 7
           }
         },
-        line: 1076
+        line: 1107
       },
       "16": {
         name: "(anonymous_16)",
         decl: {
           start: {
-            line: 1086,
+            line: 1117,
             column: 43
           },
           end: {
-            line: 1086,
+            line: 1117,
             column: 44
           }
         },
         loc: {
           start: {
-            line: 1086,
+            line: 1117,
             column: 69
           },
           end: {
-            line: 1129,
+            line: 1160,
             column: 5
           }
         },
-        line: 1086
+        line: 1117
       },
       "17": {
         name: "(anonymous_17)",
         decl: {
           start: {
-            line: 1108,
+            line: 1139,
             column: 11
           },
           end: {
-            line: 1108,
+            line: 1139,
             column: 12
           }
         },
         loc: {
           start: {
-            line: 1108,
+            line: 1139,
             column: 41
           },
           end: {
-            line: 1127,
+            line: 1158,
             column: 9
           }
         },
-        line: 1108
+        line: 1139
       },
       "18": {
         name: "(anonymous_18)",
         decl: {
           start: {
-            line: 1116,
+            line: 1147,
             column: 81
           },
           end: {
-            line: 1116,
+            line: 1147,
             column: 82
           }
         },
         loc: {
           start: {
-            line: 1116,
+            line: 1147,
             column: 115
           },
           end: {
-            line: 1125,
+            line: 1156,
             column: 13
           }
         },
-        line: 1116
+        line: 1147
       }
     },
     branchMap: {
@@ -2690,266 +2740,266 @@ var cov_qjkwzyo8y = function () {
       "3": {
         loc: {
           start: {
-            line: 1032,
+            line: 1063,
             column: 6
           },
           end: {
-            line: 1048,
+            line: 1079,
             column: 7
           }
         },
         type: "if",
         locations: [{
           start: {
-            line: 1032,
+            line: 1063,
             column: 6
           },
           end: {
-            line: 1048,
+            line: 1079,
             column: 7
           }
         }, {
           start: {
-            line: 1032,
+            line: 1063,
             column: 6
           },
           end: {
-            line: 1048,
+            line: 1079,
             column: 7
           }
         }],
-        line: 1032
+        line: 1063
       },
       "4": {
         loc: {
           start: {
-            line: 1041,
+            line: 1072,
             column: 12
           },
           end: {
-            line: 1046,
+            line: 1077,
             column: 13
           }
         },
         type: "if",
         locations: [{
           start: {
-            line: 1041,
+            line: 1072,
             column: 12
           },
           end: {
-            line: 1046,
+            line: 1077,
             column: 13
           }
         }, {
           start: {
-            line: 1041,
+            line: 1072,
             column: 12
           },
           end: {
-            line: 1046,
+            line: 1077,
             column: 13
           }
         }],
-        line: 1041
+        line: 1072
       },
       "5": {
         loc: {
           start: {
-            line: 1065,
+            line: 1096,
             column: 14
           },
           end: {
-            line: 1069,
+            line: 1100,
             column: 15
           }
         },
         type: "if",
         locations: [{
           start: {
-            line: 1065,
+            line: 1096,
             column: 14
           },
           end: {
-            line: 1069,
+            line: 1100,
             column: 15
           }
         }, {
           start: {
-            line: 1065,
+            line: 1096,
             column: 14
           },
           end: {
-            line: 1069,
+            line: 1100,
             column: 15
           }
         }],
-        line: 1065
+        line: 1096
       },
       "6": {
         loc: {
           start: {
-            line: 1077,
+            line: 1108,
             column: 8
           },
           end: {
-            line: 1079,
+            line: 1110,
             column: 9
           }
         },
         type: "if",
         locations: [{
           start: {
-            line: 1077,
+            line: 1108,
             column: 8
           },
           end: {
-            line: 1079,
+            line: 1110,
             column: 9
           }
         }, {
           start: {
-            line: 1077,
+            line: 1108,
             column: 8
           },
           end: {
-            line: 1079,
+            line: 1110,
             column: 9
           }
         }],
-        line: 1077
+        line: 1108
       },
       "7": {
         loc: {
           start: {
-            line: 1091,
+            line: 1122,
             column: 6
           },
           end: {
-            line: 1128,
+            line: 1159,
             column: 7
           }
         },
         type: "if",
         locations: [{
           start: {
-            line: 1091,
+            line: 1122,
             column: 6
           },
           end: {
-            line: 1128,
+            line: 1159,
             column: 7
           }
         }, {
           start: {
-            line: 1091,
+            line: 1122,
             column: 6
           },
           end: {
-            line: 1128,
+            line: 1159,
             column: 7
           }
         }],
-        line: 1091
+        line: 1122
       },
       "8": {
         loc: {
           start: {
-            line: 1109,
+            line: 1140,
             column: 10
           },
           end: {
-            line: 1112,
+            line: 1143,
             column: 11
           }
         },
         type: "if",
         locations: [{
           start: {
-            line: 1109,
+            line: 1140,
             column: 10
           },
           end: {
-            line: 1112,
+            line: 1143,
             column: 11
           }
         }, {
           start: {
-            line: 1109,
+            line: 1140,
             column: 10
           },
           end: {
-            line: 1112,
+            line: 1143,
             column: 11
           }
         }],
-        line: 1109
+        line: 1140
       },
       "9": {
         loc: {
           start: {
-            line: 1113,
+            line: 1144,
             column: 10
           },
           end: {
-            line: 1126,
+            line: 1157,
             column: 11
           }
         },
         type: "if",
         locations: [{
           start: {
-            line: 1113,
+            line: 1144,
             column: 10
           },
           end: {
-            line: 1126,
+            line: 1157,
             column: 11
           }
         }, {
           start: {
-            line: 1113,
+            line: 1144,
             column: 10
           },
           end: {
-            line: 1126,
+            line: 1157,
             column: 11
           }
         }],
-        line: 1113
+        line: 1144
       },
       "10": {
         loc: {
           start: {
-            line: 1117,
+            line: 1148,
             column: 14
           },
           end: {
-            line: 1119,
+            line: 1150,
             column: 15
           }
         },
         type: "if",
         locations: [{
           start: {
-            line: 1117,
+            line: 1148,
             column: 14
           },
           end: {
-            line: 1119,
+            line: 1150,
             column: 15
           }
         }, {
           start: {
-            line: 1117,
+            line: 1148,
             column: 14
           },
           end: {
-            line: 1119,
+            line: 1150,
             column: 15
           }
         }],
-        line: 1117
+        line: 1148
       }
     },
     s: {
@@ -3164,7 +3214,12 @@ var cov_qjkwzyo8y = function () {
       "208": 0,
       "209": 0,
       "210": 0,
-      "211": 0
+      "211": 0,
+      "212": 0,
+      "213": 0,
+      "214": 0,
+      "215": 0,
+      "216": 0
     },
     f: {
       "0": 0,
@@ -3201,7 +3256,7 @@ var cov_qjkwzyo8y = function () {
       "10": [0, 0]
     },
     _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
-    hash: "f70b51526b41a0328cf932fcf73ff2bb0c50a7bd"
+    hash: "6cd83e273ceb8d92a917c175750fcfc94ced1602"
   };
   var coverage = global[gcv] || (global[gcv] = {});
 
@@ -3212,10 +3267,16 @@ var cov_qjkwzyo8y = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _user_controller = _interopRequireDefault(require("../controllers/user_controller"));
 
@@ -3228,14 +3289,6 @@ var _post_sanitizer = _interopRequireDefault(require("../middlewares/post_saniti
 var _Driver = _interopRequireDefault(require("../models/Driver.model"));
 
 var _cors = _interopRequireDefault(require("cors"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var corsOption = (cov_qjkwzyo8y.s[0]++, {
   origin: true,
@@ -3260,15 +3313,14 @@ var UserRoutes =
 /*#__PURE__*/
 function () {
   function UserRoutes(router) {
-    _classCallCheck(this, UserRoutes);
-
+    (0, _classCallCheck2["default"])(this, UserRoutes);
     cov_qjkwzyo8y.f[0]++;
     cov_qjkwzyo8y.s[2]++;
     // super(router);
     this.router = router;
   }
 
-  _createClass(UserRoutes, [{
+  (0, _createClass2["default"])(UserRoutes, [{
     key: "attachRoutes",
     value: function attachRoutes() {
       cov_qjkwzyo8y.f[1]++;
@@ -3378,54 +3430,68 @@ function () {
       cov_qjkwzyo8y.s[25]++;
       this.router.get('/test-email', _user_controller["default"].testEmail);
       cov_qjkwzyo8y.s[26]++;
+      this.router.post('/userexists', // TokenVerification.userAuthentication,
+      _user_controller["default"].userExists);
+      cov_qjkwzyo8y.s[27]++;
+      this.router.post('/transaction/upgrade-amount', _token_validator["default"].userAuthentication, _user_controller["default"].walletUpgradeViaMobile);
+      cov_qjkwzyo8y.s[28]++;
+      this.router["delete"]('/itinerary/delete/:id', _token_validator["default"].userAuthentication, _user_controller["default"].deleteItinerary);
+      cov_qjkwzyo8y.s[29]++;
+      this.router.post('/payplan-get/', _token_validator["default"].userAuthentication, _user_controller["default"].setPlanIdForUser);
+      cov_qjkwzyo8y.s[30]++;
+      this.router.get('/payplan-set/:id', _token_validator["default"].userAuthentication, _user_controller["default"].getPlanIdForUser); //  this.router.get('/userexists',
+      //  UserController.userExists
+      //  )
+
+      cov_qjkwzyo8y.s[31]++;
       this.router.get('/profile/update/:id', _token_validator["default"].userAuthentication, _user_controller["default"].showProfile); //
 
-      cov_qjkwzyo8y.s[27]++;
-      this.router.post('/profile/update/:id', _token_validator["default"].userAuthentication, _user_sanitizer["default"].validateSignUp, _user_controller["default"].updateProfile);
-      cov_qjkwzyo8y.s[28]++;
-      this.router.get("/get-cars-info-user", _token_validator["default"].userAuthentication, _user_controller["default"].getCarsInfo);
-      cov_qjkwzyo8y.s[29]++;
-      this.router.get('/individual/plans/view', _token_validator["default"].userAuthentication, _user_controller["default"].individualPlans);
-      cov_qjkwzyo8y.s[30]++;
-      this.router.get('/coperate/plans/view', _token_validator["default"].userAuthentication, _user_controller["default"].coperatePlans);
-      cov_qjkwzyo8y.s[31]++;
-      this.router.post('/plans/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].addNewPlans);
       cov_qjkwzyo8y.s[32]++;
-      this.router.get('/plans/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].getAllUsersPlans);
+      this.router.post('/profile/update/:id', _token_validator["default"].userAuthentication, _user_sanitizer["default"].validateSignUp, _user_controller["default"].updateProfile);
       cov_qjkwzyo8y.s[33]++;
-      this.router.get('/quotations/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].getAllUsersQuotations);
+      this.router.get("/get-cars-info-user", _token_validator["default"].userAuthentication, _user_controller["default"].getCarsInfo);
       cov_qjkwzyo8y.s[34]++;
-      this.router.get('/plans/:id', _token_validator["default"].userAuthentication, _user_controller["default"].getOnePlanById);
+      this.router.get('/individual/plans/view', _token_validator["default"].userAuthentication, _user_controller["default"].individualPlans);
       cov_qjkwzyo8y.s[35]++;
-      this.router.patch('/plans/:id', _token_validator["default"].userAuthentication, _user_controller["default"].updateItem);
+      this.router.get('/coperate/plans/view', _token_validator["default"].userAuthentication, _user_controller["default"].coperatePlans);
       cov_qjkwzyo8y.s[36]++;
-      this.router["delete"]('/plans/:id', _token_validator["default"].userAuthentication, _user_controller["default"].deleteItem);
+      this.router.post('/plans/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].addNewPlans);
       cov_qjkwzyo8y.s[37]++;
-      this.router.put('/debit-wallet-transactions/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].debitWallet);
+      this.router.get('/plans/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].getAllUsersPlans);
       cov_qjkwzyo8y.s[38]++;
-      this.router.put('/plan-status/:id/update', _token_validator["default"].userAuthentication, _user_controller["default"].updatePlanStatus);
+      this.router.get('/quotations/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].getAllUsersQuotations);
       cov_qjkwzyo8y.s[39]++;
-      this.router.put('/itin-status/:id/update', _token_validator["default"].userAuthentication, _user_controller["default"].updateItinStatus);
+      this.router.get('/plans/:id', _token_validator["default"].userAuthentication, _user_controller["default"].getOnePlanById);
       cov_qjkwzyo8y.s[40]++;
-      this.router.put('/quote-status/:id/update', _token_validator["default"].userAuthentication, _user_controller["default"].updateQuoteStatus);
+      this.router.patch('/plans/:id', _token_validator["default"].userAuthentication, _user_controller["default"].updateItem);
       cov_qjkwzyo8y.s[41]++;
-      this.router.post('/add-drive-test-for-user', _token_validator["default"].userAuthentication, _user_controller["default"].addDriveTestFromItinerary);
+      this.router["delete"]('/plans/:id', _token_validator["default"].userAuthentication, _user_controller["default"].deleteItem);
       cov_qjkwzyo8y.s[42]++;
-      this.router.get('/cars/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].getUserCars);
+      this.router.put('/debit-wallet-transactions/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].debitWallet);
       cov_qjkwzyo8y.s[43]++;
-      this.router.post('/itinerary/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].saveUsersItinerary);
+      this.router.put('/plan-status/:id/update', _token_validator["default"].userAuthentication, _user_controller["default"].updatePlanStatus);
       cov_qjkwzyo8y.s[44]++;
+      this.router.put('/itin-status/:id/update', _token_validator["default"].userAuthentication, _user_controller["default"].updateItinStatus);
+      cov_qjkwzyo8y.s[45]++;
+      this.router.put('/quote-status/:id/update', _token_validator["default"].userAuthentication, _user_controller["default"].updateQuoteStatus);
+      cov_qjkwzyo8y.s[46]++;
+      this.router.post('/add-drive-test-for-user', _token_validator["default"].userAuthentication, _user_controller["default"].addDriveTestFromItinerary);
+      cov_qjkwzyo8y.s[47]++;
+      this.router.get('/cars/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].getUserCars);
+      cov_qjkwzyo8y.s[48]++;
+      this.router.post('/itinerary/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].saveUsersItinerary);
+      cov_qjkwzyo8y.s[49]++;
       this.router.get('/itinerary/:id/user', _token_validator["default"].userAuthentication, _user_controller["default"].getUsersItinerary); //update itineray status
 
-      cov_qjkwzyo8y.s[45]++;
+      cov_qjkwzyo8y.s[50]++;
       this.router.put('/itinerary/:id/status', _token_validator["default"].userAuthentication, _user_controller["default"].updateItineraryStatus);
-      cov_qjkwzyo8y.s[46]++;
+      cov_qjkwzyo8y.s[51]++;
       this.router.put('/user/:id/ratings', _token_validator["default"].userAuthentication, _user_controller["default"].updateDriverRatings);
-      cov_qjkwzyo8y.s[47]++;
+      cov_qjkwzyo8y.s[52]++;
       this.router.get('/itinerary/:id/user/edit', _token_validator["default"].userAuthentication, _user_controller["default"].editViewUsersItinerary);
-      cov_qjkwzyo8y.s[48]++;
+      cov_qjkwzyo8y.s[53]++;
       this.router.post('/itinerary/:id/user/edit', _token_validator["default"].userAuthentication, _user_controller["default"].updateUsersItinerary);
-      cov_qjkwzyo8y.s[49]++;
+      cov_qjkwzyo8y.s[54]++;
       this.router.route('/balance/:id').get(_token_validator["default"].userAuthentication, controllerWallet.getBalance); // this.router
       //   .route('/transactions')
       //   .get( TokenVerification.userAuthentication,  controllerWallet.getTransactions);
@@ -3434,27 +3500,27 @@ function () {
       //   .post( TokenVerification.userAuthentication, 
       //     validate(walletDeposit), controllerWallet.deposit);
 
-      cov_qjkwzyo8y.s[50]++;
+      cov_qjkwzyo8y.s[55]++;
       this.router.post('/paystack/pay', //cors(corsOption), 
       _token_validator["default"].userAuthentication, _user_controller["default"].paystackPayMeMoney);
-      cov_qjkwzyo8y.s[51]++;
+      cov_qjkwzyo8y.s[56]++;
       this.router.get('/paystack/callback', // TokenVerification.userAuthentication,
       _user_controller["default"].paystackCallBack);
-      cov_qjkwzyo8y.s[52]++;
+      cov_qjkwzyo8y.s[57]++;
       this.router.get('/receipt/:id', // TokenVerification.userAuthentication, 
       _user_controller["default"].paystackReceipt);
-      cov_qjkwzyo8y.s[53]++;
+      cov_qjkwzyo8y.s[58]++;
       this.router.get('/payment-history/:id', _token_validator["default"].userAuthentication, _user_controller["default"].paystackHistory);
-      cov_qjkwzyo8y.s[54]++;
+      cov_qjkwzyo8y.s[59]++;
       this.router.get('/payment-payments/:id', _token_validator["default"].userAuthentication, _user_controller["default"].paystackPayments);
-      cov_qjkwzyo8y.s[55]++;
+      cov_qjkwzyo8y.s[60]++;
       this.router.post('/makepayments', _token_validator["default"].userAuthentication, _user_controller["default"].createPaymentDetail);
-      cov_qjkwzyo8y.s[56]++;
+      cov_qjkwzyo8y.s[61]++;
       this.router.get('/payment-quotations/:id', _token_validator["default"].userAuthentication, _user_controller["default"].paystackQuotations);
-      cov_qjkwzyo8y.s[57]++;
+      cov_qjkwzyo8y.s[62]++;
       this.router.post('/notification', _token_validator["default"].userAuthentication, //UserSanitizer.checkIfUserDoesntExists,
       _user_controller["default"].makeNotification);
-      cov_qjkwzyo8y.s[58]++;
+      cov_qjkwzyo8y.s[63]++;
       this.router.get('/notification/:id', _token_validator["default"].userAuthentication, _user_controller["default"].getUserNotification); // this.router.get("/drivers",     //read done
       //   TokenVerification.userAuthentication, 
       //   UserController.getDrivers
@@ -3466,344 +3532,344 @@ function () {
       //   .route('/withdrawal')
       //   .post( TokenVerification.userAuthentication, validate(walletDeposit), controllerWallet.withdrawal);
 
-      cov_qjkwzyo8y.s[59]++;
+      cov_qjkwzyo8y.s[64]++;
       this.router.get('/', function (req, res) {
         cov_qjkwzyo8y.f[7]++;
-        cov_qjkwzyo8y.s[60]++;
+        cov_qjkwzyo8y.s[65]++;
         res.render('index.pug');
       });
-      cov_qjkwzyo8y.s[61]++;
+      cov_qjkwzyo8y.s[66]++;
       this.router.get('/error', function (req, res) {
         cov_qjkwzyo8y.f[8]++;
-        cov_qjkwzyo8y.s[62]++;
+        cov_qjkwzyo8y.s[67]++;
         res.render('error.pug');
       });
-      cov_qjkwzyo8y.s[63]++;
+      cov_qjkwzyo8y.s[68]++;
       this.router.get('/testpaystack', function (req, res) {
         cov_qjkwzyo8y.f[9]++;
-        cov_qjkwzyo8y.s[64]++;
+        cov_qjkwzyo8y.s[69]++;
         res.render('index.pug');
       }); //adminusers
       //admin : users routes
 
-      cov_qjkwzyo8y.s[65]++;
+      cov_qjkwzyo8y.s[70]++;
       this.router.post("/admin-add-user", //create done
       _token_validator["default"].adminAuthentication, _user_sanitizer["default"].checkIfUserExists, _user_controller["default"].addUserByAdmin);
-      cov_qjkwzyo8y.s[66]++;
+      cov_qjkwzyo8y.s[71]++;
       this.router.get("/admin-users", //read - done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageUsers);
-      cov_qjkwzyo8y.s[67]++;
+      cov_qjkwzyo8y.s[72]++;
       this.router.put("/admin-users-detail/:id", //update
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageUsersDetail);
-      cov_qjkwzyo8y.s[68]++;
+      cov_qjkwzyo8y.s[73]++;
       this.router.put("/admin-users-detail-verification/:id", //update
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageUsersDetailVerification);
-      cov_qjkwzyo8y.s[69]++;
+      cov_qjkwzyo8y.s[74]++;
       this.router["delete"]("/users/:id/delete", //delete - done
       _token_validator["default"].adminAuthentication, _user_controller["default"].deleteUser); //
       //end of admin user routes
 
-      cov_qjkwzyo8y.s[70]++;
+      cov_qjkwzyo8y.s[75]++;
       this.router.post("/add-admin", //create done
       _token_validator["default"].adminAuthentication, _user_sanitizer["default"].checkIfUserExists, _user_controller["default"].addAdminByAdmin);
-      cov_qjkwzyo8y.s[71]++;
+      cov_qjkwzyo8y.s[76]++;
       this.router.get("/admin-admins", //read done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageAdmins);
-      cov_qjkwzyo8y.s[72]++;
+      cov_qjkwzyo8y.s[77]++;
       this.router.put("/admin-admins-detail/:id", //edit done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageAdminsDetail);
-      cov_qjkwzyo8y.s[73]++;
+      cov_qjkwzyo8y.s[78]++;
       this.router.put("/admin-admins-detail-verification/:id", //update
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageAdminsDetailVerification);
-      cov_qjkwzyo8y.s[74]++;
+      cov_qjkwzyo8y.s[79]++;
       this.router["delete"]("/users/:id/delete", //delete - done
       _token_validator["default"].adminAuthentication, _user_controller["default"].deleteUser); //
 
-      cov_qjkwzyo8y.s[75]++;
+      cov_qjkwzyo8y.s[80]++;
       this.router.post("/add-driver", //create done
       _token_validator["default"].adminAuthentication, _user_sanitizer["default"].checkIfDriverExists, _user_controller["default"].addDriverByAdmin);
-      cov_qjkwzyo8y.s[76]++;
+      cov_qjkwzyo8y.s[81]++;
       this.router.get("/admin-drivers", //read done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageDrivers);
-      cov_qjkwzyo8y.s[77]++;
+      cov_qjkwzyo8y.s[82]++;
       this.router.put("/admin-drivers-detail/:id", // update
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageDriversDetail);
-      cov_qjkwzyo8y.s[78]++;
+      cov_qjkwzyo8y.s[83]++;
       this.router.put("/admin-drivers-detail-verification/:id", //update
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageDriversDetailVerification);
-      cov_qjkwzyo8y.s[79]++;
+      cov_qjkwzyo8y.s[84]++;
       this.router["delete"]("/drivers/:id/delete", //delete done
       _token_validator["default"].adminAuthentication, _user_controller["default"].deleteDriver);
-      cov_qjkwzyo8y.s[80]++;
+      cov_qjkwzyo8y.s[85]++;
       this.router.get("/admin-partners", //read done
       _token_validator["default"].adminAuthentication, _user_controller["default"].managePartners);
-      cov_qjkwzyo8y.s[81]++;
+      cov_qjkwzyo8y.s[86]++;
       this.router["delete"]("/partners/:id/delete", //delete done
       _token_validator["default"].adminAuthentication, _user_controller["default"].deletePartner);
-      cov_qjkwzyo8y.s[82]++;
+      cov_qjkwzyo8y.s[87]++;
       this.router.put("/admin-partners-detail/:id", //update done
       _token_validator["default"].adminAuthentication, _user_controller["default"].managePartnersDetail);
-      cov_qjkwzyo8y.s[83]++;
+      cov_qjkwzyo8y.s[88]++;
       this.router.put("/admin-partners-detail-verification/:id", //update
       _token_validator["default"].adminAuthentication, _user_controller["default"].managePartnersDetailVerification);
-      cov_qjkwzyo8y.s[84]++;
+      cov_qjkwzyo8y.s[89]++;
       this.router.post("/add-partner", //create done
       _token_validator["default"].adminAuthentication, _user_sanitizer["default"].checkIfPartnerExists, _user_controller["default"].addPartnerByAdmin);
-      cov_qjkwzyo8y.s[85]++;
+      cov_qjkwzyo8y.s[90]++;
       this.router.get("/admin-earnings", //read done
       _token_validator["default"].adminAuthentication, _user_controller["default"].managePartnersEarnings);
-      cov_qjkwzyo8y.s[86]++;
+      cov_qjkwzyo8y.s[91]++;
       this.router["delete"]("/partners-earnings/:id/delete", //delete done
       _token_validator["default"].adminAuthentication, _user_controller["default"].deletePartnersEarnings);
-      cov_qjkwzyo8y.s[87]++;
+      cov_qjkwzyo8y.s[92]++;
       this.router.put("/partners-earnings-detail/:id", //update done
       _token_validator["default"].adminAuthentication, _user_controller["default"].managePartnersEarningsDetail);
-      cov_qjkwzyo8y.s[88]++;
+      cov_qjkwzyo8y.s[93]++;
       this.router.post("/add-partner-earnings", //create done
       _token_validator["default"].adminAuthentication, // UserSanitizer.checkIfPartnerExists,
       _user_controller["default"].addPartnersEarningsByAdmin);
-      cov_qjkwzyo8y.s[89]++;
+      cov_qjkwzyo8y.s[94]++;
       this.router.get("/admin-profile/:id", //read done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageProfile);
-      cov_qjkwzyo8y.s[90]++;
+      cov_qjkwzyo8y.s[95]++;
       this.router.put("/admin-profile-detail/:id", //update not completed
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageProfileDetail);
-      cov_qjkwzyo8y.s[91]++;
+      cov_qjkwzyo8y.s[96]++;
       this.router.put("/admin-profile-detail-verification/:id", //update
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageProfileDetailVerification);
-      cov_qjkwzyo8y.s[92]++;
+      cov_qjkwzyo8y.s[97]++;
       this.router.get("/admin-plan-package", // read done
       _token_validator["default"].adminAuthentication, _user_controller["default"].managePlanPackage);
-      cov_qjkwzyo8y.s[93]++;
+      cov_qjkwzyo8y.s[98]++;
       this.router.get("/admin-plan-package-corporate", //read done
       _token_validator["default"].adminAuthentication, _user_controller["default"].managePlanPackageCorporate);
-      cov_qjkwzyo8y.s[94]++;
+      cov_qjkwzyo8y.s[99]++;
       this.router.post("/add-plan", //create 
       _token_validator["default"].adminAuthentication, _user_controller["default"].createNewPlan);
-      cov_qjkwzyo8y.s[95]++;
+      cov_qjkwzyo8y.s[100]++;
       this.router.put("/admin-plan-package-detail/:id", // update done
       _token_validator["default"].adminAuthentication, _user_controller["default"].managePlanPackageDetail);
-      cov_qjkwzyo8y.s[96]++;
+      cov_qjkwzyo8y.s[101]++;
       this.router["delete"]("/plan-package/:id/delete/:delete_type", //delete done
       _token_validator["default"].adminAuthentication, _user_controller["default"].deletePlanPackage);
-      cov_qjkwzyo8y.s[97]++;
+      cov_qjkwzyo8y.s[102]++;
       this.router.get("/admin-sos", //read done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageSOS);
-      cov_qjkwzyo8y.s[98]++;
+      cov_qjkwzyo8y.s[103]++;
       this.router.put("/admin-sos-detail/:id", //update
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageSOSDetail);
-      cov_qjkwzyo8y.s[99]++;
+      cov_qjkwzyo8y.s[104]++;
       this.router["delete"]("/redflag-sos/:id/delete", //delete done
       _token_validator["default"].adminAuthentication, _user_controller["default"].deleteSOS); //admin cant create any sos
       //tickets 
 
-      cov_qjkwzyo8y.s[100]++;
+      cov_qjkwzyo8y.s[105]++;
       this.router.get("/admin-tickets", //read done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageTickets);
-      cov_qjkwzyo8y.s[101]++;
+      cov_qjkwzyo8y.s[106]++;
       this.router.put("/admin-ticket-detail/:id", //update 
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageTicketsDetail);
-      cov_qjkwzyo8y.s[102]++;
+      cov_qjkwzyo8y.s[107]++;
       this.router["delete"]("/tickets/:id/delete", //delete done
       _token_validator["default"].adminAuthentication, _user_controller["default"].deleteTicket);
-      cov_qjkwzyo8y.s[103]++;
+      cov_qjkwzyo8y.s[108]++;
       this.router.post("/add-ticket", //done for admin
       _token_validator["default"].adminAuthentication, _user_controller["default"].createNewTicket);
-      cov_qjkwzyo8y.s[104]++;
+      cov_qjkwzyo8y.s[109]++;
       this.router.get("/admin-faqs", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageFaqs);
-      cov_qjkwzyo8y.s[105]++;
+      cov_qjkwzyo8y.s[110]++;
       this.router.put("/admin-faqs-detail/:id", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageFaqsDetail);
-      cov_qjkwzyo8y.s[106]++;
+      cov_qjkwzyo8y.s[111]++;
       this.router.post("/add-faq", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].createNewFAQ);
-      cov_qjkwzyo8y.s[107]++;
+      cov_qjkwzyo8y.s[112]++;
       this.router.get("/admin-settings-google", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageGoogleSettings);
-      cov_qjkwzyo8y.s[108]++;
+      cov_qjkwzyo8y.s[113]++;
       this.router.get("/admin-settings-facebook", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageFacebookSettings);
-      cov_qjkwzyo8y.s[109]++;
+      cov_qjkwzyo8y.s[114]++;
       this.router.get("/admin-settings-paystack", //done --- revisit this
       _token_validator["default"].adminAuthentication, _user_controller["default"].managePaystackSettings);
-      cov_qjkwzyo8y.s[110]++;
+      cov_qjkwzyo8y.s[115]++;
       this.router.get("/admin-settings-email", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageEmailSettings);
-      cov_qjkwzyo8y.s[111]++;
+      cov_qjkwzyo8y.s[116]++;
       this.router.get("/admin-settings-bucket", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageS3BucketSettings);
-      cov_qjkwzyo8y.s[112]++;
+      cov_qjkwzyo8y.s[117]++;
       this.router.get("/admin-settings-instagram", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageInstagramSettings);
-      cov_qjkwzyo8y.s[113]++;
+      cov_qjkwzyo8y.s[118]++;
       this.router.get("/admin-settings-instagram", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageInstagramSettings);
-      cov_qjkwzyo8y.s[114]++;
+      cov_qjkwzyo8y.s[119]++;
       this.router.put("/admin-settings-detail/:id", _token_validator["default"].adminAuthentication, _user_controller["default"].manageSettingsDetail);
-      cov_qjkwzyo8y.s[115]++;
+      cov_qjkwzyo8y.s[120]++;
       this.router.get("/admin-itineraries", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageItineraries);
-      cov_qjkwzyo8y.s[116]++;
+      cov_qjkwzyo8y.s[121]++;
       this.router.get("/admin-users-plan", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageUsersPlan);
-      cov_qjkwzyo8y.s[117]++;
+      cov_qjkwzyo8y.s[122]++;
       this.router.put("/admin-itinerary-details/:id", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageItineraryDetail);
-      cov_qjkwzyo8y.s[118]++;
+      cov_qjkwzyo8y.s[123]++;
       this.router.put("/notification-update/:id", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageUserNotificationCounter); // this.router.get("/admin-wallet",
       //   TokenVerification.adminAuthentication,
       //   UserController.manageWalletHistory
       // )
 
-      cov_qjkwzyo8y.s[119]++;
-      this.router.get("/admin-bookings", _token_validator["default"].adminAuthentication, _user_controller["default"].manageBookings);
-      cov_qjkwzyo8y.s[120]++;
-      this.router.put("/admin-bookings-detail", _token_validator["default"].adminAuthentication, _user_controller["default"].manageBookingsDetail);
-      cov_qjkwzyo8y.s[121]++;
-      this.router.post('/make-quotation', _token_validator["default"].adminAuthentication, _user_controller["default"].makeQuotation);
-      cov_qjkwzyo8y.s[122]++;
-      this.router.post("/admin-manual-booking", _token_validator["default"].adminAuthentication, _user_controller["default"].manageManualBooking);
-      cov_qjkwzyo8y.s[123]++;
-      this.router.get("/admin", _token_validator["default"].adminAuthentication, _user_controller["default"].adminDashboard);
       cov_qjkwzyo8y.s[124]++;
-      this.router.get("/admin-sales-today", _token_validator["default"].adminAuthentication, _user_controller["default"].adminDashboardTodaySales);
+      this.router.get("/admin-bookings", _token_validator["default"].adminAuthentication, _user_controller["default"].manageBookings);
       cov_qjkwzyo8y.s[125]++;
-      this.router.get("/admin-sales-yesterday", _token_validator["default"].adminAuthentication, _user_controller["default"].adminDashboardYesterdaySales);
+      this.router.put("/admin-bookings-detail", _token_validator["default"].adminAuthentication, _user_controller["default"].manageBookingsDetail);
       cov_qjkwzyo8y.s[126]++;
-      this.router.get("/admin-sales-lastweek", _token_validator["default"].adminAuthentication, _user_controller["default"].adminDashboardWeeklySales);
+      this.router.post('/make-quotation', _token_validator["default"].adminAuthentication, _user_controller["default"].makeQuotation);
       cov_qjkwzyo8y.s[127]++;
-      this.router.get("/admin-users-month-ago", _token_validator["default"].adminAuthentication, _user_controller["default"].adminDashboardMonthlySales);
+      this.router.post("/admin-manual-booking", _token_validator["default"].adminAuthentication, _user_controller["default"].manageManualBooking);
       cov_qjkwzyo8y.s[128]++;
-      this.router.get('/payment-history', _token_validator["default"].adminAuthentication, _user_controller["default"].paystackHistoryAdmin);
+      this.router.get("/admin", _token_validator["default"].adminAuthentication, _user_controller["default"].adminDashboard);
       cov_qjkwzyo8y.s[129]++;
-      this.router.get('/payment-payments', _token_validator["default"].adminAuthentication, _user_controller["default"].paystackPaymentsAdmin);
+      this.router.get("/admin-sales-today", _token_validator["default"].adminAuthentication, _user_controller["default"].adminDashboardTodaySales);
       cov_qjkwzyo8y.s[130]++;
-      this.router.get('/payment-quotations', _token_validator["default"].adminAuthentication, _user_controller["default"].paystackQuotationsAdmin);
+      this.router.get("/admin-sales-yesterday", _token_validator["default"].adminAuthentication, _user_controller["default"].adminDashboardYesterdaySales);
       cov_qjkwzyo8y.s[131]++;
-      this.router["delete"]('/payment/:id/delete', _token_validator["default"].adminAuthentication, _user_controller["default"].deletePayment);
+      this.router.get("/admin-sales-lastweek", _token_validator["default"].adminAuthentication, _user_controller["default"].adminDashboardWeeklySales);
       cov_qjkwzyo8y.s[132]++;
-      this.router["delete"]('/wallet/:id/delete', _token_validator["default"].adminAuthentication, _user_controller["default"].deleteWallet);
+      this.router.get("/admin-users-month-ago", _token_validator["default"].adminAuthentication, _user_controller["default"].adminDashboardMonthlySales);
       cov_qjkwzyo8y.s[133]++;
-      this.router["delete"]('/quotation/:id/delete', _token_validator["default"].adminAuthentication, _user_controller["default"].deleteQuotation);
+      this.router.get('/payment-history', _token_validator["default"].adminAuthentication, _user_controller["default"].paystackHistoryAdmin);
       cov_qjkwzyo8y.s[134]++;
-      this.router.put("/userplan-status-update/:id", _token_validator["default"].adminAuthentication, _user_controller["default"].updateUsersPlanStatusAdmin);
+      this.router.get('/payment-payments', _token_validator["default"].adminAuthentication, _user_controller["default"].paystackPaymentsAdmin);
       cov_qjkwzyo8y.s[135]++;
+      this.router.get('/payment-quotations', _token_validator["default"].adminAuthentication, _user_controller["default"].paystackQuotationsAdmin);
+      cov_qjkwzyo8y.s[136]++;
+      this.router["delete"]('/payment/:id/delete', _token_validator["default"].adminAuthentication, _user_controller["default"].deletePayment);
+      cov_qjkwzyo8y.s[137]++;
+      this.router["delete"]('/wallet/:id/delete', _token_validator["default"].adminAuthentication, _user_controller["default"].deleteWallet);
+      cov_qjkwzyo8y.s[138]++;
+      this.router["delete"]('/quotation/:id/delete', _token_validator["default"].adminAuthentication, _user_controller["default"].deleteQuotation);
+      cov_qjkwzyo8y.s[139]++;
+      this.router.put("/userplan-status-update/:id", _token_validator["default"].adminAuthentication, _user_controller["default"].updateUsersPlanStatusAdmin);
+      cov_qjkwzyo8y.s[140]++;
       this.router.put("/user-itinerary-status-update/:id", _token_validator["default"].adminAuthentication, _user_controller["default"].updateItineraryStatusAdmin); //admin-itinerary-add
 
-      cov_qjkwzyo8y.s[136]++;
+      cov_qjkwzyo8y.s[141]++;
       this.router.post("/admin-itinerary-add", _token_validator["default"].adminAuthentication, _user_sanitizer["default"].checkIfUserDoesntExists, _user_controller["default"].createNewItinerary);
-      cov_qjkwzyo8y.s[137]++;
+      cov_qjkwzyo8y.s[142]++;
       this.router.post("/admin-plan-add", //add booking
       _token_validator["default"].adminAuthentication, //UserSanitizer.checkIfUserDoesntExists,
       _user_controller["default"].createNewPlanBooking);
-      cov_qjkwzyo8y.s[138]++;
+      cov_qjkwzyo8y.s[143]++;
       this.router.post("/add-cars", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].createNewCar);
-      cov_qjkwzyo8y.s[139]++;
+      cov_qjkwzyo8y.s[144]++;
       this.router.get("/admin-cars-mgt", //done
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageCars);
-      cov_qjkwzyo8y.s[140]++;
+      cov_qjkwzyo8y.s[145]++;
       this.router.get("/get-cars-info", _token_validator["default"].adminAuthentication, _user_controller["default"].getCarsInfo);
-      cov_qjkwzyo8y.s[141]++;
+      cov_qjkwzyo8y.s[146]++;
       this.router.put("/admin-cars-detail/:id", _token_validator["default"].adminAuthentication, _user_controller["default"].manageCarsDetail);
-      cov_qjkwzyo8y.s[142]++;
+      cov_qjkwzyo8y.s[147]++;
       this.router.get("/admin-inspection", //read
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageInspection);
-      cov_qjkwzyo8y.s[143]++;
+      cov_qjkwzyo8y.s[148]++;
       this.router.post("/add-inspection", //create 
       _token_validator["default"].adminAuthentication, _user_controller["default"].createNewInspection);
-      cov_qjkwzyo8y.s[144]++;
+      cov_qjkwzyo8y.s[149]++;
       this.router.put("/admin-inspection-detail/:id", // update 
       _token_validator["default"].adminAuthentication, _user_controller["default"].manageInspectionDetail);
-      cov_qjkwzyo8y.s[145]++;
+      cov_qjkwzyo8y.s[150]++;
       this.router["delete"]("/inspection/:id/delete", //delete 
       _token_validator["default"].adminAuthentication, _user_controller["default"].deleteInspection);
-      cov_qjkwzyo8y.s[146]++;
+      cov_qjkwzyo8y.s[151]++;
       this.router.get("/admin-drive-test", _user_controller["default"].manageDriveTest);
-      cov_qjkwzyo8y.s[147]++;
+      cov_qjkwzyo8y.s[152]++;
       this.router.put("/admin-drive-test-detail/:id", _token_validator["default"].adminAuthentication, _user_controller["default"].manageDriveTestDetail);
-      cov_qjkwzyo8y.s[148]++;
+      cov_qjkwzyo8y.s[153]++;
       this.router.post("/add-drive-test", //create 
       _token_validator["default"].adminAuthentication, _user_controller["default"].createNewDriveTest);
-      cov_qjkwzyo8y.s[149]++;
+      cov_qjkwzyo8y.s[154]++;
       this.router["delete"]("/drive-test/:id/delete", //delete 
       _token_validator["default"].adminAuthentication, _user_controller["default"].deleteDriveTest);
-      cov_qjkwzyo8y.s[150]++;
+      cov_qjkwzyo8y.s[155]++;
       this.router.put("/update-testcenter/:id", _token_validator["default"].adminAuthentication, _user_controller["default"].manageUsersDriveTestCenterUpdate);
-      cov_qjkwzyo8y.s[151]++;
+      cov_qjkwzyo8y.s[156]++;
       this.router.get("/admin-previledges", //read done
       _token_validator["default"].adminAuthentication, _user_controller["default"].managePreviledges);
-      cov_qjkwzyo8y.s[152]++;
+      cov_qjkwzyo8y.s[157]++;
       this.router.post("/add-roles", //create 
       _token_validator["default"].adminAuthentication, _user_controller["default"].createNewPreviledges); //
 
-      cov_qjkwzyo8y.s[153]++;
+      cov_qjkwzyo8y.s[158]++;
       this.router.put("/admin-previledges-update/:id", //create 
       _token_validator["default"].adminAuthentication, _user_controller["default"].adminPreviledgesEdit);
-      cov_qjkwzyo8y.s[154]++;
+      cov_qjkwzyo8y.s[159]++;
       this.router.get('/get-admin-previledges/:id', _token_validator["default"].adminAuthentication, _user_controller["default"].getUserPreviledges);
-      cov_qjkwzyo8y.s[155]++;
+      cov_qjkwzyo8y.s[160]++;
       this.router.get('/fetchuserinfo/:id', _token_validator["default"].userAuthentication, _user_controller["default"].showUserInfo);
-      cov_qjkwzyo8y.s[156]++;
+      cov_qjkwzyo8y.s[161]++;
       this.router.put("/old_balance/:id", //create 
       _token_validator["default"].userAuthentication, _user_controller["default"].setOldBalance);
-      cov_qjkwzyo8y.s[157]++;
+      cov_qjkwzyo8y.s[162]++;
       this.router.put("/admin-role-detail/:id", // update done
       _token_validator["default"].adminAuthentication, _user_controller["default"].managePreviledgesDetail);
-      cov_qjkwzyo8y.s[158]++;
+      cov_qjkwzyo8y.s[163]++;
       this.router["delete"]("/roles/:id/delete", //delete done
       _token_validator["default"].adminAuthentication, _user_controller["default"].deletePreviledges);
-      cov_qjkwzyo8y.s[159]++;
+      cov_qjkwzyo8y.s[164]++;
       this.router.get('/profile-admin-rights/update/:id/permission/:roles', _token_validator["default"].userAuthentication, _user_controller["default"].showProfileRights); //showProfileRights(request,response)
 
-      cov_qjkwzyo8y.s[160]++;
+      cov_qjkwzyo8y.s[165]++;
       this.router.get("/get-trails", //read done
       _token_validator["default"].adminAuthentication, _user_controller["default"].getTrails);
-      cov_qjkwzyo8y.s[161]++;
+      cov_qjkwzyo8y.s[166]++;
       this.router.post("/log-audit", //create 
       _token_validator["default"].adminAuthentication, _user_controller["default"].createTrail); //
 
-      cov_qjkwzyo8y.s[162]++;
+      cov_qjkwzyo8y.s[167]++;
       this.router.get('/get-all-notification', _token_validator["default"].adminAuthentication, _user_controller["default"].getAllNotification);
-      cov_qjkwzyo8y.s[163]++;
+      cov_qjkwzyo8y.s[168]++;
       this.router.get('/get-all-cars-repair-request', _token_validator["default"].adminAuthentication, _user_controller["default"].getAllRepairs);
-      cov_qjkwzyo8y.s[164]++;
+      cov_qjkwzyo8y.s[169]++;
       this.router.put('/admin-mech-status/:id', _token_validator["default"].adminAuthentication, _user_controller["default"].changeRepairStatus); //drivers
 
-      cov_qjkwzyo8y.s[165]++;
+      cov_qjkwzyo8y.s[170]++;
       this.router.get('/confirm-booking-request', //TokenVerification.userAuthentication, 
       _user_controller["default"].driverConfirmBooking); // Add a vehicle retrieval 
 
-      cov_qjkwzyo8y.s[166]++;
+      cov_qjkwzyo8y.s[171]++;
       this.router.post('/admin-new-car-revoke', _token_validator["default"].adminAuthentication, _user_controller["default"].revokecar);
-      cov_qjkwzyo8y.s[167]++;
+      cov_qjkwzyo8y.s[172]++;
       this.router.put('/admin-new-car-revoke-status/:id', _token_validator["default"].adminAuthentication, _user_controller["default"].revokecarstatus);
-      cov_qjkwzyo8y.s[168]++;
+      cov_qjkwzyo8y.s[173]++;
       this.router.get('/admin-get-revoke-details', _token_validator["default"].adminAuthentication, _user_controller["default"].getrevokecars);
-      cov_qjkwzyo8y.s[169]++;
+      cov_qjkwzyo8y.s[174]++;
       this.router.put('/notification/:id', _token_validator["default"].userAuthentication, _user_controller["default"].updateNotificationStatus); //update driver socket id
 
-      cov_qjkwzyo8y.s[170]++;
+      cov_qjkwzyo8y.s[175]++;
       this.router.put("/driverLocationSocket/:id", function (req, res, next) {
         cov_qjkwzyo8y.f[10]++;
-        var io = (cov_qjkwzyo8y.s[171]++, req.app.io);
-        cov_qjkwzyo8y.s[172]++;
+        var io = (cov_qjkwzyo8y.s[176]++, req.app.io);
+        cov_qjkwzyo8y.s[177]++;
 
         if (!req.body) {
           cov_qjkwzyo8y.b[3][0]++;
-          cov_qjkwzyo8y.s[173]++;
+          cov_qjkwzyo8y.s[178]++;
           res.status(400);
-          cov_qjkwzyo8y.s[174]++;
+          cov_qjkwzyo8y.s[179]++;
           res.json({
             "error": "Bad Data"
           });
         } else {
           cov_qjkwzyo8y.b[3][1]++;
-          cov_qjkwzyo8y.s[175]++;
+          cov_qjkwzyo8y.s[180]++;
           console.log(req.params.id);
-          cov_qjkwzyo8y.s[176]++;
+          cov_qjkwzyo8y.s[181]++;
 
           _Driver["default"].updateOne({
             id: req.params.id
@@ -3813,27 +3879,27 @@ function () {
             }
           }, function (err, updateDetails) {
             cov_qjkwzyo8y.f[11]++;
-            cov_qjkwzyo8y.s[177]++;
+            cov_qjkwzyo8y.s[182]++;
 
             if (err) {
               cov_qjkwzyo8y.b[4][0]++;
-              cov_qjkwzyo8y.s[178]++;
+              cov_qjkwzyo8y.s[183]++;
               res.send(err);
             } else {
               cov_qjkwzyo8y.b[4][1]++;
-              cov_qjkwzyo8y.s[179]++;
+              cov_qjkwzyo8y.s[184]++;
               console.log(updateDetails);
-              cov_qjkwzyo8y.s[180]++;
+              cov_qjkwzyo8y.s[185]++;
               res.send(updateDetails);
             }
           });
         }
       }); //get nearby driver
 
-      cov_qjkwzyo8y.s[181]++;
+      cov_qjkwzyo8y.s[186]++;
       this.router.get("/driverLocation/:latitude/:longitude", function (req, res, next) {
         cov_qjkwzyo8y.f[12]++;
-        cov_qjkwzyo8y.s[182]++;
+        cov_qjkwzyo8y.s[187]++;
 
         //DriverModel.ensureIndex({"coordinate": "2dsphere"});
         _Driver["default"].find({
@@ -3848,67 +3914,67 @@ function () {
           }
         }, function (err, location) {
           cov_qjkwzyo8y.f[13]++;
-          cov_qjkwzyo8y.s[183]++;
+          cov_qjkwzyo8y.s[188]++;
 
           if (err) {
             cov_qjkwzyo8y.b[5][0]++;
-            cov_qjkwzyo8y.s[184]++;
+            cov_qjkwzyo8y.s[189]++;
             res.send(err);
           } else {
             cov_qjkwzyo8y.b[5][1]++;
-            cov_qjkwzyo8y.s[185]++;
+            cov_qjkwzyo8y.s[190]++;
             res.send(location);
           }
         });
       }); //Get Single Driver and emit track by user to driver
 
-      cov_qjkwzyo8y.s[186]++;
+      cov_qjkwzyo8y.s[191]++;
       this.router.get("/driverLocation/:id", function (req, res, next) {
         cov_qjkwzyo8y.f[14]++;
-        var io = (cov_qjkwzyo8y.s[187]++, req.app.io);
-        cov_qjkwzyo8y.s[188]++;
+        var io = (cov_qjkwzyo8y.s[192]++, req.app.io);
+        cov_qjkwzyo8y.s[193]++;
 
         _Driver["default"].findOne({
           driverId: req.params.id
         }, function (err, location) {
           cov_qjkwzyo8y.f[15]++;
-          cov_qjkwzyo8y.s[189]++;
+          cov_qjkwzyo8y.s[194]++;
 
           if (err) {
             cov_qjkwzyo8y.b[6][0]++;
-            cov_qjkwzyo8y.s[190]++;
+            cov_qjkwzyo8y.s[195]++;
             res.send(err);
           } else {
             cov_qjkwzyo8y.b[6][1]++;
           }
 
-          cov_qjkwzyo8y.s[191]++;
+          cov_qjkwzyo8y.s[196]++;
           res.send(location);
-          cov_qjkwzyo8y.s[192]++;
+          cov_qjkwzyo8y.s[197]++;
           io.emit("trackDriver", location);
         });
       }); //Update Location by driver to user
 
-      cov_qjkwzyo8y.s[193]++;
+      cov_qjkwzyo8y.s[198]++;
       this.router.put("/driverLocation/:id", function (req, res, next) {
         cov_qjkwzyo8y.f[16]++;
-        var io = (cov_qjkwzyo8y.s[194]++, req.app.io);
-        var location = (cov_qjkwzyo8y.s[195]++, req.body);
-        var latitude = (cov_qjkwzyo8y.s[196]++, parseFloat(location.latitude));
-        var longitude = (cov_qjkwzyo8y.s[197]++, parseFloat(location.longitude));
-        cov_qjkwzyo8y.s[198]++;
+        var io = (cov_qjkwzyo8y.s[199]++, req.app.io);
+        var location = (cov_qjkwzyo8y.s[200]++, req.body);
+        var latitude = (cov_qjkwzyo8y.s[201]++, parseFloat(location.latitude));
+        var longitude = (cov_qjkwzyo8y.s[202]++, parseFloat(location.longitude));
+        cov_qjkwzyo8y.s[203]++;
 
         if (!location) {
           cov_qjkwzyo8y.b[7][0]++;
-          cov_qjkwzyo8y.s[199]++;
+          cov_qjkwzyo8y.s[204]++;
           res.status(400);
-          cov_qjkwzyo8y.s[200]++;
+          cov_qjkwzyo8y.s[205]++;
           res.json({
             "error": "Bad Data"
           });
         } else {
           cov_qjkwzyo8y.b[7][1]++;
-          cov_qjkwzyo8y.s[201]++;
+          cov_qjkwzyo8y.s[206]++;
 
           _Driver["default"].update({
             _id: req.params.id
@@ -3922,41 +3988,41 @@ function () {
             }
           }, function (err, updateDetails) {
             cov_qjkwzyo8y.f[17]++;
-            cov_qjkwzyo8y.s[202]++;
+            cov_qjkwzyo8y.s[207]++;
 
             if (err) {
               cov_qjkwzyo8y.b[8][0]++;
-              cov_qjkwzyo8y.s[203]++;
+              cov_qjkwzyo8y.s[208]++;
               console.log(updateDetails);
-              cov_qjkwzyo8y.s[204]++;
+              cov_qjkwzyo8y.s[209]++;
               res.send(err);
             } else {
               cov_qjkwzyo8y.b[8][1]++;
             }
 
-            cov_qjkwzyo8y.s[205]++;
+            cov_qjkwzyo8y.s[210]++;
 
             if (updateDetails) {
               cov_qjkwzyo8y.b[9][0]++;
-              cov_qjkwzyo8y.s[206]++;
+              cov_qjkwzyo8y.s[211]++;
               //Get updated location
               db.driversLocation.findOne({
                 _id: mongojs.ObjectId(req.params.id)
               }, function (error, updatedLocation) {
                 cov_qjkwzyo8y.f[18]++;
-                cov_qjkwzyo8y.s[207]++;
+                cov_qjkwzyo8y.s[212]++;
 
                 if (error) {
                   cov_qjkwzyo8y.b[10][0]++;
-                  cov_qjkwzyo8y.s[208]++;
+                  cov_qjkwzyo8y.s[213]++;
                   res.send(error);
                 } else {
                   cov_qjkwzyo8y.b[10][1]++;
                 }
 
-                cov_qjkwzyo8y.s[209]++;
+                cov_qjkwzyo8y.s[214]++;
                 res.send(updatedLocation);
-                cov_qjkwzyo8y.s[210]++;
+                cov_qjkwzyo8y.s[215]++;
                 io.emit("action", {
                   type: "UPDATE_DRIVER_LOCATION",
                   payload: updatedLocation
@@ -3968,11 +4034,10 @@ function () {
           });
         }
       });
-      cov_qjkwzyo8y.s[211]++;
+      cov_qjkwzyo8y.s[216]++;
       return this.router;
     }
   }]);
-
   return UserRoutes;
 }();
 

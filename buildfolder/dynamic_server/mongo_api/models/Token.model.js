@@ -71,9 +71,9 @@ var cov_2ek0xyvy = function () {
   return coverage[path] = coverageData;
 }();
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var Promise = (cov_2ek0xyvy.s[0]++, require('bluebird'));
 var SignUpTokenSchema = (cov_2ek0xyvy.s[1]++, new _mongoose["default"].Schema({

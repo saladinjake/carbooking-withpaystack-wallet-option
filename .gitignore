@@ -2,9 +2,11 @@
 /logs
 /npm-debug.log
 /node_modules
-.env
+node_modules
 .DS_Store
 /UI/distVanillagulp
+
+.env
 
 
 # Logs
@@ -56,6 +58,3 @@ build/Release
 .node_repl_history
 
 # .env
-
-
-

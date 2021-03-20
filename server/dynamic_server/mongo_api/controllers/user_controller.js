@@ -1,13 +1,30 @@
 /* eslint-disable prefer-const */
 import { UserService } from '../services/user_service';
 
+
+
+
+
+
+
 export default class UserController {
+
+  //google sign up
+
+  
+
+  //google login here
+  
   static signup(request, response) {
     return UserService.signup(request, response);
   }
 
   static getAllNotification(request,response){
     return UserService.getAllNotification(request,response)
+  }
+
+  static userExists(request,response){
+    return UserService.userExists(request,response)
   }
 
   static testEmail(request,response){
@@ -37,6 +54,27 @@ export default class UserController {
 
   static changePasswordTrigger(request,response){
     return UserService.changePasswordTrigger(request,response);
+  }
+
+  static changePasswordTriggerMobile(request,response){
+    return UserService.changePasswordTriggerMobile(request,response);
+  }
+
+  static  deleteItinerary(request,response){
+    return UserService.deleteItinerary(request,response);
+  
+  }
+
+  static walletUpgradeViaMobile(request,response){
+    return UserService.walletUpgradeViaMobile(request,response);
+  }
+
+  static setPlanIdForUser(request,response){
+    return UserService.setPlanIdForUser(request,response);
+  }
+
+  static getPlanIdForUser(request,response){
+    return UserService.getPlanIdForUser(request,response);
   }
 
   static initializeGoogleLogin(request,response){

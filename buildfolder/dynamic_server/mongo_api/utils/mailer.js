@@ -142,16 +142,18 @@ var cov_4han64fy = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
 var _nodemailer = _interopRequireDefault(require("nodemailer"));
 
 var _debug = _interopRequireDefault(require("debug"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 cov_4han64fy.s[0]++;
 
@@ -165,7 +167,7 @@ cov_4han64fy.s[0]++;
 var mailer = function mailer(mailData) {
   var _ref, to, subject, text, html, transporter, info;
 
-  return regeneratorRuntime.async(function mailer$(_context) {
+  return _regenerator["default"].async(function mailer$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
@@ -184,7 +186,7 @@ var mailer = function mailer(mailData) {
           }));
           cov_4han64fy.s[4]++;
           _context.next = 8;
-          return regeneratorRuntime.awrap(transporter.sendMail({
+          return _regenerator["default"].awrap(transporter.sendMail({
             from: '"Banka App " <tejumoladavid@gmail.com>',
             to: to,
             subject: subject,

@@ -399,29 +399,26 @@ var cov_ryqdr585 = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
 var _mongo_config = _interopRequireDefault(require("../mongo_config"));
 
 var _nodemailer = _interopRequireDefault(require("nodemailer"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var SendMail =
 /*#__PURE__*/
 function () {
   function SendMail(options) {
-    _classCallCheck(this, SendMail);
-
+    (0, _classCallCheck2["default"])(this, SendMail);
     cov_ryqdr585.f[0]++;
     cov_ryqdr585.s[0]++;
     this.mailer = _nodemailer["default"];
@@ -431,7 +428,7 @@ function () {
     this.options = options;
   }
 
-  _createClass(SendMail, [{
+  (0, _createClass2["default"])(SendMail, [{
     key: "send",
     value: function send() {
       cov_ryqdr585.f[1]++;
@@ -472,7 +469,6 @@ function () {
       }
     }
   }]);
-
   return SendMail;
 }();
 

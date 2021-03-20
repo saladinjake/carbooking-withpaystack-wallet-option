@@ -3314,10 +3314,16 @@ var cov_15acgtodbv = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _db = _interopRequireDefault(require("../models/db"));
 
@@ -3328,14 +3334,6 @@ var _User = _interopRequireDefault(require("../models/User.model"));
 var _Driver = _interopRequireDefault(require("../models/Driver.model"));
 
 var _Partners = _interopRequireDefault(require("../models/Partners.model"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var validNameRegex = (cov_15acgtodbv.s[0]++, /^[A-Za-z]{3,30}$/);
 var user_typeRegex = (cov_15acgtodbv.s[1]++, /^[a-zA-Z]'?([a-zA-Z]|\.| |-){3,}$/);
@@ -3360,10 +3358,10 @@ var SubmitEventValidator =
 /*#__PURE__*/
 function () {
   function SubmitEventValidator() {
-    _classCallCheck(this, SubmitEventValidator);
+    (0, _classCallCheck2["default"])(this, SubmitEventValidator);
   }
 
-  _createClass(SubmitEventValidator, null, [{
+  (0, _createClass2["default"])(SubmitEventValidator, null, [{
     key: "checkIfUserDoesntExists",
     value: function checkIfUserDoesntExists(request, response, next) {
       cov_15acgtodbv.f[1]++;
@@ -3986,7 +3984,6 @@ function () {
       });
     }
   }]);
-
   return SubmitEventValidator;
 }();
 

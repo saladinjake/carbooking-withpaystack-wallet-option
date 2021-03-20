@@ -104,6 +104,37 @@ this.router.get('/email/smtp/template', (req, res, next) => {
   UserController.testEmail,
   )
 
+  this.router.post('/userexists',
+  // TokenVerification.userAuthentication,
+   UserController.userExists
+   )
+
+   this.router.post('/transaction/upgrade-amount',
+   TokenVerification.userAuthentication,
+     UserController.walletUpgradeViaMobile
+   )
+
+
+   this.router.delete('/itinerary/delete/:id',
+     TokenVerification.userAuthentication,
+     UserController.deleteItinerary
+   )
+
+
+   this.router.post('/payplan-get/',
+   TokenVerification.userAuthentication,
+     UserController.setPlanIdForUser
+   )
+
+   this.router.get('/payplan-set/:id',
+   TokenVerification.userAuthentication,
+     UserController.getPlanIdForUser
+   )
+
+  //  this.router.get('/userexists',
+  //  UserController.userExists
+  //  )
+
     this.router.get('/profile/update/:id',
       TokenVerification.userAuthentication,
     	UserController.showProfile
@@ -124,7 +155,7 @@ this.router.get('/email/smtp/template', (req, res, next) => {
         TokenVerification.userAuthentication,
         UserController.individualPlans
       );
-    this.router.get(
+    this.router.get( 
         '/coperate/plans/view',
         TokenVerification.userAuthentication,
         UserController.coperatePlans

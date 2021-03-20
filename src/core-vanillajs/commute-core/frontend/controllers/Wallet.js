@@ -1,16 +1,60 @@
-let accountBalance; 
-const postUrl=process.env.DEPLOY_BACK_URL+ "/paystack/pay"
-    alertify.set('notifier','position', 'top-left');
-'use strict';
 import WebsiteLogin from '../../core/Login'
 import WalletModel from '../models/WalletModel';
+
+import getApiUrl from '../../backend/services/apiservices/helpers/getOnlineUrlConnection'
+let baseUrl =  getApiUrl();
+let accountBalance; 
+
+
+const postUrl=baseUrl+ "/paystack/pay"
+    alertify.set('notifier','position', 'top-left');
+'use strict';
+
+
+
+var sortBy = (function () {
+  var toString = Object.prototype.toString,
+      // default parser function
+      parse = function (x) { return x; },
+      // gets the item to be sorted
+      getItem = function (x) {
+        var isObject = x != null && typeof x === "object";
+        var isProp = isObject && this.prop in x;
+        return this.parser(isProp ? x[this.prop] : x);
+      };
+
+  /**
+   * Sorts an array of elements.
+   *
+   * @param  {Array} array: the collection to sort
+   * @param  {Object} cfg: the configuration options
+   * @property {String}   cfg.prop: property name (if it is an Array of objects)
+   * @property {Boolean}  cfg.desc: determines whether the sort is descending
+   * @property {Function} cfg.parser: function to parse the items to expected type
+   * @return {Array}
+   */
+  return function sortby (array, cfg) {
+    if (!(array instanceof Array && array.length)) return [];
+    if (toString.call(cfg) !== "[object Object]") cfg = {};
+    if (typeof cfg.parser !== "function") cfg.parser = parse;
+    cfg.desc = !!cfg.desc ? -1 : 1;
+    return array.sort(function (a, b) {
+      a = getItem.call(cfg, a);
+      b = getItem.call(cfg, b);
+      return cfg.desc * (a < b ? -1 : +(a > b));
+    });
+  };
+
+}());
+
+
 
 function setOldBalance(balance){
 
   if(localStorage.getItem('userToken')){
 
     const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch(process.env.DEPLOY_BACK_URL+ "/old_balance/"+ user.user.email, {
+    return fetch(baseUrl+ "/old_balance/"+ user.user.email, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -137,7 +181,7 @@ class Ewallet {
 
       if(localStorage.getItem('userToken')){
           const user = JSON.parse(localStorage.getItem('userToken'))
-    return fetch(process.env.DEPLOY_BACK_URL+ "/balance/"+ user.user.email, {
+    return fetch(baseUrl+ "/balance/"+ user.user.email, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -180,7 +224,7 @@ class Ewallet {
    if(localStorage.getItem('userToken')){
      const user = JSON.parse(localStorage.getItem('userToken'))
 
-     return fetch(process.env.DEPLOY_BACK_URL+ "/transactions", {
+     return fetch(baseUrl+ "/transactions", {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -258,14 +302,18 @@ class Ewallet {
             console.log(dataPromise+ "prommise")
             dataPromise
               .then(data => {
-                console.log(data)
+                // console.log(data)
                 let className="label-success";
 
 
                 
             
 
-            
+                   data = sortBy(data, {
+                    prop: "created_at",
+                    desc: true,
+                    parser: (d) => new Date(d)
+                    })
 
                   data.map((item,i)=>{
                     console.log(item.createdDate)
@@ -373,8 +421,8 @@ class Ewallet {
       .then(response => response.json())
       .then(data => {
         if (data.status === 201) {
-          console.log('Form submitted succesfully');
-          var notification = alertify.notify('Form submitted succesfully', 'success', 5, function(){  console.log('dismissed'); });
+          // console.log('Form submitted succesfully');
+          // var notification = alertify.notify('Form submitted succesfully', 'success', 5, function(){  console.log('dismissed'); });
           document.getElementById("relink").innerHTML=data.message;
           document.getElementById("tou_up").style.display="none"
           localStorage.setItem('urlType', postUrl);

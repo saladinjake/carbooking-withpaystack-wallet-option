@@ -203,9 +203,9 @@ var cov_1sjqpivp6w = function () {
   return coverage[path] = coverageData;
 }();
 
-var _dotenv = _interopRequireDefault(require("dotenv"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _dotenv = _interopRequireDefault(require("dotenv"));
 
 cov_1sjqpivp6w.s[0]++;
 

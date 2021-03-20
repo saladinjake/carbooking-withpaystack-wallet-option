@@ -1319,10 +1319,16 @@ var cov_1lmm76g8h2 = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.MechService = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _db = _interopRequireDefault(require("../models/db"));
 
@@ -1336,14 +1342,6 @@ var _Notification = _interopRequireDefault(require("../models/Notification.model
 
 var _autoincrement_mongo = _interopRequireDefault(require("../helpers/autoincrement_mongo.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 // Database.establishConnection();
 var MongooseDatabase = (cov_1lmm76g8h2.s[0]++, (cov_1lmm76g8h2.b[0][0]++, _db["default"].getInstance()) || (cov_1lmm76g8h2.b[0][1]++, new _db["default"]()));
 
@@ -1351,10 +1349,10 @@ var MechService =
 /*#__PURE__*/
 function () {
   function MechService() {
-    _classCallCheck(this, MechService);
+    (0, _classCallCheck2["default"])(this, MechService);
   }
 
-  _createClass(MechService, null, [{
+  (0, _createClass2["default"])(MechService, null, [{
     key: "create",
     value: function create(request, response) {
       cov_1lmm76g8h2.f[0]++;
@@ -1677,7 +1675,6 @@ function () {
       });
     }
   }]);
-
   return MechService;
 }();
 

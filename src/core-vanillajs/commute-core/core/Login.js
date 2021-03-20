@@ -14,57 +14,47 @@ class WebsiteLogin {
      this.logOutEvents();
     if (document.getElementById('loginpage')) {
       //this.isLoggedIn();
-      $(".toggle-password").click(function() {
+    
 
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var input = $($(this).attr("toggle"));
-        if (input.attr("type") == "password") {
-          input.attr("type", "text");
-        } else {
-          input.attr("type", "password");
-        }
-      });
+        $(".toggle-password").click(function() {
+
+          $(this).toggleClass("fa-eye fa-eye-slash");
+          var input = $($(this).attr("toggle"));
+          if (input.attr("type") == "password") {
+            input.attr("type", "text");
+          } else {
+            input.attr("type", "password");
+          }
+        });
 
       
       this.switchFormEvents();
       this.loginEvents();
 
-    //   $("button, a").click(function() {
-
-
-      
-                
-    
-    
-    //       $("#progress").width("101%").delay(100).fadeOut(1000, function() {
-      
-    //                          // $(this).hide();
-    //       });  
-    // });
 
 
 
 
-    $(function() {
-  var $progress = $('#progress');
-  $(document).ajaxStart(function() {
-    //only add progress bar if not added yet.
-    if ($progress.length === 0) {
-      $progress = $('<div><dt/><dd/></div>').attr('id', 'progress');
-      $("header").append($progress);
-    }
-    $progress.width((50 + Math.random() * 30) + "%");
-  });
+//     $(function() {
+//   var $progress = $('#progress');
+//   $(document).ajaxStart(function() {
+//     //only add progress bar if not added yet.
+//     if ($progress.length === 0) {
+//       $progress = $('<div><dt/><dd/></div>').attr('id', 'progress');
+//       $("header").append($progress);
+//     }
+//     $progress.width((50 + Math.random() * 30) + "%");
+//   });
 
-  $(document).ajaxComplete(function() {
-    //End loading animation
-    $progress.width("100%").delay(200).fadeOut(400, function() {
-      $progress.width("0%").delay(200).show();
-    });
-  });
+//   $(document).ajaxComplete(function() {
+//     //End loading animation
+//     $progress.width("100%").delay(200).fadeOut(400, function() {
+//       $progress.width("0%").delay(200).show();
+//     });
+//   });
 
  
-});
+// });
 
 
 

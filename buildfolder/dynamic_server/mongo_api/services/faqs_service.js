@@ -1414,10 +1414,16 @@ var cov_18x8o5ly5r = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.FaqsService = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _db = _interopRequireDefault(require("../models/db"));
 
@@ -1429,14 +1435,6 @@ var _FAQModel = _interopRequireDefault(require("../models/FAQ.model.js"));
 
 var _autoincrement_mongo = _interopRequireDefault(require("../helpers/autoincrement_mongo.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 // Database.establishConnection();
 var MongooseDatabase = (cov_18x8o5ly5r.s[0]++, (cov_18x8o5ly5r.b[0][0]++, _db["default"].getInstance()) || (cov_18x8o5ly5r.b[0][1]++, new _db["default"]()));
 
@@ -1444,10 +1442,10 @@ var FaqsService =
 /*#__PURE__*/
 function () {
   function FaqsService() {
-    _classCallCheck(this, FaqsService);
+    (0, _classCallCheck2["default"])(this, FaqsService);
   }
 
-  _createClass(FaqsService, null, [{
+  (0, _createClass2["default"])(FaqsService, null, [{
     key: "createQnA",
     value: function createQnA(request, response) {
       cov_18x8o5ly5r.f[0]++;
@@ -1784,7 +1782,6 @@ function () {
       });
     }
   }]);
-
   return FaqsService;
 }();
 

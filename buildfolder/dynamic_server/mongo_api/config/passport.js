@@ -1502,9 +1502,9 @@ var cov_1ftpeqvmgp = function () {
   return coverage[path] = coverageData;
 }();
 
-var _autoincrement_mongo = _interopRequireDefault(require("../helpers/autoincrement_mongo.js"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _autoincrement_mongo = _interopRequireDefault(require("../helpers/autoincrement_mongo.js"));
 
 var passport = (cov_1ftpeqvmgp.s[0]++, require('passport'));
 var FacebookStrategy = (cov_1ftpeqvmgp.s[1]++, require('passport-facebook').Strategy);

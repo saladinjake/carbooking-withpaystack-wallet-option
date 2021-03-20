@@ -21,70 +21,173 @@ export class Logger extends Component {
   render() {
    
     return (
-      <React.Fragment>
 
-       <div className="column-sos">
-       <div className="content-page " id="spread-out">
-                <div className="content" id="admin" data-pageid="admin-logs">
-                    <div className="container">                        
-                         <div className="row">
-
-                            <div className="col-lg-12 " >
-                                <div className="card-box ">
-                                    
-                                <div className="row ">
-                                    
-                                    <div className="">
-                                       
-
-
-                                       <div className="container">
-  <div className="row">
-    <div className="main" style={{height:"350px",overflow:"scroll"}}>
-      <h2>Activity</h2>
-
-    
-      <ul className="activity-list " id="loadbase" >
-       
         
-      </ul>
-    </div>
+     <React.Fragment>
 
-    <a href="#" id="showMoreTrigger">Load More</a>
+     <div className="content-page" id="first-view">
+       
+         <div className="content">
+             <div className="container" id="admin" data-pageid="admin-logs">
 
-<p className="totop"> 
-    <a href="#top">Back to top</a> 
-</p>
+              
+                 <div className="row">
+                     <div className="col-sm-12">
+                         <h4 className="page-title"></h4>
+                         <ol className="breadcrumb">
+                             <li><a href="index.html">Home</a></li>
+                             <li className="active">Users</li>
+                         </ol>
+                     </div>
+                 </div>
 
+                 <div className="row">
+                     <div className="col-lg-12">
+                         <div className="card-box">
+                             <h4 className="m-t-0 header-title"><b>Activity Logs</b></h4>
+                             <p className="text-muted m-b-30 font-13">
+                                 Admin Logs.
+                             </p>
+                             <div className="row">
+                                 <div className="col-sm-8">
+                                     <form role="form">
+                                         <div className="form-group contact-search m-b-30">
+                                             <input type="text" id="search" className="form-control product-search"
+                                                 placeholder="Search..." />
+                                             
+                                         </div> 
+                                     </form>
+                                 </div>
+                                 {/* <div className="col-sm-4">
+                                     <a href="#custom-modal" id="add-new"
+                                         className="btn btn-default btn-md waves-effect waves-light m-b-30"
+                                         data-animation="fadein" data-plugin="custommodal" data-overlaySpeed="200"
+                                         data-overlayColor="#36404a"><i className="md md-add"></i> Add Admin</a>
+                                 </div> */}
+                             </div>
 
-    <div className="sidebar">
-    </div>
-  </div>
-</div>
-                                            
-                                      </div>
-</div>
-
-
-                                    
-                                       
-                                       </div> 
+                             <div className="table-responsive table-bordered">
+                                 <table className="table table-actions-bar" id="demo-foo-pagination" data-page-size="5" 
+                                        className="table toggle-circle table-hover">
+                                     <thead>
+                                         
+        <tr>
+                                         <th>Action</th>
+                                         <th>Date</th>
+                                        <th>Avatar</th>
                                         
-                                    </div>
+                                       
+                                        <th>ID</th>
+                                       
+                                        <th>Mesage Type</th>
+                                        <th>Time ago</th>
+                                        <th>status</th>
+                                        
+                                        <th>Module</th>
+                                    </tr>
+                                     </thead>
 
-                                </div>
-                            </div>
-                        
-                        </div>
+                                     <tbody id="tablebody1">
+                                         
+
+                                            
+
+                                     </tbody>
+
+                                     <tfoot style={{width:"100%"}}>
+                                         <tr style={{width:"100%"}}>
+                                             <td >
+                                                 <div className="text-right">
+                                                     <ul className="pagination pagination-split " style={{width:"100%"}}></ul>
+                                                 </div>
+                                             </td>
+                                         </tr>
+                                     </tfoot>
+                                 </table>
+                             </div>
+                         </div>
+
+                     </div> 
+
+
+                 </div>
+
+
+
+
+
+             </div> 
+
+         </div> 
+
+
+
+
+       
+
+
+           
+
+         </div> 
+
+
+
+
+
+
+         <div style={{display:"none"}} className="content-page" id="second-view">
+        
+         <div className="content">
+             <div className="container" >
+
+                
+             
+                     
+
+
+                 <div className="row">
+                         
+                         <div className="col-lg-12 card-box">
+                         <div className="col-lg-2 pull-left"><a href="#" 
+                         className="btn btn-default waves-effect waves-light pull-left m-b-10 goback"><i className="md  md-chevron-left"></i> Back to List</a> </div>
+                         <div className="col-lg-8"><h4 className="m-b-10 header-title">Admin Detail <span className="m-l-10 text-purple font-13"><b id="user-id"></b></span></h4></div>
+                         <div className="col-lg-2 pull-right"><div className="btn-group pull-right m-t-0">
+                                 
+                             </div> </div>
+                         <div className="clearfix"></div>
+                         <div className="m-t-10" style={{border:"1px solid #4c3392"}}></div>
+                         <div className="col-lg-6 m-t-10" >
+                             <div className="card-box">
+                                
+                                   <div id="modalbody1"></div>
+                                 
+                             </div>
+                         </div>
+ 
                        
+ 
+ 
+ 
+                     </div>
+                 </div>
+ 
+ 
 
 
-                          
-         </div>       
 
-          </div>
-</React.Fragment>
-            
+
+             </div> 
+
+         </div> 
+
+
+         </div>
+
+
+
+
+         </React.Fragment>
+
             
     );
   }

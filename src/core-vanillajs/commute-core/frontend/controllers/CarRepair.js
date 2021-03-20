@@ -4,6 +4,45 @@ import RepairModel from '../models/RepairsModel';
 import setConfigData from '../helpers/localStorageData';
 import $ from 'jquery';
 
+import getApiUrl from '../../backend/services/apiservices/helpers/getOnlineUrlConnection'
+let baseUrl =  getApiUrl();
+
+var sortBy = (function () {
+  var toString = Object.prototype.toString,
+      // default parser function
+      parse = function (x) { return x; },
+      // gets the item to be sorted
+      getItem = function (x) {
+        var isObject = x != null && typeof x === "object";
+        var isProp = isObject && this.prop in x;
+        return this.parser(isProp ? x[this.prop] : x);
+      };
+
+  /**
+   * Sorts an array of elements.
+   *
+   * @param  {Array} array: the collection to sort
+   * @param  {Object} cfg: the configuration options
+   * @property {String}   cfg.prop: property name (if it is an Array of objects)
+   * @property {Boolean}  cfg.desc: determines whether the sort is descending
+   * @property {Function} cfg.parser: function to parse the items to expected type
+   * @return {Array}
+   */
+  return function sortby (array, cfg) {
+    if (!(array instanceof Array && array.length)) return [];
+    if (toString.call(cfg) !== "[object Object]") cfg = {};
+    if (typeof cfg.parser !== "function") cfg.parser = parse;
+    cfg.desc = !!cfg.desc ? -1 : 1;
+    return array.sort(function (a, b) {
+      a = getItem.call(cfg, a);
+      b = getItem.call(cfg, b);
+      return cfg.desc * (a < b ? -1 : +(a > b));
+    });
+  };
+
+}());
+
+
 
 function searchTable(trId=0) {
 
@@ -157,7 +196,7 @@ class IReporterWebsiteRepairs {
 
       if(localStorage.getItem('userToken')){
      let user = JSON.parse(localStorage.getItem('userToken'))
-    fetch(process.env.DEPLOY_BACK_URL+ '/get-cars-info-user', {
+    fetch(baseUrl+ '/get-cars-info-user', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -224,6 +263,12 @@ class IReporterWebsiteRepairs {
       recordItems.style.fontSize = '32px';
       recordItems.style.font = 'bold';
     } else {
+      items = sortBy(items, {
+        prop: "created_at",
+        desc: true,
+        parser: (d) => new Date(d)
+      })
+      
       items.forEach((item) => {
         if(item.status=="Completed"){
              className ='label-success';
@@ -334,7 +379,7 @@ class IReporterWebsiteRepairs {
     function getSignedRequest(file){
       const xhr = new XMLHttpRequest();
     
-      xhr.open('GET', process.env.DEPLOY_BACK_URL+`/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+      xhr.open('GET', baseUrl+`/sign-s3?file-name=${file.name}&file-type=${file.type}`);
         xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');

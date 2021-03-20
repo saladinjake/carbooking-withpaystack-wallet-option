@@ -7,6 +7,7 @@ let success_url= './dashboard';
 import $ from 'jquery';
 alertify.set('notifier','position', 'top-left');
 let activeUrl = getOnlineUrlConnection();
+let baseUrl = getOnlineUrlConnection();
 
 
 
@@ -114,7 +115,7 @@ class ApiUpdateProfile {
 
 
       if(document.getElementById('drivers-profile')){
-       linkOfApi = activeUrl + '/drivers-profile/update/'+ user.user.email;
+       linkOfApi = activeUrl + '/profile/update/'+ user.user.email;
       }
 
 

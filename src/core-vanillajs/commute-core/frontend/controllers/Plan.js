@@ -2,7 +2,8 @@
 'use strict';
 import PlanCategoryModel from '../models/PlanCategoryModel';
 import $ from 'jquery';
-
+import getApiUrl from '../../backend/services/apiservices/helpers/getOnlineUrlConnection'
+let baseUrl =  getApiUrl();
 
 alertify.set('notifier','position', 'top-left');
 
@@ -12,12 +13,12 @@ carName,car,planCounter =1,allplans = document.getElementsByClassName('plan'),
 element,overlaySelected,maxCars=2, selectedCars =0, overlaySelectedCars, 
 elementCars,planList =[],planName,rootParentSection,next2,planCategoryName,
 currentView = 1,maxViewSteps = 3,steps = ["choose-plan", "choose-cars","add-itineries"],
-activeUrl = process.env.DEPLOY_BACK_URL,mainUrl = activeUrl,slideIndex = 1,
+activeUrl = baseUrl,mainUrl = activeUrl,slideIndex = 1,
 prev, next,requestQuote, carList = [], carIdsSet =[], total =0, allNewItineraries=[];
 
 
 // console.log(process.env)
-// alert(process.env.DEPLOY_BACK_URL)
+// alert(baseUrl)
 var startLoc, endLoc;
 let userPlanItineries;
 let ItineraryList =[];
@@ -33,7 +34,53 @@ let ItineraryList =[];
 
 
 
+window.deleteItinerary = (el) =>{
+  let id = el.dataset.id;
 
+
+ 
+            
+
+
+  let itin = JSON.parse(localStorage.getItem('itins'));
+
+  itin =itin.filter(item => item.plan_id!=id)
+
+  
+
+
+  let user = JSON.parse(localStorage.getItem('userToken'))
+    fetch(baseUrl+ '/itinerary/delete/'+ id, {
+      method: 'DELETE',
+      headers: {
+        'Access-Control-Allow-Headers': 'x-access-token',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': user.token,
+      },
+      mode: 'cors',
+      // body: JSON.stringify(prePostData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 202) {
+
+          localStorage.setItem('itins', JSON.stringify(itin));
+         
+          var notification = alertify.notify('Delete Successful.', 'success', 5, function(){  console.log('dismissed'); });
+           
+         document.getElementById("trip"+id).style.display="none"
+         
+        }  else {
+           //MessageBoard.displayMsg(data.error);
+          var notification = alertify.notify('Failed to delete itinerary.', 'error', 5, function(){  console.log('dismissed'); });
+                 
+        }
+      })
+      .catch(error => {
+        throw error;
+      });
+}
 
 function postNotification(postUrl,prePostData){
   let user = JSON.parse(localStorage.getItem('userToken'))
@@ -53,7 +100,7 @@ function postNotification(postUrl,prePostData){
         if (data.status === 201) {
           console.log(data)
           //MessageBoard.displayMsg('Form submitted succesfully');
-          var notification = alertify.notify('Successful transaction.', 'success', 5, function(){  console.log('dismissed'); });
+          var notification = alertify.notify('A notification message would be sent to you regarding your quotation.', 'success', 5, function(){  console.log('dismissed'); });
            
 
                 
@@ -92,7 +139,7 @@ function createUserDriveTestDetail(url, data){
                 console.log(data)
                 if (data.status == 201) {
                   
-                  var notification = alertify.notify('Successfully created drive test ', 'success', 5, function(){  console.log('dismissed'); });
+                  // var notification = alertify.notify('Successfully created drive test ', 'success', 5, function(){  console.log('dismissed'); });
                       
                   // setTimeout(()=>{
                   //   window.location.reload();
@@ -354,6 +401,7 @@ function formatDate(date) {
     var thisEl = el;
     var clicked= true;
     var AllCars = document.getElementsByClassName('car-select');
+    next.style.opacity=0;
     
        if(el.classList.contains('car-select')){
           el.classList.add('good'); //add-cars-template
@@ -363,7 +411,12 @@ function formatDate(date) {
                    if(selectedCars==maxCars){
                      $('.car-select').prop('disabled', true);
                      var notification = alertify.notify('You can only select 3 cars for this plan.', 'error', 5, function(){  console.log('dismissed'); });
-    
+                     next.disabled=false;
+                     next.style.opacity=1
+                   }else{
+                    
+                    prev.disabled=true
+
                    }
                    
                   
@@ -376,7 +429,7 @@ function formatDate(date) {
                 if(user.user.user_type=="Individual"){
                     if(selectedCars>maxCars){
                        //cant choose more than 1
-                       console.log("cant select more than 3")
+                      //  console.log("cant select more than 3")
                         $('#overlay').fadeIn(200,function(){
                           $('#box').animate({'top':'220px'},200);
                         });
@@ -389,7 +442,7 @@ function formatDate(date) {
                          });
                     }else{
 
-                       console.log(selectedCars+ "carClicked")
+                      //  console.log(selectedCars+ "carClicked")
 
                          
                       var id = thisEl.getAttribute("id");
@@ -441,7 +494,7 @@ function formatDate(date) {
                               const ixn =carIdsSet.indexOf(ix)
                               carIdsSet.splice(ixn, 1);
 
-                             console.log(carList)
+                            //  console.log(carList)
 
                              
                               
@@ -636,6 +689,8 @@ class WebsitePlanCategory {
   
   attachEvents() {
     if(document.getElementById("planpage")){
+
+      
 
       if(localStorage.getItem("userToken")){
          WebsitePlanCategory.runCarsCarousel();
@@ -901,17 +956,33 @@ class WebsitePlanCategory {
 
 
   saveItinerary(){
+    
+ 
+
+     
 
     if(localStorage.getItem('userToken')){
        const user = JSON.parse(localStorage.getItem('userToken')) ;
+      let dformat;
+      var date = new Date();
+      var dateStr =("00" + (date.getMonth() + 1)).slice(-2) + "-" +("00" + date.getDate()).slice(-2) + "-" +
+         date.getFullYear()    //+ "-" +
+        // ("00" + date.getHours()).slice(-2) + ":" +
+        // ("00" + date.getMinutes()).slice(-2) + ":" +
+        // ("00" + date.getSeconds()).slice(-2);
+
+        //if() --- //if user plan is individual make sure 3 cars are selected before submitting
+
        let guid = guidGenerator() 
-       let PLAN_ID ='CMT-PLAN-' + guid.substring(guid.length -18,guid.length -1);
+       let PLAN_ID ='CMT-PLAN-' + user.user.account_num + dateStr;
 
         document.getElementById("drive-test-certificate").value = user.user.test_certificate;
 
         document.body.addEventListener('click', function(e){
         
         if(e.target.id=="submitItinerary"){
+
+         
           
            e.preventDefault();
            prev.disabled=true;
@@ -965,8 +1036,8 @@ class WebsitePlanCategory {
             // localStorage.setItem('duration',noHrs);
 
 
-            console.log(carsSelected);
-            console.log(planChosen)
+            // console.log(carsSelected);
+            // console.log(planChosen)
             
 
             var plansetIt = JSON.parse(localStorage.getItem('plan'));
@@ -982,7 +1053,7 @@ class WebsitePlanCategory {
                certificate_id: testCert || 'no-test-cert',
                start_location : location2a,
                destination :destination,
-               no_hours:noHrs|| plansetIt[3],
+               no_hours:noHrs || plansetIt[3],
                start_time :startDate,
                end_time :endDate, 
                pickup_time: endDate,
@@ -1016,16 +1087,23 @@ class WebsitePlanCategory {
 
 
 
-          let drvUrl =process.env.DEPLOY_BACK_URL+'/add-drive-test-for-user'
+          let drvUrl =baseUrl+'/add-drive-test-for-user'
+
+
+          if(carList.length >= 3){
 
           createUserDriveTestDetail(drvUrl, userDriveTestData)
+
+          }else{
+            return false
+          }
 
       }
 
 
 
-      console.log(userPlanItineries)
-
+    
+      if(carList.length >= 3){
             
 
             if(WebsitePlanCategory.validationFails(userPlanItineries) == true){
@@ -1043,21 +1121,23 @@ class WebsitePlanCategory {
 
             var _tr;
              var dated = new Date(startDate)
-            _tr = `<tr> 
+            _tr = `<tr id="trip${userPlanItineries.plan_id}"> 
                 <td>${formatDate(dated) + " "+ endDate}</td>
                 <td>${start_location}</td>
                 <td>${destination}</td>
                 <td>${optDriver}</td>
-                <!--<td>
-                  <a href="#" id="" data-id=""  data-driver_option="${optDriver}"  data-start_time="" data-start_location="${start_location}" data-destination="${destination}" class="table-action-btn md-trigger" data-toggle="modal" data-target="#con-close-modal"><i class="md md-edit"></i></a>    
-                  </td>-->
+                <td>
+                  <a onclick="deleteItinerary(this)" id="${userPlanItineries.plan_id}" href="#" data-id="${userPlanItineries.plan_id}" data-id=""  data-driver_option="${optDriver}"  data-start_time="" data-start_location="${start_location}" data-destination="${destination}" class="table-action-btn md-trigger" ><i style="color:red"  class="md md-delete"></i></a>    
+                  </td>
                 </tr>`;
                 $(_tr).hide().insertAfter("#startPoint").fadeIn('slow');
 
 
 
 
-          console.log(ItineraryList,mainUrl)
+          // console.log(ItineraryList,mainUrl)
+
+         
                   let it_url = mainUrl + `/itinerary/${userOnline.user.email}/user`;
                return fetch(  it_url , {
               method: 'POST',
@@ -1092,10 +1172,19 @@ class WebsitePlanCategory {
        
                 })
 
+              }else{
+                var notification = alertify.notify('You must Select at least 3 cars.', 'error', 5, function(){  console.log('dismissed'); });
+                return false;
+              }
+
             
 
       
         } //target if
+
+
+        
+   
 
 
 
@@ -1109,6 +1198,7 @@ class WebsitePlanCategory {
 
        } //main if
         // 
+
   
   }
 
@@ -1182,7 +1272,7 @@ class WebsitePlanCategory {
 
               
                 
-                  let notification_url =process.env.DEPLOY_BACK_URL+"/notification"; 
+                  let notification_url =baseUrl+"/notification"; 
                   
                   let dataNotification = {
                     user_id: userOnline.user.email,

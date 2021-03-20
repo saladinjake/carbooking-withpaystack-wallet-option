@@ -9,6 +9,7 @@ import $ from 'jquery';
 
 import CarCarousel from './helpers/CarCarousel';
 let activeUrl = getOnlineUrlConnection();
+let baseUrl = getOnlineUrlConnection();
 var price,plan,cart,carPrice,
     carName,car,planCounter =1,allplans = document.getElementsByClassName('plan'),
     element,overlaySelected,maxCars=2, selectedCars =0, overlaySelectedCars, 
@@ -91,17 +92,24 @@ window.addEventPlan = (ev,el) =>{
 
 
   const recordPlans = (items, displayBoard) => {
+    let style = "display:block;fontSize:14px"
     items.forEach((item,i) => {
+      
+      if(item.plan_categories!="Commute Richly"){
+        item.price = "₦ " + item.price
+      }else{
+        item.price =" "
+      }
       const eachRecord = `<div  class="col-sm-6 col-md-6 col-lg-3 galleryImage" >
                          <a class="boxclose" id="btn-${i}-boxclose"></a>
                                 <div class="price_card text-center">
-                             <div class="pricing-header bg-purple">
-                                    <span class="price" style="fontSize:24px">₦ ${item.price}</span>
-                                    <span class="name">${item.plan_name} ${item.plan_categories}</span>
+                             <div class="pricing-header bg-purple" style="height:160px">
+                                    <span class="price" >${item.price}</span>
+                                    <span class="name"> ${item.plan_categories}</span>
                                   </div>
-                                  <div class="col-lg-12 m-t-20">
+                                  <div class="col-lg-12 m-t-20" style="height:240px">
                                   <div class="col-sm-12 col-md-12 col-lg-12 center-block text-center">
-                                  <p>${item.description}</p>
+                                  <p style="font-size:16px">${item.description}</p>
                                   </div></div>
                                   <input type="hidden" class="galleryImageInput" name="galleryImage[]" value="12345.png">
                                   <button onClick="planClickHandler();addEventPlan(event,this);document.getElementById('next').disabled=false; document.getElementById('previous').disabled=false;" style="width:80px; font-size:12px; " id="btn-${i}" data-id="btn-${i}" data-type="plan" data-plan="${item.plan_name} ${item.plan_categories}" data-plancategory="${item.plan_categories}" data-price="${item.price}" class=" btn btn-primary waves-effect waves-light w-md cd-add-to-cart js-cd-add-to-cart plan">Select</button>
@@ -429,6 +437,7 @@ class ApiGetAllPlansRecord {
           
           if (datas[0].data[0].individualPlans) {
             planList = datas[0].data[0].individualPlans;
+            planList = planList.filter(item => item.plan_name=="Individual")
             
             
            var displayBoard = document.getElementById("plan-section");
@@ -438,6 +447,7 @@ class ApiGetAllPlansRecord {
 
           } else  {
             planList = datas[0].data[0].coperatePlan;
+            planList = planList.filter(item => item.plan_name!="Individual")
             var displayBoard = document.getElementById("plan-section");
             recordPlans(planList,displayBoard)
             
@@ -458,7 +468,7 @@ class ApiGetAllPlansRecord {
 
   static updateItem(record){
     const user = JSON.parse(localStorage.getItem('userToken'));
-    var linkOfApi =  process.env.DEPLOY_BACK_URL+ '/plans/'+ record.id;
+    var linkOfApi =  baseUrl+ '/plans/'+ record.id;
     return fetch(linkOfApi, {
       method: 'PATCH',
       headers: {
@@ -481,7 +491,7 @@ class ApiGetAllPlansRecord {
   }
   static deleteItem(record){ // de
     const user = JSON.parse(localStorage.getItem('userToken'));
-      var linkOfApi =  process.env.DEPLOY_BACK_URL+ '/plans/'+ record.id;
+      var linkOfApi =  baseUrl+ '/plans/'+ record.id;
       return fetch(linkOfApi, {
       method: 'DELETE',
       headers: {

@@ -5,6 +5,7 @@ import FetchPromiseApi from './helpers/FetchPromiseApi';
 import getOnlineUrlConnection from './helpers/getOnlineUrlConnection';
 import GateKeepersForUser from './helpers/whois';
 let activeUrl = getOnlineUrlConnection();
+let baseUrl = getOnlineUrlConnection();
 alertify.set('notifier','position', 'top-left');
 let sosUrl = activeUrl + '/sos';
 
@@ -19,6 +20,8 @@ class ApiSOSService {
   static saveSOSRequest(user) {
     GateKeepersForUser();
 
+
+   if(localStorage.getItem('userToken')){
     let users = JSON.parse(localStorage.getItem('userToken'))
 
     
@@ -48,7 +51,7 @@ class ApiSOSService {
         } else if (data.status === 200) {
           // MessageBoard.displayMsg("Your sos request has been sent.");
           var notification = alertify.notify("Your sos request has been sent.", 'success', 5, function(){  console.log('dismissed'); });
-      
+          window.location.href="./sos-history"
          
         } else {
          // MessageBoard.displayMsg(data.error);
@@ -60,8 +63,10 @@ class ApiSOSService {
       .catch(error => {
         throw error;
       });
+  
+  
+    }
   }
-
   
 }
 

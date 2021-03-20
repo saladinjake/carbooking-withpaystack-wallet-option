@@ -120,9 +120,9 @@ var cov_8h7l9f1au = function () {
   return coverage[path] = coverageData;
 }();
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var Promise = (cov_8h7l9f1au.s[0]++, require('bluebird'));
 var AwsS3Schema = (cov_8h7l9f1au.s[1]++, new _mongoose["default"].Schema({

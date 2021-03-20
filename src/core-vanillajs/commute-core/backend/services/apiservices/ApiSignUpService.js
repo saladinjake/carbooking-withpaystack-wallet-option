@@ -10,9 +10,12 @@ alertify.set('notifier','position', 'top-left');
 
 
 let activeUrl = getOnlineUrlConnection();
+let baseUrl = getOnlineUrlConnection();
 
 let signUpUrl = activeUrl + '/auth/signup';
 class ApiSignUpService {
+
+ 
   static authorize() {
     const resultingData = SignUpCheker.triggerValidation();
     const signUpForm = document.getElementById('sign-form');

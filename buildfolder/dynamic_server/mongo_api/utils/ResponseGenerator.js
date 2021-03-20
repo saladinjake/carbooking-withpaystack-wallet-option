@@ -352,20 +352,18 @@ var cov_d2bzhe56e = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
 var _common = _interopRequireDefault(require("./common"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /**
  * A class for generating API responses
@@ -374,8 +372,7 @@ var ResponseGenerator =
 /*#__PURE__*/
 function () {
   function ResponseGenerator() {
-    _classCallCheck(this, ResponseGenerator);
-
+    (0, _classCallCheck2["default"])(this, ResponseGenerator);
     cov_d2bzhe56e.f[0]++;
     cov_d2bzhe56e.s[0]++;
     this.status = null;
@@ -394,7 +391,7 @@ function () {
    */
 
 
-  _createClass(ResponseGenerator, [{
+  (0, _createClass2["default"])(ResponseGenerator, [{
     key: "sendSuccess",
     value: function sendSuccess(res, statusCode, data, message) {
       cov_d2bzhe56e.f[1]++;
@@ -462,7 +459,6 @@ function () {
       });
     }
   }]);
-
   return ResponseGenerator;
 }();
 

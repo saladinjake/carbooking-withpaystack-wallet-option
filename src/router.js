@@ -106,7 +106,7 @@ import Previledges from "./components/Admin/Previledges/users/Users"
 import NotFoundPage from './containers/404Page/NotFound';
 import Forbidden from './containers/403/Forbidden';
 
-// import AdminNotifications from './components/Admin/Notifications/notifications'
+ import AdminNotifications from './components/Admin/Notifications/notifications'
 
 
 
@@ -151,14 +151,14 @@ import TripDetailContent from './components/Drivers/Driver/Trips/tripDetail';
 
 
 const Router = () => (
-	<div>
+	<>
 		<BrowserRouter>
 		  <Switch>
 		   {/* user routes completed ...*/}
 
-		    <Route exact path="/" component={HomeLogin} />
+		   <Route exact path="/" component={HomeLogin} />
 		    <Route exact path="/index.html" component={HomeLogin} />
-		    <Route exact path="/signup" component={Register} />
+		     <Route exact path="/signup" component={Register} /> 
 		    <Route exact path="/recovery" component={ForgotPassword} />
 		    <Route exact path="/dashboard" component={Dashboard} />
 		    <Route exact path="/plan-history" component={PlanHistory} />
@@ -170,7 +170,8 @@ const Router = () => (
 		    <Route exact path="/profile" component={Profile} />
 		    <Route  exact path="/sos-request" component={SOSRequest} />
 		    <Route  exact path="/create-ticket" component={TicketRequest} />
-		     {/*<Route exact path="/plan" component={Plan} />*/}
+		     <Route exact path="/plan" component={Plan} />
+
 		    <Route exact path="/request-car-repair" component={MechanicRequest} />
 		    <Route exact path="/request-repairs-history" component={MechanicRequestHistory} />
 		    <Route exact path="/wallet" component={Wallet} />
@@ -181,12 +182,14 @@ const Router = () => (
             <Route exact path="/pay-action" component={PayAction} />
               <Route exact path="/gtd-event" component={Map} />
               <Route exact path="/notification" component={Notifications} />
-             
+            
 
             {/*Admin Routes*/}
 
 
-
+          <Route exact path="/" component={HomeLogin} />
+		    <Route exact path="/index.html" component={HomeLogin} /> 
+        {/* <Route exact path="/dashboard" component={AdminDashboard} /> */}
            <Route exact path="/admin-dashboard" component={AdminDashboard} />
            <Route exact path="/admin-users" component={Users} />
            <Route exact path="/admin-users-detail" component={UserDetail} />
@@ -245,7 +248,7 @@ const Router = () => (
 
 
              <Route path="/activity-logger" component={ActivityLogger} /> 
-             {/*<Route exact path="/admin-notification" component={AdminNotifications} />*/}
+             <Route exact path="/admin-notification" component={AdminNotifications} />
 
 
 
@@ -294,7 +297,7 @@ const Router = () => (
 
              <Route exact path="/previledges-denied" component={Forbidden} />
 
-		   <Route path="*" component={NotFoundPage} />
+		         <Route path="*" component={NotFoundPage} />
 
 
 
@@ -314,7 +317,7 @@ const Router = () => (
 
 		  </Switch>
 	  </BrowserRouter>
-  </div>
+  </>
 );
 
 export default Router;

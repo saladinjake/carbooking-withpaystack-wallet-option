@@ -156,24 +156,22 @@ var cov_2g7z20oau0 = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _cars_controller = _interopRequireDefault(require("../controllers/cars_controller"));
 
 var _token_validator = _interopRequireDefault(require("../middlewares/token_validator"));
 
 var _post_sanitizer = _interopRequireDefault(require("../middlewares/post_sanitizer"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 // import BridgeRoutes from './routes';
 var SUBMIT_REDFLAG_LINK = (cov_2g7z20oau0.s[0]++, '/cars');
@@ -184,15 +182,14 @@ var CarsRoutes =
 /*#__PURE__*/
 function () {
   function CarsRoutes(router) {
-    _classCallCheck(this, CarsRoutes);
-
+    (0, _classCallCheck2["default"])(this, CarsRoutes);
     cov_2g7z20oau0.f[0]++;
     cov_2g7z20oau0.s[3]++;
     // super(router);
     this.router = router;
   }
 
-  _createClass(CarsRoutes, [{
+  (0, _createClass2["default"])(CarsRoutes, [{
     key: "attachRoutes",
     value: function attachRoutes() {
       cov_2g7z20oau0.f[1]++;
@@ -204,7 +201,6 @@ function () {
       return this.router;
     }
   }]);
-
   return CarsRoutes;
 }();
 

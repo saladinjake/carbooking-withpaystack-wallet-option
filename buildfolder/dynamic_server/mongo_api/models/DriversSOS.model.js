@@ -532,9 +532,9 @@ var cov_23v3s9rwf6 = function () {
   return coverage[path] = coverageData;
 }();
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _mongoose = _interopRequireDefault(require("mongoose"));
 
 // const  SetUpRedFlagsMigrations = () =>{
 // import UserSchema from './User.model.js'

@@ -821,29 +821,29 @@ var cov_1gie6e85z1 = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
 var _driver_services = require("../services/driver_services");
 
 var _sos_service_drivers = require("../services/sos_service_drivers");
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var DriverController =
 /*#__PURE__*/
 function () {
   function DriverController() {
-    _classCallCheck(this, DriverController);
+    (0, _classCallCheck2["default"])(this, DriverController);
   }
 
-  _createClass(DriverController, null, [{
+  (0, _createClass2["default"])(DriverController, null, [{
     key: "signup",
     value: function signup(request, response) {
       cov_1gie6e85z1.f[0]++;
@@ -1002,7 +1002,6 @@ function () {
       return _driver_services.DriverService.driverConfirmBooking(request, response);
     }
   }]);
-
   return DriverController;
 }();
 

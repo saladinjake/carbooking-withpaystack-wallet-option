@@ -170,24 +170,22 @@ var cov_8wuqwto73 = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.TokenGenerator = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 cov_8wuqwto73.s[0]++;
 
@@ -197,10 +195,10 @@ var TokenGenerator =
 /*#__PURE__*/
 function () {
   function TokenGenerator() {
-    _classCallCheck(this, TokenGenerator);
+    (0, _classCallCheck2["default"])(this, TokenGenerator);
   }
 
-  _createClass(TokenGenerator, null, [{
+  (0, _createClass2["default"])(TokenGenerator, null, [{
     key: "generateToken",
     value: function generateToken(data) {
       cov_8wuqwto73.f[0]++;
@@ -227,7 +225,6 @@ function () {
       return _bcrypt["default"].compareSync(hashedPassword, password);
     }
   }]);
-
   return TokenGenerator;
 }();
 

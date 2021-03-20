@@ -170,10 +170,16 @@ var cov_23fev55fba = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _auth_routes = _interopRequireDefault(require("./auth_routes"));
 
@@ -193,20 +199,11 @@ var _mechanic_request = _interopRequireDefault(require("./mechanic_request"));
 
 var _driver_routes = _interopRequireDefault(require("./driver_routes"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 var BridgeRoutes =
 /*#__PURE__*/
 function () {
   function BridgeRoutes(router) {
-    _classCallCheck(this, BridgeRoutes);
-
+    (0, _classCallCheck2["default"])(this, BridgeRoutes);
     cov_23fev55fba.f[0]++;
     cov_23fev55fba.s[0]++;
     this.router = router;
@@ -224,7 +221,7 @@ function () {
     };
   }
 
-  _createClass(BridgeRoutes, [{
+  (0, _createClass2["default"])(BridgeRoutes, [{
     key: "attachRoutes",
     value: function attachRoutes() {
       cov_23fev55fba.f[1]++;
@@ -238,7 +235,6 @@ function () {
       return this.router;
     }
   }]);
-
   return BridgeRoutes;
 }();
 

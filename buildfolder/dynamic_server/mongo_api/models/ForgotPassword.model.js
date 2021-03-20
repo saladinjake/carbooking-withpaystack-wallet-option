@@ -60,9 +60,9 @@ var cov_1mfyciiwey = function () {
   return coverage[path] = coverageData;
 }();
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var Promise = (cov_1mfyciiwey.s[0]++, require('bluebird'));
 var PasswordForgotTokenSchema = (cov_1mfyciiwey.s[1]++, new _mongoose["default"].Schema({

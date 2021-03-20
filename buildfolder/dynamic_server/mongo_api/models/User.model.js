@@ -2008,11 +2008,13 @@ var cov_2pyl8zbpr = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _db = _interopRequireDefault(require("./db"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var Promise = (cov_2pyl8zbpr.s[0]++, require('bluebird'));
 var httpStatus = (cov_2pyl8zbpr.s[1]++, require('http-status'));
@@ -2069,7 +2071,10 @@ var UserSchema = (cov_2pyl8zbpr.s[9]++, new _mongoose["default"].Schema({
   },
   user_type: {
     type: String,
-    "enum": ['Individual', 'Corporate'],
+    // enum:[
+    // 'Individual', 
+    // 'Corporate',
+    // ],
     "default": 'Individual'
   },
   plan_name: {
@@ -2477,7 +2482,7 @@ UserSchema.statics = {
   },
   getId: function getId(id) {
     var customer;
-    return regeneratorRuntime.async(function getId$(_context) {
+    return _regenerator["default"].async(function getId$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -2494,7 +2499,7 @@ UserSchema.statics = {
             cov_2pyl8zbpr.b[6][0]++;
             cov_2pyl8zbpr.s[37]++;
             _context.next = 9;
-            return regeneratorRuntime.awrap(this.findById(id).exec());
+            return _regenerator["default"].awrap(this.findById(id).exec());
 
           case 9:
             customer = _context.sent;
@@ -2547,7 +2552,7 @@ UserSchema.statics = {
    */
   getMasterAccount: function getMasterAccount() {
     var masterAccountData, customer;
-    return regeneratorRuntime.async(function getMasterAccount$(_context2) {
+    return _regenerator["default"].async(function getMasterAccount$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
@@ -2563,7 +2568,7 @@ UserSchema.statics = {
             _context2.prev = 3;
             cov_2pyl8zbpr.s[44]++;
             _context2.next = 7;
-            return regeneratorRuntime.awrap(this.findOne({
+            return _regenerator["default"].awrap(this.findOne({
               'accountNumber': masterAccountData.accountNumber
             }).exec());
 
@@ -2584,7 +2589,7 @@ UserSchema.statics = {
             cov_2pyl8zbpr.b[8][1]++;
             cov_2pyl8zbpr.s[47]++;
             _context2.next = 19;
-            return regeneratorRuntime.awrap(this.create(masterAccountData));
+            return _regenerator["default"].awrap(this.create(masterAccountData));
 
           case 19:
             return _context2.abrupt("return", _context2.sent);
@@ -2616,7 +2621,7 @@ UserSchema.statics = {
   findAndGenerateToken: function findAndGenerateToken(options) {
     var _ref4, email, password, refreshObject, customer, err;
 
-    return regeneratorRuntime.async(function findAndGenerateToken$(_context3) {
+    return _regenerator["default"].async(function findAndGenerateToken$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
@@ -2641,7 +2646,7 @@ UserSchema.statics = {
           case 10:
             cov_2pyl8zbpr.s[52]++;
             _context3.next = 13;
-            return regeneratorRuntime.awrap(this.findOne({
+            return _regenerator["default"].awrap(this.findOne({
               email: email
             }).exec());
 
@@ -2669,7 +2674,7 @@ UserSchema.statics = {
 
             cov_2pyl8zbpr.b[12][1]++;
             _context3.next = 24;
-            return regeneratorRuntime.awrap(customer.passwordMatches(password));
+            return _regenerator["default"].awrap(customer.passwordMatches(password));
 
           case 24:
             _context3.t0 = _context3.sent;

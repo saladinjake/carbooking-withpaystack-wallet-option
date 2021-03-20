@@ -130,9 +130,9 @@ var cov_5atryx1l5 = function () {
   return coverage[path] = coverageData;
 }();
 
-var _dotenv = _interopRequireDefault(require("dotenv"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _dotenv = _interopRequireDefault(require("dotenv"));
 
 cov_5atryx1l5.s[0]++;
 

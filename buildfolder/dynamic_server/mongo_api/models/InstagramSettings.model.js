@@ -120,9 +120,9 @@ var cov_xjh6r5a7v = function () {
   return coverage[path] = coverageData;
 }();
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var Promise = (cov_xjh6r5a7v.s[0]++, require('bluebird'));
 var InstagramSettingSchema = (cov_xjh6r5a7v.s[1]++, new _mongoose["default"].Schema({

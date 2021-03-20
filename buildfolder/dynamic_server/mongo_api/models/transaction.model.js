@@ -1194,6 +1194,10 @@ var cov_nrklbyd9m = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
 var mongoose = (cov_nrklbyd9m.s[0]++, require('mongoose'));
 var crypto = (cov_nrklbyd9m.s[1]++, require('crypto'));
 var moment = (cov_nrklbyd9m.s[2]++, require('moment-timezone'));
@@ -1253,7 +1257,7 @@ var transactionSchema = (cov_nrklbyd9m.s[7]++, new mongoose.Schema({
 
 cov_nrklbyd9m.s[8]++;
 transactionSchema.pre('save', function save(next) {
-  return regeneratorRuntime.async(function save$(_context) {
+  return _regenerator["default"].async(function save$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
@@ -1274,7 +1278,7 @@ cov_nrklbyd9m.s[11]++;
 transactionSchema.post('save', function save(doc, next) {
   var currentCustomer, savedCustomer, fee, tempAmount, transFee, savedTransFee, _masterAccount, savedMasterAccount;
 
-  return regeneratorRuntime.async(function save$(_context2) {
+  return _regenerator["default"].async(function save$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
@@ -1291,7 +1295,7 @@ transactionSchema.post('save', function save(doc, next) {
           cov_nrklbyd9m.b[0][0]++;
           cov_nrklbyd9m.s[14]++;
           _context2.next = 9;
-          return regeneratorRuntime.awrap(Customer.findOne({
+          return _regenerator["default"].awrap(Customer.findOne({
             'accountNumber': this.accountNumber
           }));
 
@@ -1303,7 +1307,7 @@ transactionSchema.post('save', function save(doc, next) {
           currentCustomer.balance = currentCustomer.balance.toFixed(2);
           cov_nrklbyd9m.s[17]++;
           _context2.next = 17;
-          return regeneratorRuntime.awrap(currentCustomer.save());
+          return _regenerator["default"].awrap(currentCustomer.save());
 
         case 17:
           savedCustomer = _context2.sent;
@@ -1382,13 +1386,13 @@ transactionSchema.post('save', function save(doc, next) {
           transFee.reference = 'fee_from_transaction:' + this._id;
           cov_nrklbyd9m.s[36]++;
           _context2.next = 45;
-          return regeneratorRuntime.awrap(transFee.save());
+          return _regenerator["default"].awrap(transFee.save());
 
         case 45:
           savedTransFee = _context2.sent;
           cov_nrklbyd9m.s[37]++;
           _context2.next = 49;
-          return regeneratorRuntime.awrap(Customer.getMasterAccount());
+          return _regenerator["default"].awrap(Customer.getMasterAccount());
 
         case 49:
           _masterAccount = _context2.sent;
@@ -1396,7 +1400,7 @@ transactionSchema.post('save', function save(doc, next) {
           _masterAccount.balance -= savedTransFee.amount;
           cov_nrklbyd9m.s[39]++;
           _context2.next = 55;
-          return regeneratorRuntime.awrap(_masterAccount.save());
+          return _regenerator["default"].awrap(_masterAccount.save());
 
         case 55:
           savedMasterAccount = _context2.sent;

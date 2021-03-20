@@ -532,9 +532,9 @@ var cov_1k4qydqhvm = function () {
   return coverage[path] = coverageData;
 }();
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _mongoose = _interopRequireDefault(require("mongoose"));
 
 //const  SetUpInterventionMigrations = () =>{
 var FeedbackSchema = (cov_1k4qydqhvm.s[0]++, new _mongoose["default"].Schema({

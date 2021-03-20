@@ -1,8 +1,12 @@
 /* eslint-disable prefer-const */
 
+
 import dotenv from 'dotenv';
 dotenv.config();
 import Database from '../models/db';
+/*pAy stack*/
+import request from 'request';
+import _ from 'lodash';
 
 const csv = require('csv-parser');
 const uuidv4 = require('uuid/v4');
@@ -64,9 +68,7 @@ import handlebars from 'handlebars';
 
 import MailMan from './MailMan'
 
-/*pAy stack*/
-import request from 'request';
-import _ from 'lodash';
+
 
 // import carInfo  from "../migrations/cars_info";
 
@@ -91,7 +93,7 @@ const {initializePayment, verifyPayment} = require('../config/paystack')(request
 
 
 const MongooseDatabase =  Database.getInstance() || new  Database();
-
+let BACKEND_API = "https://demouserapp.commute.ng:12000/api/v1";
 
 
 var readHTMLFile = function(path, callback) {
@@ -118,13 +120,13 @@ export class UserService {
   static NotificationEmail( request, response,templateDir, replacements,userEmail,STATUS=201){
    //MailConfig.ViewOption(gmailTransport,hbs);
     let HelperOptions = {
-      from:    process.env.SMTP_USER_NAME,         //"tester@softclo.com", //'"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',
+      from:    ' "Commute" <noreply@commute.ng>',         //"tester@softclo.com", //'"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',
       to:  userEmail, //'Joshua.adedoyin@softclo.com',
       subject: 'Notification',
       html: 'test',
       context: {
         name:"COMMUTE TAXI",
-        email: process.env.SMTP_USER_NAME,   // "tester@softclo.com",
+        email: "tester@softclo.com",
         address: "3A DOTUN CLOSE, IKEJA LAGOS"
       }
     };
@@ -133,6 +135,7 @@ export class UserService {
 // Adedoyin Joshua
 //joshadedoyin.aj@gmail.com
    
+
     readHTMLFile(__dirname + templateDir, function(err, html) {
                 var template = handlebars.compile(html);
                // var replacements = replacements;
@@ -145,8 +148,8 @@ export class UserService {
                         //res.json(error);
                         return response.status(400).send({ msg: error });
                       }
-                      console.log("email is send");
-                      console.log(info);
+                      // console.log("email is send");
+                      // console.log(info);
                       //res.json(info)
                       return response.status(200).send({status: 200 ,success:'ok', msg: 'Successfully updated  .', data: info });
                      // return res.status(STATUS).send({ msg: "successfully sent you a password reset link", status:'ok',data: info }); 
@@ -158,7 +161,7 @@ export class UserService {
 
   static passwordResetsMail( request, response,userEmail,templateDir, replacementObj={username:'saladin'}, tokenSTR){
     let HelperOptions = {
-      from:  process.env.SMTP_USER_NAME,            //'"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',
+      from: ' "Commute" <noreply@commute.ng>',            //'"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',
       to:  userEmail, 
       subject: 'Hellow world!',
       html: 'test',
@@ -174,19 +177,19 @@ export class UserService {
                 var template = handlebars.compile(html);
                 var replacements = {
                      username: replacementObj.username ,//'juwavictor@gmail.com'
-                     link: process.env.DEPLOY_BACK_URL + '/auth/resetMyPassword\/' + tokenSTR 
+                     link: BACKEND_API + '/auth/resetMyPassword\/' + tokenSTR 
                 };
                 var htmlToSend = template(replacements);
                 
                 HelperOptions.html = htmlToSend;
                 smtpTransport.sendMail(HelperOptions, (error,info) => {
                       if(error) {
-                        console.log(error);
+                        // console.log(error);
                         //res.json(error);
                         return response.status(400).send({ msg: error });
                       }
-                      console.log("email is send");
-                      console.log(info);
+                      // console.log("email is send");
+                      // console.log(info);
                       //res.json(info)
                       
                 });
@@ -204,23 +207,24 @@ export class UserService {
 
 
     let HelperOptions = {
-      from:    process.env.SMTP_USER_NAME,         //"tester@softclo.com", //'"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',
+      from:   ' "Commute" <noreply@commute.ng>',  //'"COMMUTE TAXI SERVICE" <juwavictor@gmail.com>',  // process.env.SMTP_USER_NAME,
       to:  result.email, //'Joshua.adedoyin@softclo.com',
       subject: 'Sign Up Activation Email',
       html: 'test',
       context: {
         name:"COMMUTE TAXI",
-        email: process.env.SMTP_USER_NAME,   // "tester@softclo.com",
+        email:  "tester@softclo.com",
         address: "3A DOTUN CLOSE, IKEJA LAGOS"
       }
     };
+
 
    
     readHTMLFile(__dirname + templateDir, function(err, html) {
                 var template = handlebars.compile(html);
                 var replacements = {
                      username: result.username,
-                     link:  process.env.DEPLOY_BACK_URL +'/auth/confirmation\/' + tokenToSend, 
+                     link:  BACKEND_API +'/auth/confirmation/' + tokenToSend, 
                 
                 };
                 var htmlToSend = template(replacements);
@@ -229,12 +233,13 @@ export class UserService {
                 smtpTransport.sendMail(HelperOptions, (error,info) => {
                       if(error) {
                         console.log(error);
-                        //res.json(error);
                         return response.status(400).send({ msg: error });
+                       
                       }
                       console.log("email is send");
                       console.log(info);
                       //res.json(info)
+                      
                        
                        
 
@@ -254,203 +259,689 @@ export class UserService {
    
 
   }
+  // static signup(request, response) {
+  //     let { firstname, 
+  //         lastname,  
+  //         username, 
+  //         email, 
+  //         phoneNumber,
+  //         user_type, 
+  //         password,
+           
+  //   } = request.body;
+
+   
+
+  //   let from_mobile = false;
+  //   if(request.body.from_mobile==true){
+  //     from_mobile =true;
+  //   }
+
+  //   console.log(password)
+  //   password = TokenGenerator.hashPassword(password.trim());
+  //   let roles = '';
+  //   if(request.body.roles){
+  //     roles = request.body.roles
+  //   }else{
+  //     roles = 'user';
+  //   }
+
+  //   let Newuser =null
+
+
+  //   if(request.body.from_mobile){
+  //     Newuser = new UserModel({ 
+  //       id: new AutoincrementId(UserModel).counter(), 
+  //       firstname, 
+  //       lastname, 
+  //       user_type, 
+  //       username, 
+  //       email, 
+  //       phone_number: phoneNumber, 
+  //       password,
+  //       is_admin: false,
+  //       roles: roles,
+  //       isVerified: true,
+  //       //accountNumber: uuidv4()
+  //        });
+
+  //   }else{
+        
+  //     Newuser = new UserModel({ 
+  //           id: new AutoincrementId(UserModel).counter(), 
+  //           firstname, 
+  //           lastname, 
+  //           user_type, 
+  //           username, 
+  //           email, 
+  //           phone_number: phoneNumber, 
+  //           password,
+  //           is_admin: false,
+  //           roles: roles,
+  //       //accountNumber: uuidv4()
+  //     });
+
+
+  //   }
+    
+
+     
+
+  //   if(from_mobile==false){
+
+  //     Newuser.save()
+  //     .then(data => {
+  //       const user = data;
+  //       const result = {
+  //         id: user.id,
+  //         email: user.email,
+  //         username: user.username,
+  //       };
+  //       let emailT = crypto.randomBytes(16).toString('hex');
+  //       // Create a verification token for this user
+  //       var emailtoken = new EmailTokenMakerForSignUp({ _userId: user._id, email_confirm_token: emailT });
+        
+  //                         // Save the verification token
+  //       emailtoken.save(function (err) {
+  //           if (err) { 
+  //              return console.log(err.message );
+  //           }
+                              
+  //                             //console.log(__dirname + '/views/templates/signup-verification.html')
+
+  //          UserService.newUserMail(request,response, result,'/views/templates/signup-verification.html', emailtoken.email_confirm_token,201)
+  //               const token = TokenGenerator.generateToken(result);
+  //               return response.status(201).json({
+  //                                          status: 201,
+  //                                         data: [
+  //                                                {
+  //                                                  token,
+  //                                                   from_mobile:true,
+  //                                                   user,
+  //                                                },
+  //                                               ],
+  //                                                message: 'User created successfully',
+  //               });
+
+  //          })
+
+
+                            
+  //     })
+  //     .catch(err => {
+  //           console.log(err+ 'error here')
+  //           response.status(400).json({
+  //             status: 400,
+  //             error: ErrorHandler.errors().validationError,
+  //           });
+  //     });
+
+
+
+
+
+  //   }else{
+    
+
+  //     Newuser.save()
+  //     .then(data => {
+  //       const user = data;
+  //       const result = {
+  //         id: user.id,
+  //         email: user.email,
+  //         username: user.username,
+  //       };
+
+
+  //       const token = TokenGenerator.generateToken(result);
+  //       return response.status(201).json({
+  //               status: 201,
+  //               data: [
+  //                      {
+  //                       token,
+  //                       user,
+  //                      },
+  //                     ],
+  //                     message: 'User created successfully',
+  //             });                 
+  //     })
+  //     .catch(err => {
+  //           console.log(err+ 'error here')
+  //           response.status(400).json({
+  //             status: 400,
+  //             error: ErrorHandler.errors().validationError,
+  //           });
+  //     });
+
+
+  //   }
+
+      
+  // }
+
+  // static login(request, response) {
+  //   const { email, password } = request.body;
+  //   UserModel.findOne({email: email})
+  //     .then(data => {
+  //       const user = data;
+  //       console.log(user.isVerified)
+
+
+  //       if (!user) {
+  //         return response.status(422).json({
+  //           status: 422,
+  //           error: 'User does not exists',
+  //         });
+
+          
+  //       }
+
+
+
+  //       if(!user.isVerified){
+  //         let link = BACKEND_API + '/auth'
+  //         return response.status(422).json({
+  //           status: 422,
+  //           error: `<h6>Email verification step is needed. please check your email for a verification link or click the link to resend you an email verification</h6> 
+
+  //           <a href="${link}/resend/${email}">Resend </a>`,
+  //         });
+  //       }
+        
+  //       if (!TokenGenerator.checkIfPasswordMatch(password, user.password)) {
+  //         return response.status(422).json({
+  //           status: 422,
+  //           error: 'Invalid login details. Email or password is wrong',
+  //         });
+  //       }
+
+       
+
+  //       const result = {
+  //         id: user.id,
+  //         _id: user._id,
+  //         email: user.email,
+  //         isAdmin: user.is_admin,
+  //         isVerified:user.isVerified,
+  //         firstname: user.firstname,
+  //         username: user.username,
+  //          profile: user.avatar,
+  //         plan: user.plan_name,
+  //         balance: user.balance,
+  //         notification_count: user.notification_count,
+  //         user_type: user.user_type,
+  //         username:user.username,
+  //         phoneNumber: user.phone_number,
+  //         roles: user.roles,
+  //         test_certificate: user.test_certificate
+
+  //       };
+  //       const token = TokenGenerator.generateToken(result);
+  //       return response.status(200).json({
+  //         status: 200,
+  //         data: [
+  //           {
+  //             token,
+  //             user: {
+  //               id: user.id,
+  //                _id: user._id,
+  //               email: user.email,
+  //               isAdmin: user.is_admin,
+  //               isVerified:user.isVerified,
+  //               firstname: user.firstname,
+  //               username: user.username,
+  //               profile: user.avatar,
+  //               plan_name: user.plan_name,
+  //               balance: user.balance,
+  //               notification_count: user.notification_count,
+  //                user_type: user.user_type,
+  //                account_num: user.accountNumber,
+  //                username:user.username,
+  //                phoneNumber: user.phone_number,
+  //                roles: user.roles,
+  //               test_certificate: user.test_certificate
+  //             },
+  //           },
+  //         ],
+  //         message: 'Successfully signed in',
+  //       });
+  //     })
+  //     .catch(err =>
+  //       response.status(400).json({
+  //         status: 400,
+  //         error: ErrorHandler.errors().validationError,
+  //       }),
+  //     );
+  // }
+
+
+
+
+
+
+
+
+
+
+
+  //web sign up and login
   static signup(request, response) {
-      let { firstname, 
-          lastname,  
-          username, 
-          email, 
-          phoneNumber,
-          user_type, 
-          password 
-    } = request.body;
+    let { firstname, 
+         lastname,  
+         username, 
+         email, 
+         phoneNumber,
+         user_type, 
+         password 
+   } = request.body;
+
+   console.log(password)
+   password = TokenGenerator.hashPassword(password.trim());
+
+   const Newuser = new UserModel({ 
+     id: new AutoincrementId(UserModel).counter(), 
+     firstname, 
+     lastname, 
+     user_type, 
+     username, 
+     email, 
+     phone_number: phoneNumber, 
+     password,
+     is_admin: false,
+     //accountNumber: uuidv4()
+      });
+
+
+    Newuser.save()
+     .then(data => {
+       const user = data;
+       const result = {
+         id: user.id,
+         email: user.email,
+         username: user.username,
+       };
+       let emailT = crypto.randomBytes(16).toString('hex');
+       // Create a verification token for this user
+       var emailtoken = new EmailTokenMakerForSignUp({ _userId: user._id, email_confirm_token: emailT });
+       
+
+       
+       // Save the verification token
+       emailtoken.save(function (err) {
+           if (err) { 
+             return console.log(err.message );
+            }
+           console.log(emailtoken.email_confirm_token, emailtoken._userId)
+           
+
+           //console.log(__dirname + '/views/templates/signup-verification.html')
+
+           let ress = UserService.newUserMail(request,response, result,'/views/templates/signup-verification.html', emailtoken.email_confirm_token,201)
+            
+           const token = TokenGenerator.generateToken(result);
+           
+
+                  return response.status(201).json({
+                    status: 201,
+                    data: [
+                      {
+                        token,
+                        user,
+                      },
+                    ],
+                    message: 'User created successfully',
+                  });
+
+           
+           
+
+
+
+           
+       });
+
+
+       
+     })
+     .catch(err => {
+       console.log(err+ 'error here')
+       response.status(400).json({
+         status: 400,
+         error: ErrorHandler.errors().validationError,
+       });
+     });
+ }
+
+ static login(request, response) {
+   const { email, password } = request.body;
+   UserModel.findOne({email: email})
+     .then(data => {
+       const user = data;
+       console.log(user.isVerified)
+
+
+       if (!user) {
+         return response.status(422).json({
+           status: 422,
+           error: 'User does not exists',
+         });
+
+         
+       }
+
+
+       
+
+
+       if(!user.isVerified){
+         return response.status(422).json({
+           status: 422,
+           error: `<h6>Email verification step is needed. please check your email for a verification link or click the link to resend you an email verification</h6> 
+
+           <a href="https://demouserapp.commute.ng/api/v1/auth/resend/${email}">Resend </a>`,
+         });
+       }
+       // console.log(email);
+       // console.log(password);
+       if (!TokenGenerator.checkIfPasswordMatch(password, user.password)) {
+         return response.status(422).json({
+           status: 422,
+           error: 'Invalid login details. Email or password is wrong',
+         });
+       }
+
+       //request.session.user = user;
+
+
+
+
+       const result = {  
+         id: user.id,
+         _id: user._id,
+         email: user.email,
+         isAdmin: user.is_admin,
+         isVerified:user.isVerified,
+         firstname: user.firstname,
+         lastname: user.lastname,
+         username: user.username,
+          profile: user.avatar,
+         plan: user.plan_name,
+         balance: user.balance,
+         notification_count: user.notification_count,
+         user_type: user.user_type,
+         username:user.username,
+         phoneNumber: user.phone_number,
+         roles: user.roles,
+         test_certificate: user.test_certificate
+
+       };
+       const token = TokenGenerator.generateToken(result);
+
+
+       //if request host is from user and user role is user or admin allow
+      //  if(request.headers.host=="demouserapp.commute.ng" && user.roles!="Individual Driver"){
+           return response.status(200).json({
+         status: 200,
+         data: [
+           {
+             token,
+             user: {
+               id: user.id,
+                _id: user._id,
+               email: user.email,
+               isAdmin: user.is_admin,
+               isVerified:user.isVerified,
+               firstname: user.firstname,
+               username: user.username,
+               profile: user.avatar,
+               plan_name: user.plan_name,
+               balance: user.balance,
+               notification_count: user.notification_count,
+                user_type: user.user_type,
+                account_num: user.accountNumber,
+                username:user.username,
+         phoneNumber: user.phone_number,
+         roles: user.roles,
+          test_certificate: user.test_certificate
+             },
+           },
+         ],
+         message: 'Successfully signed in',
+       });
+      //  }
+       
+     })
+     .catch(err =>
+       response.status(400).json({
+         status: 400,
+         error: ErrorHandler.errors().validationError,
+       }),
+     );
+ }
+
+
+
+
+
+
+  //web sign up and login
+  static signupMobile(request, response) {
+    let { firstname, 
+         lastname,  
+         username, 
+         email, 
+         phoneNumber,
+         user_type, 
+         password 
+   } = request.body;
+
+   console.log(password)
+   password = TokenGenerator.hashPassword(password.trim());
+
+
+       let from_mobile = false;
+    if(request.body.from_mobile==true){
+      from_mobile =true;
+    }
 
     console.log(password)
-    password = TokenGenerator.hashPassword(password.trim());
+    
     let roles = '';
     if(request.body.roles){
       roles = request.body.roles
     }else{
       roles = 'user';
     }
+
+
+
+
+
+
     
 
-    const Newuser = new UserModel({ 
-      id: new AutoincrementId(UserModel).counter(), 
-      firstname, 
-      lastname, 
-      user_type, 
-      username, 
-      email, 
-      phone_number: phoneNumber, 
-      password,
-      is_admin: false,
-      roles: roles,
-      //accountNumber: uuidv4()
-       });
+  const Newuser = new UserModel({ 
+    id: new AutoincrementId(UserModel).counter(), 
+    firstname, 
+    lastname, 
+    user_type, 
+    username, 
+    email, 
+    phone_number: phoneNumber, 
+    password,
+    is_admin: false,
+    isVerified: true,
+    roles
+    //accountNumber: uuidv4()
+     });
 
 
-     Newuser.save()
-      .then(data => {
-        const user = data;
-        const result = {
-          id: user.id,
-          email: user.email,
-          username: user.username,
-        };
-        let emailT = crypto.randomBytes(16).toString('hex');
-        // Create a verification token for this user
-        var emailtoken = new EmailTokenMakerForSignUp({ _userId: user._id, email_confirm_token: emailT });
-        
+   Newuser.save()
+    .then(data => {
+      const user = data;
+      const result = {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+      };
+      let emailT = crypto.randomBytes(16).toString('hex');
+      // Create a verification token for this user
+      // var emailtoken = new EmailTokenMakerForSignUp({ _userId: user._id, email_confirm_token: emailT });
+      
 
-        
-        // Save the verification token
-        emailtoken.save(function (err) {
-            if (err) { 
-              return console.log(err.message );
-             }
-            console.log(emailtoken.email_confirm_token, emailtoken._userId)
-            
+      
+      // Save the verification token
+      // emailtoken.save(function (err) {
+      //     if (err) { 
+      //       return console.log(err.message );
+      //      }
+      //     console.log(emailtoken.email_confirm_token, emailtoken._userId)
+          
 
-            //console.log(__dirname + '/views/templates/signup-verification.html')
+          //console.log(__dirname + '/views/templates/signup-verification.html')
 
-            UserService.newUserMail(request,response, result,'/views/templates/signup-verification.html', emailtoken.email_confirm_token,201)
-             const token = TokenGenerator.generateToken(result);
-             return response.status(201).json({
-                                                status: 201,
-                                                data: [
-                                                  {
-                                                    token,
-                                                    user,
-                                                  },
-                                                ],
-                                                message: 'User created successfully',
-                        });
-
-
-
-            
-        });
+          // UserService.newUserMail(request,response, result,'/views/templates/signup-verification.html', emailtoken.email_confirm_token,201)
+           const token = TokenGenerator.generateToken(result);
+           return response.status(201).json({
+                                              status: 201,
+                                              data: [
+                                                {
+                                                  token,
+                                                  user,
+                                                },
+                                              ],
+                                              message: 'User created successfully',
+                      });
 
 
-        
-      })
-      .catch(err => {
-        console.log(err+ 'error here')
-        response.status(400).json({
-          status: 400,
-          error: ErrorHandler.errors().validationError,
-        });
-      });
-  }
-
-  static login(request, response) {
-    const { email, password } = request.body;
-    UserModel.findOne({email: email})
-      .then(data => {
-        const user = data;
-        console.log(user.isVerified)
-
-
-        if (!user) {
-          return response.status(422).json({
-            status: 422,
-            error: 'User does not exists',
-          });
 
           
-        }
+      // });
 
 
+      
+    })
+    .catch(err => {
+      console.log(err+ 'error here')
+      response.status(400).json({
+        status: 400,
+        error: ErrorHandler.errors().validationError,
+      });
+    });
+ }
 
-        if(!user.isVerified){
-          let link = process.env.DEPLOY_BACK_URL + '/auth/'
-          return response.status(422).json({
-            status: 422,
-            error: `<h6>Email verification step is needed. please check your email for a verification link or click the link to resend you an email verification</h6> 
-
-            <a href="${link}/resend/${email}">Resend </a>`,
-          });
-        }
-        // console.log(email);
-        // console.log(password);
-        if (!TokenGenerator.checkIfPasswordMatch(password, user.password)) {
-          return response.status(422).json({
-            status: 422,
-            error: 'Invalid login details. Email or password is wrong',
-          });
-        }
-
-        //request.session.user = user;
+ static loginMobile(request, response) {
+   const { email, password } = request.body;
+   UserModel.findOne({email: email})
+     .then(data => {
+       const user = data;
+       console.log(user.isVerified)
 
 
+       if (!user) {
+         return response.status(422).json({
+           status: 422,
+           error: 'User does not exists',
+         });
 
-        const result = {
-          id: user.id,
-          _id: user._id,
-          email: user.email,
-          isAdmin: user.is_admin,
-          isVerified:user.isVerified,
-          firstname: user.firstname,
-          username: user.username,
-           profile: user.avatar,
-          plan: user.plan_name,
-          balance: user.balance,
-          notification_count: user.notification_count,
-          user_type: user.user_type,
-          username:user.username,
-          phoneNumber: user.phone_number,
-          roles: user.roles,
+         
+       }
+
+
+       
+
+
+       if(!user.isVerified){
+         return response.status(422).json({
+           status: 422,
+           error: `<h6>Email verification step is needed. please check your email for a verification link or click the link to resend you an email verification</h6> 
+
+           <a href="https://demouserapp.commute.ng/api/v1/auth/resend/${email}">Resend </a>`,
+         });
+       }
+       // console.log(email);
+       // console.log(password);
+       if (!TokenGenerator.checkIfPasswordMatch(password, user.password)) {
+         return response.status(422).json({
+           status: 422,
+           error: 'Invalid login details. Email or password is wrong',
+         });
+       }
+
+       //request.session.user = user;
+
+
+       
+
+       const result = {  
+         id: user.id,
+         _id: user._id,
+         email: user.email,
+         isAdmin: user.is_admin,
+         isVerified:user.isVerified,
+         firstname: user.firstname,
+         username: user.username,
+          profile: user.avatar,
+         plan: user.plan_name,
+         balance: user.balance,
+         notification_count: user.notification_count,
+         user_type: user.user_type,
+         username:user.username,
+         phoneNumber: user.phone_number,
+         roles: user.roles,
+         test_certificate: user.test_certificate
+
+       };
+       const token = TokenGenerator.generateToken(result);
+
+
+       //if request host is from user and user role is user or admin allow
+      //  if(request.headers.host=="demouserapp.commute.ng" && user.roles!="Individual Driver"){
+           return response.status(200).json({
+         status: 200,
+         data: [
+           {
+             token,
+             user: {
+               id: user.id,
+                _id: user._id,
+               email: user.email,
+               isAdmin: user.is_admin,
+               isVerified:user.isVerified,
+               firstname: user.firstname,
+               username: user.username,
+               profile: user.avatar,
+               plan_name: user.plan_name,
+               balance: user.balance,
+               notification_count: user.notification_count,
+                user_type: user.user_type,
+                account_num: user.accountNumber,
+                username:user.username,
+         phoneNumber: user.phone_number,
+         roles: user.roles,
           test_certificate: user.test_certificate
+             },
+           },
+         ],
+         message: 'Successfully signed in',
+       });
+      //  }
+       
+     })
+     .catch(err =>
+       response.status(400).json({
+         status: 400,
+         error: ErrorHandler.errors().validationError,
+       }),
+     );
+ }
 
-        };
-        const token = TokenGenerator.generateToken(result);
-        return response.status(200).json({
-          status: 200,
-          data: [
-            {
-              token,
-              user: {
-                id: user.id,
-                 _id: user._id,
-                email: user.email,
-                isAdmin: user.is_admin,
-                isVerified:user.isVerified,
-                firstname: user.firstname,
-                username: user.username,
-                profile: user.avatar,
-                plan_name: user.plan_name,
-                balance: user.balance,
-                notification_count: user.notification_count,
-                 user_type: user.user_type,
-                 account_num: user.accountNumber,
-                 username:user.username,
-          phoneNumber: user.phone_number,
-          roles: user.roles,
-           test_certificate: user.test_certificate
-              },
-            },
-          ],
-          message: 'Successfully signed in',
-        });
-      })
-      .catch(err =>
-        response.status(400).json({
-          status: 400,
-          error: ErrorHandler.errors().validationError,
-        }),
-      );
-  }
+
+
+
 
   static logout(request,response){
-//     router.post('/logout', function(req, res) {
-//   logout.logoutUser(req, res, function(err, data) {
-//     if (err) {
-//       res.json({ 'error': data.error, 'message': data.message });
-//     } else {
-//       res.json({ 'success': data.success, 'message': data.message });
-//     }
-//   });
-// });
+
   }
 
   static confirmationPost (req, res) {
@@ -494,6 +985,41 @@ export class UserService {
             
         });
     });
+}
+
+
+static userExists(request,response){
+
+  UserModel.findOne({ email: request.body.email }, function (err, user) {
+        if (!user) {
+          return response.status(404).json({
+            status: 404,
+            data: [
+              {
+              
+                
+              },
+            ],
+            message: 'User Not found ',
+          });
+        }
+        
+        
+        return response.status(200).json({
+            status: 200,
+            data: [
+              {
+              email: user.email,
+              phone: user.phone_number,
+              username: user.username
+                
+              },
+            ],
+            message: 'User found successfully',
+          });
+
+  })
+    
 }
 
 
@@ -597,6 +1123,137 @@ static passwordForgot(req, res){
   static confirmResetPassword (req, res) {
      return  res.sendFile(path.join(__dirname + '/views/pw-reset.html'));
             
+  }
+
+
+
+  
+  static changePasswordTriggerMobile(req,res){
+    let password = req.body.password;
+    let email = req.body.email;
+   
+    // console.log(req.params.id)
+   
+    // Find a matching token
+   
+        // If we found a token, find a matching user email: req.body.email
+        UserModel.findOne({ email: email  }, function (err, user) {
+            if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
+            //if (user.email != token.email_to_reset) return res.status(400).send({ type: 'No Reset Token', msg: 'This user reset token was not set.' });
+
+            // Verify and save the user
+            user.password = TokenGenerator.hashPassword(password.trim());
+            user.save(function (err) {
+                if (err) { return res.status(500).send({ msg: err.message }); }
+                return res.status(200).send({ msg:"The account password has been reset. Please wait..." , status:'ok'});
+                //return  res.sendFile(path.join(__dirname + '/pw-reset-success.html'));
+            }); 
+        });
+    
+  }
+
+  static setPlanIdForUser(request,response){
+
+   
+    let email = req.body.email;
+    let plan_id = req.body.plan_id;
+   
+    // console.log(req.params.id)
+   
+    // Find a matching token
+   
+        // If we found a token, find a matching user email: req.body.email
+        UserModel.findOne({ email: email  }, function (err, user) {
+            if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
+            //if (user.email != token.email_to_reset) return res.status(400).send({ type: 'No Reset Token', msg: 'This user reset token was not set.' });
+
+            // Verify and save the user
+            user.plan_id_to_pay = plan_id || "No plan id"
+            user.save(function (err) {
+                if (err) { return res.status(500).send({ msg: err.message }); }
+                return res.status(200).send({ msg:"The plan id  has been updated" , status:'ok'});
+                //return  res.sendFile(path.join(__dirname + '/pw-reset-success.html'));
+            }); 
+        });
+   
+
+  }
+
+
+  
+  static getPlanIdForUser(request,response){
+
+   
+    let email = req.params.id;
+    
+   
+    // console.log(req.params.id)
+   
+    // Find a matching token
+   
+        // If we found a token, find a matching user email: req.body.email
+        UserModel.findOne({ email: email  }, function (err, user) {
+            if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
+            //if (user.email != token.email_to_reset) return res.status(400).send({ type: 'No Reset Token', msg: 'This user reset token was not set.' });
+
+            // Verify and save the user
+            let plan_id = user.plan_id_to_pay || "No plan id"
+            user.save(function (err) {
+                if (err) { return res.status(500).send({ msg: err.message }); }
+                return res.status(200).send({ plan_id:plan_id , status:'ok'});
+                //return  res.sendFile(path.join(__dirname + '/pw-reset-success.html'));
+            }); 
+        });
+   
+
+  }
+
+
+  static walletUpgradeViaMobile(req,res){
+    let balance= req.body.accountBalance;
+    let email = req.body.email;
+   
+    // console.log(req.params.id)
+   
+    // Find a matching token
+   
+        // If we found a token, find a matching user email: req.body.email
+        UserModel.findOne({ email: email  }, function (err, user) {
+            if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
+            //if (user.email != token.email_to_reset) return res.status(400).send({ type: 'No Reset Token', msg: 'This user reset token was not set.' });
+
+            // Verify and save the user
+            user.balance = balance;
+            user.save(function (err) {
+
+              
+                if (err) { return res.status(500).send({ msg: err.message }); }
+
+
+                //add wallet transaction
+
+                const newDonor = {id: new String(new Date()), reference, amount:(amount/100), email: customer.email,full_name: metadata.full_name,phone_number}
+
+                const donor = new WalletModel(newDonor)
+      
+                donor.save().then((donor,error)=>{
+                    if(!donor){
+                      console.log(error)
+                      return res.status(500).send({ msg: error });
+                    }
+                    return res.status(200).send({ msg:"The account balance has been updated" , status:'ok'});
+                
+
+                })
+
+
+                  //return  res.sendFile(path.join(__dirname + '/pw-reset-success.html'));
+            }); 
+        });
+
+
+
+    
   }
 
   static changePasswordTrigger(req,res){
@@ -1003,7 +1660,7 @@ static updateAsyncUserPreviledges = async function(request,response){
       user.username= username || user.username;
       user.email= email || user.email;
    
-      user.user_type= user_type|| user.user_type;
+      user.roles= user_type|| user.user_type;
       user.firstname= firstname|| user.firstname;
       user.lastname = lastname || user.lastname;
       user.phone_number = phoneNumber|| user.phone_number;
@@ -1099,7 +1756,57 @@ static updateAsyncUserPreviledges = async function(request,response){
   }
 
 
+  
 
+
+
+  static deleteItinerary(request,response){
+    ItineraryModel.find({plan_id: request.params.id})
+      .then(data => {
+        const user = data;
+
+        if ( user.length <= 0) {
+          console.log(
+            JSON.stringify({
+              status: 404,
+              error: 'The user with the given id does not exists',
+            }),
+          );
+          return response.status(404).json({
+            status: 404,
+            error: 'The user with the given id does not exists',
+          });
+        }
+
+        ItineraryModel.remove({plan_id: request.params.id})
+          .then(data => {
+            const deletedUser = data;
+            response.status(202).json({
+              status: 202,
+              data: [
+                {
+                  id: deletedUser._id,
+                  message: 'user record has been deleted',
+                },
+              ],
+            });
+          })
+          .catch(error =>{
+            console.log(error)
+            response.status(400).json({
+              status: 400,
+              error: ErrorHandler.errors().validationError,
+            });
+          });
+      })
+      .catch(error =>{
+         console.log(error)
+        response.status(400).json({
+          status: 400,
+          error: ErrorHandler.errors().validationError,
+        });
+      });
+  }
 
 
 
@@ -2377,7 +3084,7 @@ static updateUsersItinerary(request,response){
           if(!donor){
               //handle error when the donor is not found
               console.log(error)
-              res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+              res.redirect(BACKEND_API+ '/error')
           }
          const tranx = donor;
          console.log(tranx +"for the user")
@@ -2393,7 +3100,7 @@ static updateUsersItinerary(request,response){
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+          res.redirect(BACKEND_API+ '/error')
       })
   }
 
@@ -2570,7 +3277,7 @@ static updateUsersItinerary(request,response){
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+          res.redirect(BACKEND_API+ '/error')
       })
 
   }
@@ -2666,7 +3373,7 @@ var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+          res.redirect(BACKEND_API+ '/error')
       })
 
   }
@@ -3033,12 +3740,12 @@ getUser = (req, res) => {
           ],
         });
       })
-      .catch(error =>
+      .catch(error =>{
         response.status(400).json({
           status: 400,
           error: ErrorHandler.errors().validationError,
-        }),
-      );
+        })
+      });
   }
 
 
@@ -3414,12 +4121,12 @@ getUser = (req, res) => {
           ],
         });
       })
-      .catch(error =>
+      .catch(error =>{
         response.status(400).json({
           status: 400,
           error: ErrorHandler.errors().validationError,
-        }),
-      );
+        })
+      });
   }
 
   static deleteDriver(request,response){
@@ -4161,7 +4868,7 @@ getUser = (req, res) => {
   }
 
   static manageProfile(request,response){
-    UserModel.find({_id: request.params.id, is_admin:true})
+    UserModel.find({email: request.params.id})
       .then(data => {
         console.log("specific profile:" + data)
         
@@ -4183,12 +4890,12 @@ getUser = (req, res) => {
                 ],
           });
       })
-      .catch(err =>
+      .catch(err =>{
               response.status(400).json({
                 status: 400,
                 error: ErrorHandler.errors().validationError,
-              }),
-            );
+              })
+      });
     
   }
 
@@ -7467,7 +8174,7 @@ date_created: new Date(),
           if(!donor){
               //handle error when the donor is not found
               console.log(error)
-              res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+              res.redirect(BACKEND_API+ '/error')
           }
          const tranx = donor;
          console.log(tranx)
@@ -7483,7 +8190,7 @@ date_created: new Date(),
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+          res.redirect(BACKEND_API+ '/error')
       })
 
   }
@@ -7688,7 +8395,7 @@ date_created: new Date(),
           if(!donor){
               //handle error when the donor is not found
               console.log(error)
-              res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+              res.redirect(BACKEND_API+ '/error')
           }
          const tranx = donor;
          console.log(tranx +"for the user")
@@ -7704,7 +8411,7 @@ date_created: new Date(),
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+          res.redirect(BACKEND_API+ '/error')
       })
   }
 
@@ -7715,7 +8422,7 @@ date_created: new Date(),
           if(!donor){
               //handle error when the donor is not found
               console.log(error)
-              res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+              res.redirect(BACKEND_API+ '/error')
           }
          const tranx = donor;
          console.log(tranx +"for the user")
@@ -7731,7 +8438,7 @@ date_created: new Date(),
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+          res.redirect(BACKEND_API+ '/error')
       })
   }
 
@@ -7742,7 +8449,7 @@ date_created: new Date(),
           if(!donor){
               //handle error when the donor is not found
               console.log(error)
-              res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+              res.redirect(BACKEND_API+ '/error')
           }
          const tranx = donor;
          console.log(tranx +"for the user quotations")
@@ -7758,7 +8465,7 @@ date_created: new Date(),
         
       }).catch((e)=>{
           console.log(e)
-          res.redirect(process.env.DEPLOY_BACK_URL+ '/error')
+          res.redirect(BACKEND_API+ '/error')
       })
   }
 
@@ -8146,6 +8853,8 @@ static revokecarstatus(request,response){
         car_status,
         hasBeenRevoked,
     } = request.body;
+
+    
 
     
 

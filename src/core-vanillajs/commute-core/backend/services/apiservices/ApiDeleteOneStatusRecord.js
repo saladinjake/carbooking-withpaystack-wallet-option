@@ -5,6 +5,11 @@ import getOnlineUrlConnection from './helpers/getOnlineUrlConnection';
 import MessageBoard from '../../../core/MessageBoard';
 import FetchPromiseApi from './helpers/FetchPromiseApi';
 //import sweet animations and sweet loading effects
+
+
+let activeUrl = getOnlineUrlConnection();
+let baseUrl = getOnlineUrlConnection();
+
 class ApiDeleteOneStatusRecord {
   static redirect(TypeOfReport) {
     if (TypeOfReport === 'red-flag') {

@@ -252,27 +252,17 @@ var cov_375na9vgf = function () {
   return coverage[path] = coverageData;
 }();
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
-function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
-
-function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
-
-function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+var _wrapNativeSuper2 = _interopRequireDefault(require("@babel/runtime/helpers/wrapNativeSuper"));
 
 var httpStatus = (cov_375na9vgf.s[0]++, require('http-status'));
 /**
@@ -282,7 +272,7 @@ var httpStatus = (cov_375na9vgf.s[0]++, require('http-status'));
 var ExtendableError =
 /*#__PURE__*/
 function (_Error) {
-  _inherits(ExtendableError, _Error);
+  (0, _inherits2["default"])(ExtendableError, _Error);
 
   function ExtendableError(_ref) {
     var _this;
@@ -292,12 +282,10 @@ function (_Error) {
         status = _ref.status,
         isPublic = _ref.isPublic,
         stack = _ref.stack;
-
-    _classCallCheck(this, ExtendableError);
-
+    (0, _classCallCheck2["default"])(this, ExtendableError);
     cov_375na9vgf.f[0]++;
     cov_375na9vgf.s[1]++;
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ExtendableError).call(this, message));
+    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(ExtendableError).call(this, message));
     cov_375na9vgf.s[2]++;
     _this.name = _this.constructor.name;
     cov_375na9vgf.s[3]++;
@@ -318,7 +306,7 @@ function (_Error) {
   }
 
   return ExtendableError;
-}(_wrapNativeSuper(Error));
+}((0, _wrapNativeSuper2["default"])(Error));
 /**
  * Class representing an API error.
  * @extends ExtendableError
@@ -328,7 +316,7 @@ function (_Error) {
 var APIError =
 /*#__PURE__*/
 function (_ExtendableError) {
-  _inherits(APIError, _ExtendableError);
+  (0, _inherits2["default"])(APIError, _ExtendableError);
 
   /**
    * Creates an API error.
@@ -344,12 +332,10 @@ function (_ExtendableError) {
         status = _ref2$status === void 0 ? (cov_375na9vgf.b[0][0]++, httpStatus.INTERNAL_SERVER_ERROR) : _ref2$status,
         _ref2$isPublic = _ref2.isPublic,
         isPublic = _ref2$isPublic === void 0 ? (cov_375na9vgf.b[1][0]++, false) : _ref2$isPublic;
-
-    _classCallCheck(this, APIError);
-
+    (0, _classCallCheck2["default"])(this, APIError);
     cov_375na9vgf.f[1]++;
     cov_375na9vgf.s[9]++;
-    return _possibleConstructorReturn(this, _getPrototypeOf(APIError).call(this, {
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(APIError).call(this, {
       message: message,
       errors: errors,
       status: status,

@@ -1534,7 +1534,9 @@ var cov_2zmbrz240 = function () {
   return coverage[path] = coverageData;
 }();
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _typeof2 = _interopRequireDefault(require("@babel/runtime/helpers/typeof"));
 
 // Module Scope
 var mongoose = (cov_2zmbrz240.s[0]++, require('mongoose')),
@@ -1621,7 +1623,7 @@ exports.plugin = function (schema, options) {
 
   cov_2zmbrz240.s[15]++;
 
-  switch (_typeof(options)) {
+  switch ((0, _typeof2["default"])(options)) {
     // If string, the user chose to pass in just the model name.
     case 'string':
       cov_2zmbrz240.b[3][0]++;

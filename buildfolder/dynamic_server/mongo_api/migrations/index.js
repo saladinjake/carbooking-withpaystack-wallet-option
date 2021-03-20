@@ -87,6 +87,8 @@ var cov_2hijydav3u = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -147,8 +149,6 @@ var _Inspection = _interopRequireDefault(require("../models/Inspection.model"));
 var _DriveTest = _interopRequireDefault(require("../models/DriveTest.model"));
 
 var _RolesAndPreviledges = _interopRequireDefault(require("../models/RolesAndPreviledges.model"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 cov_2hijydav3u.s[0]++;
 

@@ -66,7 +66,7 @@ export  default class Dashboard extends Component {
 
                             
 
-                            <a id="plan-detail" href="./plan-detail" className="tooltipLink" data-tooltip="lets you view the all planned itineraries and planned trips">
+                            <a style={{height:"150px"}} id="plan-detail" href="./plan-detail" className="tooltipLink" data-tooltip="lets you view the all planned itineraries and planned trips">
                             <div data-id="plan-detail" data-href="./plan-detail" className="col-sm-6  col-md-6 col-lg-3">
                             <div className="widget-bg-color-icon card-box p-t-10 p-b-10">
                                     <div className="text-dark">
@@ -74,7 +74,7 @@ export  default class Dashboard extends Component {
                                     </div>
                                     <div className="">
                                         <h5 className="text-dark"><b style={{fontSize:"14px"}} className="" id="plan-id">No Plan</b></h5>
-                                        <p className="text-muted" id="idvalue">No plan id</p>
+                                        <p className="text-muted" id="idvalue">No plan </p>
                                     </div>
                                     <div className="clearfix"></div>
                                 </div></div></a>
@@ -285,6 +285,15 @@ export  default class Dashboard extends Component {
                                                
 
                                             </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colSpan="5">
+                                                    <div className="text-right">
+                                                        <ul className="pagination pagination-split m-t-30"></ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
                                         </table>
 
                                         

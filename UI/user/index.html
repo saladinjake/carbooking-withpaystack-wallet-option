@@ -33,65 +33,65 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
-		
-		
+
+
 		<style>
 			html {
 					position: relative;
 					min-height: 100%;
 					background: #fff;
 				}
-		
+
 		</style>
 
-		<style> 
-        #loader { 
-            border: 12px solid #f3f3f3; 
-            border-radius: 50%; 
-            border-top: 12px solid #444444; 
-            width: 70px; 
-            height: 70px; 
-            animation: spin 1s linear infinite; 
-        } 
-          
-        @keyframes spin { 
-            100% { 
-                transform: rotate(360deg); 
-            } 
-        } 
-          
-        .center { 
-            position: absolute; 
-            top: 0; 
-            bottom: 0; 
-            left: 0; 
-            right: 0; 
-            margin: auto; 
-        } 
+		<style>
+        #loader {
+            border: 12px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 12px solid #444444;
+            width: 70px;
+            height: 70px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .center {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
 
        /* #gtd{
         	opacity:0;
         }*/
-    </style> 
+    </style>
         <script src="assets/js/modernizr.min.js"></script>
-		
+
 		<link href="https://fonts.googleapis.com/css?family=Varela&display=swap" rel="stylesheet" type="text/css" />
-		<link href="https://fonts.googleapis.com/css?family=Noto+Sans|Source+Sans+Pro&display=swap" rel="stylesheet" type="text/css" /> 
+		<link href="https://fonts.googleapis.com/css?family=Noto+Sans|Source+Sans+Pro&display=swap" rel="stylesheet" type="text/css" />
 
 	</head>
 
-	<div id="loader" class="center"></div> 
+	<div id="loader" class="center"></div>
 	<body style="background:#fff;" class="widescreen" id="loginpage">
-		
+
 		<div id="gtd">
-		
+
 		  <!-- Top Bar Start -->
             <div class="topbar" id="spread-out">
 
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="text-center">
-                       <!--  <a href="index.html" class="logo"><!-- <i class="icon-magnet icon-c-logo"></i> --><!--  <img class="logo-small" src="assets/images/CommuteLogos-13.png"/>  <img class="logo-wide" src="assets/images/CommuteLogos-02.png"/>   <!-- <span>Ub<i class="md md-album"></i>ld</span> </a>--> 
+                       <!--  <a href="index.html" class="logo"><!-- <i class="icon-magnet icon-c-logo"></i> --><!--  <img class="logo-small" src="assets/images/CommuteLogos-13.png"/>  <img class="logo-wide" src="assets/images/CommuteLogos-02.png"/>   <!-- <span>Ub<i class="md md-album"></i>ld</span> </a>-->
                         <!-- Image Logo here -->
                         <a href="index.html" class="logo">
                             <i class="icon-c-logo"> <img src="assets/images/CommuteLogos-13.png"/> </i>
@@ -103,22 +103,22 @@
                 <!-- Button mobile view to collapse sidebar menu -->
                 <div class="navbar navbar-default" role="navigation">
                     <div class="container">
-                        
+
                         <!--/.nav-collapse -->
                     </div>
                 </div>
             </div>
             <!-- Top Bar End -->
 
-		<!-- <div class="account-pages"></div> 
+		<!-- <div class="account-pages"></div>
 		<div class="clearfix"></div> -->
 		<div class="col-lg-8 col-md-6 hidden-md-down hidden-xs hidden-sm " style='background:#fff url("assets/images/home2.jpg") no-repeat fixed left; background-size:60%;'>
 			<div style="padding:38.2% 0px"></div>
 		</div>
-		
-		
 
-		
+
+
+
 		<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 pull-right" style='background:#fff'>
 			<div class="card-box">
 				<div class="panel-heading">
@@ -129,29 +129,29 @@
 				<div class="panel-body">
                     <div class="info-msg">
 									  <i class="fa fa-info-circle"></i>
-									  
+
 									</div>
 
 									<div class="success-msg" id="msg-suc">
 									  <i class="fa fa-check"></i>
-									  
+
 									</div>
 
 									<div class="warning-msg">
 									  <i class="fa fa-warning"></i>
-									  
+
 									</div>
 
 									<div class="error-msg" id="msg" >
 									  <i class="fa fa-times-circle"></i>
-									  
+
 									</div>
 
 					<form class="form-horizontal m-t-20" method="POST" action="http://localhost:12000/api/v1/auth/login">
 
-						
 
-						 
+
+
 
 						<div class="form-group ">
 							<div class="col-xs-12">
@@ -190,33 +190,13 @@
 								<a href="recoverpw.html" class="text-dark"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
 							</div>
 						</div>
-						
-						<div class="form-group m-t-20 m-b-0">
-							<div class="col-sm-12 text-center">
-								<h4><b>Sign in with</b></h4>
-							</div>
-						</div>
-						
-						<div class="form-group m-b-0 text-center">
-							<div class="col-sm-12">
-								<a href="http://localhost:12000/api/v1/auth/facebook" class="btn btn-facebook waves-effect waves-light m-t-20">
-		                           <i class="fa fa-facebook m-r-5"></i> Facebook
-		                        </a>
 
-		                        <a href="http://localhost:12000/api/v1/auth/twitter" class="btn btn-twitter waves-effect waves-light m-t-20">
-		                           <i class="fa fa-twitter m-r-5"></i> Twitter
-		                        </a>
 
-		                        <a href="http://localhost:12000/api/v1/auth/google" class="btn btn-googleplus waves-effect waves-light m-t-20">
-		                           <i class="fa fa-google m-r-5"></i> Google
-		                        </a>
-							</div>
-						</div>
 					</form>
 
 
 				</div>
-				
+
 				<div class="row m-t-20">
 				<!-- <div class="col-sm-12 text-center">
 					<p>
@@ -250,9 +230,7 @@
         <script src="assets/js/jquery.core.js"></script>
         <script src="assets/js/jquery.app.js"></script>
 
-        <script type="text/javascript">
-        	
-        </script>
+
 
 	</body>
 </html>

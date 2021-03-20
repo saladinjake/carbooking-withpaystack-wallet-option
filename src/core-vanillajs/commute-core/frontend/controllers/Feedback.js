@@ -6,8 +6,48 @@ import setConfigData from '../helpers/localStorageData';
 // import googleMapsGeocoder from 'google-maps-geocoder';
 
 import $ from 'jquery';
+import getApiUrl from '../../backend/services/apiservices/helpers/getOnlineUrlConnection'
+let baseUrl =  getApiUrl();
 
 alertify.set('notifier','position', 'top-left');
+
+
+
+var sortBy = (function () {
+  var toString = Object.prototype.toString,
+      // default parser function
+      parse = function (x) { return x; },
+      // gets the item to be sorted
+      getItem = function (x) {
+        var isObject = x != null && typeof x === "object";
+        var isProp = isObject && this.prop in x;
+        return this.parser(isProp ? x[this.prop] : x);
+      };
+
+  /**
+   * Sorts an array of elements.
+   *
+   * @param  {Array} array: the collection to sort
+   * @param  {Object} cfg: the configuration options
+   * @property {String}   cfg.prop: property name (if it is an Array of objects)
+   * @property {Boolean}  cfg.desc: determines whether the sort is descending
+   * @property {Function} cfg.parser: function to parse the items to expected type
+   * @return {Array}
+   */
+  return function sortby (array, cfg) {
+    if (!(array instanceof Array && array.length)) return [];
+    if (toString.call(cfg) !== "[object Object]") cfg = {};
+    if (typeof cfg.parser !== "function") cfg.parser = parse;
+    cfg.desc = !!cfg.desc ? -1 : 1;
+    return array.sort(function (a, b) {
+      a = getItem.call(cfg, a);
+      b = getItem.call(cfg, b);
+      return cfg.desc * (a < b ? -1 : +(a > b));
+    });
+  };
+
+}());
+
     
 
 function on() {
@@ -172,7 +212,50 @@ window.videoArry = (video) => {
 //     }
 
 //    }
+
+
 // })
+
+
+
+function searchTable(trId=0) {
+
+
+  // $(document).ready(function(){
+
+  // Search all columns
+  $('#foo-table-input').keyup(function(){
+    // Search Text
+    var search = $(this).val();
+
+    // Hide all table tbody rows
+    $('table tbody tr').hide();
+
+    // Count total search result
+    var len = $('table tbody tr:not(.notfound) td:contains("'+search+'")').length;
+
+    if(len > 0){
+      // Searching text in columns and show match row
+      $('table tbody tr:not(.notfound) td:contains("'+search+'")').each(function(){
+        $(this).closest('tr').show();
+      });
+    }else{
+      //$('.notfound').show();
+    }
+
+  });
+
+  
+// // });
+
+// // Case-insensitive searching (Note - remove the below script for Case sensitive search )
+$.expr[":"].contains = $.expr.createPseudo(function(arg) {
+   return function( elem ) {
+     return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+   };
+});
+}
+
 
 function formatDate(date) {
   var hours = date.getHours();
@@ -238,6 +321,10 @@ class IReporterWebsiteInterventions {
 
      if (document.getElementById('view-tickets')) {
 
+      document.getElementById("foo-table-input").addEventListener("keyup",(e)=>{
+        searchTable() 
+      })
+
     const recordItems = document.querySelector('#fetched-data');
      //alert('hello man')
     if (items.length ===0) {
@@ -246,6 +333,11 @@ class IReporterWebsiteInterventions {
       recordItems.style.fontSize = '32px';
       recordItems.style.font = 'bold';
     } else {
+      items =  sortBy(items, {
+        prop: "created_at",
+        desc: true,
+        parser: (d) => new Date(d)
+      })
       items.forEach((item) => {
         var d = new Date(item.created_at);
         var e = formatDate(d);
@@ -501,7 +593,7 @@ class IReporterWebsiteInterventions {
       if(file != null){
           const xhr = new XMLHttpRequest();
         
-          xhr.open('GET', process.env.DEPLOY_BACK_URL+`/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+          xhr.open('GET', baseUrl+`/sign-s3?file-name=${file.name}&file-type=${file.type}`);
             xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
         xhr.setRequestHeader('Content-type', 'application/json');
         xhr.setRequestHeader('Access-Control-Allow-Origin', '*');

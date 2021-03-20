@@ -372,9 +372,9 @@ var cov_1vnn5a7756 = function () {
   return coverage[path] = coverageData;
 }();
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var Promise = (cov_1vnn5a7756.s[0]++, require('bluebird'));
 var EarningsSchema = (cov_1vnn5a7756.s[1]++, new _mongoose["default"].Schema({

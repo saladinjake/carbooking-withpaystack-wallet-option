@@ -1,125 +1,48 @@
 
+'use strict';
 import GateKeepersForUser from './helpers/whois';
 import getOnlineUrlConnection from './helpers/getOnlineUrlConnection';
-// import $ from 'jquery';
- var price;
-     var plan;
-     var cart ;
-     var carPrice;
-     var carName;
-     var car;
-     var planCounter =1;
-     var allplans = document.getElementsByClassName('plan');
-     var element;
-     var overlaySelected;
-     var maxCars=4; 
-     var selectedCars =0; 
-     var overlaySelectedCars; 
-     var elementCars;
-     var planList;
-     var planName;
-     // var prev;
-     // var next;
-     var rootParentSection;
-     var next2;
+import MessageBoard from '../../../core/MessageBoard';
 
-     const currentView = 1;
-     const maxViewSteps = 3;
-     const steps = ["choose-plan", "choose-cars","add-itineries"];
 
+import $ from 'jquery';
+
+import CarCarousel from './helpers/CarCarousel';
 let activeUrl = getOnlineUrlConnection();
-let mainUrl = activeUrl;
-  var slideIndex = 1;
-  var prev, next;
-$(document).ready(function(){
-  if(document.getElementById("planpage")){
-   showSlides(slideIndex); 
+let baseUrl = getOnlineUrlConnection();
+var price,plan,cart,carPrice,
+    carName,car,planCounter =1,allplans = document.getElementsByClassName('plan'),
+    element,overlaySelected,maxCars=2, selectedCars =0, overlaySelectedCars, 
+     elementCars,planList,planName,rootParentSection,next2,
+    currentView = 1,maxViewSteps = 3,steps = ["choose-plan", "choose-cars","add-itineries"],
+    mainUrl = activeUrl,slideIndex = 1,
+    prev, next,requestQuote;
+    var linkOfApi = activeUrl;
 
-   if(localStorage.getItem('planSelected')){
-    var selectedPlansTaken = localStorage.getItem('planSelected');
-    alert(selectedPlansTaken)
-   }
 
-   prev = document.getElementById("previous");
-   next = document.getElementById("next");
+window.planClicked = false; // declare the variable that tracks the state
+window.planClickHandler = () =>{ // declare a function that updates the state
+  planClicked = true;
+}
+window.carClickedCount =1;
+window.carClicked = false; // declare the variable that tracks the state
+window.carClickHandler = () =>{ // declare a function that updates the state
+  carClicked = true;
+  carClickedCount+=1;
+}
 
-   prev.addEventListener("click", (e)=>{
-     plusSlides(-1)
-   })
+window.addEventPlan = (ev,el) =>{
   
-
-   next.addEventListener("click", (e)=>{
-     plusSlides(1)
-   })
-
- }  
-
-})
-
-
-
-
-// Next/previous controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-// Thumbnail image controls
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-  }
-
-
-  
-  var index = slideIndex-1;
-  slides[index].style.display = "block";
-  slides[index].style.opacity=1;
-}
-
-selectedUserPlans()
-function selectedUserPlans(){
-     
-    
-
-     
-
     let chosenPlan;
-     document.addEventListener("DOMContentLoaded", function(event) {
-       if(localStorage.getItem("planSelected")){
-        chosenPlan  = localStorage.getItem("planSelected");
-       }
-       // prev = document.getElementById("previous");
-       // next = document.getElementById("next");
-
-
-
-        
-
-     });
-
-
     
-     
-// document.addEventListener("DOMContentLoaded", function(event) {
+    var thisEl = el;
+    if(el.classList.contains('plan')){
+           ev.preventDefault()
 
-    document.body.addEventListener('click', function(e){
-      e.preventDefault();
-      if(e.target.classList.contains('plan')){
-  
+          
            if(planCounter >1){
 
               $('#overlay').fadeIn(200,function(){
-                 // document.gcd etElementById("messenger").innerHTML="cant choose more than one plan"
                   $('#box').animate({'top':'220px'},200);
               });
 
@@ -131,68 +54,90 @@ function selectedUserPlans(){
             
              document.getElementById("msg-").innerHTML="cant choose more than one plan"
              
-             // return false
            }else{
-            //$('#modal-1').toggleClass("md-show"); //you can list several class names 
-                var id = e.target.getAttribute("id");
-                //next.setAttribute('disabled', false);
-                next.style.display="block"
-              
+                var id = thisEl.getAttribute("id");
                 overlaySelected = document.getElementById(id+ "-plan");
                 var closer = document.getElementById(id+ '-boxclose');
-
                  // Removes an element from the document
-               element = e.target.parentNode.parentNode;
-               element.style.border="3px solid blue";
-
-               rootParentSection =  e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+               element =thisEl.parentNode.parentNode;
+               element.style.border="1px solid blue";
+               rootParentSection = thisEl.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+               localStorage.setItem("planSelected",thisEl.id)
                //alert(rootParentSection.id)
 
-               localStorage.setItem("planSelected",e.target.id)
-
-
                 closer.style.display="block";
-
                 closer.addEventListener('click',()=>{
                   planCounter =1;
+                  localStorage.setItem("planSelectedCount",planCounter)
                    element.style.border="none";
                    closer.style.display="none";
-                })
-            
+                });
                 overlaySelected.style.opacity=0.9;
-
-               price = e.target.getAttribute('data-price');
-               planName = e.target.getAttribute('data-plan');
-
+               price = thisEl.getAttribute('data-price');
+               planName = thisEl.getAttribute('data-plan');
                planList = {
                 price,
                 planName
                };
-          
            }
            planCounter+=1;
+
            localStorage.setItem("planSelectedCount",planCounter)
-           return true;
-           
-        }
-           
-       },false);
+           return true;  
+    }
+
+}
 
 
 
 
+  const recordPlans = (items, displayBoard) => {
+    let style = "display:block;fontSize:14px"
+    items.forEach((item,i) => {
+      
+      if(item.plan_categories!="Commute Richly"){
+        item.price = "₦ " + item.price
+      }else{
+        item.price =" "
+      }
+      const eachRecord = `<div  class="col-sm-6 col-md-6 col-lg-3 galleryImage" >
+                         <a class="boxclose" id="btn-${i}-boxclose"></a>
+                                <div class="price_card text-center">
+                             <div class="pricing-header bg-purple" style="height:160px">
+                                    <span class="price" >${item.price}</span>
+                                    <span class="name"> ${item.plan_categories}</span>
+                                  </div>
+                                  <div class="col-lg-12 m-t-20" style="height:240px">
+                                  <div class="col-sm-12 col-md-12 col-lg-12 center-block text-center">
+                                  <p style="font-size:16px">${item.description}</p>
+                                  </div></div>
+                                  <input type="hidden" class="galleryImageInput" name="galleryImage[]" value="12345.png">
+                                  <button onClick="planClickHandler();addEventPlan(event,this);document.getElementById('next').disabled=false; document.getElementById('previous').disabled=false;" style="width:80px; font-size:12px; " id="btn-${i}" data-id="btn-${i}" data-type="plan" data-plan="${item.plan_name} ${item.plan_categories}" data-plancategory="${item.plan_categories}" data-price="${item.price}" class=" btn btn-primary waves-effect waves-light w-md cd-add-to-cart js-cd-add-to-cart plan">Select</button>
+                                </div> 
+                                <div className="overlay-plan" id="btn-${i}-plan">
+                                  <a href="#" class="icon" title="User Profile">
+                                    
+                                  </a>
+                                 
+                                </div>
+                            </div> 
+    `;
+
+      displayBoard.innerHTML += eachRecord;
+    });
+  };
 
 
+  window.addCarSelectEvent = (ev, el) =>{
 
     var carList = [];
      
      var allcars = document.getElementsByClassName('car-select');
   
-      document.body.addEventListener('click', function(e){
-          e.preventDefault();
-
         
-         if(e.target.classList.contains('car-select')){
+         if(el.classList.contains('car-select')){
+          ev.preventDefault();
+           
            if(selectedCars >maxCars){
              
              $('#overlay').fadeIn(200,function(){
@@ -213,135 +158,245 @@ function selectedUserPlans(){
 
 
             //$('#modal-1').toggleClass("md-show"); //you can list several class names 
-            var id = e.target.getAttribute("id");
+            var id = el.getAttribute("id");
           
             overlaySelectedCars = document.getElementById(id+ "-plan");
             
             overlaySelectedCars.style.opacity=0.5;
 
-             carPrice = e.target.getAttribute('data-price');
-           carName = e.target.getAttribute('data-carmodel');
-           const carImage= e.target.getAttribute('data-image');
+             carPrice = el.getAttribute('data-price');
+           carName = el.getAttribute('data-carmodel');
+           const carImage= el.getAttribute('data-image');
 
             carList.push({
                 price: carPrice,
                 name: carName,
                 image: carImage
-            })
+            });
+
+             
+            elementCars = el.parentNode.parentNode;
+            var closer = document.getElementById('close-btc-' + id);
+                closer.style.display="block";
+                closer.addEventListener('click',()=>{
+                   selectedCars-=1;
+                   elementCars.style.border="none";
+                   closer.style.display="none";
+                });
 
           
+        
+           elementCars.style.border="1px solid blue";
 
-            elementCars = e.target.parentNode.parentNode;
-           elementCars.style.border="3px solid blue";
-
-           rootParentSection =  e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+           rootParentSection =  el.parentNode.parentNode.parentNode.parentNode.parentNode;
+           
           //alert(rootParentSection.id + "is here")
            }
          }
          selectedCars+=1;
-           
+    
+  }
 
-          
-           
-       },false);
+ window.preventWindow = (e) =>{
+   e.preventDefault();
+ }
 
-       let ItineraryList =[];
-       document.body.addEventListener('click', function(e){
-        e.preventDefault();
-        if(e.target.id=="submitItinerary"){
-            var location = document.getElementById("location").value;
-            var destination = document.getElementById("destination").value;
-            var testCert = document.getElementById("drive-test-certificate").value;
-            var startDate = document.getElementById("start").value;
-            var endDate = document.getElementById("end").value;
-            var driverOpt = document.getElementById("driver-option");
-            const optDriver = driverOpt.options[driverOpt.selectedIndex].text;
-            var certDate = document.getElementById("datepicker-autoclose").value;
-            var travelOpt = document.getElementById("traveloption")
-            const optTraveler = travelOpt.options[travelOpt.selectedIndex].text;
-            var noHrs = document.getElementById("no_hrs").value;
-            var carsSelected = carList;
-            var planChosen = planList;
+  let car_count = 101;
+  const recordCars = (items, displayBoard) => {
+    console.log(items)
+    items.forEach((item,i) => {
+      let className ='';
+      if(item.status=="Booked"){
+           className = "label-danger"
+        }else if(item.status=="Available"){
+           className = "label-success"
+        } else{
+           className = "label-warning"
+        } 
 
-            const userPlanItineries = {
-              location,
-              destination,
-              testCert,
-              startDate,
-              endDate,
-              optDriver,
-              certDate,
-              optTraveler,
-              noHrs,
-              // carsSelected,
-              // planName: planChosen.planName,
-              // price: planChosen.price
-            };
-
-            ItineraryList.push(userPlanItineries);
-
-            var _tr;
-            _tr = `<tr> 
-                <td>${startDate}</td>
-                <td>${location}</td>
-                <td>${destination}</td>
-                <td>${optDriver}</td>
-                <td>
-                  <a href="#" class="table-action-btn"><i className="md md-chevron-right"></i></a>    
-                  </td>
-                </tr>`;
-                $(_tr).hide().insertAfter("#startPoint").fadeIn('slow');
-            
-
-            const userOnline = JSON.parse(localStorage.getItem('userToken'));
-            console.log(ItineraryList)
-              let it_url = mainUrl + `/itinerary/${userOnline.user.id}/user`;
-            fetch(  it_url , {
-          method: 'POST',
-          headers: {
-             'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'x-access-token': userOnline.token,
-
-          },
-          body: JSON.stringify( userPlanItineries),
-           mode: 'cors',
-        }).then(response => response.json())
-            .then(data =>{
-
-            }).catch(e => { console.log(e)})
-
-
+        let className2 ='label-warning'
+        if(item.health_status=="Pending"){
+           className2 = "label-danger"
+        }else if(item.health_status=="Completed"){
+          className2 = "label-success"
         }
-        
-            
+          
+        let className3='';
+        if(item.car_status=="Disabled"){
+           className3 = "label-danger"
+        }else if(item.car_status=="Active"){
+           className3 = "label-success"
+        } else{
+           className3 = "label-warning"
+        } 
 
-        
+      const eachRecord=`<div data-target="card" style="background:#fff; border-radius:12px"  class=" slide col-sm-6 col-md-6 col-lg-3 galleryImage" >
+                         
+                         <a class="boxclose" id="btnc-${car_count}-boxclose" style="z-index:99999999999; margin-top:-19px"></a>
+                                
+                                <div class=" text-center">
+                             <div class="pricing-header ">
+                                    <img src="${ item.imagePath || item.images}" style="width:140px;height:130px" /><br />
+                                    <span class="label ${className}">${item.status}</span>
+                                  
 
-    })
-     
+                                  </div>
+                                  <div class="col-lg-12 m-t-20">
+                                  <div class="col-sm-12 col-md-12 col-lg-12 center-block text-center">
+                                  <br/>
+                                  <div class="cars-info">
+                                             
+                                             <h4 class="m-t-0 text-center"><a id="car-info-${car_count}" href="#" class="text-dark">${item.carModel || item.model}</a> </h4>
+                                  </div>
+
+                                  
+                                  </div></div>
+                                  <input type="hidden" class="galleryImageInput" name="galleryImage[]" value="12345.png">
+                                  <button onClick="carClickHandler();addCarSelectEvent(event,this);document.getElementById('next').disabled=false; document.getElementById('previous').disabled=false;" style=" left:20px;margin-left:30px; font-size:12px; margin:20px auto"  id="btnc-${car_count}" data-driver="${item.assigned_driver_name}" data-driver_email="${item.assigned_driver_email}" data-plate="${item.plate_number}" driver_location="${item.assigned_driver_location}" data-driver_phone="${item.assigned_driver_phone}" class="add-to-cart car-select-proven btn btn-primary waves-effect waves-light car-select" data-id="btnc-${car_count}" data-type2="car-select" data-price="${item.price}" data-type="${item.car_type}"  data-carmodel="${item.model}" data-image="${item.images}" data-caryear="${item.car_year}" data-id="1" >Select</button>
+
+                                </div> 
+                                <div class="overlay-plan" id="btnc-${car_count}-car">
+                                  <a href="#" class="icon" title="User Profile">
+                                    
+                                  </a>
+                                 
+                                </div>
+                            </div>`; 
+
+
+      displayBoard.innerHTML += eachRecord;
+
+      car_count+=1;
+    });
+    displayBoard.innerHTML +='<br/><br/><br/>';
+
+    //carSlider();
+
+  };
+
+
+function carSlider(){
+
+
+const args = {
+transitionDuration: '0.8s'
+}
+new CarCarousel(document.getElementById('car-carousel'), args)
+  // $(document).ready(function () {
+  //   var itemsMainDiv = ('.MultiCarousel');
+  //   var itemsDiv = ('.MultiCarousel-inner');
+  //   var itemWidth = "";
+
+  //   $('.leftLst, .rightLst').click(function () {
+  //       var condition = $(this).hasClass("leftLst");
+  //       if (condition)
+  //           click(0, this);
+  //       else
+  //           click(1, this)
+  //   });
+
+  //  ResCarouselSize();
 
 
 
-  
+
+  //   $(window).resize(function () {
+  //       ResCarouselSize();
+  //   });
+
+  //   //this function define the size of the items
+  //   function ResCarouselSize() {
+  //       var incno = 0;
+  //       var dataItems = ("data-items");
+  //       var itemClass = ('.item_');
+  //       var id = 0;
+  //       var btnParentSb = '';
+  //       var itemsSplit = '';
+  //       var sampwidth = $(itemsMainDiv).width();
+  //       var bodyWidth = $('body').width();
+  //       $(itemsDiv).each(function () {
+  //           id = id + 1;
+  //           var itemNumbers = $(this).find(itemClass).length;
+  //           btnParentSb = $(this).parent().attr(dataItems);
+  //           itemsSplit = btnParentSb.split(',');
+  //           $(this).parent().attr("id", "MultiCarousel" + id);
 
 
+  //           if (bodyWidth >= 1200) {
+  //               incno = itemsSplit[3];
+  //               itemWidth = sampwidth / incno;
+  //           }
+  //           else if (bodyWidth >= 992) {
+  //               incno = itemsSplit[2];
+  //               itemWidth = sampwidth / incno;
+  //           }
+  //           else if (bodyWidth >= 768) {
+  //               incno = itemsSplit[1];
+  //               itemWidth = sampwidth / incno;
+  //           }
+  //           else {
+  //               incno = itemsSplit[0];
+  //               itemWidth = sampwidth / incno;
+  //           }
+  //           $(this).css({ 'transform': 'translateX(0px)', 'width': itemWidth * itemNumbers });
+  //           $(this).find(itemClass).each(function () {
+  //               $(this).outerWidth(itemWidth);
+  //           });
 
-     
+  //           $(".leftLst").addClass("over");
+  //           $(".rightLst").removeClass("over");
+
+  //       });
+//     }
 
 
+//     //this function used to move the items
+//     function ResCarousel(e, el, s) {
+//         var leftBtn = ('.leftLst');
+//         var rightBtn = ('.rightLst');
+//         var translateXval = '';
+//         var divStyle = $(el + ' ' + itemsDiv).css('transform');
+//         var values = divStyle.match(/-?[\d\.]+/g);
+//         var xds = Math.abs(values[4]);
+//         if (e == 0) {
+//             translateXval = parseInt(xds) - parseInt(itemWidth * s);
+//             $(el + ' ' + rightBtn).removeClass("over");
 
+//             if (translateXval <= itemWidth / 2) {
+//                 translateXval = 0;
+//                 $(el + ' ' + leftBtn).addClass("over");
+//             }
+//         }
+//         else if (e == 1) {
+//             var itemsCondition = $(el).find(itemsDiv).width() - $(el).width();
+//             translateXval = parseInt(xds) + parseInt(itemWidth * s);
+//             $(el + ' ' + leftBtn).removeClass("over");
+
+//             if (translateXval >= itemsCondition - itemWidth / 2) {
+//                 translateXval = itemsCondition;
+//                 $(el + ' ' + rightBtn).addClass("over");
+//             }
+//         }
+//         $(el + ' ' + itemsDiv).css('transform', 'translateX(' + -translateXval + 'px)');
+//     }
+
+//     //It is used to get some elements from btn
+//     function click(ell, ee) {
+//         var Parent = "#" + $(ee).parent().attr("id");
+//         var slide = $(Parent).attr("data-slide");
+//         ResCarousel(ell, Parent, slide);
+//     }
 
 // });
-
-     
-
 }
+
 class ApiGetAllPlansRecord {
  
 
   static getData(urlType) {
     const carsUrl = activeUrl + '/cars';
+    //const loader = document.querySelector('#loader');
+      //  loader.style.display = 'block';
     GateKeepersForUser();
     if (urlType == '/individual/plans/view') {
       activeUrl = activeUrl + urlType;
@@ -369,86 +424,35 @@ class ApiGetAllPlansRecord {
      return  Promise.all(promises)
         .then(datas => {
           console.log(datas)
+          //loader.style.display="none"
 
           if (datas[1].data[0].carsAvailable) {
             carLists = datas[1].data[0].carsAvailable;
             let car_count = 101;
-            carLists.map((item,i) =>{
-               displayCarsTemplates +=`<div class="col-sm-6 col-lg-3 col-md-4 mobiles">
-              <a class="boxclose" id="btnc-${car_count}-boxclose"></a>
-
-                                    <div class="product-list-box thumb ">
-                                        <a href="#" class="image-popup" title="Screenshot-1">
-                                            <img style="width:200px; height:200px;" src="${item.images[0]}" class="thumb-img" alt="work-thumbnail" />
-                                        </a>
-
-                                        <div class="product-action">
-                                            
-                                        </div>
-                                        <div class="cars-info">
-                                            <h4 class="m-t-0 text-center"><a id="car-info-${car_count}" href="#" class="text-dark">${item.car_type}</a> </h4>
-                                         
-                                        </div>
-                     
-
-                                          <button style="margin:0px auto"  id="btnc-${car_count}"  class="btn btn-primary waves-effect waves-light cd-add-to-cart js-cd-add-to-cart car-select" data-id="btn-${car_count}" data-type="car-select" data-price="1000" data-type="car" data-carmodel="Range Rover" data-image="public/assets/images/products/big/2.png" data-id="1" >Select</button>
-
-                                    </div>
-                                    <div class="overlay-plan-cars"  id="btnc-${car_count}-plan">
-    <a href="#" class="icon" title="User Profile">
-      <i class="fa fa-check"></i>
-    </a>
-    
-  </div>
-                                </div>
-`;
- car_count++;
-            });
+              var displayBoard = document.getElementById("travelcars");
+             recordCars(carLists,displayBoard)
           }
           
-          document.getElementById("add-cars-template").innerHTML=displayCarsTemplates;
+          
           
           if (datas[0].data[0].individualPlans) {
             planList = datas[0].data[0].individualPlans;
+            planList = planList.filter(item => item.plan_name=="Individual")
             
             
-           //alert(recordList.length)
-            planList.map((item,i)=>{
-                       // alert(recordList[i].plan_categories)
-                       if(true){
-
-                        displayPlanTemplate +=`<div  class="col-sm-6 col-md-6 col-lg-3">
-                         <a class="boxclose" id="btn-${i}-boxclose"></a>
-                                <div class="price_card text-center">
-                                  <div class="pricing-header bg-purple">
-                                    <span class="price" style="fontSize:24px">₦ ${item.price}</span>
-                                    <span class="name">${item.plan_name} ${item.plan_categories}</span>
-                                  </div>
-                                  <div class="col-lg-12 m-t-20">
-                                  <div class="col-sm-12 col-md-12 col-lg-12 center-block text-center">
-                                  <p>${item.description}</p>
-                                  </div></div>
-                                  <button id="btn-${i}" data-id="btn-${i}" data-type="plan" data-plan="${item.plan_name} ${item.plan_categories}" data-price="${item.price}" class=" btn btn-primary waves-effect waves-light w-md cd-add-to-cart js-cd-add-to-cart plan">Choose</button>
-                                </div> 
-                                <div className="overlay-plan" id="btn-${i}-plan">
-                                  <a href="#" class="icon" title="User Profile">
-                                    <i class="fa fa-check"></i>
-                                  </a>
-                                 
-                                </div>
-                                                            </div> 
-                              `;
-                  }
- 
-            });
-
-           document.getElementById("plan-section").innerHTML=displayPlanTemplate;
+           var displayBoard = document.getElementById("plan-section");
+           recordPlans(planList,displayBoard)
+           // document.getElementById("plan-section").innerHTML=displayPlanTemplate;
 
 
-          } else if (data.data[0].coperatePlans) {
-            planList = data.data[0].coperatePlans;
-          
-            return planList;
+          } else  {
+            planList = datas[0].data[0].coperatePlan;
+            planList = planList.filter(item => item.plan_name!="Individual")
+            var displayBoard = document.getElementById("plan-section");
+            recordPlans(planList,displayBoard)
+            
+
+           
           }
        
       })
@@ -457,6 +461,60 @@ class ApiGetAllPlansRecord {
         throw error;
       });
   }
+
+  getOnePlanById(){
+
+  }
+
+  static updateItem(record){
+    const user = JSON.parse(localStorage.getItem('userToken'));
+    var linkOfApi =  baseUrl+ '/plans/'+ record.id;
+    return fetch(linkOfApi, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': user.token,
+      },
+      mode: 'cors',
+      body: JSON.stringify(record),
+    }).then(response => response.json())
+      .then(data => {
+        if (data.status === 200) {
+          MessageBoard.displayMsg('Successfully updated request for data mechanic request.' );
+        } else {
+          console.log(JSON.strigify(data) + 'error updating iti')
+          
+          return MessageBoard.displayMsg('Could not perform Update for mech request');
+        }
+      });
+  }
+  static deleteItem(record){ // de
+    const user = JSON.parse(localStorage.getItem('userToken'));
+      var linkOfApi =  baseUrl+ '/plans/'+ record.id;
+      return fetch(linkOfApi, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': user.token,
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 202) {
+          const recordOfType = data.data[0].type;
+          MessageBoard.displayMsg('Deleted data record');
+         // ApiDeleteOneStatusRecord.redirect(recordOfType);
+        } else {
+          return MessageBoard.displayMsg('Could not perform delete operation');
+        }
+      });
+  }
+
 }
+
+
+
 
 export default ApiGetAllPlansRecord;

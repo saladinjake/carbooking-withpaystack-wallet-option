@@ -2,6 +2,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import * as queryString from 'query-string';
+
+
+
+const stringifiedParams = queryString.stringify({
+  client_id: process.env.APP_ID_GOES_HERE,
+  redirect_uri: 'https://www.example.com/authenticate/facebook/',
+  scope: ['email', 'user_friends'].join(','), // comma seperated string
+  response_type: 'code',
+  auth_type: 'rerequest',
+  display: 'popup',
+});
+
+const facebookLoginUrl = `https://www.facebook.com/v4.0/dialog/oauth?${stringifiedParams}`;
+
+
+
+
+
 
 
 export class Register extends Component {
@@ -188,7 +207,12 @@ export class Register extends Component {
             
             <div className="form-group m-b-0 text-center">
               <div className="col-sm-12">
-                 <a style={{width:"60px",marginRight:"5px", height:"40px"}}  href="http://localhost:12000/api/v1/auth/google" className=""><img style={{width:"40px",height:"40px"}} src="public/assets/images/google.png"  />
+
+              {/* <a href={facebookLoginUrl}>
+    Login with Facebook
+  </a>
+  
+                 <a style={{width:"60px",marginRight:"5px", height:"40px"}} id="goosign"  href="https://demouserapp.commute.ng/api/v1/request/gmail/auth" className=""><img style={{width:"40px",height:"40px"}} src="public/assets/images/google.png"  />
                                                 
                                                   </a>
 
@@ -198,7 +222,7 @@ export class Register extends Component {
 
                                                   <a style={{width:"60px",marginRight:"5px", height:"40px"}}   href="http://localhost:12000/api/v1/auth/facebook" className="">
                                                     <img style={{width:"25px",height:"25px"}} src="public/assets/images/facebook2.png"  />
-                                                  </a>
+                                                  </a> */}
               </div>
             </div>
             

@@ -8,7 +8,9 @@ const emailRegularExpression = /\S+@\S+\.\S+/;
 alertify.set('notifier','position', 'bottom-left');
 
 let activeUrl = getOnlineUrlConnection();
-const admin_url =  './admin-dashboard';
+let baseUrl = getOnlineUrlConnection();
+
+const admin_url = './admin-dashboard';
 let user_dashpane = './dashboard';
 let driver_dashpane='./dashboard-driver'
 
@@ -17,7 +19,12 @@ let resetPwUrl = activeUrl + '/auth/forgot_password'
 
 
 let API = process.env.DEPLOY_FRONT_URL;
-let APP = process.env.DEPLOY_BACK_URL;
+let APP = baseUrl;
+
+function clearState(){
+  MessageBoard.displayMsg("Login Failed")
+  localStorage.clear();
+}
 
 class ApiLoginService {
   static validate() {
@@ -35,7 +42,6 @@ class ApiLoginService {
     dome2.innerHTML="loading..."
     dome2.disabled=true;
 
-    console.log(userName);
     if (!userName) {
        MessageBoard.displayMsg('Email is required');
        setTimeout(()=>{  MessageBoard.displayMsg('');},6000)
@@ -45,8 +51,6 @@ class ApiLoginService {
     if (!userPw) {
        MessageBoard.displayMsg('Password is required');
        var notification = alertify.notify('Password is required', 'error', 5, function(){  console.log('dismissed'); });
-      
-
        setTimeout(()=>{  MessageBoard.displayMsg('');},4000)
     }
 
@@ -55,6 +59,9 @@ class ApiLoginService {
       password,
     };
 
+
+
+    
     fetch(loginUrl, {
       method: 'POST',
       headers: {
@@ -68,21 +75,10 @@ class ApiLoginService {
       .then(response => response.json())
       .then(data => {
         if (data.status === 422) {
-           // swal("Good job!", "You clicked the button!", "success");
-
           setTimeout(()=>{
             dome2.disabled=false;
             dome2.innerHTML='LOG IN';
           },4000)
-
-          $('form').addClass('ahashakeheartache');
-
-          $('input').addClass('ahashakeheartache')
-
-          $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
-              $('form').delay(200).removeClass('ahashakeheartache');
-           });
-
           MessageBoard.displayMsg( data.error);
           var notification = alertify.notify(data.error, 'error', 5, function(){  console.log('dismissed'); });
         } else if (data.status === 200) {
@@ -93,81 +89,44 @@ class ApiLoginService {
           localStorage.setItem('userToken', JSON.stringify(data.data[0]));
           localStorage.login == 'true';
           localStorage.setItem('userToken', JSON.stringify(data.data[0]));
+          console.log(data.data[0].user)
 
+          if(data.data[0].user.roles!= "Individual Driver" && data.data[0].user.isAdmin== false ){
+            window.location.href=user_dashpane
+
+          
+          }else if(data.data[0].user.isAdmin== true){
+               window.location.href=admin_url
+            
+         }  else{
+
+              var notification = alertify.notify('Failed login', 'error', 5, function(){  console.log('dismissed'); });
+          setTimeout(()=>{
+            dome2.disabled=false;
+            dome2.innerHTML='LOG IN';
+          },4000)
+
+             }
 
        
-
-
-          MessageBoard.displayMsg(data.message);
-
-          // swal("Good job!", "You clicked the button!", "success");
-
-          var notification = alertify.notify(data.message, 'success', 5, function(){  console.log('dismissed'); });
-
-
-          if( data.data[0].user.isAdmin ){
-              window.location.href=admin_url
-          }
-          // else if(data.data[0].user.roles=='Individual Driver'){
-          //     window.location.href=driver_dashpane
-          // }
-
-          else if(data.data[0].user.roles=='user' ){
-              window.location.href=user_dashpane
-          } 
-
-          // if(data.data[0].user.roles!='user'){
-          //    user_dashpane=driver_dashpane
-          // }
-
-          // data.data[0].user.isAdmin
-          //   ? (window.location.replace(admin_url) )
-          //   : (window.location.replace(user_dashpane));
         }else if(data.status==409){
-          $('input').addClass('ahashakeheartache')
-
-          // swal("Good job!", "You clicked the button!", "success");
-
           MessageBoard.displayMsg(data.error);
           var notification = alertify.notify(data.error, 'error', 5, function(){  console.log('dismissed'); });
           setTimeout(()=>{
             dome2.disabled=false;
             dome2.innerHTML='LOG IN';
           },4000)
-
-          $('form').addClass('ahashakeheartache');
-
-          $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
-              $('form').delay(200).removeClass('ahashakeheartache');
-           });
-
-
-      
         }
         else if(data.status==404){
-          $('input').addClass('ahashakeheartache')
           MessageBoard.displayMsg(data.error);
-          // swal("Good job!", "You clicked the button!", "success");
           var notification = alertify.notify(data.error, 'error', 5, function(){  console.log('dismissed'); });
           setTimeout(()=>{
             dome2.disabled=false;
             dome2.innerHTML='LOG IN';
           },4000)
-
-          $('form').addClass('ahashakeheartache');
-
-          $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
-              $('form').delay(200).removeClass('ahashakeheartache');
-           });
-
-
-
-           
         }
          else if(data.status==400){
-          $('input').addClass('ahashakeheartache')
           console.log(data)
-          // swal("Good job!", "You clicked the button!", "success");
           MessageBoard.displayMsg("credentials entered could not be found.");
           var notification = alertify.notify("credentials entered could not be found.", 'error', 5, function(){  console.log('dismissed'); });
          setTimeout(()=>{
@@ -176,16 +135,6 @@ class ApiLoginService {
           },4000)
           // MessageBoard.displayMsg(data.error );
           //Router.redirect('./');
-
-          $('form').addClass('ahashakeheartache');
-
-          $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
-              $('form').delay(200).removeClass('ahashakeheartache');
-           });
-
-
-
-          
         }
       })
       .catch(error => {
@@ -194,16 +143,7 @@ class ApiLoginService {
             dome2.innerHTML='LOG IN';
           },4000)
         //throw error;
-        $('input').addClass('ahashakeheartache')
-        MessageBoard.displayMsg(error + 'here');
-        $('form').addClass('ahashakeheartache');
-
-          $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
-              $('form').delay(200).removeClass('ahashakeheartache');
-           });
-
-
-        // swal("Good job!", "You clicked the button!", "success");
+        MessageBoard.displayMsg(error + ' some error occured');
       });
   }
 
@@ -222,13 +162,7 @@ class ApiLoginService {
     let email = document.getElementById('email').value;
     const emailForm = document.getElementById('e-form');
     const successAnimationStart = document.getElementById("success-mark")
-    // if (!email) {
-    //    MessageBoard.displayMsg('Email is required.');
-    //         var notification = alertify.notify('Email is required.', 'error', 5, function(){  console.log('dismissed'); });
-     
-    //    return false;
-    //    //setTimeout(()=>{  MessageBoard.displayMsg('');},6000)
-    // }
+    
 
     if(!emailRegularExpression.test(email)){
       MessageBoard.displayMsg('Email is invalid.');
@@ -284,37 +218,5 @@ class ApiLoginService {
 }
 
 
-const button = document.querySelector('#login_btn')
-const loader = document.querySelector('#loader-container')
-const confirmation = document.querySelector('#confirmation-container')
-
-
-// button.addEventListener('click', (e) => {
-//   e.preventDefault()
-//   showLoader()
-//   showConfirmation()
-//   resetLogin()
-// })
-
-const showLoader = () => {
-  loader.classList.add('loader-open')
-  loader.classList.remove('loader-close')
-}
-
-const showConfirmation = () => {
-  setTimeout(() => {
-    confirmation.classList.add('confirmation-open')
-    confirmation.classList.remove('confirmation-close')
-  }, 2000)
-}
-
-const resetLogin = () => {
-  setTimeout(() => {
-    loader.classList.add('loader-close')
-    loader.classList.remove('loader-open')
-    confirmation.classList.add('confirmation-close')
-    confirmation.classList.remove('confirmation-open')
-  }, 4000)
-}
 
 export default ApiLoginService;

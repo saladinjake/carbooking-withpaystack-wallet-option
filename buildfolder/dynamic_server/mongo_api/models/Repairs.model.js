@@ -372,9 +372,9 @@ var cov_165senplo3 = function () {
   return coverage[path] = coverageData;
 }();
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var Promise = (cov_165senplo3.s[0]++, require('bluebird'));
 var MechSchema = (cov_165senplo3.s[1]++, new _mongoose["default"].Schema({

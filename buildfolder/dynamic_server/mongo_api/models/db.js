@@ -2,7 +2,7 @@
 
 var cov_1vz3r7qq5p = function () {
   var path = "C:\\Users\\Obiajulu\\Desktop\\commute\\commute-dev-Proj-repo\\server\\dynamic_server\\mongo_api\\models\\db.js";
-  var hash = "7c8bcada89d4c8c142e9aee09542c261e73e250f";
+  var hash = "8c30bb240fa007ef9ff5797d4bb7762cd1f3eba8";
   var global = new Function("return this")();
   var gcv = "__coverage__";
   var coverageData = {
@@ -185,7 +185,7 @@ var cov_1vz3r7qq5p = function () {
         },
         end: {
           line: 61,
-          column: 111
+          column: 67
         }
       },
       "18": {
@@ -205,7 +205,7 @@ var cov_1vz3r7qq5p = function () {
         },
         end: {
           line: 63,
-          column: 110
+          column: 66
         }
       },
       "20": {
@@ -215,7 +215,7 @@ var cov_1vz3r7qq5p = function () {
         },
         end: {
           line: 65,
-          column: 110
+          column: 66
         }
       },
       "21": {
@@ -523,7 +523,7 @@ var cov_1vz3r7qq5p = function () {
       "3": [0, 0]
     },
     _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
-    hash: "7c8bcada89d4c8c142e9aee09542c261e73e250f"
+    hash: "8c30bb240fa007ef9ff5797d4bb7762cd1f3eba8"
   };
   var coverage = global[gcv] || (global[gcv] = {});
 
@@ -534,10 +534,16 @@ var cov_1vz3r7qq5p = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
@@ -546,14 +552,6 @@ var _mongo_config = _interopRequireDefault(require("../config/mongo_config"));
 var _bluebird = _interopRequireDefault(require("bluebird"));
 
 var _util = _interopRequireDefault(require("util"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 cov_1vz3r7qq5p.s[0]++;
 
@@ -574,8 +572,7 @@ var DbQuery =
 /*#__PURE__*/
 function () {
   function DbQuery() {
-    _classCallCheck(this, DbQuery);
-
+    (0, _classCallCheck2["default"])(this, DbQuery);
     cov_1vz3r7qq5p.f[0]++;
     var that = (cov_1vz3r7qq5p.s[5]++, this);
     cov_1vz3r7qq5p.s[6]++;
@@ -606,7 +603,7 @@ function () {
     }
   }
 
-  _createClass(DbQuery, [{
+  (0, _createClass2["default"])(DbQuery, [{
     key: "getEstablishedConnection",
     value: function getEstablishedConnection() {
       cov_1vz3r7qq5p.f[2]++;
@@ -628,7 +625,7 @@ function () {
         cov_1vz3r7qq5p.b[2][0]++;
         cov_1vz3r7qq5p.s[17]++;
         //'mongodb://localhost:27017/taxi_service_final'
-        this.dbLink = 'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service'; //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL   //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final';//config.development.database;
+        this.dbLink = 'mongodb://localhost:27017/taxi_service_final'; //'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service' //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL   //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final';//config.development.database;
       } else {
         cov_1vz3r7qq5p.b[2][1]++;
         cov_1vz3r7qq5p.s[18]++;
@@ -636,11 +633,11 @@ function () {
         if (NODE_ENV === 'test') {
           cov_1vz3r7qq5p.b[3][0]++;
           cov_1vz3r7qq5p.s[19]++;
-          this.dbLink = 'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service'; //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL  //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final'; //config.test.database;
+          this.dbLink = 'mongodb://localhost:27017/taxi_service_final'; //'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service' //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL  //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final'; //config.test.database;
         } else {
           cov_1vz3r7qq5p.b[3][1]++;
           cov_1vz3r7qq5p.s[20]++;
-          this.dbLink = 'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service'; //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final';  //config.production.database;
+          this.dbLink = 'mongodb://localhost:27017/taxi_service_final'; //'mongodb+srv://platform:@Platform123.@commutetest-f3rhn.mongodb.net/commute_taxi_service'  //process.env.MONGODB_MLAB_URL || process.env.MONGO_DATABASE_URL //process.env.MONGODB_URI || 'mongodb://localhost:27017/taxi_service_final';  //config.production.database;
         }
       }
 
@@ -665,7 +662,6 @@ function () {
       return instance;
     }
   }]);
-
   return DbQuery;
 }();
 

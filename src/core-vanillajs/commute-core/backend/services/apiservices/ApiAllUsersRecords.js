@@ -3,7 +3,7 @@ import getOnlineUrlConnection from './helpers/getOnlineUrlConnection';
 import FetchPromiseApi from './helpers/FetchPromiseApi';
 
 let activeUrl = getOnlineUrlConnection();
-
+let baseUrl = getOnlineUrlConnection();
 class ApiAllUsersRecords {
 	constructor(){
 

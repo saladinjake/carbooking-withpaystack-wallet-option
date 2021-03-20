@@ -60,9 +60,9 @@ var cov_lry0kw0nv = function () {
   return coverage[path] = coverageData;
 }();
 
-var _dotenv = _interopRequireDefault(require("dotenv"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _dotenv = _interopRequireDefault(require("dotenv"));
 
 cov_lry0kw0nv.s[0]++;
 

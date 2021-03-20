@@ -356,14 +356,14 @@ var cov_1w6k2ux09p = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 
 var _App = _interopRequireDefault(require("./mongo_api/App"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // import config from "./config/dummy_config";
 var debug = (cov_1w6k2ux09p.s[0]++, require('debug')('ireport-app:server'));

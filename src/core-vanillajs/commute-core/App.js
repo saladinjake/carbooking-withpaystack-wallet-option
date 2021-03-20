@@ -3,17 +3,16 @@ import '../../../public/css/mainstyles.css';
 import frontendControllers from './frontend/Bootstrap';
 import Loader from './core/Loading';
 import $ from 'jquery';
-import MobileAppFeelAlike from './MobileAnimation'
 
 
 function pageTransitionEffectClose(){
   $(document).ready(function(event){
   var isAnimating = false,
     newLocation = '';
-    
+
     var firstLoad = false;
-  
-  //trigger smooth transition from the actual page to the new one 
+
+  //trigger smooth transition from the actual page to the new one
   $('main').on('click', 'a', function(event){
     event.preventDefault();
     //detect which page has been selected
@@ -28,10 +27,10 @@ function pageTransitionEffectClose(){
     if( firstLoad ) {
       /*
       Safari emits a popstate event on page load - check if firstLoad is true before animating
-      if it's false - the page has just been loaded 
+      if it's false - the page has just been loaded
       */
       var newPageArray = location.pathname.split('/'),
-        //this is the url of the page to be loaded 
+        //this is the url of the page to be loaded
         newPage = newPageArray[newPageArray.length - 1];
 
       if( !isAnimating  &&  newLocation != newPage ) changePage(newPage, false);
@@ -59,7 +58,7 @@ function pageTransitionEffectClose(){
     url = ('' == url) ? 'index.html' : url;
     var newSection = 'cd-'+url.replace('.html', '');
     var section = $('<div class="cd-main-content '+newSection+'"></div>');
-      
+
     // section.load(url+' .cd-main-content > *', function(event){
       // load new content and replace <main> content with the new one
       // $('main').html(section);
@@ -76,7 +75,7 @@ function pageTransitionEffectClose(){
 
         if( !transitionsSupported() ) isAnimating = false;
       }, delay);
-      
+
       if(url!=window.location && bool){
         // document.getElementById('app').style.display="none"
         if(url!='#'){
@@ -87,11 +86,11 @@ function pageTransitionEffectClose(){
           // document.getElementById('app').style.display="block"
                 window.location.href=url;
         },1500)
-       
+
         }else{
           window.history.pushState({path: url},'',url);
         }
-        
+
       }
     // });
   }
@@ -115,14 +114,14 @@ function formatAmount(x) {
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
     }
-    
-    
+
+
 }
 
 const isToday = (someDate) => {
-  const today = formatDate(new Date()) 
+  const today = formatDate(new Date())
   return someDate == today
-   
+
 }
 
 function formatDate(date) {
@@ -159,14 +158,14 @@ class FrontEndApp {
   bootstrap() {
      //MobileAppFeelAlike.runAnimation()
 
-     pageTransitionEffectClose()
-   
+    //  pageTransitionEffectClose()
+
     //new Loader().attachEvents()
     const keys = Object.values(this.coreClasses).map(function(item) {
       let classInstance = item;
       classInstance.attachEvents();
     });
-    
+
     if(localStorage.getItem("userToken")){
       const user = JSON.parse(localStorage.getItem("userToken"));
       if(document.getElementById("create-plan-id")){
@@ -174,7 +173,7 @@ class FrontEndApp {
          e.preventDefault();
          if(localStorage.getItem("itins")){
            localStorage.removeItem("itins");
-      
+
          }
          window.location.replace("/create-plan")
        })
@@ -185,14 +184,14 @@ class FrontEndApp {
       window.onload= function(){
 
 
-    
-    
-
-        
 
 
-        const urls = [process.env.DEPLOY_BACK_URL+"/balance/"+ user.user.email, 
-                      process.env.DEPLOY_BACK_URL+"/notification/"+ user.user.email
+
+
+
+
+        const urls = ["http://localhost:12000/api/v1"+"/balance/"+ user.user.email,
+                      "http://localhost:12000/api/v1"+"/notification/"+ user.user.email
                       ];
     //console.log('Token:  ' + ApiGetBothRecord.getLoggedInUser().token);
         const promises = urls.map(url =>
@@ -205,11 +204,19 @@ class FrontEndApp {
             },
           }).then(response => response.json()),
         );
-        
+
         let noticeBoard = document.getElementById("notice_board")
         Promise.all(promises)
         .then(datas => {
-          console.log(datas)
+
+           //if token expires log out
+           if(datas[0].status==403){
+              alert('Session expired')
+              localStorage.clear()
+              return window.location.href="./"
+           }
+
+
             let userDetail = datas[0].data[0].accountBalance
             let userNotifications = datas[1].data[0].tranx
             console.log(userNotifications )
@@ -224,18 +231,18 @@ class FrontEndApp {
                  subNotifications = [userNotifications[userNotifications.length -1]]
                  userNotifications.map((item,i)=>{
 
-                
+
 
 
                 if(item.for_users==true && item.type!="payment"){
-                  
+
 
                   if(item.status=="new"){
                     counter+=1;
 
                     let markup =`   <div  class="pull-left p-r-10" style="">
                                                     <em class="noti-primary"></em>
-                                                     
+
                                                  </div>
                                                  <div class="media-body" data-id="${item._id}" onclick="updateNotificationStatus(this)" data-status="${item.status}">
                                                     <h5 class="media-heading">Quotation Notification <span class="label label-default pull-right">New</span></h5>
@@ -245,43 +252,43 @@ class FrontEndApp {
                                                     </p>
                                                  </div><hr/>`;
 
-                    $( "#notice_board" ).append( $( markup ) ) 
+                    $( "#notice_board" ).append( $( markup ) )
 
                   }
 
-                  
+
 
                 }
-                
+
               })
             }
 
-           
+
             let value = datas[0].data[0].accountBalance ||  '0.00'
             document.getElementById('balance-seen').innerHTML = '₦ '+ value;
-          
+
             let count = document.getElementById("notifyCount");
             count.innerHTML =  counter; //userNotifications.length;
 
              }
-            
+
         })
 
-      
+
 
 
       }
 
 
 
-      
+
 
     }
 
 
 
-    
-    
+
+
   }
 
   run() {
@@ -307,10 +314,10 @@ class FrontEndApp {
 
 window.updateNotificationStatus = (el) =>{
 
-  
+
   const user = JSON.parse(localStorage.getItem("userToken"));
-  let url = process.env.DEPLOY_BACK_URL+"/notification/"+ el.dataset.id
-   
+  let url = "http://localhost:12000/api/v1"+"/notification/"+ el.dataset.id
+
   let dataStatus = {
     status:"old",
   }
@@ -334,9 +341,9 @@ window.updateNotificationStatus = (el) =>{
           }else{
              document.getElementById("notifyCount").innerHTML = 0;
           }
-          
+
           setTimeout(()=>{window.location.href="./notification"},2000)
-          
+
           // document.getElementById('selectStatus').options[select.selectedIndex].value = newStatus;
         } else {
           console.log('error updating status')
@@ -347,7 +354,7 @@ window.updateNotificationStatus = (el) =>{
 
 
 
-  
+
 
 }
 
@@ -375,85 +382,6 @@ function removeClass(ele, cls) {
 
 
 
-// class SideMenux{
-//   constructor(){
-//     this.$body = $("body");
-//         this.$openLeftBtn = $(".open-left");
-//         this.$menuItem = $("#sidebar-menu a");
-//   }
 
-//   openLeftBar(){
-//     $("#wrapper").toggleClass("enlarged");
-//       $("#wrapper").addClass("forced");
-
-//       if($("#wrapper").hasClass("enlarged") && $("body").hasClass("fixed-left")) {
-//         $("body").removeClass("fixed-left").addClass("fixed-left-void");
-//       } else if(!$("#wrapper").hasClass("enlarged") && $("body").hasClass("fixed-left-void")) {
-//         $("body").removeClass("fixed-left-void").addClass("fixed-left");
-//       }
-      
-//       if($("#wrapper").hasClass("enlarged")) {
-//         $(".left ul").removeAttr("style");
-//       } else {
-//         $(".subdrop").siblings("ul:first").show();
-//       }
-      
-//       toggle_slimscroll(".slimscrollleft");
-//       $("body").trigger("resize");
-
-//   }
-
-//   menuItemClick(e){
-//      if(!$("#wrapper").hasClass("enlarged")){
-//         if($(this).parent().hasClass("has_sub")) {
-
-//         }   
-//         if(!$(this).hasClass("subdrop")) {
-//           // hide any open menus and remove all other classes
-//           $("ul",$(this).parents("ul:first")).slideUp(350);
-//           $("a",$(this).parents("ul:first")).removeClass("subdrop");
-//           $("#sidebar-menu .pull-right i").removeClass("md-remove").addClass("md-add");
-          
-//           // open our new menu and add the open class
-//           $(this).next("ul").slideDown(350);
-//           $(this).addClass("subdrop");
-//           $(".pull-right i",$(this).parents(".has_sub:last")).removeClass("md-add").addClass("md-remove");
-//           $(".pull-right i",$(this).siblings("ul")).removeClass("md-remove").addClass("md-add");
-//         }else if($(this).hasClass("subdrop")) {
-//           $(this).removeClass("subdrop");
-//           $(this).next("ul").slideUp(350);
-//           $(".pull-right i",$(this).parent()).removeClass("md-remove").addClass("md-add");
-//         }
-//       }
-
-//   }
-
-//   attachEvents(){
-//     var $this  = this;
-
-       
-//       var ua = navigator.userAgent,
-//         event = (ua.match(/iP/i)) ? "touchstart" : "click";
-      
-//       //bind on click
-//       this.$openLeftBtn.on(event, function(e) {
-//         e.stopPropagation();
-//         $this.openLeftBar();
-//       });
-
-//       // LEFT SIDE MAIN NAVIGATION
-//       $this.$menuItem.on(event, $this.menuItemClick);
-
-//       // NAVIGATION HIGHLIGHT & OPEN PARENT
-//       $("#sidebar-menu ul li.has_sub a.active").parents("li:last").children("a:first").addClass("active").trigger("click");
-    
-//   }
-// }
-
-
-// setTimeout(()=>{
-// new SideMenux().attachEvents()
-
-// },1000)
 
 export default FrontEndApp;

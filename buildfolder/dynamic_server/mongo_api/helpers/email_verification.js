@@ -697,6 +697,8 @@ var cov_1tt9xapmof = function () {
   return coverage[path] = coverageData;
 }();
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 var _fs = _interopRequireDefault(require("fs"));
 
 var _nodemailer = _interopRequireDefault(require("nodemailer"));
@@ -708,8 +710,6 @@ var _mongo_config = _interopRequireDefault(require("../config/mongo_config.js"))
 var _handlebars = _interopRequireDefault(require("handlebars"));
 
 var _q = _interopRequireDefault(require("q"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 cov_1tt9xapmof.s[0]++;
 'use strict';
