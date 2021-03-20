@@ -10,9 +10,15 @@
 - run: yarn install
 - open a terminal to start the mongodb server
 - open 2 terminals
-- on one run the front end  : npm run
+- on one run the front end  : npm run start:dev
 - on the other run the backend yarn start-back or npm run start-back
 
+
+# admin
+- admin: juwavictor@gmail.com password: password123
+
+#user
+- user: codyqwerty@gmail.com password: password123
 
 # for more scripts look through the package.json files
 ```
