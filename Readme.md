@@ -24,11 +24,11 @@
 
 
 ### Screen shot
-![alt text](https://github.com/saladinjake/carbooking-withpaystack-wallet-option/blob/app-complete-state/public/dashboard.PNG?raw=true)
+![alt text](https://github.com/saladinjake/carbooking-withpaystack-wallet-option/blob/app-complete-state/public/images/dashboard.PNG?raw=true)
 
-![alt text](https://github.com/saladinjake/carbooking-withpaystack-wallet-option/blob/app-complete-state/public/login.PNG?raw=true)
+![alt text](https://github.com/saladinjake/carbooking-withpaystack-wallet-option/blob/app-complete-state/public/images/login.PNG?raw=true)
 
-![alt text](https://github.com/saladinjake/carbooking-withpaystack-wallet-option/blob/app-complete-state/public/profile.PNG?raw=true)
+![alt text](https://github.com/saladinjake/carbooking-withpaystack-wallet-option/blob/app-complete-state/public/images/profile.PNG?raw=true)
 
 
 # for more scripts look through the package.json files
