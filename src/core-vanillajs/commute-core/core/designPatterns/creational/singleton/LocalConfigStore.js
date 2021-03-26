@@ -1,18 +1,17 @@
 
 let _singleton = null
-class LocalConfigStore{
+class Config{
   constructor(){
-    
     if(!_singleton){
-       _singleton = this; 
+       _singleton = this;
      }
-      
+
     this.dataStore = {};
     this.stringify = JSON.stringify;
-        this.parser = JSON.parse;
-      this.stringify = JSON.stringify;
+    this.parser = JSON.parse;
+    this.stringify = JSON.stringify;
       //this.localStore = localStorage;
-   return _singleton;
+    return _singleton;
   }
 
   parse(valu){
@@ -37,34 +36,7 @@ class LocalConfigStore{
     })
   }
 
-  // operation () {
-       
-  // }
 
-  // setStorage(key, val){
-  //   if(typeof value === 'object'){
-  //     var value = this.stringify(value);
-  //   }
-  //   this.localStore.setItem(key,val)
-
-  // }
-
-  // getStorage(){
-  //   var value = this.localStore.getItem(key);
-  //   try{
-  //     return this.parse(value)
-  //   }catch(err){
-  //     return value;
-  //   }
-  // }
-
-  // clearStore(){
-  //   this.localStore.clear()
-  // }
-
-  // removeFromStore(key){
-  //   this.localStore.removeItem(key)
-  // }
   setItem(key, val){
     this.dataStore[key] = val;
   }
@@ -82,6 +54,6 @@ class LocalConfigStore{
   }
 }
 
-let Store = new LocalConfigStore();
+let Store = new Config();
 
 module.exports=Store;

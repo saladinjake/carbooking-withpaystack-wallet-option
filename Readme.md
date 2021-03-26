@@ -20,6 +20,17 @@
 #user
 - user: codyqwerty@gmail.com password: password123
 
+
+
+
+### Screen shot
+![alt text](https://github.com/saladinjake/carbooking-withpaystack-wallet-option/blob/app-complete-state/public/dashboard.PNG?raw=true)
+
+![alt text](https://github.com/saladinjake/carbooking-withpaystack-wallet-option/blob/app-complete-state/public/login.PNG?raw=true)
+
+![alt text](https://github.com/saladinjake/carbooking-withpaystack-wallet-option/blob/app-complete-state/public/profile.PNG?raw=true)
+
+
 # for more scripts look through the package.json files
 ```
 "scripts": {
