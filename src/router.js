@@ -118,7 +118,7 @@ import Forbidden from './containers/403/Forbidden';
 
 //mine
 
-/*import HomeLoginDriver from './components/Drivers/Driver/Home/Home';
+import HomeLoginDriver from './components/Drivers/Driver/Home/Home';
 import RegisterDriver from './components/Drivers/Driver/Register/Register';
 import ForgotPasswordDriver from './components/Drivers/Driver/ForgotPassword/ForgotPassword';
 import DashboardDriver from './components/Drivers/Driver/Dashboard/Dashboard';
@@ -139,7 +139,6 @@ import NotificationsDriver from './components/Drivers/Driver/Notifications/notif
  import CompletedTripsContent from './components/Drivers/Driver/Trips/completedTrips';
 import UpcomingTripsContent from './components/Drivers/Driver/Trips/upcomingTrips';
 import TripDetailContent from './components/Drivers/Driver/Trips/tripDetail';
-*/
 
 
 
@@ -158,7 +157,7 @@ const Router = () => (
 
 		   <Route exact path="/" component={HomeLogin} />
 		    <Route exact path="/index.html" component={HomeLogin} />
-		     <Route exact path="/signup" component={Register} /> 
+		     <Route exact path="/signup" component={Register} />
 		    <Route exact path="/recovery" component={ForgotPassword} />
 		    <Route exact path="/dashboard" component={Dashboard} />
 		    <Route exact path="/plan-history" component={PlanHistory} />
@@ -182,30 +181,30 @@ const Router = () => (
             <Route exact path="/pay-action" component={PayAction} />
               <Route exact path="/gtd-event" component={Map} />
               <Route exact path="/notification" component={Notifications} />
-            
+
 
             {/*Admin Routes*/}
 
 
           <Route exact path="/" component={HomeLogin} />
-		    <Route exact path="/index.html" component={HomeLogin} /> 
+		    <Route exact path="/index.html" component={HomeLogin} />
         {/* <Route exact path="/dashboard" component={AdminDashboard} /> */}
            <Route exact path="/admin-dashboard" component={AdminDashboard} />
            <Route exact path="/admin-users" component={Users} />
            <Route exact path="/admin-users-detail" component={UserDetail} />
            <Route exact path="/admin-admins" component={Admins} />
            <Route exact path="/admin-mech" component={Mech} />
-           
+
            <Route exact path="/admin-admins-detail" component={AdminsDetail} />
            <Route exact path="/admin-drivers" component={Drivers} />
            <Route exact path="/admin-drivers-detail" component={DriverDetail} />
            <Route exact path="/admin-partners" component={Partners} />
-          
+
            <Route exact path="/admin-car-request-view" component={RetrievalEdit} />
            <Route exact path="/admin-map" component={AdminMapTracker} />
-           
+
            <Route exact path="/admin-car-request" component={AdminCarRequest} />
-           
+
            <Route exact path="/admin-car-request" component={AdminCarRequest} />
            <Route exact path="/admin-partners-detail" component={PartnerDetail} />
            <Route exact path="/admin-partners-earnings" component={PartnersEarnings} />
@@ -244,10 +243,8 @@ const Router = () => (
 		   <Route exact path="/admin-wallet" component={WalletAdmin} />
 		    <Route exact path="/admin-paid-history" component={WalletHistoryAdmin} />
 		    <Route exact path="/admin-quote-subscription-history" component={QuoteSubscriptionHistoryAdmin} />
-             <Route exact path="/admin-previledges" component={Previledges} /> 
-
-
-             <Route path="/activity-logger" component={ActivityLogger} /> 
+             <Route exact path="/admin-previledges" component={Previledges} />
+             <Route path="/activity-logger" component={ActivityLogger} />
              <Route exact path="/admin-notification" component={AdminNotifications} />
 
 
@@ -255,43 +252,42 @@ const Router = () => (
 
 
 
-             {/*
+
                  <Route path="/drivers-home" exact component={HomeLoginDriver} />
                 <Route path="/drivers-login" component={HomeLoginDriver} />
                 <Route path="/dashboard-driver" component={DashboardDriver} />
                 <Route path="/drivers-signup" component={RegisterDriver} />
                 <Route path="/recovery-driver" component={ForgotPasswordDriver} />
-                <Route path="/drivers-profile" component={ProfileDriver} /> 
+                <Route path="/drivers-profile" component={ProfileDriver} />
                  <Route path="/drivers-ratings" component={Ratings} />
-                 <Route path="/drivers-sos-request" component={SOSRequestDriver} /> 
-                 <Route path="/drivers-sos-history" component={SubmittedSOSDriver} /> 
+                 <Route path="/drivers-sos-request" component={SOSRequestDriver} />
+                 <Route path="/drivers-sos-history" component={SubmittedSOSDriver} />
 
-                    
-                <Route path="/drivers-request-car-repair" component={MechanicRequestDriver} />    
+
+                <Route path="/drivers-request-car-repair" component={MechanicRequestDriver} />
                   <Route path="/drivers-request-repairs-history" component={MechanicRequestDriverHistory} />
-                <Route path="/drivers-createticket" component={TicketRequestDriver} />    
-                <Route path="/drivers-submittedticket" component={TicketHistoryDriver} />   
-                <Route path="/drivers-faqs" component={FAQHistoryDriver} />   
-                <Route path="/drivers-notifications" component={NotificationsDriver} /> 
-                
-                
-
-
-                <Route path="/drivers-assignedvehiclehistory" component={AssignedVehicleHistory} />  
-                <Route path="/drivers-completedtrips" component={CompletedTripsContent} />    
-                <Route path="/drivers-upcomingtrips" component={UpcomingTripsContent} />    
-                <Route path="/drivers-tripdetail" component={TripDetailContent} />  
-
-             */}
-
-             
-                
+                <Route path="/drivers-createticket" component={TicketRequestDriver} />
+                <Route path="/drivers-submittedticket" component={TicketHistoryDriver} />
+                <Route path="/drivers-faqs" component={FAQHistoryDriver} />
+                <Route path="/drivers-notifications" component={NotificationsDriver} />
 
 
 
-                
 
-               
+                <Route path="/drivers-assignedvehiclehistory" component={AssignedVehicleHistory} />
+                <Route path="/drivers-completedtrips" component={CompletedTripsContent} />
+                <Route path="/drivers-upcomingtrips" component={UpcomingTripsContent} />
+                <Route path="/drivers-tripdetail" component={TripDetailContent} />
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -312,7 +308,7 @@ const Router = () => (
 
 
 
- 
+
 
 
 		  </Switch>

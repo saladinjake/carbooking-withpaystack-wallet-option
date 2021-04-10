@@ -332,13 +332,16 @@ function dashboard() {
             if(datas[0].error){
               // alert('no itin'+ datas[0].error)
               if(document.getElementById("dashboard")){
-              document.getElementById('tableviewItins').style.display="none"
-              document.getElementById('svgItins').style.display="block"
+                if(document.getElementById('tableviewItins')){
+                  document.getElementById('tableviewItins').style.display="none"
+                  document.getElementById('svgItins').style.display="block"
 
 
-               //alert('no plans')
-               document.getElementById('tableviewPlans').style.display="none"
-               document.getElementById('svgPlans').style.display='block'
+                   //alert('no plans')
+                   document.getElementById('tableviewPlans').style.display="none"
+                   document.getElementById('svgPlans').style.display='block'
+                }
+
 
               }
             }else {

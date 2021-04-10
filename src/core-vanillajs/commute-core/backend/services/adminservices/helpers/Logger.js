@@ -14,14 +14,14 @@ export default class Logger{
 	constructor(){}
 
 
-	
+
 
 	static sendLogInfo(adminEntity,userEntity, ModuleEntity, messageType, status, MethodType='ACTION TRIGGER',log='A'){
     let logMessage=``;
      if(log.length>3){
       logMessage = log
      }else{
-       
+
         if(userEntity!=''){
 			if(MethodType=='GET'){
 	           logMessage =`Fetch Record by ${adminEntity.user.username} for the Api resource `
@@ -41,7 +41,7 @@ export default class Logger{
         }else{
 
         	logMessage =`${adminEntity.user.username} operation on ${formatDate(new Date())} with status ${messageType} `
- 
+
 
         }
 
@@ -49,7 +49,7 @@ export default class Logger{
 
        let prePostData ={
        	   date:formatDate(new Date()),
-       	   admin: adminEntity.user.username || "Admin",
+       	   admin:  "Admin",
        	   avatar: "https://commute-bucket.s3.amazonaws.com/"+ adminEntity.user.profile,
        	   user: userEntity,
        	   module_name: ModuleEntity,
@@ -75,13 +75,13 @@ export default class Logger{
               .then(data => {
                 console.log(data)
                 if (data.status == 201) {
-                  
-                  
-                      
+
+
+
 
                  // ApiDeleteOneStatusRecord.redirect(recordOfType);
                 } else {
-                  
+
                   var notification = alertify.notify('Failed operation. Audit Trailing unsuccessful.', 'error', 15, function(){  console.log('dismissed'); });
 
                 }

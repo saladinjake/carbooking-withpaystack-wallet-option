@@ -91,15 +91,13 @@ class ApiLoginService {
           localStorage.setItem('userToken', JSON.stringify(data.data[0]));
           console.log(data.data[0].user)
 
-          if(data.data[0].user.roles!= "Individual Driver" && data.data[0].user.isAdmin== false ){
-            window.location.href=user_dashpane
-
-          }else if(data.data[0].user.roles== "Individual Driver" && data.data[0].user.isAdmin== false  ){
+          // if(data.data[0].user.roles!= "Individual Driver" && data.data[0].user.isAdmin== false ){
+          //   window.location.href=driver_dashpane
+          //
+          // }else
+          if(data.data[0].user.roles== "Individual Driver" && data.data[0].user.isAdmin== false  ){
              window.location.href=driver_dashpane
-          }else if(data.data[0].user.isAdmin== true){
-               window.location.href=admin_url
-
-         }  else{
+          } else{
 
               var notification = alertify.notify('Failed login', 'error', 5, function(){  console.log('dismissed'); });
           setTimeout(()=>{
