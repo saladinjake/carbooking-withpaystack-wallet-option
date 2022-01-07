@@ -7,6 +7,7 @@ import Footer from './enterprise-version/views/User/Footer/Footer';
 import FrontEndApp from './enterprise-version/assets/js/goom_modules/libraries/App';
 import BackendApp  from './enterprise-version/assets/js/goom_modules/libraries/backend/App';
 import '../../public/css/mainstyles.css'
+import "./App.css"
 import $ from 'jquery';
 
 import GoomTaxiServiceRoutes from "./enterprise-version/core/routes/index"

@@ -102,17 +102,7 @@
     "type": "git",
     "url": "https://github.com/saladinjake/carbooking-withpaystack-wallet-option.git"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.(js|jsx)": [
-      "npm run lint:write",
-      "git add"
-    ]
-  },
+  
   "engines": {
     "node": ">=10.0"
   },

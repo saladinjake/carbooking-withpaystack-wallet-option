@@ -27,7 +27,7 @@ import Notifications from '../../../views/User/Notifications/notifications'
 import NotFoundPage from '../../../views/404Page/NotFound';
 import Forbidden from '../../../views/403/Forbidden';
 
-
+import LaunchPad from '../../../views/LaunchPad/GoomLaunchpad'
 //import Mapp from './components/map'
 
 const UserRouter = () => { 
@@ -51,7 +51,11 @@ const UserRouter = () => {
 		    <Route exact path="/profile" component={Profile} />
 		    <Route  exact path="/sos-request" component={SOSRequest} />
 		    <Route  exact path="/create-ticket" component={TicketRequest} />
-		    <Route exact path="/plan" component={Plan} />
+		    
+
+			<Route exact path="/plan" component={Plan} />
+
+			<Route exact path="/service-categories" component={LaunchPad} />
 
 		    <Route exact path="/request-car-repair" component={MechanicRequest} />
 		    <Route exact path="/request-repairs-history" component={MechanicRequestHistory} />

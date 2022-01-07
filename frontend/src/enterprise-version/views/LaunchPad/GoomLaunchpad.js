@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-import "./styles.css";
+
 
 class Collection extends React.Component {
   render() {
     return (
       <div
-        className="collection"
+        className="collection card-box col-md-3"
         onClick={() => this.props.setSelected(this.props.name)}
       >
         <div className="collection-name">
