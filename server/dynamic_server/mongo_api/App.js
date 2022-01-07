@@ -22,28 +22,18 @@ const pug = require('pug');
 import UserModel from './models/User.model';
 
 const error = require('./middlewares/error');
-
-
 const http = require('http')
 const https = require('https');
-
-
 var socket_io = require("socket.io");
-
 var socketIo = require("socket.io");
 var io = socketIo();
-
 //database connection
 const Chat = require("./models/Chat");
 const connect = require("./dbconnect");
-
 const chatRouter = require("./route/chatroute");
-
 //import favicon from 'serve-favicon';
 //const exphbs = require('express-handlebars');
-
 require('./config/passport'); // pass passport for configuration
-
 
 
 const getApiAndEmit = socket => {
@@ -89,14 +79,12 @@ class MongoAppDemo {
 
     };
     this.express.use(cors(corsOption));
-
     // gzip compression
     this.express.use(compression());
-// secure apps by setting various HTTP headers
+    // secure apps by setting various HTTP headers
     // this.express.use(helmet());
-
     // if error is not an instanceOf APIError, convert it.
-//     this.express.use(error.converter);
+      //     this.express.use(error.converter);
 
 // // catch 404 and forward to error handler
 //     this.express.use(error.notFound);
@@ -173,13 +161,8 @@ class MongoAppDemo {
     });
     this.express.disable('x-powered-by');
     this.express.use(express.static(__dirname +'../../../public'));
-
-
-      // app.use(express.static(path.join(__dirname, 'public/')));
-      this.express.set('view engine', pug);
-
-
-
+    // app.use(express.static(path.join(__dirname, 'public/')));
+    this.express.set('view engine', pug);
 
   }
 
@@ -191,21 +174,17 @@ class MongoAppDemo {
       this.port = port;
       this.port = port;
     }
-
-
      let app = that.express;
-
-
      // Listen both http & https ports
 
-         const httpServer = http.createServer(app);
-      const httpsServer = https.createServer({
-         key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
-          cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
+    const httpServer = http.createServer(app);
+    const httpsServer = https.createServer({
+    key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
 
          requestCert: false,
          rejectUnauthorized: false
-        }, app);
+    }, app);
 
 //  httpServer.listen(12000, () => {
 //     console.log('HTTP Server running on port 12000');
@@ -230,41 +209,27 @@ class MongoAppDemo {
 
 
 let interval;
-
-
-
-
 const locationMap = new Map()
 
-
 io.on('connection', socket => {
-  console.log("New client connected" + socket.id);
-  if (interval) {
-    clearInterval(interval);
-  }
-  interval = setInterval(() => getApiAndEmit(socket), 1000);
+console.log("New client connected" + socket.id);
+if (interval) {
+  clearInterval(interval);
+}
+interval = setInterval(() => getApiAndEmit(socket), 1000);
 
 
 
-  socket.on('updateLocation', pos => {
-    locationMap.set(socket.id, pos)
-  })
+socket.on('updateLocation', pos => {
+  locationMap.set(socket.id, pos)
+})
 
-  socket.on('requestLocations', () => {
-    socket.emit('locationsUpdate', Array.from(locationMap))
-  })
-
-
-
-
-
-
+socket.on('requestLocations', () => {
+  socket.emit('locationsUpdate', Array.from(locationMap))
+})
 
 
   //server communication for chat message
-
-
-
   //Someone is typing
   socket.on("typing", data => {
     socket.broadcast.emit("notifyTyping", {
@@ -294,18 +259,12 @@ io.on('connection', socket => {
   });
 
 
-
-
-
-
-
   socket.on('disconnect', () => {
     console.log("Client disconnected");
     clearInterval(interval);
 
     locationMap.delete(socket.id)
   })
-
 
 
 })
@@ -325,13 +284,6 @@ httpsServer.listen(12000, () => {
     console.log('HTTPS Server running on port 443');
 });
 
-
-
-
-
-
-
-
     // io.listen(
     //    // that.express.listen(that.port, err => {
     //    //    if (err) {
@@ -345,10 +297,7 @@ httpsServer.listen(12000, () => {
     //   console.log("Socket connected: " + socket.id);
     // });
 
-
 // });
-
-
 
    }
 
@@ -358,3 +307,4 @@ httpsServer.listen(12000, () => {
 
 export { passport };
 export default MongoAppDemo;
+

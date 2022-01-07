@@ -16,20 +16,16 @@ class CarsRoutes {
   }
 
   attachRoutes() {
-   
-
     this.router.post(
       '/cars',
       TokenVerification.userAuthentication,
       CarsController.createCarProfile,
     );
-
     this.router.get(
       '/cars',
       TokenVerification.userAuthentication,
       CarsController.getAllCars,
     );
-    
     return this.router;
   }
 }

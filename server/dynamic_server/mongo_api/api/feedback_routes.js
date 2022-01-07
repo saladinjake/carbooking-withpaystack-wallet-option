@@ -14,27 +14,23 @@ class InterventionRoutes {
   }
 
   attachRoutes() {
-   
     this.router.post(
       '/feedback',
       TokenVerification.userAuthentication,
       SubmitEventValidator.validateSubmit,
       InterventionController.createIntervention,
     );
-
     this.router.get(
       SUBMIT_INTERVENTION_LINK,
       TokenVerification.userAuthentication,
       InterventionController.allInterventions,
     );
-
     this.router.get(
       feedback_GET_SPECIFIC_LINK,
       TokenVerification.userAuthentication,
       SubmitEventValidator.validateId,
       InterventionController.interventionId,
     );
-
     this.router.patch(
       INTERVENTION_LOCATION_LINK,
       TokenVerification.userAuthentication,
@@ -42,7 +38,6 @@ class InterventionRoutes {
       SubmitEventValidator.validateLocation,
       InterventionController.interventionLocation,
     );
-
     this.router.patch(
       INTERVENTION_COMMENT_LINK,
       TokenVerification.userAuthentication,
@@ -50,14 +45,12 @@ class InterventionRoutes {
       SubmitEventValidator.validateComment,
       InterventionController.editInterventionComment,
     );
-
     this.router.delete(
       INTERVENTION_STATUS_LINK,
       TokenVerification.userAuthentication,
       SubmitEventValidator.validateId,
       InterventionController.deleteIntervention,
     );
-
     this.router.patch(
       INTERVENTION_STATUS_LINK,
       TokenVerification.userAuthentication,
@@ -66,15 +59,12 @@ class InterventionRoutes {
       SubmitEventValidator.validateStatus,
       InterventionController.updateInterventionStatus,
     );
-
-    
     this.router.get(
       '/users/:id/feedback/',
       TokenVerification.userAuthentication,
       SubmitEventValidator.validateId,
      InterventionController.usersInterventions,
     );
-    
     return this.router;
   }
 }

@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
-  entry: ['@babel/polyfill/noConflict', './src/index.js'],
+  entry: ['@babel/polyfill/noConflict', './frontend/src/index.js'],
   output: {
     path: `${__dirname}/dist-reactive`,
     publicPath: '/',
@@ -23,7 +23,7 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader',
-          'sass-loader'
+          //'sass-loader'
         ]
       },
 
@@ -75,7 +75,7 @@ module.exports = {
   //     defaults: false // load '.env.defaults' as the default values if empty.
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './frontend/src/index.html',
       filename: './index.html'
     }),
 

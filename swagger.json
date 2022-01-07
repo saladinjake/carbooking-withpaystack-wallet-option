@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "IReporter enables any/every citizen to bring any form of corruption to the notice of appropriate authorities and the general public [iReporter247](https://dubby20.github.io/iReporter/UI/index.html)",
+    "description": "GOOM Logistics is a logistic / haulage application to handle and manage deliveries from cab booking to frieghts down to the minimalistic form of every day cargo shipping",
     "version": "1.0.0",
     "title": "iReporter",
     "termsOfService": "http://swagger.io/terms/",
@@ -13,7 +13,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "ireporter-app.herokuapp.com",
+  "host": "goom-logistics-app.herokuapp.com",
   "basePath": "/api/v1",
   "tags": [{
       "name": "User",
@@ -21,11 +21,11 @@
     },
     {
       "name": "Red-flags",
-      "description": "An incident linked to corruption"
+      "description": "An incident linked to customer related support service"
     },
     {
       "name": "Interventions",
-      "description": "Agency to intervene"
+      "description": "Agency to intervene to the car break down or any sos response"
     }
   ],
   "schemes": [

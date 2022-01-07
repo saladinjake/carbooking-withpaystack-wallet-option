@@ -14,23 +14,13 @@ module.exports = {
     
     ]
   },
-  
   plugins: [
-    
-
-
-     new CopyWebpackPlugin([
-      
+     new CopyWebpackPlugin([  
        {
         from: `${__dirname}/server/dynamic_server/mongo_api/views`,
         to:`${__dirname}/buildfolder/dynamic_server/mongo_api/services/views`,
       },
 
-      
-      
-     
     ]),
-
-
   ],
 };

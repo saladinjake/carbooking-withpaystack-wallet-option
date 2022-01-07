@@ -4,25 +4,15 @@ import DriverModel from "../models/Driver.model";
 
 import TokenVerification from '../middlewares/token_validator';
 import SubmitEventValidator from '../middlewares/post_sanitizer';
-
-
-
 // for social media auth
 import JWT from 'jsonwebtoken';
 import { TokenGenerator } from '../helpers/token_generator';
-
 import { passport } from  '../App';
 import  config from  '../config/mongo_config';
 import request from 'request';
-
-
-
 // import BridgeRoutes from './routes';
 const SIGNUP_LINK = '/auth/drivers-signup';
 const LOGIN_LINK = '/auth/drivers-login';
-
-
-
 
 import cors from 'cors';
 let corsOption = {
@@ -31,29 +21,20 @@ let corsOption = {
         credentials: true,
         exposedHeaders: ['x-auth-token'],
         'Access-Control-Allow-Origin': '*'
-    };
+};
 
-
-
-//for e wallet transactions
-
-//const validate = require('express-validation');
 
 class DriversRoutes {
   constructor(router) {
     // super(router);
     this.router = router;
   }
-
   attachRoutes() {
     /*
  * Respond to GET requests to /account.
  * Upon request, render the 'account.html' web page in views/ directory.
  */
-
-
   // simplelogins
-  
     this.router.post(
       '/auth/drivers-signup',
       DriverSanitizer.validateSignUp,
@@ -68,66 +49,47 @@ class DriversRoutes {
     this.router.post('/auth/drivers-forgot_password', DriverController.passwordForgot);
     this.router.get('/auth/drivers-confirmation/:id', DriverController.confirmationPost);
     this.router.get('/auth/drivers-resend/:id', DriverController.resendTokenPost);
-    
     this.router.get('/auth/drivers-resetMyPassword/:id', DriverController.confirmResetPassword);//show form
     this.router.post('/auth/drivers-resetpassword', DriverController.changePasswordTrigger);
-
     this.router.get('/drivers-logout', function(req, res){
       req.logout();
       res.redirect('/');
     });
   
-
-
     this.router.get('/drivers-profile/update/:id',
       TokenVerification.userAuthentication,
     	DriverController.showProfile
     );
-
     this.router.post('/drivers-profile/update/:id',
       TokenVerification.userAuthentication,
     	DriverSanitizer.validateSignUp,
     	DriverController.updateProfile
     );
-
-
     this.router.get('/drivers-assigned-user-trips/:id',
       TokenVerification.userAuthentication,
       DriverController.getDriversAssignedTrips
     );
-
     this.router.get('/drivers-assigned-cars/:id',
       TokenVerification.userAuthentication,
       DriverController.getAssignedDriverToCars
     )
-
-
-
-
-
-
     this.router.post(
       '/drivers-sos',
       TokenVerification.userAuthentication,
       // SubmitEventValidator.validateSubmit,
       DriverController.createRedFlag,
     );
-
     this.router.get(
       '/drivers-sos/:id/users',
       TokenVerification.userAuthentication,
       // SubmitEventValidator.validateSubmit,
       DriverController.usersRedflags,
     );
-
-
     this.router.post(
       '/drivers-notifications',
       TokenVerification.userAuthentication,
       DriverController.sendNotifications,
     );
-
-
     this.router.get(
       '/drivers-notifications/:id',
       TokenVerification.userAuthentication,
@@ -137,17 +99,7 @@ class DriversRoutes {
 
 
 
-    //  this.router.post('/drivers-notification',
-    //   TokenVerification.userAuthentication, 
-    //    //DriverSanitizer.checkIfUserDoesntExists,
-    //   DriverController.makeNotification
-    //   );
-    //  this.router.get('/drivers-notification/:id',
-    //   TokenVerification.userAuthentication, 
-    //   DriverController.getUserNotification
-    //   );
-
-
+    
   
 
     

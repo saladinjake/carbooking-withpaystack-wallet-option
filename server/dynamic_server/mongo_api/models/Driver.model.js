@@ -11,6 +11,23 @@ let DriverSchema = new mongoose.Schema({
           type: Number, 
           default: 0
       },
+
+      createdAt: {type: Date, default: Date.now},
+      firstName: {type: String, required: true},
+      lastName: {type: String, required: true},
+      mobileNumber: {type: String, required: true},
+      email: {type: String, required: true, unique: true},
+      username: {type: String, required: true, unique: true},
+      password: String,
+      userType: {type: String, required: true},
+      photoUrl: String,
+      licenseType: String,
+      licenseNumber: String,
+      licenseExpiry: Date,
+      address: String,
+      status: String,
+
+
       firstname: {
           type: String,
           
@@ -38,18 +55,10 @@ let DriverSchema = new mongoose.Schema({
         ],
         default: "Active"
       },
-
-   
-      
       roles: { 
         type: String , 
-       
-        default:'Individual Driver'
-            
+        default:'driver'    
       },
-
-
-
       isVerified: { 
           type: Boolean, 
     
@@ -62,45 +71,33 @@ let DriverSchema = new mongoose.Schema({
       avatar:{
         type: String
       },
-
-      
-
       car_assigned_name: {
         type: Array,
       },
-
       assigned_car_plate_number:{
        type:String
       },
-
       assigned_driver_location:{
           type: String,
         },
-
       geometry: {
           coordinates: { type: [Number], index: '2dsphere'}
       },
-
       location: {
        type: { type: String },
        coordinates: []
       },
-
         socket_id: {
           type: String
         },
-  
       passwordResetToken: { type: String},
       passwordResetExpires: { type: Date },
-        // othernames : {
-        //   type: String,
-        //   required: true
-        // },
-        username : {
+      
+     username : {
           type: String,
           
-        },
-        email : {
+      },
+      email : {
           type: String,
         
         },
@@ -244,5 +241,11 @@ DriverSchema.index({ location: "2dsphere" });
      
 
 module.exports = mongoose.model('DriverModel', DriverSchema);
+
+
+
+
+
+
 
 

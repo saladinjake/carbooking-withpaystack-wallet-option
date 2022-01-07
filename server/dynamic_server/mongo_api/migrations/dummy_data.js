@@ -986,7 +986,7 @@ partnerEmail:  'juwavictor@gmail.com',
       isVerified: true,
       
       avatar:'saladinjake.jpg',//saladinjake.jpg
-      roles:"Individual Driver",
+      roles:"driver",
       balance:"0.00",
       identity_card:"ireoireroiieoroie",
       test_certificate:"hfdhjhfhdfhd",
@@ -1042,7 +1042,7 @@ partnerEmail:  'juwavictor@gmail.com',
       id: 5,
       firstname:'solomon', //firstname
       lastname:'Andas',  //lastname
-      roles:'Individual Driver',
+      roles:'driver',
       user_type:'Individual',   //othernames
     
       username:'kudirata',  //username
@@ -1085,7 +1085,7 @@ partnerEmail:  'juwavictor@gmail.com',
       is_active:true ,
       isVerified: true,
       avatar:'saladinjake.jpg',//saladinjake.jpg
-      roles:"Individual Driver",
+      roles:"driver",
       balance:"0.00",
       identity_card:"ireoireroiieoroie",
       test_certificate:"hfdhjhfhdfhd",

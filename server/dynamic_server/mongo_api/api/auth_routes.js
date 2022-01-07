@@ -28,8 +28,6 @@ import handlebars from 'handlebars';
 let url = require('url');
 const { google } = require('googleapis');
 
-
-
 var readHTMLFile = function(path, callback) {
   fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
       if (err) {
@@ -287,9 +285,6 @@ class AuthRoutes {
 
     this.router.get('/request/gmail/auth', requestGmailAuth)
     this.router.get('/auth/google/callback', getGmailUserInfo)
-
-
-
     this.router.get('/request/gmail/auth/login', requestGmailAuth)
     this.router.get('/auth/google/callback', getGmailUserInfoLogin)
 
@@ -325,87 +320,7 @@ class AuthRoutes {
 
 
 
- 
 
-//begin login steps
-//   this.router.get('/google', (req, res) => {
-//     if (!authed) {
-//         // Generate an OAuth URL and redirect there
-//         const url = oAuth2Client.generateAuthUrl({
-//             access_type: 'offline',
-//             scope: 'https://www.googleapis.com/auth/gmail.readonly'
-//         });
-//         console.log(url)
-//         res.redirect(url);
-//     } else {
-//         const gmail = google.gmail({ 
-//           version: 'v1',
-//            auth: oAuth2Client 
-//         });
-
-
-//         gmail.users.labels.list({
-//             userId: 'me',
-//         }, (err, res) => {
-//             if (err) return console.log('The API returned an error: ' + err);
-//             const labels = res.data.labels;
-//             if (labels.length) {
-//                 console.log('Labels:');
-//                 labels.forEach((label) => {
-//                     console.log(`- ${label.name}`);
-//                 });
-//             } else {
-//                 console.log('No labels found.');
-//             }
-//         });
-//         // res.send({
-//         //   data:data
-//         // })
-//     }
-// })
-
-
-
-// //login ends
-// this.router.get('/auth/google/callback', (req, res)  =>{
-//     const code = req.query.code
-//     if (code) {
-//         // Get an access token based on our OAuth code
-//         oAuth2Client.getToken(code, function (err, tokens) {
-//             if (err) {
-//                 console.log('Error authenticating')
-//                 console.log(err);
-//             } else {
-//                 console.log('Successfully authenticated');
-//                 oAuth2Client.setCredentials(tokens);
-//                 authed = true;
- 
-                
-//                 const plus = google.plus({
-//                     version: 'v1',
-//                     auth: oAuth2Client,
-//                 });
-                
-//                 plus.people.get({userId: 'me'}, function (err,data) {
-//                   if(err){
-//                     console.log(err)
-//                   }else{
-//                     console.log(data)
-//                   }
-
-//                 });
-
-        
-       
-
-//                 res.redirect('http://localhost:4000')
-//             }
-//         });
-//     }
-// });
-
-
-  
 const createToken = (req, res) => {
    console.log(req.user)
    let resultingTokenShibilish ={

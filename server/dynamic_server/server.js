@@ -2,10 +2,7 @@
 import MongooseApp from './mongo_api/App'
 // import config from "./config/dummy_config";
 const debug = require('debug')('ireport-app:server');
-
 let AppRunning = null;
-
-
 let appChecker = process.argv[2] || '';
 if (appChecker.length > 0) { 
   // 'dummy-api','postgresdb-api','mongoose-api','sequelize-api','knex-api', 'async-await-pg'
@@ -20,7 +17,6 @@ if (appChecker.length > 0) {
       const MongooseAppDemo = new MongooseApp();
      AppRunning = MongooseAppDemo;
       break;
-   
     default:
      const MongooseAppDemo2 = new MongooseApp();
      AppRunning = MongooseAppDemo2;
