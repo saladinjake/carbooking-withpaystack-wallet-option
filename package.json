@@ -59,16 +59,16 @@
   "scripts": {
     "start:gulp:devmode": "gulp watch",
     "babel-node": "babel-node --presets=@babel/preset-env",
-    "start-backend": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT && nodemon --exec babel-node  server/dynamic_server/server.js",
-    "build": "npm run builda",
+    "start-backend:devmode": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT && nodemon --exec ./node_modules/.bin/babel-node  server/dynamic_server/server.js",
+    "build": "npm run build-react",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "coverage": "nyc reports --reporter=text-lcov | coveralls",
     "mocha": "mocha --require @babel/register",
     "test": "for i in $(ls tests/); do babel-node \"./tests/${i}\" | faucet ; done",
     "pretest": "npm run dbrun-migrations-mongoose",
-    "migration-mongoose-seed": " npm run babel-node -- server/dynamic_server/mongo_api/migrations/migrations.js",
-    "dbrun-migrations-mongoose": "npm run migration-mongoose-seed",
-    "heroku-postbuild": "npm run builda",
+    "migration-mongoose-seed:devmode": " npm run babel-node -- server/dynamic_server/mongo_api/migrations/migrations.js",
+    "dbrun-migrations-mongoose:devmode": "npm run migration-mongoose-seed:devmode",
+    "heroku-postbuild": "npm run build-react",
     "lint": "eslint source/ --quiet",
     "lint:write": "eslint --debug . --fix",
     "prettier": "prettier --write frontend/**/*.js",
@@ -91,7 +91,7 @@
     "devups-upload": "webpack -p --config ./webpackuploadtoserver.config.js",
     "build-front": "npm run clean-front && npm run webpack",
     "start-front-buildfolder": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT &&  node server_react.js",
-    "start-backend-from-build-with-migrations-refresh": "npm run launch-it-back",
+    "start-backend-from-build-with-migrations-refresh": "npm run launch-compiled-backend",
     "launch-it-back": "export NODE_ENV=DEVELOPMENT || set NODE_ENV=DEVELOPMENT  && npm run dbrun-migrations-mongoose-deploy-back && node  ./buildfolder/dynamic_server/server.js",
     "migration-mongoose-seed-deploy-back": " node ./buildfolder/dynamic_server/mongo_api/migrations/migrations.js",
     "dbrun-migrations-mongoose-deploy-back": "npm run migration-mongoose-seed-deploy-back",
@@ -102,7 +102,6 @@
     "type": "git",
     "url": "https://github.com/saladinjake/carbooking-withpaystack-wallet-option.git"
   },
-  
   "engines": {
     "node": ">=10.0"
   },
@@ -157,7 +156,6 @@
     "make-runnable": "^1.3.6",
     "method-override": "^3.0.0",
     "moment-timezone": "^0.5.27",
-    "mongoose": "^5.7.1",
     "morgan": "^1.9.0",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",

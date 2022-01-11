@@ -34,7 +34,7 @@ const chatRouter = require("./route/chatroute");
 //import favicon from 'serve-favicon';
 //const exphbs = require('express-handlebars');
 require('./config/passport'); // pass passport for configuration
-
+// process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 1;
 
 const getApiAndEmit = socket => {
   const response = new Date();
@@ -74,7 +74,7 @@ class MongoAppDemo {
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true,
         exposedHeaders: ['x-auth-token'],
-         "Access-Control-Allow-Credentials" :"true"
+         "Access-Control-Allow-Credentials" :"true",
          'Access-Control-Allow-Origin': "http://localhost:4001/"
 
     };
@@ -178,13 +178,13 @@ class MongoAppDemo {
      // Listen both http & https ports
 
     const httpServer = http.createServer(app);
-    const httpsServer = https.createServer({
-    key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
+    // const httpsServer = https.createServer({
+    // key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
+    // cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
 
-         requestCert: false,
-         rejectUnauthorized: false
-    }, app);
+    //      requestCert: false,
+    //      rejectUnauthorized: false
+    // }, app);
 
 //  httpServer.listen(12000, () => {
 //     console.log('HTTP Server running on port 12000');
@@ -192,7 +192,7 @@ class MongoAppDemo {
 
 
 
-// const io = socketIo(httpServer);
+const io = socketIo(httpServer);
 
 
 //  const io = require("socket.io")(httpServer, {
@@ -271,7 +271,7 @@ socket.on('requestLocations', () => {
 
 
 
-    // httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
+     httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
 
   // httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
 
@@ -280,9 +280,9 @@ socket.on('requestLocations', () => {
 
 
 
-httpsServer.listen(12000, () => {
-    console.log('HTTPS Server running on port 443');
-});
+// httpsServer.listen(12000, () => {
+//     console.log('HTTPS Server running on port 443');
+// });
 
     // io.listen(
     //    // that.express.listen(that.port, err => {

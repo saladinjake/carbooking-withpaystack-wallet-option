@@ -83,7 +83,7 @@ import  SOSService  from "./sos_service";
 
 import MailConfig from '../config/email';
 
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+//process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 1;
 
 var gmailTransport = MailConfig.GmailTransport;
 var smtpTransport = MailConfig.SMTPTransport;
