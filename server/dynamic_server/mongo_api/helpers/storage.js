@@ -1,28 +1,27 @@
-let _singleton = null
-class LocalConfigStore{
-  constructor(){
-    
-    if(!_singleton){
-       _singleton = this; 
-     }
-      
+let _singleton = null;
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
+class LocalConfigStore {
+  constructor() {
+    if (!_singleton) {
+      _singleton = this;
+    }
+
     this.dataStore = {};
-    
-   return _singleton;
+
+    return _singleton;
   }
 
-
-  setItem(key, val){
+  setItem(key, val) {
     this.dataStore[key] = val;
   }
 
-  getItem(key){
+  getItem(key) {
     return this.dataStore[key];
   }
-
-  
 }
 
 let Store = new LocalConfigStore();
 
-module.exports=Store;
+module.exports = Store;

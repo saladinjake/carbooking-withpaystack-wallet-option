@@ -1,9 +1,11 @@
- import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 //import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 export class TokenGenerator {
   static generateToken(data) {
     const token = jwt.sign(data, process.env.SECRET, {

@@ -1,11 +1,10 @@
-
-
 import { RedFlagService } from '../services/sos_service';
 //import SOSModel from '../models/SOSModel';
 import $ from 'jquery';
-const SUCCESS_URL= 'http://localhost:4001/sos-history.html';
-
-
+const SUCCESS_URL = 'http://localhost:4001/sos-history.html';
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 export default class SOSController {
   static createRedFlag(request, response) {
     RedFlagService.createRedFlag(request, response);
@@ -45,6 +44,4 @@ export default class SOSController {
   static usersRedflags(request, response) {
     RedFlagService.usersRedflags(request, response);
   }
-
-  
 }

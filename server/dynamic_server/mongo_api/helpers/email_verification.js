@@ -1,46 +1,52 @@
 import fs from 'fs';
-import nodemailer  from 'nodemailer';
+import nodemailer from 'nodemailer';
 import smtpTransport from 'nodemailer-smtp-transport';
 import config from '../config/mongo_config.js';
 import handlebars from 'handlebars';
 import Q from 'q';
 
-'use strict';
+('use strict');
 
 module.exports = {
-  _template: null, 
+  _template: null,
   _transport: null,
- 
-  init: function (config) {
+
+  init: function(config) {
     var d = Q.defer();
- 
-    emailTemplates(config.emailTplsDir, function (err, template) {
-      if (err) {
-        return d.reject(err);
-      }
- 
-      this._template = template;
-      this._transport = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
-      return d.resolve();
-    }.bind(this));
- 
+
+    emailTemplates(
+      config.emailTplsDir,
+      function(err, template) {
+        if (err) {
+          return d.reject(err);
+        }
+
+        this._template = template;
+        this._transport = nodemailer.createTransport({
+          service: 'Sendgrid',
+          auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD },
+        });
+        return d.resolve();
+      }.bind(this),
+    );
+
     return d.promise;
   },
- 
-  send: function (from, to, subject, text, html) {
+
+  send: function(from, to, subject, text, html) {
     var d = Q.defer();
     var params = {
-      from: from, 
+      from: from,
       to: to,
       subject: subject,
-      text: text
+      text: text,
     };
- 
+
     if (html) {
       params.html = html;
     }
- 
-    this._transport.sendMail(params, function (err, res) {
+
+    this._transport.sendMail(params, function(err, res) {
       if (err) {
         console.error(err);
         return d.reject(err);
@@ -48,27 +54,28 @@ module.exports = {
         return d.resolve(res);
       }
     });
- 
+
     return d.promise;
   },
- 
-  sendMail: function (from, to, subject, tplName, locals) {
+
+  sendMail: function(from, to, subject, tplName, locals) {
     var d = Q.defer();
     var self = this;
-    this.init({ emailTplsDir: "email-templates" }).then(function () {
-      this._template(tplName, locals, function (err, html, text) {
-        if (err) {
-          console.error(err);
-          return d.reject(err);
-        }
- 
-        self.send(from, to, subject, text, html)
-          .then(function (res) {
+    this.init({ emailTplsDir: 'email-templates' }).then(
+      function() {
+        this._template(tplName, locals, function(err, html, text) {
+          if (err) {
+            console.error(err);
+            return d.reject(err);
+          }
+
+          self.send(from, to, subject, text, html).then(function(res) {
             return d.resolve(res);
           });
-      });
-    }.bind(this));
- 
+        });
+      }.bind(this),
+    );
+
     return d.promise;
-  }
+  },
 };

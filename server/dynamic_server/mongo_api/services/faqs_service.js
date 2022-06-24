@@ -1,7 +1,8 @@
 //import mongoose from 'mongoose';
 import Database from '../models/db';
-
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 import { ResponseHandler } from '../helpers/response_handler';
 import { ErrorHandler } from '../helpers/error_handler';
 import FAQModel from '../models/FAQ.model.js';
@@ -11,33 +12,32 @@ const MongooseDatabase = Database.getInstance() || new Database();
 export class FaqsService {
   static createQnA(request, response) {
     const {
-            id,
-            car_type,
-            car_year,
-            color,
-            model,
-            partner_id,
-            status,
-            images,
-            plate_number,
-            isOwnedByCompany,
-  
+      id,
+      car_type,
+      car_year,
+      color,
+      model,
+      partner_id,
+      status,
+      images,
+      plate_number,
+      isOwnedByCompany,
     } = request.body;
     let uid = Number(user_id) || Number(request.body.user_id);
     console.log('you user id : ' + uid);
     let postData = request.body;
-    const NewCars = new FAQModel({ 
-            id:  new AutoincrementId(FAQModel).counter(),
-            car_type,
-            car_year,
-            color,
-            model,
-            partner_id,
-            status,
-            images,
-            plate_number ,
-           isOwnedByCompany,
-      });
+    const NewCars = new FAQModel({
+      id: new AutoincrementId(FAQModel).counter(),
+      car_type,
+      car_year,
+      color,
+      model,
+      partner_id,
+      status,
+      images,
+      plate_number,
+      isOwnedByCompany,
+    });
 
     NewCars.save()
       .then(data => {
@@ -61,12 +61,12 @@ export class FaqsService {
   }
 
   static getAllQnA(request, response) {
-    FAQModel.find({status:'Active'})
+    FAQModel.find({ status: 'Active' })
       .then(data => {
         let carsAvailable = data;
-        console.log(carsAvailable,"faqs")
+        console.log(carsAvailable, 'faqs');
         if (carsAvailable.length === 0) {
-           cars= [];
+          cars = [];
 
           return response.status(200).json({
             status: 200,
@@ -97,7 +97,7 @@ export class FaqsService {
   }
 
   static QnAId(request, response) {
-    FAQModel.find({id: Number(request.params.id)})
+    FAQModel.find({ id: Number(request.params.id) })
       .then(data => {
         const Cars = data;
         if (Cars.length <= 0) {
@@ -125,11 +125,11 @@ export class FaqsService {
   }
 
   static deleteQnA(request, response) {
-    FAQModel.find({id: Number(request.params.id)})
+    FAQModel.find({ id: Number(request.params.id) })
       .then(data => {
         const Carss = data;
 
-        if ( Carss.length <= 0) {
+        if (Carss.length <= 0) {
           console.log(
             JSON.stringify({
               status: 404,
@@ -141,7 +141,7 @@ export class FaqsService {
             error: 'The car with the given id does not exists',
           });
         }
-        FAQModel.removeOne({id: Number(request.params.id)})
+        FAQModel.removeOne({ id: Number(request.params.id) })
           .then(data => {
             const deletedCars = data;
             response.status(202).json({
@@ -170,7 +170,7 @@ export class FaqsService {
   }
 
   static editCars(request, response) {
-    FAQModel.find({id: Number(request.params.id)})
+    FAQModel.find({ id: Number(request.params.id) })
       .then(CarsId => {
         if (CarsId.length < 1) {
           return response.status(404).json({
@@ -178,30 +178,33 @@ export class FaqsService {
             error: 'The   given car id does not exists',
           });
         }
-        const { 
-           car_type,
-            car_year,
-            color,
-            model,
-            partner_id,
-            status,
-            images,
-            plate_number ,
-           isOwnedByCompany, } = request.body;
-        if ( Number(request.user.id) === Number(CarsId[0].user_id) )  {
-          FAQModel.updateOne({id: Number(request.params.id)}, {
-             
-            car_type,
-            car_year,
-            color,
-            model,
-            partner_id,
-            status,
-            images,
-            plate_number ,
-           isOwnedByCompany,
-             
-           }).then(data => {
+        const {
+          car_type,
+          car_year,
+          color,
+          model,
+          partner_id,
+          status,
+          images,
+          plate_number,
+          isOwnedByCompany,
+        } = request.body;
+        if (Number(request.user.id) === Number(CarsId[0].user_id)) {
+          FAQModel.updateOne(
+            { id: Number(request.params.id) },
+            {
+              car_type,
+              car_year,
+              color,
+              model,
+              partner_id,
+              status,
+              images,
+              plate_number,
+              isOwnedByCompany,
+            },
+          )
+            .then(data => {
               const editCarss = data;
               return response.status(200).json({
                 status: 200,
@@ -230,17 +233,15 @@ export class FaqsService {
       .catch(error =>
         response.status(400).json({
           status: 400,
-          error:ErrorHandler.errors().validationError,
+          error: ErrorHandler.errors().validationError,
         }),
       );
   }
 
-  
-
   static usersCars(request, response) {
     // UserModel.find({user_id: request.params.id})
     FAQModel.find({ user_id: Number(request.params.id) })
-    
+
       .then(data => {
         const Carss = data;
         if (Carss.length === 0) {
@@ -267,5 +268,4 @@ export class FaqsService {
         }),
       );
   }
-
 }

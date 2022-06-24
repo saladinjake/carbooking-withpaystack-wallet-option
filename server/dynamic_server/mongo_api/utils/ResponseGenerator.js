@@ -1,5 +1,7 @@
 import Utils from './common';
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 /**
  * A class for generating API responses
  */
@@ -44,7 +46,7 @@ class ResponseGenerator {
    * Sends response
    * @param {object} res
    * @returns {object} response
-  */
+   */
   send(res) {
     const filteredResponse = Utils.stripNull({
       status: this.status,

@@ -1,6 +1,8 @@
 import nodemailer from 'nodemailer';
 import debug from 'debug';
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 /**
  *@description - A function for sending mail
  *
@@ -8,10 +10,8 @@ import debug from 'debug';
  *
  * @returns {void} void
  */
-const mailer = async (mailData) => {
-  const {
-    to, subject, text, html,
-  } = mailData;
+const mailer = async mailData => {
+  const { to, subject, text, html } = mailData;
 
   try {
     const transporter = nodemailer.createTransport({

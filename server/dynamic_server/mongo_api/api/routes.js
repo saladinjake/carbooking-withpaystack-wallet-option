@@ -6,32 +6,33 @@ import UploadRoutes from './api_uploads';
 import CarsRoute from './cars_routes';
 import FaqRoute from './faqs_routes';
 import MechanicRoute from './mechanic_request';
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 import DriverRoutes from './driver_routes';
 
 class BridgeRoutes {
   constructor(router) {
     this.router = router;
     this.CoreRoutes = {
-      Auth:  new AuthRoutes(this.router),
-      RedFlags:  new RedFlagRoutes(this.router),
-      InterVentions:new InterventionRoutes(this.router),
+      Auth: new AuthRoutes(this.router),
+      RedFlags: new RedFlagRoutes(this.router),
+      InterVentions: new InterventionRoutes(this.router),
       Users: new UserRoutes(this.router),
-      Uploads: new  UploadRoutes(this.router),
+      Uploads: new UploadRoutes(this.router),
       CarsRoutes: new CarsRoute(this.router),
       MechanicRoutes: new MechanicRoute(this.router),
       FaqRoutes: new FaqRoute(this.router),
-      DriverRoute : new DriverRoutes(this.router)
+      DriverRoute: new DriverRoutes(this.router),
     };
   }
 
   attachRoutes() {
-    const keys = Object.values(this.CoreRoutes).map((item)  => {
+    const keys = Object.values(this.CoreRoutes).map(item => {
       let classInstance = item;
       classInstance.attachRoutes();
     });
     return this.router;
-
   }
 }
 export default BridgeRoutes;

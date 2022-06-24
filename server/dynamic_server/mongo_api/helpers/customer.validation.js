@@ -1,21 +1,34 @@
 const Joi = require('joi');
 const Customer = require('../models/User.model');
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 module.exports = {
-
   // POST /v1/ewallet/transfer
   walletTransfer: {
     body: {
-      amount: Joi.number().positive().precision(2).min(10).max(50000).required(),
-      destinationAccountNumber: Joi.number().required()
+      amount: Joi.number()
+        .positive()
+        .precision(2)
+        .min(10)
+        .max(50000)
+        .required(),
+      destinationAccountNumber: Joi.number().required(),
     },
   },
 
   // POST /v1/ewallet/deposit
   walletDeposit: {
     body: {
-      amount: Joi.number().positive().precision(2).min(10).max(50000).required(),
-      card: Joi.string().creditCard().required()
+      amount: Joi.number()
+        .positive()
+        .precision(2)
+        .min(10)
+        .max(50000)
+        .required(),
+      card: Joi.string()
+        .creditCard()
+        .required(),
     },
   },
 
@@ -23,7 +36,9 @@ module.exports = {
   listCustomers: {
     query: {
       page: Joi.number().min(1),
-      perPage: Joi.number().min(1).max(100),
+      perPage: Joi.number()
+        .min(1)
+        .max(100),
       name: Joi.string(),
       email: Joi.string(),
       //role: Joi.string().valid(Customer.roles),
@@ -33,8 +48,13 @@ module.exports = {
   // POST /v1/customers
   createCustomer: {
     body: {
-      email: Joi.string().email().required(),
-      password: Joi.string().min(6).max(128).required(),
+      email: Joi.string()
+        .email()
+        .required(),
+      password: Joi.string()
+        .min(6)
+        .max(128)
+        .required(),
       name: Joi.string().max(128),
       //role: Joi.string().valid(Customer.roles),
     },
@@ -43,8 +63,13 @@ module.exports = {
   // PUT /v1/customers/:customerId
   replaceCustomer: {
     body: {
-      email: Joi.string().email().required(),
-      password: Joi.string().min(6).max(128).required(),
+      email: Joi.string()
+        .email()
+        .required(),
+      password: Joi.string()
+        .min(6)
+        .max(128)
+        .required(),
       name: Joi.string().max(128),
       // role: Joi.string().valid(Customer.roles),
     },
@@ -57,7 +82,9 @@ module.exports = {
   updateCustomer: {
     body: {
       email: Joi.string().email(),
-      password: Joi.string().min(6).max(128),
+      password: Joi.string()
+        .min(6)
+        .max(128),
       name: Joi.string().max(128),
       // role: Joi.string().valid(Customer.roles),
     },

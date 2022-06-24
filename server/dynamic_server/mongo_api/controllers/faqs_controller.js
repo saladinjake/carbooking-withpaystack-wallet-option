@@ -1,6 +1,7 @@
-
 import { FaqsService } from '../services/faqs_service';
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 export default class FaqsController {
   static createQnA(request, response) {
     return FaqsService.createQnA(request, response);
@@ -17,6 +18,4 @@ export default class FaqsController {
   // static editCars(request, response) {
   //   return FaqsService.editQnA(request, response);
   // }
-
-  
 }

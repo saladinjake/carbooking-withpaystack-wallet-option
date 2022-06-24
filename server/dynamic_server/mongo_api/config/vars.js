@@ -1,5 +1,7 @@
 import dotenv from 'dotenv';
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 dotenv.config();
 const path = require('path');
 
@@ -17,9 +19,7 @@ module.exports = {
   masterAccount: process.env.MASTER_ACCOUNT_NUMBER,
   masterAccountPassword: process.env.MASTER_ACCOUNT_PASSWORD,
   mongo: {
-    uri: process.env.NODE_ENV === 'test'
-      ? process.env.MONGO_URI_TESTS
-      : process.env.MONGO_URI,
+    uri: process.env.NODE_ENV === 'test' ? process.env.MONGO_URI_TESTS : process.env.MONGO_URI,
   },
   logs: process.env.NODE_ENV === 'production' ? 'combined' : 'dev',
 };

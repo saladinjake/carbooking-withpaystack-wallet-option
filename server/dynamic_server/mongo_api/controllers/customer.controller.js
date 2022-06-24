@@ -2,7 +2,9 @@ const httpStatus = require('http-status');
 const { omit } = require('lodash');
 const Customer = require('../models/customer.model');
 const { handler: errorHandler } = require('../middlewares/error');
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 /**
  * Load customer and append to req.
  * @public
@@ -73,7 +75,8 @@ exports.update = (req, res, next) => {
   const updatedCustomer = omit(req.body, ommitRole);
   const customer = Object.assign(req.locals.customer, updatedCustomer);
 
-  customer.save()
+  customer
+    .save()
     .then(savedCustomer => res.json(savedCustomer.transform()))
     .catch(e => next(Customer.checkDuplicateEmail(e)));
 };
@@ -99,7 +102,8 @@ exports.list = async (req, res, next) => {
 exports.remove = (req, res, next) => {
   const { customer } = req.locals;
 
-  customer.remove()
+  customer
+    .remove()
     .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(e => next(e));
 };

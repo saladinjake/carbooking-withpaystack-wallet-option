@@ -1,6 +1,7 @@
-
 import { CarsService } from '../services/cars_services';
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 export default class CarsController {
   static createCarProfile(request, response) {
     return CarsService.createCarProfile(request, response);
@@ -21,6 +22,4 @@ export default class CarsController {
   static usersCars(request, response) {
     return CarsService.usersSelectedCars(request, response);
   }
-
-  
 }

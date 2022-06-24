@@ -1,3 +1,6 @@
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 export default class ResponseHandler {
   static sendResponse(response, status = 201, data = [{}]) {
     return response.status(status).json({

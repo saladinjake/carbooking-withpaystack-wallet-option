@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const config = {
-    
   demo: {
     appMode: 'dummy_api',
     user: process.env.DB_USER,
@@ -16,7 +15,7 @@ const config = {
     idleTimeoutInMillisec: 30000,
     connectionTimeoutInMillisec: 2000,
   },
-  
+
   development: {
     appMode: 'development',
     user: process.env.DB_USER,
@@ -56,5 +55,3 @@ const config = {
 };
 
 export default config;
-
-

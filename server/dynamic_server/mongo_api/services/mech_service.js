@@ -1,7 +1,8 @@
 //import mongoose from 'mongoose';
 import Database from '../models/db';
-
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 import { ResponseHandler } from '../helpers/response_handler';
 import { ErrorHandler } from '../helpers/error_handler';
 import MechModel from '../models/Repairs.model';
@@ -11,24 +12,33 @@ import AutoincrementId from '../helpers/autoincrement_mongo.js';
 const MongooseDatabase = Database.getInstance() || new Database();
 export class MechService {
   static create(request, response) {
-    const { user_id, location, description, status, firstname, lastname, email, carbrand,images } = request.body;
+    const {
+      user_id,
+      location,
+      description,
+      status,
+      firstname,
+      lastname,
+      email,
+      carbrand,
+      images,
+    } = request.body;
     // let id = Number(user_id) || Number(request.body.user_id);
     console.log('you user id : ' + user_id);
     let postData = request.body;
     const NewMech = new MechModel({
+      id: new AutoincrementId(MechModel).counter(),
+      user_id,
+      location,
 
-        id:  new AutoincrementId(MechModel).counter(),
-        user_id, 
-        location, 
-  
-        status, 
-        email, 
-        firstname, 
-        lastname,
-         carbrand, 
-         description, 
-         images
-      });
+      status,
+      email,
+      firstname,
+      lastname,
+      carbrand,
+      description,
+      images,
+    });
 
     NewMech.save()
       .then(data => {
@@ -43,8 +53,8 @@ export class MechService {
           ],
         });
       })
-      .catch(err =>{
-        console.log(err)
+      .catch(err => {
+        console.log(err);
         response.status(400).json({
           status: 400,
           error: ErrorHandler.errors().validationError,
@@ -53,17 +63,15 @@ export class MechService {
   }
 
   static all(request, response) {
-    MechModel.find({user_id: Number(request.params.id)})
+    MechModel.find({ user_id: Number(request.params.id) })
       .then(data => {
         let mechRequest = data;
         if (mechRequest.length === 0) {
           redFlag = [
             {
               id: 1,
-                user_id:5, 
-                location:'89898888,09007667', 
-                
-              
+              user_id: 5,
+              location: '89898888,09007667',
             },
           ];
 
@@ -95,11 +103,10 @@ export class MechService {
       );
   }
 
-  
   static users(request, response) {
     // UserModel.find({user_id: request.params.id})
     MechModel.find({ user_id: request.params.id })
-    
+
       .then(data => {
         const mechRequest = data;
         if (mechRequest.length === 0) {
@@ -127,11 +134,10 @@ export class MechService {
       );
   }
 
-
   static update(request, response) {
-    MechModel.find({id: request.params.id})
+    MechModel.find({ id: request.params.id })
       .then(mechId => {
-        if (mechId.length <=0) {
+        if (mechId.length <= 0) {
           return response.status(404).json({
             status: 404,
             error: 'The id for the given mech-request  does not exists',
@@ -144,27 +150,27 @@ export class MechService {
           email,
           description,
           carbrand,
-          
+
           location,
-          
         } = request.body;
-        if ( Number(request.user.id) === Number(mechId[0].user_id) )  {
-          MechModel.updateOne({id: Number(request.params.id)}, {
-          
-          user_id,
-          firstname,
-          lastname,
-          email,
-          description,
-          carbrand,
-          location,
-          status: 'pending',
-          // images:['a.jpg']
-             
-           }).then(data => {
-             
+        if (Number(request.user.id) === Number(mechId[0].user_id)) {
+          MechModel.updateOne(
+            { id: Number(request.params.id) },
+            {
+              user_id,
+              firstname,
+              lastname,
+              email,
+              description,
+              carbrand,
+              location,
+              status: 'pending',
+              // images:['a.jpg']
+            },
+          )
+            .then(data => {
               const editMechRequest = data;
-              console.log(data)
+              console.log(data);
               return response.status(200).json({
                 status: 200,
                 data: [
@@ -197,18 +203,18 @@ export class MechService {
       );
   }
 
-
-
-  static sendNotifications(request,response){
-
+  static sendNotifications(request, response) {
     const { user_id, message, type, description } = request.body;
     let id = Number(user_id) || Number(request.body.user_id);
     console.log('you user id : ' + id);
     let postData = request.body;
-    const NewNotification = new NotificationModel({ 
-        id:  new AutoincrementId(NotificationModel).counter(),
-        user_id, message, type, description
-      });
+    const NewNotification = new NotificationModel({
+      id: new AutoincrementId(NotificationModel).counter(),
+      user_id,
+      message,
+      type,
+      description,
+    });
 
     NewNotification.save()
       .then(data => {
@@ -229,13 +235,11 @@ export class MechService {
           error: ErrorHandler.errors().validationError,
         }),
       );
-
   }
 
-
-  static getNotifications(request,response){
+  static getNotifications(request, response) {
     NotificationModel.find({ user_id: Number(request.params.id) })
-    
+
       .then(data => {
         const notifications = data;
         if (notifications.length === 0) {
@@ -262,5 +266,4 @@ export class MechService {
         }),
       );
   }
-
 }

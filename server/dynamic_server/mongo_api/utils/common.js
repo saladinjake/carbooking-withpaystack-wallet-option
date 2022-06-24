@@ -1,8 +1,9 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 const Utils = {
-
   /**
    * @description - validate password by comparing password with hash password
    * @param {string} password
@@ -37,7 +38,7 @@ const Utils = {
   stripNull(obj) {
     let cleanObj = {};
 
-    Object.keys(obj).forEach((val) => {
+    Object.keys(obj).forEach(val => {
       const newVal = obj[val];
       cleanObj = newVal ? { ...cleanObj, [val]: newVal } : cleanObj;
     });

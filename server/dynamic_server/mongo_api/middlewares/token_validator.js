@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { ResponseHandler } from '../helpers/response_handler';
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 export default class TokenVerification {
   static userAuthentication(request, response, next) {
     const token = request.header('x-access-token');
@@ -25,9 +27,8 @@ export default class TokenVerification {
   }
 
   static adminAuthentication(request, response, next) {
-
     const token = request.header('x-access-token');
-  
+
     if (!token) {
       console.log('error validating token');
       return response.status(401).json({
@@ -40,10 +41,9 @@ export default class TokenVerification {
       request.user = decoded;
 
       if (request.user.isAdmin === false) {
-
         return response.status(403).json({
           status: 403,
-          error: 'You do not have the admin rights to perform this action'
+          error: 'You do not have the admin rights to perform this action',
         });
       }
       return next();
@@ -53,8 +53,5 @@ export default class TokenVerification {
         error: 'Authentication failed',
       });
     }
-
-
-    
   }
 }

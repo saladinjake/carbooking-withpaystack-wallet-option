@@ -1,8 +1,9 @@
 require('dotenv').config();
+// import dotenv from "dotenv"
 import express, { Router } from 'express';
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 import cors from 'cors';
-const debug = require('debug')('ireport:server/server');
+const debug = require('debug')('commute-dev-Proj-repo:server/server');
 const util = require('util');
 import bodyParser from 'body-parser';
 import logger from 'morgan';
@@ -17,33 +18,28 @@ import fs from 'fs';
 import path from 'path';
 import compression from 'compression';
 // import helmet from 'helmet'; // csrf xcrf security
-const pug = require('pug');
+import pug from 'pug';
 //var config = require('./oauth.js');
 import UserModel from './models/User.model';
+import error from './middlewares/error';
+import http from 'http';
+import https from 'https';
+import socket_io from 'socket.io';
+import socketIo from 'socket.io';
+require('./config/passport'); // pass passport for configuration
 
-const error = require('./middlewares/error');
-const http = require('http')
-const https = require('https');
-var socket_io = require("socket.io");
-var socketIo = require("socket.io");
 var io = socketIo();
 //database connection
-const Chat = require("./models/Chat");
-const connect = require("./dbconnect");
-const chatRouter = require("./route/chatroute");
-//import favicon from 'serve-favicon';
-//const exphbs = require('express-handlebars');
-require('./config/passport'); // pass passport for configuration
-// process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 1;
+const connect = require('./dbconnect');
+const Chat = require('./models/Chat');
+const chatRouter = require('./route/chatroute');
 
 const getApiAndEmit = socket => {
   const response = new Date();
   // console.log("emit me frm server to user")
   // Emitting a new message. Will be consumed by the client
-  socket.emit("FromAPI", response);
+  socket.emit('FromAPI', response);
 };
-
-
 
 class MongoAppDemo {
   constructor() {
@@ -61,22 +57,20 @@ class MongoAppDemo {
     var allowedOrigins = [
       'http://localhost:4001',
       'https://checkout.paystack.com',
-      "https://google.com",
-      "https:mail.google.com",
-      "https://facebook.com",
-      "https://twitter.com",
-      "https://instagram.com"
+      'https://google.com',
+      'https:mail.google.com',
+      'https://facebook.com',
+      'https://twitter.com',
+      'https://instagram.com',
     ];
 
     let corsOption = {
-       'Access-Control-Allow-Origin': '*',
-
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        credentials: true,
-        exposedHeaders: ['x-auth-token'],
-         "Access-Control-Allow-Credentials" :"true",
-         'Access-Control-Allow-Origin': "http://localhost:4001/"
-
+      'Access-Control-Allow-Origin': '*',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      credentials: true,
+      exposedHeaders: ['x-auth-token'],
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Origin': 'http://localhost:4001/',
     };
     this.express.use(cors(corsOption));
     // gzip compression
@@ -84,42 +78,39 @@ class MongoAppDemo {
     // secure apps by setting various HTTP headers
     // this.express.use(helmet());
     // if error is not an instanceOf APIError, convert it.
-      //     this.express.use(error.converter);
-
-// // catch 404 and forward to error handler
-//     this.express.use(error.notFound);
-
-// // error handler, send stacktrace only during development
-//     this.express.use(error.handler);
-
-//     this.express.options("/*", function(req, res, next){
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-//   res.sendStatus(200);
-// });
-   // this.express.use(cors());
+    //     this.express.use(error.converter);
+    // // catch 404 and forward to error handler
+    //     this.express.use(error.notFound);
+    // // error handler, send stacktrace only during development
+    //     this.express.use(error.handler);
+    //     this.express.options("/*", function(req, res, next){
+    //   res.header('Access-Control-Allow-Origin', '*');
+    //   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    //   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+    //   res.sendStatus(200);
+    // });
+    // this.express.use(cors());
 
     // required for passport
-    this.express.use(session({ secret: process.env.SECRET,
-          resave: true,
-          saveUninitialized: true
-    })); // session secret
+    this.express.use(
+      session({
+        secret: process.env.SECRET,
+        resave: true,
+        saveUninitialized: true,
+      }),
+    ); // session secret
     this.express.use(passport.initialize());
 
     //this.express.use(cors(corsOption));
-
-    this.express.use(bodyParser.json());//
-
+    this.express.use(bodyParser.json()); //
     // this.express.use(methodOverride());
     this.express.disable('x-powered-by');
     this.express.use(
-          bodyParser.urlencoded({
-            extended: false,
-          }),
+      bodyParser.urlencoded({
+        extended: false,
+      }),
     );
     this.express.use(cookieParser());
-
     // serialize and deserialize
     // passport.serializeUser(function(user, done) {
     //   console.log('serializeUser: ' + user.id);
@@ -140,18 +131,13 @@ class MongoAppDemo {
     passport.deserializeUser(function(obj, done) {
       done(null, obj);
     });
-
-
-
     const router = Router();
     new BridgeRouter(router).attachRoutes();
-
     this.port = process.env.PORT || 12000;
     //define the route real path
     this.express.use('/api/v1', router);
     //routes
-    this.express.use("/api/v1/chats", chatRouter);
-
+    this.express.use('/api/v1/chats', chatRouter);
     this.express.use((request, response, next) => {
       response.status(404).json({
         status: 404,
@@ -160,10 +146,9 @@ class MongoAppDemo {
       next();
     });
     this.express.disable('x-powered-by');
-    this.express.use(express.static(__dirname +'../../../public'));
+    this.express.use(express.static(__dirname + '../../public'));
     // app.use(express.static(path.join(__dirname, 'public/')));
     this.express.set('view engine', pug);
-
   }
 
   initialize() {}
@@ -174,115 +159,93 @@ class MongoAppDemo {
       this.port = port;
       this.port = port;
     }
-     let app = that.express;
-     // Listen both http & https ports
 
+    let app = that.express;
+    // Listen both http & https ports
     const httpServer = http.createServer(app);
-    // const httpsServer = https.createServer({
-    // key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
-    // cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
+    //const httpsServer = https.createServer({
+    //    key: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/privkey.pem'),
+    //     cert: fs.readFileSync('/etc/letsencrypt/live/demouserapp.commute.ng/fullchain.pem'),
+    //
+    //    requestCert: false,
+    //    rejectUnauthorized: false
+    //   }, app);
 
-    //      requestCert: false,
-    //      rejectUnauthorized: false
-    // }, app);
-
-//  httpServer.listen(12000, () => {
-//     console.log('HTTP Server running on port 12000');
-// });
-
-
-
-const io = socketIo(httpServer);
-
-
-//  const io = require("socket.io")(httpServer, {
-//     handlePreflightRequest: (req, res) => {
-//         const headers = {
-//             "Access-Control-Allow-Headers": "Content-Type, Authorization",
-//             "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-//             "Access-Control-Allow-Credentials": true
-//         };
-//         res.writeHead(200, headers);
-//         res.end();
-//     }
-// });
-
-
-let interval;
-const locationMap = new Map()
-
-io.on('connection', socket => {
-console.log("New client connected" + socket.id);
-if (interval) {
-  clearInterval(interval);
-}
-interval = setInterval(() => getApiAndEmit(socket), 1000);
-
-
-
-socket.on('updateLocation', pos => {
-  locationMap.set(socket.id, pos)
-})
-
-socket.on('requestLocations', () => {
-  socket.emit('locationsUpdate', Array.from(locationMap))
-})
-
-
-  //server communication for chat message
-  //Someone is typing
-  socket.on("typing", data => {
-    socket.broadcast.emit("notifyTyping", {
-      user: data.user,
-      message: data.message
+    httpServer.listen(12000, () => {
+      console.log('HTTP Server running on port 12000');
     });
-  });
 
-  //when soemone stops typing
-  socket.on("stopTyping", () => {
-    socket.broadcast.emit("notifyStopTyping");
-  });
+    // const io = socketIo(httpServer);
 
-  socket.on("chat message", function(msg) {
-    console.log("message: " + msg);
-
-    //broadcast message to everyone in port:5000 except yourself.
-    socket.broadcast.emit("received", { message: msg });
-
-    //save chat to the database
-    connect.then(db => {
-      console.log("connected correctly to the server");
-      let chatMessage = new Chat({ message: msg, sender: "Anonymous" });
-
-      chatMessage.save();
+     const io = require("socket.io")(httpServer, {
+        handlePreflightRequest: (req, res) => {
+            const headers = {
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
+                "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+                "Access-Control-Allow-Credentials": true
+            };
+            res.writeHead(200, headers);
+            res.end();
+        }
     });
-  });
 
+    let interval;
+    const locationMap = new Map();
+    io.on('connection', socket => {
+      console.log('New client connected' + socket.id);
+      if (interval) {
+        clearInterval(interval);
+      }
+      interval = setInterval(() => getApiAndEmit(socket), 1000);
 
-  socket.on('disconnect', () => {
-    console.log("Client disconnected");
-    clearInterval(interval);
+      socket.on('updateLocation', pos => {
+        locationMap.set(socket.id, pos);
+      });
+      socket.on('requestLocations', () => {
+        socket.emit('locationsUpdate', Array.from(locationMap));
+      });
 
-    locationMap.delete(socket.id)
-  })
+      //server communication for chat message
+      //Someone is typing
+      socket.on('typing', data => {
+        socket.broadcast.emit('notifyTyping', {
+          user: data.user,
+          message: data.message,
+        });
+      });
 
+      //when soemone stops typing
+      socket.on('stopTyping', () => {
+        socket.broadcast.emit('notifyStopTyping');
+      });
 
-})
+      socket.on('chat message', function(msg) {
+        console.log('message: ' + msg);
+        //broadcast message to everyone in port:5000 except yourself.
+        socket.broadcast.emit('received', { message: msg });
+        //save chat to the database
+        connect.then(db => {
+          console.log('connected correctly to the server');
+          let chatMessage = new Chat({ message: msg, sender: 'Anonymous' });
 
+          chatMessage.save();
+        });
+      });
+      socket.on('disconnect', () => {
+        console.log('Client disconnected');
+        clearInterval(interval);
 
+        locationMap.delete(socket.id);
+      });
+    });
 
-     httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
+    // httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
 
-  // httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
+    // httpServer.listen(12000, () => console.log(`Listening on port ${that.port}`));
 
-
-
-
-
-
-// httpsServer.listen(12000, () => {
-//     console.log('HTTPS Server running on port 443');
-// });
+    // httpsServer.listen(12000, () => {
+    //     console.log('HTTPS Server running on port 443');
+    // });
 
     // io.listen(
     //    // that.express.listen(that.port, err => {
@@ -297,14 +260,9 @@ socket.on('requestLocations', () => {
     //   console.log("Socket connected: " + socket.id);
     // });
 
-// });
-
-   }
-
+    // });
+  }
 }
-
-
 
 export { passport };
 export default MongoAppDemo;
-

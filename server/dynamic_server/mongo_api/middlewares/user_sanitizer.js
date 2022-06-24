@@ -1,16 +1,21 @@
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 import Database from '../models/db';
 import ResponseHandler from '../helpers/response_handler';
 import UserModel from '../models/User.model';
-import DriverModel from "../models/Driver.model";
-import PartnerModel from "../models/Partners.model";
+import DriverModel from '../models/Driver.model';
+import PartnerModel from '../models/Partners.model';
 const validNameRegex = /^[A-Za-z]{3,30}$/;
 const user_typeRegex = /^[a-zA-Z]'?([a-zA-Z]|\.| |-){3,}$/;
 const usernameRegex = /^[A-Za-z0-9]{3,20}$/;
 const emailRegex = /\S+@\S+\.\S+/;
 const passwordRegex = /^[A-Za-z0-9]{6,}$/;
 const phoneNumberRegex = /^(\+?234|0)?[789]\d{9}$/;
-const lastnameRegex=/^[A-Za-z\d_-]+$/;
-
+const lastnameRegex = /^[A-Za-z\d_-]+$/;
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 const handleError = (response, message, code = 422) =>
   response.status(code).json({
     status: code,
@@ -18,42 +23,34 @@ const handleError = (response, message, code = 422) =>
   });
 
 export default class SubmitEventValidator {
-
   static checkIfUserDoesntExists(request, response, next) {
     const { email } = request.body;
 
-    if(!emailRegex.test(email)){
-
+    if (!emailRegex.test(email)) {
       return response.status(422).json({
-            status: 422,
-            error: 'Invalid email sent',
-          });
-
+        status: 422,
+        error: 'Invalid email sent',
+      });
     }
-    console.log("email to check: "+ email)
-    UserModel.find({email:email} )
-  
-      .then(result => {
-       
-        const userExists = result;
-        if ( userExists.length>0 ) {
-          return next();
-          
-        }else{
+    console.log('email to check: ' + email);
+    UserModel.find({ email: email })
 
-           console.log("this user does not : " + JSON.stringify(result))
+      .then(result => {
+        const userExists = result;
+        if (userExists.length > 0) {
+          return next();
+        } else {
+          console.log('this user does not : ' + JSON.stringify(result));
           return response.status(422).json({
             status: 422,
             error: 'User does not exist on this platform',
           });
-          
         }
-        
       })
       .catch(err =>
         response.status(400).json({
           status: 400,
-          error: 'Email or Username must be unique: '+ err,
+          error: 'Email or Username must be unique: ' + err,
         }),
       );
   }
@@ -61,109 +58,95 @@ export default class SubmitEventValidator {
   static checkIfUserExists(request, response, next) {
     const { email } = request.body;
 
-    if(!emailRegex.test(email)){
-
+    if (!emailRegex.test(email)) {
       return response.status(422).json({
-            status: 422,
-            error: 'Invalid email sent',
-          });
-
+        status: 422,
+        error: 'Invalid email sent',
+      });
     }
-    console.log("email to check: "+ email)
-    UserModel.find({email:email} )
-  
+    console.log('email to check: ' + email);
+    UserModel.find({ email: email })
+
       .then(result => {
-       
         const userExists = result;
-        if ( userExists.length>0 ) {
-           console.log("this user exist : " + JSON.stringify(result))
+        if (userExists.length > 0) {
+          console.log('this user exist : ' + JSON.stringify(result));
           return response.status(409).json({
             status: 409,
             error: 'Email already exists',
           });
-        }else{
+        } else {
           return next();
         }
-        
       })
       .catch(err =>
         response.status(400).json({
           status: 400,
-          error: 'Email or Username must be unique: '+ err,
+          error: 'Email or Username must be unique: ' + err,
         }),
       );
   }
 
   static checkIfUserIsBanned(request, response, next) {
-
     const { email } = request.body;
 
-    if(!emailRegex.test(email)){
-
+    if (!emailRegex.test(email)) {
       return response.status(422).json({
-            status: 422,
-            error: 'Invalid email sent',
-          });
-
+        status: 422,
+        error: 'Invalid email sent',
+      });
     }
-    console.log("email to check: "+ email)
-    UserModel.find({email:email,status:"Active"} )
-  
+    console.log('email to check: ' + email);
+    UserModel.find({ email: email, status: 'Active' })
+
       .then(result => {
-       
         const userExists = result;
-        if ( userExists.length<=0 ) {
-           console.log("this user exist : " + JSON.stringify(result))
+        if (userExists.length <= 0) {
+          console.log('this user exist : ' + JSON.stringify(result));
           return response.status(409).json({
             status: 409,
             error: 'User is either banned or suspended on this platform',
           });
-        }else{
+        } else {
           return next();
         }
-        
       })
       .catch(err =>
         response.status(400).json({
           status: 400,
-          error: 'Email or Username must be unique: '+ err,
+          error: 'Email or Username must be unique: ' + err,
         }),
       );
-
   }
 
   static checkIfDriverExists(request, response, next) {
     const { email } = request.body;
 
-    if(!emailRegex.test(email)){
-
+    if (!emailRegex.test(email)) {
       return response.status(422).json({
-            status: 422,
-            error: 'Invalid email sent',
-          });
-
+        status: 422,
+        error: 'Invalid email sent',
+      });
     }
-    console.log("email to check: "+ email)
-    DriverModel.find({email:email} )
-  
+    console.log('email to check: ' + email);
+    DriverModel.find({ email: email })
+
       .then(result => {
-       
         const userExists = result;
-        if ( userExists.length>0 ) {
-           console.log("this user exist : " + JSON.stringify(result))
+        if (userExists.length > 0) {
+          console.log('this user exist : ' + JSON.stringify(result));
           return response.status(409).json({
             status: 409,
             error: 'Email already exists',
           });
-        }else{
+        } else {
           return next();
         }
-        
       })
       .catch(err =>
         response.status(400).json({
           status: 400,
-          error: 'Email or Username must be unique: '+ err,
+          error: 'Email or Username must be unique: ' + err,
         }),
       );
   }
@@ -171,35 +154,31 @@ export default class SubmitEventValidator {
   static checkIfPartnerExists(request, response, next) {
     const { email } = request.body;
 
-    if(!emailRegex.test(email)){
-
+    if (!emailRegex.test(email)) {
       return response.status(422).json({
-            status: 422,
-            error: 'Invalid email sent',
-          });
-
+        status: 422,
+        error: 'Invalid email sent',
+      });
     }
-    console.log("email to check: "+ email)
-    PartnerModel.find({email:email} )
-  
+    console.log('email to check: ' + email);
+    PartnerModel.find({ email: email })
+
       .then(result => {
-       
         const userExists = result;
-        if ( userExists.length>0 ) {
-           console.log("this user exist : " + JSON.stringify(result))
+        if (userExists.length > 0) {
+          console.log('this user exist : ' + JSON.stringify(result));
           return response.status(409).json({
             status: 409,
             error: 'Email already exists',
           });
-        }else{
+        } else {
           return next();
         }
-        
       })
       .catch(err =>
         response.status(400).json({
           status: 400,
-          error: 'Email or Username must be unique: '+ err,
+          error: 'Email or Username must be unique: ' + err,
         }),
       );
   }
@@ -213,39 +192,39 @@ export default class SubmitEventValidator {
       email,
       phoneNumber,
       password,
-      terms_and_cond
+      terms_and_cond,
     } = request.body;
-    
-    if (terms_and_cond=="not selected") {
-      console.log('err terms')
+
+    if (terms_and_cond == 'not selected') {
+      console.log('err terms');
       return response.status(422).json({
         status: 422,
         error: 'Terms and conditions must be checked to sign up',
       });
     }
     if (!(firstname && firstname.length)) {
-      console.log('err fn')
+      console.log('err fn');
       return response.status(422).json({
         status: 422,
         error: 'Please enter your firstname',
       });
     }
     if (!validNameRegex.test(firstname)) {
-      console.log('err fn1')
+      console.log('err fn1');
       return response.status(422).json({
         status: 422,
         error: 'firstname must be between 3 and 30 characters only',
       });
     }
     if (!(lastname && lastname.length)) {
-      console.log('err ln')
+      console.log('err ln');
       return response.status(422).json({
         status: 422,
         error: 'Please enter your lastname',
       });
     }
     if (!lastnameRegex.test(lastname)) {
-      console.log('err ln2')
+      console.log('err ln2');
       return response.status(422).json({
         status: 422,
         error: 'lastname must be between 3 and 30 characters only',
@@ -253,23 +232,19 @@ export default class SubmitEventValidator {
     }
 
     if (!(user_type && user_type.length)) {
-      
       return response.status(422).json({
         status: 422,
         error: 'Please enter your user_type',
       });
     }
-    if ((user_type=="Select Category")) {
-      
+    if (user_type == 'Select Category') {
       return response.status(422).json({
         status: 422,
         error: 'Please choose a plan category',
       });
     }
 
-
-
-    console.log(user_type)
+    console.log(user_type);
 
     if (!user_typeRegex.test(user_type)) {
       return response.status(422).json({
@@ -344,7 +319,7 @@ export default class SubmitEventValidator {
         error: 'email is required',
       });
     }
-     if (!emailRegex.test(email)) {
+    if (!emailRegex.test(email)) {
       return response.status(422).json({
         status: 422,
         error: 'Please enter a valid email',
@@ -357,49 +332,31 @@ export default class SubmitEventValidator {
       });
     }
 
-    if(!emailRegex.test(email)){
-
+    if (!emailRegex.test(email)) {
       return response.status(422).json({
-            status: 422,
-            error: 'Invalid email sent',
-          });
-
+        status: 422,
+        error: 'Invalid email sent',
+      });
     }
-    console.log("email to check: "+ email)
+    console.log('email to check: ' + email);
     var error = false;
-    UserModel.find({email:email} )
+    UserModel.find({ email: email })
       .then(result => {
-        console.log("this user exist : " + JSON.stringify(result))
+        console.log('this user exist : ' + JSON.stringify(result));
         const userExists = result;
-        if ( userExists.length<0 ) {
+        if (userExists.length < 0) {
           return response.status(404).json({
             status: 404,
             error: 'Email does not exists',
           });
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        else if(userExists[0].email){
+        } else if (userExists[0].email) {
           return next();
-        }else {
-          return  response.status(422).json({
-          status: 422,
-          error: 'Invalid credentials',
-        })
+        } else {
+          return response.status(422).json({
+            status: 422,
+            error: 'Invalid credentials',
+          });
         }
-        
       })
       .catch(err =>
         response.status(400).json({
@@ -407,6 +364,5 @@ export default class SubmitEventValidator {
           error: 'Email or Username must be unique',
         }),
       );
-     
   }
 }

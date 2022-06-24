@@ -1,6 +1,5 @@
 'use strict';
-
-
-class ActiveRecordSingleRedFlag extends SingleInterventionActiveRecord {
-  
-}
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
+class ActiveRecordSingleRedFlag extends SingleInterventionActiveRecord {}

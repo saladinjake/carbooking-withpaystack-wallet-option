@@ -3,19 +3,18 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-mixed-operators */
 import { ErrorHandler } from '../helpers/error_handler';
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 const locationRegex = /^([-+]?\d{1,2}([.]\d+)?),\s*([-+]?\d{1,3}([.]\d+)?)$/;
 const validIdRegex = /^[1-9]{1,}/;
 export default class SubmitEventValidator {
   static validateSubmit(request, response, next) {
     const { location, images, subject, comment, reportType } = request.body;
 
-    
-
     if (!(reportType && reportType.length)) {
       return ErrorHandler.sendError(response, 'Category must be a string');
     }
-
 
     // if (!(location && location.length)) {
     //   return ErrorHandler.sendError(response, 'Location must be a string');
@@ -23,32 +22,17 @@ export default class SubmitEventValidator {
     // if (typeof location !== 'string' || !locationRegex.test(location)) {
     //   return ErrorHandler.sendError(response, 'location does not match a Lat Long coordinates');
     // }
-     var imageToSubmit ="no image"
+    var imageToSubmit = 'no image';
     if (!images) {
-      imageToSubmit ="no image preview";
+      imageToSubmit = 'no image preview';
       //return ErrorHandler.sendError(response, 'Please enter an image url');
     }
 
-    // if (!Array.isArray(images)) {
-    //   return ErrorHandler.sendError(response, 'Images must be an array');
-    // }
-
-    // const notAString = images.filter(image => typeof image !== 'string');
-    // if (notAString.length >= 1) {
-    //   return ErrorHandler.sendError(response, 'image must be a string');
-    // }
-
+    
     if (!subject) {
       return ErrorHandler.sendError(response, 'Please enter a subject');
     }
-    // if (!Array.isArray(videos)) {
-    //   return ErrorHandler.sendError(response, 'videos must be an array');
-    // }
-
-    // const notAVideoString = videos.filter(video => typeof video !== 'string');
-    // if (notAVideoString.length >= 1) {
-    //   return ErrorHandler.sendError(response, 'video must be a string');
-    // }
+    
 
     if (!comment) {
       return ErrorHandler.sendError(response, 'Please enter a comment');
@@ -76,7 +60,10 @@ export default class SubmitEventValidator {
     if (!(status && status.length)) {
       return ErrorHandler.sendError(response, 'Status is required');
     }
-    if (typeof status !== 'string' || status !== 'under investigation' && status !== 'resolved' && status !== 'rejected'){
+    if (
+      typeof status !== 'string' ||
+      (status !== 'under investigation' && status !== 'resolved' && status !== 'rejected')
+    ) {
       return ErrorHandler.sendError(
         response,
         'Invalid status, status must be a string containing under investigation, resolved or rejected',

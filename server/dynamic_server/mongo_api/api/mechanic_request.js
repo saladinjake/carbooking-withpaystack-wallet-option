@@ -1,8 +1,8 @@
-
-
 import MechController from '../controllers/mech_controller';
 import UserSanitizer from '../middlewares/user_sanitizer';
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 import TokenVerification from '../middlewares/token_validator';
 import SubmitEventValidator from '../middlewares/post_sanitizer';
 
@@ -24,22 +24,14 @@ class MechanicRoutes {
       TokenVerification.userAuthentication,
       MechController.users,
     );
-    
-    this.router.get(
-      '/mechanic-request',
-      TokenVerification.userAuthentication,
-      MechController.all,
-    );
 
-    
+    this.router.get('/mechanic-request', TokenVerification.userAuthentication, MechController.all);
 
     this.router.patch(
-      "/mech-request/:id/update",
+      '/mech-request/:id/update',
       TokenVerification.userAuthentication,
       MechController.update,
     );
-
-
 
     return this.router;
   }

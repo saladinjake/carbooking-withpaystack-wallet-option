@@ -1,201 +1,178 @@
 'use strict';
 const Promise = require('bluebird');
-import mongoose from  'mongoose';
-
+import mongoose from 'mongoose';
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 //Partner has many cars
-      /**
-       * Partner Schema
-       */
+/**
+ * Partner Schema
+ */
 
-
-
-let PartnerSchema = new mongoose.Schema({
-
-  businessName: {
-        type: String,
-       
+let PartnerSchema = new mongoose.Schema(
+  {
+    businessName: {
+      type: String,
     },
     firstName: {
-        type: String,
-       
+      type: String,
     },
     lastName: {
       type: String,
-      
-  },
-  address:{
-    type:String
-  },
-  bankAccount:{type : String},
-  bankAccountName:{type: String},
-  bankAccountNumber: { type: String},
-  status:{
-        type:String,
-        enum:[
-         "Active",
-         "Dormant",
-         "Disabled",
-         "Suspended"
-        ],
-        default: "Active"
-      },
+    },
+    address: {
+      type: String,
+    },
+    bankAccount: { type: String },
+    bankAccountName: { type: String },
+    bankAccountNumber: { type: String },
+    status: {
+      type: String,
+      enum: ['Active', 'Dormant', 'Disabled', 'Suspended'],
+      default: 'Active',
+    },
     email: {
-        type: String,
-       
+      type: String,
     },
     password: {
-        type: String,
-        
-        
+      type: String,
     },
     phoneNumber: {
-        type: String,
-  
-        
+      type: String,
     },
-    phone:{
-      type: String
+    phone: {
+      type: String,
     },
-    passwordResetToken: { type: String},
+    passwordResetToken: { type: String },
     passwordResetExpires: { type: Date },
-    avatar:{
-      type: String
+    avatar: {
+      type: String,
     },
-    totalCars:{
-      type:Number,
-      default:0
-    },
-
-    userName:{
-      type:String
+    totalCars: {
+      type: Number,
+      default: 0,
     },
 
-    roles:{
-      type:String,
-      enum:[
-         "Individual Partner",
-         "Organizational Partner",
-        
-        ],
-        default: "Individual Partner"
+    userName: {
+      type: String,
+    },
+
+    roles: {
+      type: String,
+      enum: ['Individual Partner', 'Organizational Partner'],
+      default: 'Individual Partner',
     },
     isVerified: {
-      type:Boolean,
-      default:false
-    }
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    collection: 'partner_collections',
+    timestamps: {
+      createdAt: 'createdAt',
+      updatedAt: 'updatedAt',
+    },
+  },
+);
 
-    
+PartnerSchema.set('toJSON', { getters: true, virtuals: true });
 
+/**
+ * Methods
+ */
+PartnerSchema.method({});
 
+/**
+ * Statics
+ */
+PartnerSchema.statics = {
+  // Add Intervention
+  addUser(user, callback) {
+    return this.create(user, callback);
+  },
 
-},
-{
-  collection: 'partner_collections',
-  timestamps: {
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  }
-});
-
-PartnerSchema.set('toJSON', {getters: true, virtuals: true});
-
-      
-      /**
-       * Methods
-       */
-      PartnerSchema.method({
+  get(id) {
+    return this.findOne(id)
+      .exec()
+      .then(user => {
+        if (user) {
+          return user;
+        }
+        const err = new Error('No such user exists!');
+        return Promise.reject(err);
       });
+  },
 
-      /**
-       * Statics
-       */
-      PartnerSchema.statics = {
-             // Add Intervention
-            addUser  (user, callback)  {
-              return this.create(user, callback);
+  listUsers({ skip = 0, limit = 50 } = {}) {
+    return this.find()
+      .sort({ created_at: -1 })
+      .skip(+skip)
+      .limit(+limit)
+      .exec();
+  },
+
+  upsertFbUser(accessToken, refreshToken, profile, cb) {
+    var that = this;
+    return this.findOne(
+      {
+        'facebookProvider.id': profile.id,
+      },
+      function(err, user) {
+        // no user was found, lets create a new one
+        if (!user) {
+          var newUser = new that({
+            fullName: profile.displayName,
+            email: profile.emails[0].value,
+            facebookProvider: {
+              id: profile.id,
+              token: accessToken,
             },
+          });
 
-            get(id) {
-              return this.findOne(id)
-                .exec()
-                .then((user) => {
-                  if (user) {
-                    return user;
-                  }
-                  const err = new Error('No such user exists!');
-                  return Promise.reject(err);
-                });
+          newUser.save(function(error, savedUser) {
+            if (error) {
+              console.log(error);
+            }
+            return cb(error, savedUser);
+          });
+        } else {
+          return cb(err, user);
+        }
+      },
+    );
+  },
+
+  upsertGoogleUser(accessToken, refreshToken, profile, cb) {
+    var that = this;
+    return this.findOne(
+      {
+        'googleProvider.id': profile.id,
+      },
+      function(err, user) {
+        // no user was found, lets create a new one
+        if (!user) {
+          var newUser = new that({
+            fullName: profile.displayName,
+            email: profile.emails[0].value,
+            googleProvider: {
+              id: profile.id,
+              token: accessToken,
             },
+          });
 
-            
-            listUsers({ skip = 0, limit = 50 } = {}) {
-              return this.find()
-                .sort({ created_at: -1 })
-                .skip(+skip)
-                .limit(+limit)
-                .exec();
-            },
-
-            
-        upsertFbUser(accessToken, refreshToken, profile, cb) {
-            var that = this;
-            return this.findOne({
-                'facebookProvider.id': profile.id
-            }, function(err, user) {
-                // no user was found, lets create a new one
-                if (!user) {
-                    var newUser = new that({
-                        fullName: profile.displayName,
-                        email: profile.emails[0].value,
-                        facebookProvider: {
-                            id: profile.id,
-                            token: accessToken
-                        }
-                    });
-
-                    newUser.save(function(error, savedUser) {
-                        if (error) {
-                            console.log(error);
-                        }
-                        return cb(error, savedUser);
-                    });
-                } else {
-                    return cb(err, user);
-                }
-            });
-        },
-
-        upsertGoogleUser(accessToken, refreshToken, profile, cb) {
-            var that = this;
-            return this.findOne({
-                'googleProvider.id': profile.id
-            }, function(err, user) {
-                // no user was found, lets create a new one
-                if (!user) {
-                    var newUser = new that({
-                        fullName: profile.displayName,
-                        email: profile.emails[0].value,
-                        googleProvider: {
-                            id: profile.id,
-                            token: accessToken
-                        }
-                    });
-
-                    newUser.save(function(error, savedUser) {
-                        if (error) {
-                            console.log(error);
-                        }
-                        return cb(error, savedUser);
-                    });
-                } else {
-                    return cb(err, user);
-                }
-            });
-        },
-      }
-
-     
+          newUser.save(function(error, savedUser) {
+            if (error) {
+              console.log(error);
+            }
+            return cb(error, savedUser);
+          });
+        } else {
+          return cb(err, user);
+        }
+      },
+    );
+  },
+};
 
 module.exports = mongoose.model('PartnerModel', PartnerSchema);
-
-

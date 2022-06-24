@@ -1,33 +1,34 @@
 import dotenv from 'dotenv';
 
 dotenv.config();
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 const config = {
   debugger: true,
   apiKey: 'YOUR OWN Google API key FOR MAP',
 
-   facebook: {
+  facebook: {
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: process.env.FACEBOOK_CALLBACK
+    callbackURL: process.env.FACEBOOK_CALLBACK,
   },
   twitter: {
     consumerKey: 'get_your_own',
     consumerSecret: 'get_your_own',
-    callbackURL: "http://localhost:1337/auth/twitter/callback"
+    callbackURL: 'http://localhost:1337/auth/twitter/callback',
   },
-  
+
   google: {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLLE_SECRETE_ID,
-    callbackURL: process.env.GOOGLE_CALL_BACK
+    callbackURL: process.env.GOOGLE_CALL_BACK,
   },
   instagram: {
     clientID: 'get_your_own',
     clientSecret: 'get_your_own',
-    callbackURL: 'http://localhost:1337/auth/instagram/callback'
+    callbackURL: 'http://localhost:1337/auth/instagram/callback',
   },
-
 
   // facebookAuth : {
   //       clientID      : 'your-clientID-here',
@@ -54,9 +55,9 @@ const config = {
   mail: {
     service: 'Gmail',
     auth: {
-        user: 'juwavictor@gmail.com',
-        pass: 'changeThis'
-    }
+      user: 'juwavictor@gmail.com',
+      pass: 'changeThis',
+    },
   },
   demo: {
     appMode: 'dummy_api',
@@ -89,7 +90,7 @@ const config = {
     database: process.env.MONGO_DATABASE_URL,
     host: process.env.MONGO_DB_HOST,
     port: process.env.MONGO_DB_PORT,
-   database_type: 'mongodb',
+    database_type: 'mongodb',
     max: 20,
     idleTimeoutInMillisec: 30000,
     connectionTimeoutInMillisec: 2000,
@@ -102,7 +103,7 @@ const config = {
     host: process.env.MONGO_DB_HOST,
     port: process.env.MONGO_DB_PORT,
     database_type: 'mongodb',
-   
+
     max: 20,
     idleTimeoutInMillisec: 30000,
     connectionTimeoutInMillisec: 2000,

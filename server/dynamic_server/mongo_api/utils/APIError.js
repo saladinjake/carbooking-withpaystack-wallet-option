@@ -1,12 +1,12 @@
 const httpStatus = require('http-status');
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 /**
  * @extends Error
  */
 class ExtendableError extends Error {
-  constructor({
-    message, errors, status, isPublic, stack,
-  }) {
+  constructor({ message, errors, status, isPublic, stack }) {
     super(message);
     this.name = this.constructor.name;
     this.message = message;
@@ -38,7 +38,11 @@ class APIError extends ExtendableError {
     isPublic = false,
   }) {
     super({
-      message, errors, status, isPublic, stack,
+      message,
+      errors,
+      status,
+      isPublic,
+      stack,
     });
   }
 }

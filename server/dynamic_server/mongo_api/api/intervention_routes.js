@@ -2,6 +2,9 @@ import InterventionController from '../controllers/intervention_controller';
 import TokenVerification from '../middlewares/token_validator';
 import SubmitEventValidator from '../middlewares/post_sanitizer';
 // import BridgeRoutes from './routes';
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 const SUBMIT_INTERVENTION_LINK = '/interventions';
 const INTERVENTIONS_GET_SPECIFIC_LINK = '/interventions/:id';
 const INTERVENTION_LOCATION_LINK = '/interventions/:id/location';
@@ -72,14 +75,13 @@ class InterventionRoutes {
       InterventionController.updateInterventionStatus,
     );
 
-    
     this.router.get(
       '/users/:id/interventions/',
       TokenVerification.userAuthentication,
       SubmitEventValidator.validateId,
-     InterventionController.usersInterventions,
+      InterventionController.usersInterventions,
     );
-    
+
     return this.router;
   }
 }

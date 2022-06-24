@@ -16,15 +16,20 @@
 // };
 
 // export default AutoIncrementer;
-
-
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 let AutoIncrementer = function(Model) {
   let countIds;
-  Model.find().estimatedDocumentCount().exec().then(count => {
-    countIds = count;
-    console.log(count+" is the number of doc")
-  }).catch(e => console.log(e));
-  let countId =  Number(countIds) || 5;
+  Model.find()
+    .estimatedDocumentCount()
+    .exec()
+    .then(count => {
+      countIds = count;
+      console.log(count + ' is the number of doc');
+    })
+    .catch(e => console.log(e));
+  let countId = Number(countIds) || 5;
   function increase() {
     return countId++;
   }

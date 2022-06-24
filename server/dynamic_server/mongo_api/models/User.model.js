@@ -1,493 +1,464 @@
 'use strict';
 const Promise = require('bluebird');
-import mongoose from  'mongoose';
-
+import mongoose from 'mongoose';
+/****************************************************************/
+/******* @author saladin jake (Victor juwa) ********************************/
+/******* @desc Express js || ****************/
 const httpStatus = require('http-status');
 const { omitBy, isNil } = require('lodash');
 const APIError = require('../utils/APIError');
 const autoIncrement = require('../services/mongooseAutoIncrement');
-const { env, jwtSecret, jwtExpirationInterval, masterAccount, masterAccountPassword } = require('../config/vars');
+const {
+  env,
+  jwtSecret,
+  jwtExpirationInterval,
+  masterAccount,
+  masterAccountPassword,
+} = require('../config/vars');
 const uuidv4 = require('uuid/v4');
 import db from './db';
 
 autoIncrement.initialize(db.getInstance().getEstablishedConnection());
 
 /**
-* Customer Roles
-*/
+ * Customer Roles
+ */
 const roles = ['user', 'admin'];
 
 //const  SetUpUserMigrations = () =>{
-      /**
-       * User Schema
-       */
-let UserSchema = new mongoose.Schema({
-      id :{
-          type: Number, 
-          default: 0
-      },
-      firstname: {
-          type: String,
-          
-      },
-      fb_id:{
-        type:String
-      },
-      google_id:{
-        type:String,
-      },
-      ratings_average:{
-        type:String,
-        default:0
-      },
+/**
+ * User Schema
+ */
+let UserSchema = new mongoose.Schema(
+  {
+    id: {
+      type: Number,
+      default: 0,
+    },
+    firstname: {
+      type: String,
+    },
+    fb_id: {
+      type: String,
+    },
+    google_id: {
+      type: String,
+    },
+    ratings_average: {
+      type: String,
+      default: 0,
+    },
 
-      status:{
-        type:String,
-        enum:[
-         "Active",
-         "Dormant",
-         "Disabled",
-         "Suspended"
-        ],
-        default: "Active"
-      },
-      user_type: {
-        type: String,
-        // enum:[
-        // 'Individual', 
-        // 'Corporate',
-        
+    status: {
+      type: String,
+      enum: ['Active', 'Dormant', 'Disabled', 'Suspended'],
+      default: 'Active',
+    },
+    user_type: {
+      type: String,
+      // enum:[
+      // 'Individual',
+      // 'Corporate',
 
-        // ],
-        default: 'Individual'
-      },
-      plan_name:{
-        type:String,
-        default: "commute saver"
-      },
-      lastname : {
-        type: String,
-        
-      },
-      roles: { 
-        type: String , 
-        // enum: [
-        //        'user', 
-        //        'simple_admin', 
-        //        'super_admin',
-        //        'Simple Admin',
-        //        'Moderator Admin',
-        //        'Super Admin', 
-        // ], 
-        default:'user'
-            
-      },
+      // ],
+      default: 'Individual',
+    },
+    plan_name: {
+      type: String,
+      default: 'commute saver',
+    },
+    lastname: {
+      type: String,
+    },
+    roles: {
+      type: String,
+      // enum: [
+      //        'user',
+      //        'simple_admin',
+      //        'super_admin',
+      //        'Simple Admin',
+      //        'Moderator Admin',
+      //        'Super Admin',
+      // ],
+      default: 'user',
+    },
 
-      for_users: {
-        type:Boolean,
-        default:true,
-      },
+    for_users: {
+      type: Boolean,
+      default: true,
+    },
 
-      usergroup_set:{
-        type:Array,
-        default:[
-        'Simple Admin', 
-          'Moderator Admin',
-          'Super Admin', 
-          'Inspection Manager',
-          'Partners Manager',
-          'Hr',
-          'Accountant',
-        ]
-      },
-      test_certificate:{
-        type: String,
-        default:"NO-CERTIFICATE-ISSUED"
-      
-      },
+    usergroup_set: {
+      type: Array,
+      default: [
+        'Simple Admin',
+        'Moderator Admin',
+        'Super Admin',
+        'Inspection Manager',
+        'Partners Manager',
+        'Hr',
+        'Accountant',
+      ],
+    },
+    test_certificate: {
+      type: String,
+      default: 'NO-CERTIFICATE-ISSUED',
+    },
 
-      test_center:{
-        type: String,
-        default:"NO-CERTER-YET"
-        
-      
-      },
+    test_center: {
+      type: String,
+      default: 'NO-CERTER-YET',
+    },
 
-      test_center_address:{
-        type:String,
-        default:"NO-TESTCENTER-ADDRESS-YET"
-    
-      
-      },
-      isVerified: { 
-          type: Boolean, 
-        
-          default: false 
-      },
-      is_active: {
-        type:String, 
-        default: true
-      },
-      avatar:{
-        type: String,
-        default:""
-      },
-      notification_count: {
-        type:Number,
-        default:0
-      },
-      balance: {
-        type: String,
-        default: '0.00'
-      },
-      old_balance:{
-        type:String,
-        default:'0.00'
-      },
+    test_center_address: {
+      type: String,
+      default: 'NO-TESTCENTER-ADDRESS-YET',
+    },
+    isVerified: {
+      type: Boolean,
 
-      // previledges_rules: {
-      //   type: Array,
-      // },
+      default: false,
+    },
+    is_active: {
+      type: String,
+      default: true,
+    },
+    avatar: {
+      type: String,
+      default: '',
+    },
+    notification_count: {
+      type: Number,
+      default: 0,
+    },
+    balance: {
+      type: String,
+      default: '0.00',
+    },
+    old_balance: {
+      type: String,
+      default: '0.00',
+    },
 
+    // previledges_rules: {
+    //   type: Array,
+    // },
 
-      view_payments:{
-         type: String,
-        default: 'yes',
-       }, 
-        view_transactions:{
-         type: String,
-             //default:'yes',
-        },
-        // view_payments:{
-        //  type: String,
-        //       //default:'yes',
-        //  },
-        view_quotations:{
-         type: String,
-              //default:'yes',
-         },
-        view_cars:{
-         type: String,
-              //default:'yes',
-         },
-        view_drivers:{
-         type: String,
-              //default:'yes',
-         },
-        view_partners:{
-         type: String,
-         //default:'yes',
-         },
-        view_sos:{
-         type: String,
-              //default:'yes',
-         },
-        view_package:{
-         type: String,
-             //default:'yes',
-        },
-        view_bookings:{
-         type: String,
-             //default:'yes',
-      },
+    view_payments: {
+      type: String,
+      default: 'yes',
+    },
+    view_transactions: {
+      type: String,
+      //default:'yes',
+    },
+    // view_payments:{
+    //  type: String,
+    //       //default:'yes',
+    //  },
+    view_quotations: {
+      type: String,
+      //default:'yes',
+    },
+    view_cars: {
+      type: String,
+      //default:'yes',
+    },
+    view_drivers: {
+      type: String,
+      //default:'yes',
+    },
+    view_partners: {
+      type: String,
+      //default:'yes',
+    },
+    view_sos: {
+      type: String,
+      //default:'yes',
+    },
+    view_package: {
+      type: String,
+      //default:'yes',
+    },
+    view_bookings: {
+      type: String,
+      //default:'yes',
+    },
 
+    view_tickets: {
+      type: String,
+      //default:'yes',
+    },
 
-      view_tickets:{
-         type: String,
-             //default:'yes',
-      },
+    view_faqs: {
+      type: String,
+      //default:'yes',
+    },
 
-      view_faqs:{
-         type: String,
-             //default:'yes',
-      },
+    view_settings: {
+      type: String,
+      //default:'yes',
+    },
 
-      view_settings:{
-         type: String,
-             //default:'yes',
-      },
+    view_users: {
+      type: String,
+      //default:'yes',
+    },
 
-      view_users:{
-         type: String,
-             //default:'yes',
-      },
+    view_admins: {
+      type: String,
+      //default:'yes',
+    },
 
-      view_admins:{
-         type: String,
-             //default:'yes',
-      },
+    view_car_inspection: {
+      type: String,
+      // default:'yes',
+    },
+    view_drive_test: {
+      type: String,
+      //default:'yes',
+    },
 
-       view_car_inspection:{
-         type: String,
-            // default:'yes',
-      },
-      view_drive_test:{
-         type: String,
-             //default:'yes',
+    manage_payments: {
+      type: String,
+      default: 'yes',
+    },
+    manage_transactions: {
+      type: String,
+      //default:'yes',
+    },
+    manage_quotations: {
+      type: String,
+      //default:'yes',
+    },
+    manage_cars: {
+      type: String,
+      //default:'yes',
+    },
+    manage_drivers: {
+      type: String,
+      //default:'yes',
+    },
+    manage_partners: {
+      type: String,
+      //default:'yes',
+    },
+    manage_sos: {
+      type: String,
+      //default:'yes',
+    },
+    manage_package: {
+      type: String,
+      //default:'yes',
+    },
+    manage_bookings: {
+      type: String,
+      //default:'yes',
+    },
 
-      },
+    manage_tickets: {
+      type: String,
+      //default:'yes',
+    },
 
+    manage_faqs: {
+      type: String,
+      //default:'yes',
+    },
 
+    manage_settings: {
+      type: String,
+      //default:'yes',
+    },
 
+    manage_users: {
+      type: String,
+      //default:'yes',
+    },
 
+    manage_admins: {
+      type: String,
+      //default:'yes',
+    },
 
+    manage_car_inspection: {
+      type: String,
+      //default:'yes',
+    },
+    manage_drive_test: {
+      type: String,
+      //default:'yes',
+    },
 
-      manage_payments:{
-         type: String,
-        default: 'yes',
-       }, 
-        manage_transactions:{
-         type: String,
-             //default:'yes',
-        },
-        manage_quotations:{
-         type: String,
-              //default:'yes',
-         },
-        manage_cars:{
-         type: String,
-              //default:'yes',
-         },
-        manage_drivers:{
-         type: String,
-              //default:'yes',
-         },
-        manage_partners:{
-         type: String,
-         //default:'yes',
-         },
-        manage_sos:{
-         type: String,
-              //default:'yes',
-         },
-        manage_package:{
-         type: String,
-             //default:'yes',
-        },
-        manage_bookings:{
-         type: String,
-             //default:'yes',
-      },
+    passwordResetToken: { type: String },
+    passwordResetExpires: { type: Date },
 
+    username: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
+    password: {
+      type: String,
+    },
+    phone_number: {
+      type: String,
 
-      manage_tickets:{
-         type: String,
-             //default:'yes',
-      },
+      //match: [/^[1-9][0-9]{9}$/, 'The value of path {PATH} ({VALUE}) is not a valid mobile number.']
+    },
+    is_admin: {
+      type: Boolean,
+      default: false,
+    },
+    created_at: {
+      type: Date,
+      default: Date.now,
+    },
+    updated_at: {
+      type: Date,
+      default: Date.now,
+    },
 
-      manage_faqs:{
-         type: String,
-             //default:'yes',
-      },
+    facebook: {
+      id: String,
+      token: String,
+      email: String,
+      name: String,
+    },
+    google: {
+      id: String,
+      token: String,
+      email: String,
+      name: String,
+    },
 
-      manage_settings:{
-         type: String,
-             //default:'yes',
-      },
-
-      manage_users:{
-         type: String,
-             //default:'yes',
-      },
-
-      manage_admins:{
-         type: String,
-             //default:'yes',
-      },
-
-      manage_car_inspection:{
-         type: String,
-             //default:'yes',
-      },
-      manage_drive_test:{
-         type: String,
-             //default:'yes',
-
-      },
-
-      passwordResetToken: { type: String},
-      passwordResetExpires: { type: Date },
-       
-      username : {
-          type: String,
-          
-      },
-      email : {
-        type: String,
-          
-        
-      },
-        password :{
-          type: String,   
-        },
-        phone_number : {
-          type: String,
-        
-          //match: [/^[1-9][0-9]{9}$/, 'The value of path {PATH} ({VALUE}) is not a valid mobile number.']
-        },
-        is_admin:{ 
-          type:Boolean,
-          default:false
-        },
-        created_at : {
-          type: Date,
-          default: Date.now
-        },
-        updated_at :{
-          type: Date,
-          default: Date.now
-        },
-        
-        facebook: {
-          id: String,
-          token: String,
-          email: String,
-          name: String
-        },
-        google: {
-            id: String,
-            token: String,
-            email: String,
-            name: String
-        },
-
-        amount: {
-        type: Number, 
-       
+    amount: {
+      type: Number,
     },
     reference: {
-        type: String, 
-        
+      type: String,
     },
 
     //if user is a driver
 
-    identity_card:{
-        type: String,
-        
-      },
-      
+    identity_card: {
+      type: String,
+    },
 
+    car_assigned_name: {
+      type: Array,
+    },
 
-      car_assigned_name: {
-        type: Array,
-      },
+    assigned_car_plate_number: {
+      type: String,
+    },
 
-      assigned_car_plate_number:{
-       type:String
-      },
+    assigned_driver_location: {
+      type: String,
+    },
 
-      assigned_driver_location:{
-          type: String,
-        },
+    geometry: {
+      coordinates: { type: [Number], index: '2dsphere' },
+    },
 
-      geometry: {
-          coordinates: { type: [Number], index: '2dsphere'}
-      },
+    location: {
+      type: { type: String },
+      coordinates: [],
+    },
 
-      location: {
-       type: { type: String },
-       coordinates: []
-      },
+    socket_id: {
+      type: String,
+    },
+  },
+  {
+    collection: 'users_collections',
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
+  },
+);
 
-        socket_id: {
-          type: String
-        },
+UserSchema.set('toJSON', { getters: true, virtuals: true });
 
+/**
+ * Methods
+ */
+UserSchema.method({
+  transform() {
+    const transformed = {};
+    const fields = ['id', 'accountNumber', 'name', 'email', 'role', 'created_at'];
 
-  
+    fields.forEach(field => {
+      transformed[field] = this[field];
+    });
 
-      },{
-        collection: 'users_collections',
-        timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
+    return transformed;
+  },
 });
 
-UserSchema.set('toJSON', {getters: true, virtuals: true});
+/**
+ * Statics
+ */
+UserSchema.statics = {
+  transformBalance(user) {
+    return user.balance;
+  },
+  // Add Intervention
+  addUser(user, callback) {
+    return this.create(user, callback);
+  },
 
-      
-      /**
-       * Methods
-       */
-      UserSchema.method({
-        
-          transform() {
-            const transformed = {};
-            const fields = ['id', 'accountNumber', 'name', 'email', 'role', 'created_at'];
-
-            fields.forEach((field) => {
-              transformed[field] = this[field];
-            });
-
-            return transformed;
-          },
+  get(id) {
+    return this.findOne(id)
+      .exec()
+      .then(user => {
+        if (user) {
+          return user;
+        }
+        const err = new Error('No such user exists!');
+        return Promise.reject(err);
       });
+  },
 
-      /**
-       * Statics
-       */
-      UserSchema.statics = {
-              transformBalance(user) {
-            
-              
+  listUsers({ skip = 0, limit = 50 } = {}) {
+    return this.find()
+      .sort({ created_at: -1 })
+      .skip(+skip)
+      .limit(+limit)
+      .exec();
+  },
 
-               return user.balance;
-             },
-             // Add Intervention
-            addUser  (user, callback)  {
-              return this.create(user, callback);
+  upsertFbUser(accessToken, refreshToken, profile, cb) {
+    var that = this;
+    return this.findOne(
+      {
+        'facebookProvider.id': profile.id,
+      },
+      function(err, user) {
+        // no user was found, lets create a new one
+        if (!user) {
+          var newUser = new that({
+            fullName: profile.displayName,
+            email: profile.emails[0].value,
+            facebookProvider: {
+              id: profile.id,
+              token: accessToken,
             },
+          });
 
-            get(id) {
-              return this.findOne(id)
-                .exec()
-                .then((user) => {
-                  if (user) {
-                    return user;
-                  }
-                  const err = new Error('No such user exists!');
-                  return Promise.reject(err);
-                });
-            },
+          newUser.save(function(error, savedUser) {
+            if (error) {
+              console.log(error);
+            }
+            return cb(error, savedUser);
+          });
+        } else {
+          return cb(err, user);
+        }
+      },
+    );
+  },
 
-            
-            listUsers({ skip = 0, limit = 50 } = {}) {
-              return this.find()
-                .sort({ created_at: -1 })
-                .skip(+skip)
-                .limit(+limit)
-                .exec();
-            },
-
-            
-        upsertFbUser(accessToken, refreshToken, profile, cb) {
-            var that = this;
-            return this.findOne({
-                'facebookProvider.id': profile.id
-            }, function(err, user) {
-                // no user was found, lets create a new one
-                if (!user) {
-                    var newUser = new that({
-                        fullName: profile.displayName,
-                        email: profile.emails[0].value,
-                        facebookProvider: {
-                            id: profile.id,
-                            token: accessToken
-                        }
-                    });
-
-                    newUser.save(function(error, savedUser) {
-                        if (error) {
-                            console.log(error);
-                        }
-                        return cb(error, savedUser);
-                    });
-                } else {
-                    return cb(err, user);
-                }
-            });
-        },
-
-    async getId(id) {
+  async getId(id) {
     try {
       let customer;
 
@@ -521,13 +492,13 @@ UserSchema.set('toJSON', {getters: true, virtuals: true});
       password: masterAccountPassword,
     };
     try {
-      let customer = await this.findOne({ 'accountNumber': masterAccountData.accountNumber }).exec();
-      
+      let customer = await this.findOne({ accountNumber: masterAccountData.accountNumber }).exec();
+
       if (customer) {
         return customer;
-      }else{
+      } else {
         return await this.create(masterAccountData);
-      }      
+      }
     } catch (error) {
       throw error;
     }
@@ -549,7 +520,7 @@ UserSchema.set('toJSON', {getters: true, virtuals: true});
       isPublic: true,
     };
     if (password) {
-      if (customer && await customer.passwordMatches(password)) {
+      if (customer && (await customer.passwordMatches(password))) {
         return { customer, accessToken: customer.token() };
       }
       err.message = 'Incorrect email or password';
@@ -568,9 +539,7 @@ UserSchema.set('toJSON', {getters: true, virtuals: true});
    * @param {number} limit - Limit number of customers to be returned.
    * @returns {Promise<Customer[]>}
    */
-  list({
-    page = 1, perPage = 30, name, email, role,
-  }) {
+  list({ page = 1, perPage = 30, name, email, role }) {
     const options = omitBy({ name, email, role }, isNil);
 
     return this.find(options)
@@ -591,11 +560,13 @@ UserSchema.set('toJSON', {getters: true, virtuals: true});
     if (error.name === 'MongoError' && error.code === 11000) {
       return new APIError({
         message: 'Validation Error',
-        errors: [{
-          field: 'email',
-          location: 'body',
-          messages: ['"email" already exists'],
-        }],
+        errors: [
+          {
+            field: 'email',
+            location: 'body',
+            messages: ['"email" already exists'],
+          },
+        ],
         status: httpStatus.CONFLICT,
         isPublic: true,
         stack: error.stack,
@@ -605,44 +576,42 @@ UserSchema.set('toJSON', {getters: true, virtuals: true});
   },
 
   upsertGoogleUser(accessToken, refreshToken, profile, cb) {
-      var that = this;
-      return this.findOne({
-                'googleProvider.id': profile.id
-      }, function(err, user) {
-                // no user was found, lets create a new one
-                if (!user) {
-                    var newUser = new that({
-                        fullName: profile.displayName,
-                        email: profile.emails[0].value,
-                        googleProvider: {
-                            id: profile.id,
-                            token: accessToken
-                        }
-                    });
+    var that = this;
+    return this.findOne(
+      {
+        'googleProvider.id': profile.id,
+      },
+      function(err, user) {
+        // no user was found, lets create a new one
+        if (!user) {
+          var newUser = new that({
+            fullName: profile.displayName,
+            email: profile.emails[0].value,
+            googleProvider: {
+              id: profile.id,
+              token: accessToken,
+            },
+          });
 
-                    newUser.save(function(error, savedUser) {
-                        if (error) {
-                            console.log(error);
-                        }
-                        return cb(error, savedUser);
-                    });
-                } else {
-                    return cb(err, user);
-                }
-            });
-        },
-}
+          newUser.save(function(error, savedUser) {
+            if (error) {
+              console.log(error);
+            }
+            return cb(error, savedUser);
+          });
+        } else {
+          return cb(err, user);
+        }
+      },
+    );
+  },
+};
 
 UserSchema.plugin(autoIncrement.plugin, {
   model: 'UserModel',
   field: 'accountNumber',
   startAt: 1001,
-  incrementBy: 1
-});     
+  incrementBy: 1,
+});
 
 module.exports = mongoose.model('UserModel', UserSchema);
-
-
-
-
-
