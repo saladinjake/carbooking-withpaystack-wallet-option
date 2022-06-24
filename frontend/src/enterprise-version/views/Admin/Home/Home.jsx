@@ -38,7 +38,7 @@ const facebookLoginUrl = `https://www.facebook.com/v4.0/dialog/oauth?${stringifi
 
 export class Home extends Component {
   render() {
-    const styleM= { background:'#fff url("public/assets/images/banner-home.jpg") no-repeat fixed left', backgroundSize:'contain', height:"100%",position:"fixed"};  
+    const styleM= {  height:"100%",position:"fixed"};  
     const styleY ={padding:"43% 0px" }
     return (
        <React.Fragment>
@@ -60,8 +60,8 @@ export class Home extends Component {
             <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 pull-right" >
                 <div className="card-box animated animatedFadeInUp fadeInUp ">
                       <div className="panel-heading">
-          <h1 className="text-custom m-t-40 m-b-20 text-left" style={{fontWeight:'700', letterSpacing:"3px", color: "rgb(126, 87, 194)"}}>Sign in</h1>
-                <a href="./signup" className="btn-link" style={{textDecoration:"none"}}>or create an account</a>
+          <h1 className="text-custom m-t-40 m-b-20 text-left" style={{fontWeight:'700', letterSpacing:"3px", color: "rgb(126, 87, 194)"}}>Admin Login</h1>
+
                 {/* <a href={facebookLoginUrl}>
     Login with Facebook
   </a> */}
@@ -130,7 +130,7 @@ export class Home extends Component {
                                   
                                   <div className="form-group m-t-20 m-b-0">
                                     <div className="col-sm-12 text-center">
-                                      <h4><b>Sign in with</b></h4>
+                                      <h4><b>Goom Admin</b></h4>
                                     </div>
                                   </div>
                                   
@@ -164,11 +164,7 @@ export class Home extends Component {
                             </div>
                 
                             <div className="row m-t-20">
-                            <div className="col-sm-12 text-center">
-                              <p>
-                                Don't have an account? <a href="./signup" className="text-primary m-l-5"><b>Sign Up</b></a>
-                              </p>
-                            </div>
+                            
                           </div>
             
 

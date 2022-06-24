@@ -102,9 +102,9 @@ const AdminRouter = () => {
 
 
             {/*Admin Routes*/}
-          {/* <Route exact path="/" component={Home} />
-		    <Route exact path="/index.html" component={Home} /> */}
-        {/* <Route exact path="/dashboard" component={AdminDashboard} /> */}
+        <Route exact path="/" component={Home} />
+		    <Route exact path="/index.html" component={Home} />
+        <Route exact path="/dashboard" component={AdminDashboard} /> 
            <Route exact path="/admin-dashboard" component={AdminDashboard} />
            <Route exact path="/admin-users" component={Users} />
            <Route exact path="/admin-users-detail" component={UserDetail} />
