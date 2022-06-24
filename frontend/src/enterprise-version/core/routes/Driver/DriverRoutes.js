@@ -60,7 +60,7 @@ const DriverRouter = (props) => {
 
 		   
 		
-            <Route path="/drivers-home" exact component={HomeLoginDriver} />
+            <Route path="/" exact component={HomeLoginDriver} />
             <Route path="/drivers-login" component={HomeLoginDriver} />
             <Route path="/dashboard-driver" component={DashboardDriver} />
             <Route path="/drivers-signup" component={RegisterDriver} />

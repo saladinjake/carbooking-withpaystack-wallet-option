@@ -6,14 +6,13 @@ import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
 
-import AdminRoutes from "./Admin/AdminRoutes"
+import UserRoutes from "./User/UserRoutes"
+
 const AppRoutes = () =>{
     return (
       <>
-        
-         <AdminRoutes/>
-   
-    </>
+         <UserRoutes/>
+      </>
     )
 }
 
