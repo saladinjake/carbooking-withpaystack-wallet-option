@@ -46,11 +46,8 @@ const FrontendRepoBootstrap = {
   Ewallets: new Ewallet(),
   QuotationHistorys: new QuotationHistory(),
   PaymentHistorys: new PaymentHistory(),
-   PaymentWizardz: new PaymentWizard(),
-   Notice: new Notification(),
-
-  
-
+  PaymentWizardz: new PaymentWizard(),
+  Notice: new Notification(),
   
 };
 export default FrontendRepoBootstrap;

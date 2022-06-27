@@ -127,3 +127,7 @@ ul#move li:nth-child(4) {
 ul#move li:nth-child(5) {
 	background: #744674;
 }
+
+.none{
+	display: none;
+}

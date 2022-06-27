@@ -63,11 +63,12 @@
     "lint": "eslint source/ --quiet",
     "lint:write": "eslint --debug . --fix",
     "prettier": "prettier --write frontend/**/*.js",
+    "start:server":"babel-node --presets=@babel/preset-env server.js",
     "start-react": "node server_react.js",
     "webpack": "webpack --config ./webpack.config.prod.js",
     "start:dev": "webpack-dev-server --config ./webpack.config.dev.js --open --hot --port 4000",
     "start": "node server_react.js",
-    
+    "deploy": "now public",
     "build": "webpack -p --config ./webpack.config.prod.js",
     "clean-react": "del-cli  dist-reactive ",
     "clean": "del-cli  buildfolder/**/*.js ",
